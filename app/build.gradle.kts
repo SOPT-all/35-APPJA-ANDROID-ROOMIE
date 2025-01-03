@@ -25,12 +25,16 @@ android {
         versionName = libs.versions.versionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", properties["base.url"].toString())
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", properties["dev.base.url"].toString())
+        }
+
         release {
             isMinifyEnabled = false
+            buildConfigField("String", "BASE_URL", properties["prod.base.url"].toString())
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
