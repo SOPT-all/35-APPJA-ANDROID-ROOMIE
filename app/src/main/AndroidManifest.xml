@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RoomieAndroid"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        tools:targetApi="35">
         <activity
             android:name=".presentation.navigator.MainActivity"
             android:exported="true"
