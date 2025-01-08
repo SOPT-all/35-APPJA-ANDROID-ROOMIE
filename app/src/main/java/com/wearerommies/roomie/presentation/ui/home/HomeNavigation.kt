@@ -5,27 +5,21 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.wearerommies.roomie.presentation.ui.home.HomeRoute.ROUTE
+import com.wearerommies.roomie.presentation.model.MainTabRoute
 
 fun NavController.navigateHome(navOptions: NavOptions) {
     navigate(
-        route = ROUTE,
+        route = MainTabRoute.Home,
         navOptions = navOptions
     )
 }
 
 fun NavGraphBuilder.homeNavGraph() {
-    composable(
-        route = ROUTE,
-    ) {
+    composable<MainTabRoute.Home>{
         HomeRoute(
             paddingValues = PaddingValues(),
             navigateUp = {}
         )
     }
 
-}
-
-object HomeRoute {
-    const val ROUTE = "home"
 }
