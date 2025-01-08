@@ -6,7 +6,7 @@ import com.wearerommies.roomie.domain.entity.ReqresEntity
 import com.wearerommies.roomie.domain.repository.ReqresRepository
 import javax.inject.Inject
 
-class ReqresRepositoryImpl @Inject constructor(
+internal class ReqresRepositoryImpl @Inject constructor(
     private val reqresDataSource: ReqresDataSource
 ) : ReqresRepository {
     override suspend fun getReqresLists(page: Int): Result<List<ReqresEntity>> =
