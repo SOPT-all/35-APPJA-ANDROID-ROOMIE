@@ -1,0 +1,25 @@
+package com.wearerommies.roomie.presentation.ui.mypage
+
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
+
+@HiltViewModel
+class MyViewModel @Inject constructor(
+) : ViewModel() {
+    // state 관리
+    private val _state = MutableStateFlow(MyState())
+    val state: StateFlow<MyState>
+        get() = _state.asStateFlow()
+
+    // side effect 관리
+    private val _sideEffect: MutableSharedFlow<MySideEffect> = MutableSharedFlow()
+    val sideEffect: SharedFlow<MySideEffect>
+        get() = _sideEffect.asSharedFlow()
+}
