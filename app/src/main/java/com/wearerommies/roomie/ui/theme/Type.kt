@@ -1,6 +1,5 @@
 package com.wearerommies.roomie.ui.theme
 
-import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -21,9 +20,8 @@ val PretendardSemiBold = FontFamily(Font(R.font.pretendard_semibold, FontWeight.
 val PretendardMedium = FontFamily(Font(R.font.pretendard_medium, FontWeight.Medium))
 val PretendardRegular = FontFamily(Font(R.font.pretendard_regular, FontWeight.Normal))
 
-
 @Stable
-class RommieTypography internal constructor(
+class RoomieTypography internal constructor(
     heading1B20: TextStyle,
     heading2Sb20: TextStyle,
     heading3M20: TextStyle,
@@ -95,7 +93,7 @@ class RommieTypography internal constructor(
         caption1R10: TextStyle = this.caption1R10,
         caption2Sb10: TextStyle = this.caption2Sb10,
         caption3M10: TextStyle = this.caption3M10
-    ): RommieTypography = RommieTypography(
+    ): RoomieTypography = RoomieTypography(
         heading1B20,
         heading2Sb20,
         heading3M20,
@@ -115,7 +113,7 @@ class RommieTypography internal constructor(
         caption3M10
     )
 
-    fun update(other: RommieTypography) {
+    fun update(other: RoomieTypography) {
         heading1B20 = other.heading1B20
         heading2Sb20 = other.heading2Sb20
         heading3M20 = other.heading3M20
@@ -136,7 +134,7 @@ class RommieTypography internal constructor(
     }
 }
 
-fun rommieTextStyle(
+fun roomieTextStyle(
     fontFamily: FontFamily,
     fontWeight: FontWeight,
     fontSize: TextUnit,
@@ -155,121 +153,121 @@ fun rommieTextStyle(
 )
 
 @Composable
-fun rommieTypography(): RommieTypography {
-    return RommieTypography(
-        heading1B20 = rommieTextStyle(
+fun roomieTypography(): RoomieTypography {
+    return RoomieTypography(
+        heading1B20 = roomieTextStyle(
             fontFamily = PretendardBold,
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
             lineHeight = 28.sp,
             letterSpacing = (-0.5).em
         ),
-        heading2Sb20 = rommieTextStyle(
+        heading2Sb20 = roomieTextStyle(
             fontFamily = PretendardSemiBold,
             fontWeight = FontWeight.SemiBold,
             fontSize = 20.sp,
             lineHeight = 28.sp,
             letterSpacing = (-0.5).em
         ),
-        heading3M20 = rommieTextStyle(
+        heading3M20 = roomieTextStyle(
             fontFamily = PretendardMedium,
             fontWeight = FontWeight.Medium,
             fontSize = 20.sp,
             lineHeight = 28.sp,
             letterSpacing = (-0.5).em
         ),
-        heading4B18 = rommieTextStyle(
+        heading4B18 = roomieTextStyle(
             fontFamily = PretendardBold,
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             lineHeight = 24.sp,
             letterSpacing = (-0.5).em
         ),
-        heading5Sb18 = rommieTextStyle(
+        heading5Sb18 = roomieTextStyle(
             fontFamily = PretendardSemiBold,
             fontWeight = FontWeight.SemiBold,
             fontSize = 18.sp,
             lineHeight = 24.sp,
             letterSpacing = (-0.5).em
         ),
-        title1R16 = rommieTextStyle(
+        title1R16 = roomieTextStyle(
             fontFamily = PretendardRegular,
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp,
             lineHeight = 22.sp,
             letterSpacing = (-1).em
         ),
-        title2Sb16 = rommieTextStyle(
+        title2Sb16 = roomieTextStyle(
             fontFamily = PretendardSemiBold,
             fontWeight = FontWeight.SemiBold,
             fontSize = 16.sp,
             lineHeight = 22.sp,
             letterSpacing = (-1).em
         ),
-        title3M16 = rommieTextStyle(
+        title3M16 = roomieTextStyle(
             fontFamily = PretendardMedium,
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp,
             lineHeight = 22.sp,
             letterSpacing = (-1).em
         ),
-        body1R14 = rommieTextStyle(
+        body1R14 = roomieTextStyle(
             fontFamily = PretendardRegular,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
             lineHeight = 20.sp,
             letterSpacing = (-1).em
         ),
-        body2Sb14 = rommieTextStyle(
+        body2Sb14 = roomieTextStyle(
             fontFamily = PretendardSemiBold,
             fontWeight = FontWeight.SemiBold,
             fontSize = 14.sp,
             lineHeight = 20.sp,
             letterSpacing = (-1).em
         ),
-        body3M14 = rommieTextStyle(
+        body3M14 = roomieTextStyle(
             fontFamily = PretendardMedium,
             fontWeight = FontWeight.Medium,
             fontSize = 14.sp,
             lineHeight = 20.sp,
             letterSpacing = (-1).em
         ),
-        body4R12 = rommieTextStyle(
+        body4R12 = roomieTextStyle(
             fontFamily = PretendardRegular,
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
             lineHeight = 18.sp,
             letterSpacing = (-1).em
         ),
-        body5Sb12 = rommieTextStyle(
+        body5Sb12 = roomieTextStyle(
             fontFamily = PretendardSemiBold,
             fontWeight = FontWeight.SemiBold,
             fontSize = 12.sp,
             lineHeight = 18.sp,
             letterSpacing = (-1).em
         ),
-        body6M12 = rommieTextStyle(
+        body6M12 = roomieTextStyle(
             fontFamily = PretendardMedium,
             fontWeight = FontWeight.Medium,
             fontSize = 12.sp,
             lineHeight = 18.sp,
             letterSpacing = (-1).em
         ),
-        caption1R10 = rommieTextStyle(
+        caption1R10 = roomieTextStyle(
             fontFamily = PretendardRegular,
             fontWeight = FontWeight.Normal,
             fontSize = 10.sp,
             lineHeight = 14.sp,
             letterSpacing = (-1).em
         ),
-        caption2Sb10 = rommieTextStyle(
+        caption2Sb10 = roomieTextStyle(
             fontFamily = PretendardSemiBold,
             fontWeight = FontWeight.SemiBold,
             fontSize = 10.sp,
             lineHeight = 14.sp,
             letterSpacing = (-1).em
         ),
-        caption3M10 = rommieTextStyle(
+        caption3M10 = roomieTextStyle(
             fontFamily = PretendardMedium,
             fontWeight = FontWeight.Medium,
             fontSize = 10.sp,

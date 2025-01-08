@@ -48,7 +48,7 @@ val TransparentGray1210 = Color(0x1A1A1A1A)
 val ActionError = Color(0xFFEA0000)
 
 @Stable
-class RommieColors(
+class RoomieColors(
     primary: Color,
     primaryLight1: Color,
     primaryLight2: Color,
@@ -172,7 +172,7 @@ class RommieColors(
         transparentGray160: Color = this.transparentGray160,
         transparentGray1210: Color = this.transparentGray1210,
         actionError: Color = this.actionError
-    ): RommieColors = RommieColors(
+    ): RoomieColors = RoomieColors(
         primary,
         primaryLight1,
         primaryLight2,
@@ -205,7 +205,7 @@ class RommieColors(
         actionError
     )
 
-    fun update(other: RommieColors) {
+    fun update(other: RoomieColors) {
         primary = other.primary
         primaryLight1 = other.primaryLight1
         primaryLight2 = other.primaryLight2
@@ -239,7 +239,7 @@ class RommieColors(
     }
 }
 
-fun rommieColors(
+fun roomieColors(
     primary: Color = Primary,
     primaryLight1: Color = PrimaryLight1,
     primaryLight2: Color = PrimaryLight2,
@@ -270,7 +270,7 @@ fun rommieColors(
     transparentGray160: Color = TransparentGray160,
     transparentGray1210: Color = TransparentGray1210,
     actionError: Color = ActionError
-) = RommieColors(
+) = RoomieColors(
     primary,
     primaryLight1,
     primaryLight2,

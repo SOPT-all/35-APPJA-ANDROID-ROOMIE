@@ -2,38 +2,36 @@ package com.wearerommies.roomie.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 
-private val LocalRommieColors = staticCompositionLocalOf<RommieColors> {
-    error("No RommieColors provided")
+private val LocalRoomieColors = staticCompositionLocalOf<RoomieColors> {
+    error("No RoomieColors provided")
 }
 
-private val LocalRommieTypography = staticCompositionLocalOf<RommieTypography> {
-    error("No RommieTypography provided")
+private val LocalRoomieTypography = staticCompositionLocalOf<RoomieTypography> {
+    error("No RoomieTypography provided")
 }
 
-object RommieTheme {
-    val colors: RommieColors
+object RoomieTheme {
+    val colors: RoomieColors
         @Composable
         @ReadOnlyComposable
-        get() = LocalRommieColors.current
+        get() = LocalRoomieColors.current
 
-    val typography: RommieTypography
+    val typography: RoomieTypography
         @Composable
         @ReadOnlyComposable
-        get() = LocalRommieTypography.current
+        get() = LocalRoomieTypography.current
 }
 
 @Composable
-fun ProvideRommieColorsAndTypography(
-    colors: RommieColors,
-    typography: RommieTypography,
+fun ProvideRoomieColorsAndTypography(
+    colors: RoomieColors,
+    typography: RoomieTypography,
     content: @Composable () -> Unit
 ) {
     val provideColors = remember { colors.copy() }
@@ -43,8 +41,8 @@ fun ProvideRommieColorsAndTypography(
     provideTypography.update(typography)
 
     CompositionLocalProvider(
-        LocalRommieColors provides provideColors,
-        LocalRommieTypography provides provideTypography,
+        LocalRoomieColors provides provideColors,
+        LocalRoomieTypography provides provideTypography,
         content = content
     )
 }
@@ -54,10 +52,10 @@ fun RoomieAndroidTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = rommieColors()
-    val typography = rommieTypography()
+    val colors = roomieColors()
+    val typography = roomieTypography()
 
-    ProvideRommieColorsAndTypography(colors, typography) {
+    ProvideRoomieColorsAndTypography(colors, typography) {
         MaterialTheme(content = content)
     }
 }
