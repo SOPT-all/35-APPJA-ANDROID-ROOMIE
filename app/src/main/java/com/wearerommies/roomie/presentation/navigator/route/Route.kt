@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.model
+package com.wearerommies.roomie.presentation.navigator.route
 
 import kotlinx.serialization.Serializable
 

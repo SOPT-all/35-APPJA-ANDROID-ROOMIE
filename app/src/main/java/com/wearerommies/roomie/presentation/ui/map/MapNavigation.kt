@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.wearerommies.roomie.presentation.model.MainTabRoute
+import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 
 fun NavController.navigateMap(navOptions: NavOptions) {
     navigate(

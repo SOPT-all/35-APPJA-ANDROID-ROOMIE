@@ -4,8 +4,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import com.wearerommies.roomie.R
-import com.wearerommies.roomie.presentation.model.MainTabRoute
-import com.wearerommies.roomie.presentation.model.Route
+import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
+import com.wearerommies.roomie.presentation.navigator.route.Route
 
 enum class MainTabType(
     @DrawableRes val navIcon: Int,
