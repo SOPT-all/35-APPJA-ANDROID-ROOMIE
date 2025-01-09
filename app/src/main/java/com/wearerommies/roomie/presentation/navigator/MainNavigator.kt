@@ -10,9 +10,9 @@ import androidx.navigation.navOptions
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.type.MainTabType
-import com.wearerommies.roomie.presentation.ui.home.navigation.navigateHome
-import com.wearerommies.roomie.presentation.ui.map.navigation.navigateMap
-import com.wearerommies.roomie.presentation.ui.mypage.navigation.navigateMy
+import com.wearerommies.roomie.presentation.ui.home.navigation.navigateToHome
+import com.wearerommies.roomie.presentation.ui.map.navigation.navigateToMap
+import com.wearerommies.roomie.presentation.ui.mypage.navigation.navigateToMy
 
 class MainNavigator(
     val navController: NavHostController,
@@ -38,9 +38,9 @@ class MainNavigator(
         }
 
         when (tab) {
-            MainTabType.HOME -> navController.navigateHome(navOptions)
-            MainTabType.MAP -> navController.navigateMap(navOptions)
-            MainTabType.MY -> navController.navigateMy(navOptions)
+            MainTabType.HOME -> navController.navigateToHome(navOptions)
+            MainTabType.MAP -> navController.navigateToMap(navOptions)
+            MainTabType.MY -> navController.navigateToMy(navOptions)
         }
     }
 

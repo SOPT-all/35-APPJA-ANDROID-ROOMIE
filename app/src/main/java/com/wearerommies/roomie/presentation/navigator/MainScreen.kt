@@ -12,7 +12,7 @@ import com.wearerommies.roomie.presentation.navigator.component.MainBottomBar
 import com.wearerommies.roomie.presentation.navigator.component.RoomieNavHost
 import com.wearerommies.roomie.presentation.type.MainTabType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun MainScreen(
@@ -44,7 +44,7 @@ private fun MainScreenContent(
             MainBottomBar(
                 modifier = Modifier.navigationBarsPadding(),
                 isVisible = navigator.showBottomBar(),
-                tabs = MainTabType.entries.toPersistentList(),
+                tabs = MainTabType.entries.toImmutableList(),
                 currentTabSelected = navigator.currentTab,
                 onTabSelected = { navigator.navigate(it) }
             )

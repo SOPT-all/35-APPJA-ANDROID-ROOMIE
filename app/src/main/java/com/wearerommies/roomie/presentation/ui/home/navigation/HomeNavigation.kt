@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.ui.home.HomeRoute
 
-fun NavController.navigateHome(navOptions: NavOptions) {
+fun NavController.navigateToHome(navOptions: NavOptions) {
     navigate(
         route = MainTabRoute.Home,
         navOptions = navOptions

@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
+import com.wearerommies.roomie.presentation.core.extension.topBorder
+import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.type.MainTabType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
@@ -43,9 +44,12 @@ fun MainBottomBar(
             modifier = modifier
                 .fillMaxWidth()
                 .background(color = Color.White)
-                .border(width = 1.dp, color = RoomieTheme.colors.grayScale4),
+                .topBorder(height = convertDpToFloat(1.dp), color = RoomieTheme.colors.grayScale4),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround,
+            horizontalArrangement = Arrangement.spacedBy(
+                space = (LocalConfiguration.current.screenWidthDp * 0.189).dp,
+                Alignment.CenterHorizontally
+            ),
         ) {
             tabs.forEach { tabItem ->
                 MainBottomBarItem(
@@ -71,8 +75,8 @@ private fun MainBottomBarItem(
 ) {
     Column(
         modifier = modifier
-            .padding(vertical = 12.dp)
-            .width((LocalConfiguration.current.screenWidthDp * 0.145).dp)
+            .padding(top = 12.dp, bottom = 10.dp)
+            .width((LocalConfiguration.current.screenWidthDp * 0.133).dp)
             .noRippleClickable {
                 onTabSelected(tabType)
             },
