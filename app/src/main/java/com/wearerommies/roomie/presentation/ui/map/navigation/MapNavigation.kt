@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui.home
+package com.wearerommies.roomie.presentation.ui.map.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
@@ -6,17 +6,18 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
+import com.wearerommies.roomie.presentation.ui.map.MapRoute
 
-fun NavController.navigateHome(navOptions: NavOptions) {
+fun NavController.navigateMap(navOptions: NavOptions) {
     navigate(
-        route = MainTabRoute.Home,
+        route = MainTabRoute.Map,
         navOptions = navOptions
     )
 }
 
-fun NavGraphBuilder.homeNavGraph() {
-    composable<MainTabRoute.Home>{
-        HomeRoute(
+fun NavGraphBuilder.mapNavGraph() {
+    composable<MainTabRoute.Map> {
+        MapRoute(
             paddingValues = PaddingValues(),
             navigateUp = {}
         )

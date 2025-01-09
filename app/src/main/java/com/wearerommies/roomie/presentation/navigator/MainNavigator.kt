@@ -1,6 +1,5 @@
 package com.wearerommies.roomie.presentation.navigator
 
-import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
@@ -11,9 +10,9 @@ import androidx.navigation.navOptions
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.type.MainTabType
-import com.wearerommies.roomie.presentation.ui.home.navigateHome
-import com.wearerommies.roomie.presentation.ui.map.navigateMap
-import com.wearerommies.roomie.presentation.ui.mypage.navigateMy
+import com.wearerommies.roomie.presentation.ui.home.navigation.navigateHome
+import com.wearerommies.roomie.presentation.ui.map.navigation.navigateMap
+import com.wearerommies.roomie.presentation.ui.mypage.navigation.navigateMy
 
 class MainNavigator(
     val navController: NavHostController,
@@ -25,7 +24,7 @@ class MainNavigator(
     val startDestination = MainTabRoute.Home
 
     val currentTab: MainTabType?
-        @SuppressLint("RestrictedApi") @Composable get() = MainTabType.find { tab ->
+        @Composable get() = MainTabType.find { tab ->
             currentDestination?.route == tab::class.qualifiedName
         }
 

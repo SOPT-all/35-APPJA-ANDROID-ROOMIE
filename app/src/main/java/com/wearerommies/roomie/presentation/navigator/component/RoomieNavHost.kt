@@ -6,9 +6,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.wearerommies.roomie.presentation.navigator.MainNavigator
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
-import com.wearerommies.roomie.presentation.ui.home.homeNavGraph
-import com.wearerommies.roomie.presentation.ui.map.mapNavGraph
-import com.wearerommies.roomie.presentation.ui.mypage.myNavGraph
+import com.wearerommies.roomie.presentation.ui.home.navigation.homeNavGraph
+import com.wearerommies.roomie.presentation.ui.map.navigation.mapNavGraph
+import com.wearerommies.roomie.presentation.ui.mypage.navigation.myNavGraph
 
 @Composable
 fun RoomieNavHost(
