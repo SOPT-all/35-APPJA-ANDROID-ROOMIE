@@ -29,6 +29,8 @@ import coil.compose.AsyncImage
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.UiState
+import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
+import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun ReqresRoute(
@@ -49,6 +51,7 @@ fun ReqresRoute(
             .collect { sideEffect ->
                 when (sideEffect) {
                     is ReqresSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
+                    else -> {}
                 }
             }
     }
@@ -100,8 +103,7 @@ fun ReqresScreen(
                         modifier = Modifier
                             .noRippleClickable { navigateUp() },
                         text = "로딩 중...",
-                        textAlign = TextAlign.Center,
-                        fontSize = 30.sp
+                        style = RoomieTheme.typography.caption2Sb10
                     )
                 }
             }
@@ -146,9 +148,11 @@ fun ReqresScreen(
 @Preview
 @Composable
 fun ReqresScreenPreview() {
-    ReqresScreen(
-        paddingValues = PaddingValues(),
-        navigateUp = {},
-        state = UiState.Loading
-    )
+    RoomieAndroidTheme {
+        ReqresScreen(
+            paddingValues = PaddingValues(),
+            navigateUp = {},
+            state = UiState.Loading
+        )
+    }
 }
