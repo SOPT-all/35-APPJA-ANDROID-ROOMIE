@@ -28,9 +28,9 @@ fun MainScreen(
 
 @Composable
 private fun MainScreenContent(
-    modifier: Modifier = Modifier,
     navigator: MainNavigator,
     snackBarHostState: SnackbarHostState,
+    modifier: Modifier = Modifier
 ) {
     Scaffold(
         modifier = modifier,

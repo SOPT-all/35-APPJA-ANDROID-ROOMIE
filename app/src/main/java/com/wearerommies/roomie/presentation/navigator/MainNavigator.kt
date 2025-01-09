@@ -31,7 +31,7 @@ class MainNavigator(
 
     fun navigate(tab: MainTabType) {
         val navOptions = navOptions {
-            popUpTo(MainTabType.HOME.route) {
+            popUpTo<MainTabRoute.Home> {
                 saveState = true
             }
             launchSingleTop = true
@@ -45,13 +45,13 @@ class MainNavigator(
         }
     }
 
-    private fun popBackStack() {
-        navController.popBackStack()
+    private fun navigateUp() {
+        navController.navigateUp()
     }
 
     fun popBackStackIfNotHome() {
         if (!isSameCurrentDestination<MainTabRoute.Home>()) {
-            popBackStack()
+            navigateUp()
         }
     }
 
