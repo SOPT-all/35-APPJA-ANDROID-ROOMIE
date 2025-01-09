@@ -25,14 +25,15 @@ import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.type.MainTabType
-import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
-fun BottomNavigationBar(
+fun MainBottomBar(
     isVisible: Boolean,
-    bottomNaviBarItems: List<MainTabType>,
-    currentNavItemSelected: MainTabType?,
-    onBottomNaviBarItemSelected: (MainTabType) -> Unit,
+    tabs: ImmutableList<MainTabType>,
+    currentTabSelected: MainTabType?,
+    onTabSelected: (MainTabType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     AnimatedVisibility(visible = isVisible) {
@@ -42,13 +43,13 @@ fun BottomNavigationBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround,
         ) {
-            bottomNaviBarItems.forEach { navItem ->
-                BottomNavigationItem(
-                    isSelected = currentNavItemSelected == navItem,
-                    bottomNaviType = navItem,
-                    onBottomNaviBarItemSelected = onBottomNaviBarItemSelected,
-                    bottomNaviIcon = navItem.navIcon,
-                    bottomNaviTitle = navItem.navTitle,
+            tabs.forEach { navItem ->
+                MainBottomBarItem(
+                    isSelected = currentTabSelected == navItem,
+                    tabType = navItem,
+                    onTabSelected = onTabSelected,
+                    tabIcon = navItem.navIcon,
+                    tabTitle = navItem.navTitle,
                 )
             }
         }
@@ -56,20 +57,19 @@ fun BottomNavigationBar(
 }
 
 @Composable
-private fun BottomNavigationItem(
+private fun MainBottomBarItem(
     isSelected: Boolean,
-    bottomNaviType: MainTabType,
-    onBottomNaviBarItemSelected: (MainTabType) -> Unit,
-    @DrawableRes bottomNaviIcon: Int,
-    @StringRes bottomNaviTitle: Int,
+    tabType: MainTabType,
+    onTabSelected: (MainTabType) -> Unit,
+    @DrawableRes tabIcon: Int,
+    @StringRes tabTitle: Int,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier =
-        modifier
+        modifier = modifier
             .width((LocalConfiguration.current.screenWidthDp * 0.200).dp)
             .noRippleClickable {
-                onBottomNaviBarItemSelected(bottomNaviType)
+                onTabSelected(tabType)
             },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically)
@@ -77,10 +77,9 @@ private fun BottomNavigationItem(
         Icon(
             modifier = Modifier
                 .size(24.dp),
-            painter = painterResource(id = bottomNaviIcon),
+            painter = painterResource(id = tabIcon),
             contentDescription = stringResource(id = R.string.app_name),
-            tint =
-            if (isSelected) {
+            tint = if (isSelected) {
                 Color(0xFF626CF6)
             } else {
                 Color(0xFF4D4D4D)
@@ -88,9 +87,8 @@ private fun BottomNavigationItem(
         )
 
         Text(
-            text = stringResource(bottomNaviTitle),
-            color =
-            if (isSelected) {
+            text = stringResource(tabTitle),
+            color = if (isSelected) {
                 Color(0xFF626CF6)
             } else {
                 Color(0xFF4D4D4D)
@@ -101,15 +99,15 @@ private fun BottomNavigationItem(
 
 @Preview(showBackground = true)
 @Composable
-fun BottomNavigationBarPreview() {
-    BottomNavigationBar(
+fun MainBottomBarPreview() {
+    MainBottomBar(
         isVisible = true,
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
             .padding(vertical = 12.dp),
-        bottomNaviBarItems = MainTabType.entries.toImmutableList(),
-        currentNavItemSelected = MainTabType.HOME,
-        onBottomNaviBarItemSelected = {},
+        tabs = MainTabType.entries.toPersistentList(),
+        currentTabSelected = MainTabType.HOME,
+        onTabSelected = {},
     )
 }

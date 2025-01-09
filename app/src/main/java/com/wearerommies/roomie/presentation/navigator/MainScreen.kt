@@ -8,11 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.wearerommies.roomie.presentation.navigator.component.BottomNavigationBar
+import com.wearerommies.roomie.presentation.navigator.component.MainBottomBar
 import com.wearerommies.roomie.presentation.navigator.component.RoomieNavHost
 import com.wearerommies.roomie.presentation.type.MainTabType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
-import okhttp3.internal.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun MainScreen(
@@ -41,12 +41,12 @@ private fun MainScreenContent(
             )
         },
         bottomBar = {
-            BottomNavigationBar(
+            MainBottomBar(
                 modifier = Modifier.navigationBarsPadding(),
                 isVisible = navigator.showBottomBar(),
-                bottomNaviBarItems = MainTabType.entries.toImmutableList(),
-                currentNavItemSelected = navigator.currentTab,
-                onBottomNaviBarItemSelected = { navigator.navigate(it) }
+                tabs = MainTabType.entries.toPersistentList(),
+                currentTabSelected = navigator.currentTab,
+                onTabSelected = { navigator.navigate(it) }
             )
         },
         snackbarHost = { SnackbarHost(snackBarHostState) }
