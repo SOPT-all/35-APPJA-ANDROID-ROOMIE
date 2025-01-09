@@ -153,7 +153,7 @@ fun roomieTextStyle(
 )
 
 @Composable
-fun roomieTypography(): RoomieTypography {
+fun RoomieTypography(): RoomieTypography {
     return RoomieTypography(
         heading1B20 = roomieTextStyle(
             fontFamily = PretendardBold,

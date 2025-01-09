@@ -53,7 +53,7 @@ fun RoomieAndroidTheme(
     content: @Composable () -> Unit
 ) {
     val colors = roomieColors()
-    val typography = roomieTypography()
+    val typography = RoomieTypography()
 
     ProvideRoomieColorsAndTypography(colors, typography) {
         MaterialTheme(content = content)
