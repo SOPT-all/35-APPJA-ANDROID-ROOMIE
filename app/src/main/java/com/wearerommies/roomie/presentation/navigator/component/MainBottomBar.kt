@@ -4,12 +4,12 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.type.MainTabType
+import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 
@@ -39,17 +40,19 @@ fun MainBottomBar(
     AnimatedVisibility(visible = isVisible) {
         Row(
             modifier = modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .background(color = Color.White)
+                .border(width = 1.dp, color = RoomieTheme.colors.grayScale4),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround,
         ) {
-            tabs.forEach { navItem ->
+            tabs.forEach { tabItem ->
                 MainBottomBarItem(
-                    isSelected = currentTabSelected == navItem,
-                    tabType = navItem,
+                    isSelected = currentTabSelected == tabItem,
+                    tabType = tabItem,
                     onTabSelected = onTabSelected,
-                    tabIcon = navItem.navIcon,
-                    tabTitle = navItem.navTitle,
+                    tabIcon = tabItem.tabIcon,
+                    tabTitle = tabItem.tabTitle,
                 )
             }
         }
@@ -67,6 +70,7 @@ private fun MainBottomBarItem(
 ) {
     Column(
         modifier = modifier
+            .padding(vertical = 12.dp)
             .width((LocalConfiguration.current.screenWidthDp * 0.200).dp)
             .noRippleClickable {
                 onTabSelected(tabType)
@@ -75,23 +79,21 @@ private fun MainBottomBarItem(
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically)
     ) {
         Icon(
-            modifier = Modifier
-                .size(24.dp),
             painter = painterResource(id = tabIcon),
             contentDescription = stringResource(id = R.string.app_name),
             tint = if (isSelected) {
-                Color(0xFF626CF6)
+                RoomieTheme.colors.primary
             } else {
-                Color(0xFF4D4D4D)
+                RoomieTheme.colors.grayScale10
             },
         )
 
         Text(
             text = stringResource(tabTitle),
             color = if (isSelected) {
-                Color(0xFF626CF6)
+                RoomieTheme.colors.primary
             } else {
-                Color(0xFF4D4D4D)
+                RoomieTheme.colors.grayScale12
             },
         )
     }

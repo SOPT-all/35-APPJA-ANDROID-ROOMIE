@@ -8,23 +8,23 @@ import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 
 enum class MainTabType(
-    @DrawableRes val navIcon: Int,
-    @StringRes val navTitle: Int,
+    @DrawableRes val tabIcon: Int,
+    @StringRes val tabTitle: Int,
     val route: MainTabRoute,
 ) {
     HOME(
-        navIcon = R.drawable.ic_launcher_background,
-        navTitle = R.string.home,
+        tabIcon = R.drawable.ic_home_line_black_24px,
+        tabTitle = R.string.home,
         route = MainTabRoute.Home
     ),
     MAP(
-        navIcon = R.drawable.ic_launcher_background,
-        navTitle = R.string.map,
+        tabIcon = R.drawable.ic_map_line_black_24px,
+        tabTitle = R.string.map,
         route = MainTabRoute.Map
     ),
     MY(
-        navIcon = R.drawable.ic_launcher_background,
-        navTitle = R.string.mypage,
+        tabIcon = R.drawable.ic_user_line_black_24px,
+        tabTitle = R.string.mypage,
         route = MainTabRoute.My
     );
 
