@@ -22,5 +22,4 @@ fun NavGraphBuilder.mapNavGraph() {
             navigateUp = {}
         )
     }
-
 }

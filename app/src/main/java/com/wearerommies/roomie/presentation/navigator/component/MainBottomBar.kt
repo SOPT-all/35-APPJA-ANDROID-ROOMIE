@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.type.MainTabType
+import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
@@ -71,7 +72,7 @@ private fun MainBottomBarItem(
     Column(
         modifier = modifier
             .padding(vertical = 12.dp)
-            .width((LocalConfiguration.current.screenWidthDp * 0.200).dp)
+            .width((LocalConfiguration.current.screenWidthDp * 0.145).dp)
             .noRippleClickable {
                 onTabSelected(tabType)
             },
@@ -90,6 +91,7 @@ private fun MainBottomBarItem(
 
         Text(
             text = stringResource(tabTitle),
+            style = RoomieTheme.typography.caption2Sb10,
             color = if (isSelected) {
                 RoomieTheme.colors.primary
             } else {
@@ -102,14 +104,16 @@ private fun MainBottomBarItem(
 @Preview(showBackground = true)
 @Composable
 fun MainBottomBarPreview() {
-    MainBottomBar(
-        isVisible = true,
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White)
-            .padding(vertical = 12.dp),
-        tabs = MainTabType.entries.toPersistentList(),
-        currentTabSelected = MainTabType.HOME,
-        onTabSelected = {},
-    )
+    RoomieAndroidTheme {
+        MainBottomBar(
+            isVisible = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.White)
+                .padding(vertical = 12.dp),
+            tabs = MainTabType.entries.toPersistentList(),
+            currentTabSelected = MainTabType.HOME,
+            onTabSelected = {},
+        )
+    }
 }

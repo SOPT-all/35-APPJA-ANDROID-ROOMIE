@@ -29,6 +29,8 @@ import coil.compose.AsyncImage
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.UiState
+import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
+import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun MapRoute(
@@ -82,6 +84,7 @@ fun MapScreen(
                         modifier = Modifier
                             .noRippleClickable { navigateUp() },
                         text = "MAP",
+                        color = RoomieTheme.colors.primaryLight1,
                         textAlign = TextAlign.Center,
                         fontSize = 30.sp
                     )
@@ -126,9 +129,11 @@ fun MapScreen(
 @Preview
 @Composable
 fun MapScreenPreview() {
-    MapScreen(
-        paddingValues = PaddingValues(),
-        navigateUp = {},
-        state = UiState.Loading
-    )
+    RoomieAndroidTheme {
+        MapScreen(
+            paddingValues = PaddingValues(),
+            navigateUp = {},
+            state = UiState.Loading
+        )
+    }
 }

@@ -29,6 +29,8 @@ import coil.compose.AsyncImage
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.UiState
+import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
+import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun HomeRoute(
@@ -82,6 +84,7 @@ fun HomeScreen(
                         modifier = Modifier
                             .noRippleClickable { navigateUp() },
                         text = "HOME",
+                        color = RoomieTheme.colors.primary,
                         textAlign = TextAlign.Center,
                         fontSize = 30.sp
                     )
@@ -126,9 +129,11 @@ fun HomeScreen(
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(
-        paddingValues = PaddingValues(),
-        navigateUp = {},
-        state = UiState.Loading
-    )
+    RoomieAndroidTheme {
+        HomeScreen(
+            paddingValues = PaddingValues(),
+            navigateUp = {},
+            state = UiState.Loading
+        )
+    }
 }
