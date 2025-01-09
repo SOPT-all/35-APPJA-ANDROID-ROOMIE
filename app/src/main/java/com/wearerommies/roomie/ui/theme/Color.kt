@@ -47,6 +47,9 @@ val TransparentGray1210 = Color(0x1A1A1A1A)
 // Action
 val ActionError = Color(0xFFEA0000)
 
+// Gradient
+val GradientPrimary = Color(0xFF626CF6)
+
 @Stable
 class RoomieColors(
     primary: Color,
@@ -78,7 +81,8 @@ class RoomieColors(
     transparentGray140: Color,
     transparentGray160: Color,
     transparentGray1210: Color,
-    actionError: Color
+    actionError: Color,
+    gradientPrimary: Color
 ) {
     var primary: Color by mutableStateOf(primary)
         private set
@@ -140,6 +144,8 @@ class RoomieColors(
         private set
     var actionError: Color by mutableStateOf(actionError)
         private set
+    var gradientPrimary: Color by mutableStateOf(gradientPrimary)
+        private set
 
     fun copy(
         primary: Color = this.primary,
@@ -171,7 +177,8 @@ class RoomieColors(
         transparentGray140: Color = this.transparentGray140,
         transparentGray160: Color = this.transparentGray160,
         transparentGray1210: Color = this.transparentGray1210,
-        actionError: Color = this.actionError
+        actionError: Color = this.actionError,
+        gradientPrimary: Color = this.gradientPrimary
     ): RoomieColors = RoomieColors(
         primary,
         primaryLight1,
@@ -202,7 +209,8 @@ class RoomieColors(
         transparentGray140,
         transparentGray160,
         transparentGray1210,
-        actionError
+        actionError,
+        gradientPrimary
     )
 
     fun update(other: RoomieColors) {
@@ -236,6 +244,7 @@ class RoomieColors(
         transparentGray160 = other.transparentGray160
         transparentGray1210 = other.transparentGray1210
         actionError = other.actionError
+        gradientPrimary = other.gradientPrimary
     }
 }
 
@@ -269,7 +278,8 @@ fun roomieColors(
     transparentGray140: Color = TransparentGray140,
     transparentGray160: Color = TransparentGray160,
     transparentGray1210: Color = TransparentGray1210,
-    actionError: Color = ActionError
+    actionError: Color = ActionError,
+    gradientPrimary: Color = GradientPrimary
 ) = RoomieColors(
     primary,
     primaryLight1,
@@ -300,5 +310,6 @@ fun roomieColors(
     transparentGray140,
     transparentGray160,
     transparentGray1210,
-    actionError
+    actionError,
+    gradientPrimary
 )
