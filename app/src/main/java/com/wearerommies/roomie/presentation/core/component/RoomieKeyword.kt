@@ -72,10 +72,12 @@ fun RoomieKeyword(
 @Composable
 fun RoomieBorderKeyword(
     text: String,
-    textStyle: TextStyle,
-    borderColor: Color,
-    backgroundColor: Color,
     modifier: Modifier = Modifier,
+    textStyle: TextStyle = RoomieTheme.typography.caption2Sb10.copy(
+        color = RoomieTheme.colors.grayScale7
+    ),
+    borderColor: Color = RoomieTheme.colors.grayScale5,
+    backgroundColor: Color = RoomieTheme.colors.grayScale3,
     onClick: () -> Unit = {},
 ) {
     Box(
@@ -156,20 +158,10 @@ private fun RoomieKeywordPreview() {
             //도로명&지번 키워드
             RoomieBorderKeyword(
                 text = "도로명",
-                textStyle = RoomieTheme.typography.caption2Sb10.copy(
-                    color = RoomieTheme.colors.grayScale7
-                ),
-                borderColor = RoomieTheme.colors.grayScale5,
-                backgroundColor = RoomieTheme.colors.grayScale3,
             )
 
             RoomieBorderKeyword(
                 text = "지번",
-                textStyle = RoomieTheme.typography.caption2Sb10.copy(
-                    color = RoomieTheme.colors.grayScale7
-                ),
-                borderColor = RoomieTheme.colors.grayScale5,
-                backgroundColor = RoomieTheme.colors.grayScale3,
             )
         }
     }
