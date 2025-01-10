@@ -33,10 +33,10 @@ fun RoomieTextKeyword(
     Box(
         modifier = modifier
             .background(color = backgroundColor, shape = RoundedCornerShape(size = 4.dp))
-            .padding(horizontal = 8.dp, vertical = 4.dp)
             .noRippleClickable {
                 onClick()
-            },
+            }
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
@@ -56,10 +56,10 @@ fun RoomieKeyword(
     Box(
         modifier = modifier
             .background(color = backgroundColor, shape = RoundedCornerShape(size = 4.dp))
-            .padding(horizontal = 8.dp, vertical = 4.dp)
             .noRippleClickable {
                 onClick()
-            },
+            }
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         contentAlignment = Alignment.Center
     ) {
         content()
@@ -109,7 +109,8 @@ private fun RoomieKeywordPreview() {
                         )
                         Icon(
                             painter = painterResource(R.drawable.ic_middle_dot),
-                            contentDescription = "dot"
+                            contentDescription = "dot",
+                            tint = RoomieTheme.colors.primary
                         )
                         Text(
                             text = "n인실",
