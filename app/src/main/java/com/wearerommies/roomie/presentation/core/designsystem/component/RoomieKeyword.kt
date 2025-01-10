@@ -18,6 +18,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
@@ -27,11 +28,15 @@ fun RoomieTextKeyword(
     textStyle: TextStyle,
     backgroundColor: Color,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
 ) {
     Box(
         modifier = modifier
             .background(color = backgroundColor, shape = RoundedCornerShape(size = 4.dp))
-            .padding(horizontal = 8.dp, vertical = 4.dp),
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .noRippleClickable {
+                onClick()
+            },
         contentAlignment = Alignment.Center
     ) {
         Text(
@@ -46,11 +51,15 @@ fun RoomieKeyword(
     content: @Composable () -> Unit,
     backgroundColor: Color,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
 ) {
     Box(
         modifier = modifier
             .background(color = backgroundColor, shape = RoundedCornerShape(size = 4.dp))
-            .padding(horizontal = 8.dp, vertical = 4.dp),
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .noRippleClickable {
+                onClick()
+            },
         contentAlignment = Alignment.Center
     ) {
         content()
