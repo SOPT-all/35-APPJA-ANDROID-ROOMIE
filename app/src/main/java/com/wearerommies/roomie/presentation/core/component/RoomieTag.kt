@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.core.designsystem.component
+package com.wearerommies.roomie.presentation.core.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
