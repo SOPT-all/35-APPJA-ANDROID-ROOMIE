@@ -1,11 +1,13 @@
 package com.wearerommies.roomie.presentation.core.designsystem.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -13,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -63,6 +66,33 @@ fun RoomieKeyword(
         contentAlignment = Alignment.Center
     ) {
         content()
+    }
+}
+
+@Composable
+fun RoomieBorderKeyword(
+    text: String,
+    textStyle: TextStyle,
+    borderColor: Color,
+    backgroundColor: Color,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+) {
+    Box(
+        modifier = modifier
+            .width((LocalConfiguration.current.screenWidthDp * 0.106).dp)
+            .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(size = 4.dp))
+            .background(color = backgroundColor, shape = RoundedCornerShape(size = 4.dp))
+            .noRippleClickable {
+                onClick()
+            }
+            .padding(horizontal = 6.dp, vertical = 4.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = text,
+            style = textStyle
+        )
     }
 }
 
@@ -121,6 +151,25 @@ private fun RoomieKeywordPreview() {
                     }
                 },
                 backgroundColor = RoomieTheme.colors.primaryLight4
+            )
+
+            //도로명&지번 키워드
+            RoomieBorderKeyword(
+                text = "도로명",
+                textStyle = RoomieTheme.typography.caption2Sb10.copy(
+                    color = RoomieTheme.colors.grayScale7
+                ),
+                borderColor = RoomieTheme.colors.grayScale5,
+                backgroundColor = RoomieTheme.colors.grayScale3,
+            )
+
+            RoomieBorderKeyword(
+                text = "지번",
+                textStyle = RoomieTheme.typography.caption2Sb10.copy(
+                    color = RoomieTheme.colors.grayScale7
+                ),
+                borderColor = RoomieTheme.colors.grayScale5,
+                backgroundColor = RoomieTheme.colors.grayScale3,
             )
         }
     }
