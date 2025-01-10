@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
@@ -34,21 +35,18 @@ fun RoomieTextChip(
     backgroundColor: Color = RoomieTheme.colors.primaryLight4,
     onClick: () -> Unit = {},
 ) {
-    Box(
+    Text(
         modifier = modifier
             .background(color = backgroundColor, shape = RoundedCornerShape(size = 4.dp))
             .noRippleClickable {
                 onClick()
             }
             .padding(horizontal = 8.dp, vertical = 4.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = text,
-            style = textStyle,
-            color = textColor
-        )
-    }
+        text = text,
+        style = textStyle,
+        color = textColor,
+        textAlign = TextAlign.Center
+    )
 }
 
 @Composable
@@ -106,7 +104,7 @@ fun RoomieOutlinedChip(
     backgroundColor: Color = RoomieTheme.colors.grayScale3,
     onClick: () -> Unit = {},
 ) {
-    Box(
+    Text(
         modifier = modifier
             .width((LocalConfiguration.current.screenWidthDp * 0.106).dp)
             .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(size = 4.dp))
@@ -115,24 +113,21 @@ fun RoomieOutlinedChip(
                 onClick()
             }
             .padding(horizontal = 6.dp, vertical = 4.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = text,
-            style = textStyle,
-            color = textColor
-        )
-    }
+        text = text,
+        style = textStyle,
+        color = textColor,
+        textAlign = TextAlign.Center
+    )
 }
 
 @Preview
 @Composable
-private fun RoomieKeywordPreview() {
+private fun RoomieChipPreview() {
     RoomieAndroidTheme {
         Column(
             verticalArrangement = Arrangement.spacedBy(space = 4.dp)
         ) {
-            //map keyword
+            //map 칩
             RoomieTextChip(
                 text = "#차분한",
                 textStyle = RoomieTheme.typography.body4R12,
@@ -140,18 +135,18 @@ private fun RoomieKeywordPreview() {
                 backgroundColor = Color(0xFFF3F1F1)
             )
 
-            //detail keyword
+            //detail 칩
             RoomieTextChip(
                 text = "#차분한",
             )
 
-            //detail keyword
+            //detail 칩
             RoomieTextWithDotChip(
                 firstText = "성별",
                 secondText = "n인실",
             )
 
-            //도로명&지번 키워드
+            //도로명&지번 칩
             RoomieOutlinedChip(
                 text = "도로명",
             )
