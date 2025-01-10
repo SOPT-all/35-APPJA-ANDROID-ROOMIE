@@ -26,11 +26,12 @@ import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
-fun RoomieTextKeyword(
+fun RoomieTextChip(
     text: String,
-    textStyle: TextStyle,
-    backgroundColor: Color,
     modifier: Modifier = Modifier,
+    textStyle: TextStyle = RoomieTheme.typography.body3M14,
+    textColor: Color = RoomieTheme.colors.primary,
+    backgroundColor: Color = RoomieTheme.colors.primaryLight4,
     onClick: () -> Unit = {},
 ) {
     Box(
@@ -44,16 +45,20 @@ fun RoomieTextKeyword(
     ) {
         Text(
             text = text,
-            style = textStyle
+            style = textStyle,
+            color = textColor
         )
     }
 }
 
 @Composable
-fun RoomieKeyword(
-    content: @Composable () -> Unit,
-    backgroundColor: Color,
+fun RoomieTextWithDotChip(
+    firstText: String,
+    secondText: String,
     modifier: Modifier = Modifier,
+    textStyle: TextStyle = RoomieTheme.typography.body4R12,
+    contentColor: Color = RoomieTheme.colors.primary,
+    backgroundColor: Color = RoomieTheme.colors.primaryLight4,
     onClick: () -> Unit = {},
 ) {
     Box(
@@ -65,17 +70,38 @@ fun RoomieKeyword(
             .padding(horizontal = 8.dp, vertical = 4.dp),
         contentAlignment = Alignment.Center
     ) {
-        content()
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(
+                2.dp,
+                alignment = Alignment.CenterHorizontally
+            )
+        ) {
+            Text(
+                text = firstText,
+                style = textStyle,
+                color = contentColor
+            )
+            Icon(
+                painter = painterResource(R.drawable.ic_middle_dot),
+                contentDescription = "dot",
+                tint = contentColor
+            )
+            Text(
+                text = secondText,
+                style = textStyle,
+                color = contentColor
+            )
+        }
     }
 }
 
 @Composable
-fun RoomieBorderKeyword(
+fun RoomieOutlinedChip(
     text: String,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = RoomieTheme.typography.caption2Sb10.copy(
-        color = RoomieTheme.colors.grayScale7
-    ),
+    textStyle: TextStyle = RoomieTheme.typography.caption2Sb10,
+    textColor: Color = RoomieTheme.colors.grayScale7,
     borderColor: Color = RoomieTheme.colors.grayScale5,
     backgroundColor: Color = RoomieTheme.colors.grayScale3,
     onClick: () -> Unit = {},
@@ -93,7 +119,8 @@ fun RoomieBorderKeyword(
     ) {
         Text(
             text = text,
-            style = textStyle
+            style = textStyle,
+            color = textColor
         )
     }
 }
@@ -106,61 +133,30 @@ private fun RoomieKeywordPreview() {
             verticalArrangement = Arrangement.spacedBy(space = 4.dp)
         ) {
             //map keyword
-            RoomieTextKeyword(
+            RoomieTextChip(
                 text = "#차분한",
-                textStyle = RoomieTheme.typography.body4R12.copy(
-                    color = RoomieTheme.colors.grayScale9
-                ),
+                textStyle = RoomieTheme.typography.body4R12,
+                textColor = RoomieTheme.colors.grayScale9,
                 backgroundColor = Color(0xFFF3F1F1)
             )
 
             //detail keyword
-            RoomieTextKeyword(
+            RoomieTextChip(
                 text = "#차분한",
-                textStyle = RoomieTheme.typography.body3M14.copy(
-                    color = RoomieTheme.colors.primary
-                ),
-                backgroundColor = RoomieTheme.colors.primaryLight4
             )
 
             //detail keyword
-            RoomieKeyword(
-                content = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(
-                            2.dp,
-                            alignment = Alignment.CenterHorizontally
-                        )
-                    ) {
-                        Text(
-                            text = "성별",
-                            style = RoomieTheme.typography.body4R12.copy(
-                                color = RoomieTheme.colors.primary
-                            ),
-                        )
-                        Icon(
-                            painter = painterResource(R.drawable.ic_middle_dot),
-                            contentDescription = "dot",
-                            tint = RoomieTheme.colors.primary
-                        )
-                        Text(
-                            text = "n인실",
-                            style = RoomieTheme.typography.body4R12.copy(
-                                color = RoomieTheme.colors.primary
-                            ),
-                        )
-                    }
-                },
-                backgroundColor = RoomieTheme.colors.primaryLight4
+            RoomieTextWithDotChip(
+                firstText = "성별",
+                secondText = "n인실",
             )
 
             //도로명&지번 키워드
-            RoomieBorderKeyword(
+            RoomieOutlinedChip(
                 text = "도로명",
             )
 
-            RoomieBorderKeyword(
+            RoomieOutlinedChip(
                 text = "지번",
             )
         }

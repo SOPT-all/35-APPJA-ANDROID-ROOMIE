@@ -19,9 +19,10 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 @Composable
 fun RoomieTag(
     text: String,
-    textStyle: TextStyle,
-    backgroundColor: Color,
     modifier: Modifier = Modifier,
+    textStyle: TextStyle = RoomieTheme.typography.caption2Sb10,
+    textColor: Color = RoomieTheme.colors.primary,
+    backgroundColor: Color = RoomieTheme.colors.primaryLight4,
     onClick: () -> Unit = {},
 ) {
     Box(
@@ -35,7 +36,8 @@ fun RoomieTag(
     ) {
         Text(
             text = text,
-            style = textStyle
+            style = textStyle,
+            color = textColor
         )
     }
 }
@@ -45,11 +47,7 @@ fun RoomieTag(
 private fun RoomieTagPreview() {
     RoomieAndroidTheme {
         RoomieTag(
-            text = "입주 완료",
-            textStyle = RoomieTheme.typography.caption2Sb10.copy(
-                color = RoomieTheme.colors.primary
-            ),
-            backgroundColor = RoomieTheme.colors.primaryLight4
+            text = "입주 완료"
         )
     }
 }

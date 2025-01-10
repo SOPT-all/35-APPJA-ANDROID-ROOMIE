@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,8 +26,9 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun RoomieRoomAsset(
     @DrawableRes imageDrawableId: Int,
     text: String,
-    textStyle: TextStyle,
     modifier: Modifier = Modifier,
+    textStyle: TextStyle = RoomieTheme.typography.caption1R10,
+    textColor: Color = RoomieTheme.colors.grayScale9,
 ) {
     Column(
         modifier = modifier
@@ -36,7 +38,7 @@ fun RoomieRoomAsset(
     ) {
         Image(
             painter = painterResource(id = imageDrawableId),
-            contentDescription = "방 자산",
+            contentDescription = null,
             modifier = Modifier
                 .size(32.dp)
                 .clip(CircleShape)
@@ -45,7 +47,8 @@ fun RoomieRoomAsset(
 
         Text(
             text = text,
-            style = textStyle
+            style = textStyle,
+            color = textColor
         )
     }
 }
@@ -57,9 +60,6 @@ private fun RoomieRoomAssetPreview() {
         RoomieRoomAsset(
             imageDrawableId = R.drawable.ic_launcher_background,
             text = "책상",
-            textStyle = RoomieTheme.typography.caption1R10.copy(
-                color = RoomieTheme.colors.grayScale9
-            )
         )
     }
 }
