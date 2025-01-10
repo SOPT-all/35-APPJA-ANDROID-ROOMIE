@@ -68,7 +68,7 @@ fun RoomieKeyword(
 
 @Preview
 @Composable
-fun RoomieKeywordPreview() {
+private fun RoomieKeywordPreview() {
     RoomieAndroidTheme {
         Column(
             verticalArrangement = Arrangement.spacedBy(space = 4.dp)
