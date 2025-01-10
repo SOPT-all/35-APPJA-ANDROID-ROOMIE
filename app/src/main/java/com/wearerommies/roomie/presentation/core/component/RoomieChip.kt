@@ -112,6 +112,32 @@ fun RoomieOutlinedChip(
     )
 }
 
+@Composable
+fun RoomieHouseNameChip(
+    text: String,
+    modifier: Modifier = Modifier,
+    textStyle: TextStyle = RoomieTheme.typography.body6M12,
+    textColor: Color = RoomieTheme.colors.primary,
+    borderColor: Color = RoomieTheme.colors.primaryLight2,
+    backgroundColor: Color = RoomieTheme.colors.primaryLight5,
+    onClick: () -> Unit = {},
+) {
+    Text(
+        modifier = modifier
+            .width((LocalConfiguration.current.screenWidthDp * 0.275).dp)
+            .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(size = 4.dp))
+            .background(color = backgroundColor, shape = RoundedCornerShape(size = 4.dp))
+            .noRippleClickable {
+                onClick()
+            }
+            .padding(horizontal = 12.dp, vertical = 4.dp),
+        text = text,
+        style = textStyle,
+        color = textColor,
+        textAlign = TextAlign.Center
+    )
+}
+
 @Preview
 @Composable
 private fun RoomieChipPreview() {
@@ -145,6 +171,11 @@ private fun RoomieChipPreview() {
 
             RoomieOutlinedChip(
                 text = "지번",
+            )
+
+            //쉐어하우스 이름 칩
+            RoomieHouseNameChip(
+                text = "쉐어하우스 이름"
             )
         }
     }
