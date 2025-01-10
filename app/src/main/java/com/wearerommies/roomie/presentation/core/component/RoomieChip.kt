@@ -3,7 +3,6 @@ package com.wearerommies.roomie.presentation.core.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -59,38 +58,31 @@ fun RoomieTextWithDotChip(
     backgroundColor: Color = RoomieTheme.colors.primaryLight4,
     onClick: () -> Unit = {},
 ) {
-    Box(
+    Row(
         modifier = modifier
             .background(color = backgroundColor, shape = RoundedCornerShape(size = 4.dp))
             .noRippleClickable {
                 onClick()
             }
             .padding(horizontal = 8.dp, vertical = 4.dp),
-        contentAlignment = Alignment.Center
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(2.dp, alignment = Alignment.CenterHorizontally),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(
-                2.dp,
-                alignment = Alignment.CenterHorizontally
-            )
-        ) {
-            Text(
-                text = firstText,
-                style = textStyle,
-                color = contentColor
-            )
-            Icon(
-                painter = painterResource(R.drawable.ic_middle_dot),
-                contentDescription = "dot",
-                tint = contentColor
-            )
-            Text(
-                text = secondText,
-                style = textStyle,
-                color = contentColor
-            )
-        }
+        Text(
+            text = firstText,
+            style = textStyle,
+            color = contentColor
+        )
+        Icon(
+            painter = painterResource(R.drawable.ic_middle_dot),
+            contentDescription = "dot",
+            tint = contentColor
+        )
+        Text(
+            text = secondText,
+            style = textStyle,
+            color = contentColor
+        )
     }
 }
 
