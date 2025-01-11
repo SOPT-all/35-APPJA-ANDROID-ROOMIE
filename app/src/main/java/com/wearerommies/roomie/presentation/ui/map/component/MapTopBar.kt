@@ -37,6 +37,7 @@ fun MapTopBar(
     ) {
         SearchTextField(
             isReadOnly = true,
+            isShadowUsed = true,
             modifier = Modifier
                 .weight(1f)
                 .noRippleClickable { onClickSearchTextField() }
