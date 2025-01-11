@@ -14,12 +14,11 @@
 # TECH STACK 🖥️
 - Clean Architecture
 - Gradle Version Catalog
-- Custom Convention Plugins
 - MVI
 - Jetpack Compose
 - Material, Material 3
 - Hilt
-- Retrofit, OkHttp
+- Retrofit2, OkHttp
 - Coroutine & Flow
 - Timber, Coil, Lottie
 - Kakao Open API
