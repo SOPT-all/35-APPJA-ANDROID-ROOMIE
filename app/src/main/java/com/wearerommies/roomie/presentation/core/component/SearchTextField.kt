@@ -147,7 +147,7 @@ fun SearchTextFieldPreview() {
         ) {
             SearchTextField(isReadOnly = true)
 
-            SearchTextField(isReadOnly = false)
+            SearchTextField(textFieldValue = "123456789", isReadOnly = false)
         }
     }
 }
