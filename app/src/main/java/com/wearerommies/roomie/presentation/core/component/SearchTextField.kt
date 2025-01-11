@@ -84,7 +84,7 @@ fun SearchTextField(
                 }
             )
             .background(
-                color = RoomieTheme.colors.grayScale1,
+                color = if (!isReadOnly) RoomieTheme.colors.grayScale2 else RoomieTheme.colors.grayScale1,
                 shape = RoundedCornerShape(8.dp)
             )
             .padding(vertical = 5.dp)
