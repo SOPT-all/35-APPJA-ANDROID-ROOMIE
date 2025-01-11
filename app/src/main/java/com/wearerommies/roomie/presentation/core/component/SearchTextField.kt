@@ -38,11 +38,11 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun SearchTextField(
+    textFieldValue: String,
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     isShadowUsed: Boolean = false,
     isReadOnly: Boolean = false,
-    textFieldValue: String = "",
-    onValueChange: (String) -> Unit = {}
 ) {
     var textFieldState by remember { mutableStateOf(TextFieldValue(textFieldValue)) }
     var isFocused by remember { mutableStateOf(false) }
@@ -141,6 +141,9 @@ fun SearchTextField(
 @Composable
 fun SearchTextFieldPreview() {
     RoomieAndroidTheme {
-        SearchTextField()
+        SearchTextField(
+            textFieldValue = "",
+            onValueChange = {}
+        )
     }
 }
