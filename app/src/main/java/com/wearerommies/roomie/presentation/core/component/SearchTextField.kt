@@ -41,7 +41,6 @@ fun SearchTextField(
     textFieldValue: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    isShadowUsed: Boolean = false,
     isReadOnly: Boolean = false,
 ) {
     var textFieldState by remember { mutableStateOf(TextFieldValue(textFieldValue)) }
@@ -65,7 +64,7 @@ fun SearchTextField(
                 if (!isReadOnly) isFocused = focusState.isFocused
             }
             .then(
-                if (isShadowUsed) {
+                if (!isReadOnly) {
                     modifier.customShadow(shape = RoundedCornerShape(8.dp))
                 } else {
                     modifier
@@ -83,7 +82,7 @@ fun SearchTextField(
                 }
             )
             .background(
-                color = RoomieTheme.colors.grayScale1,
+                color = if (!isReadOnly) RoomieTheme.colors.grayScale2 else RoomieTheme.colors.grayScale1,
                 shape = RoundedCornerShape(8.dp)
             )
             .padding(vertical = 5.dp)
