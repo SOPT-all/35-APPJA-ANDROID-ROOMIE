@@ -2,7 +2,9 @@ package com.wearerommies.roomie.presentation.core.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,9 +40,8 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun SearchTextField(
+    isReadOnly: Boolean,
     modifier: Modifier = Modifier,
-    isShadowUsed: Boolean = false,
-    isReadOnly: Boolean = false,
     textFieldValue: String = "",
     onValueChange: (String) -> Unit = {}
 ) {
@@ -65,7 +66,7 @@ fun SearchTextField(
                 if (!isReadOnly) isFocused = focusState.isFocused
             }
             .then(
-                if (isShadowUsed) {
+                if (isReadOnly) {
                     modifier.customShadow(shape = RoundedCornerShape(8.dp))
                 } else {
                     modifier
@@ -141,6 +142,12 @@ fun SearchTextField(
 @Composable
 fun SearchTextFieldPreview() {
     RoomieAndroidTheme {
-        SearchTextField()
+        Column(
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            SearchTextField(isReadOnly = true)
+
+            SearchTextField(isReadOnly = false)
+        }
     }
 }
