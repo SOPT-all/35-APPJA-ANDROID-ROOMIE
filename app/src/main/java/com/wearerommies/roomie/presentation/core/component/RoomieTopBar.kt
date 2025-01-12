@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
@@ -29,7 +31,8 @@ fun RoomieTopBar(
     leadingIcon: @Composable () -> Unit = {},
     title: String? = null,
     titleStyle: TextStyle = RoomieTheme.typography.heading5Sb18,
-    titleColor: Color = RoomieTheme.colors.grayScale12
+    titleColor: Color = RoomieTheme.colors.grayScale12,
+    trailingIcon: @Composable () -> Unit = {},
 ) {
     Box(
         modifier = modifier
@@ -40,8 +43,7 @@ fun RoomieTopBar(
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(all = 10.dp),
+                .fillMaxSize(),
             contentAlignment = Alignment.CenterStart
         ) {
             leadingIcon()
@@ -57,6 +59,13 @@ fun RoomieTopBar(
                 color = titleColor
             )
         }
+
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            trailingIcon()
+        }
     }
 }
 
@@ -67,10 +76,12 @@ private fun RoomieTopBarPreview() {
         Column(
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
-            //백버튼, 타이틀 있음
+            //leading, title 있음
             RoomieTopBar(
                 leadingIcon = {
                     Icon(
+                        modifier = Modifier
+                            .padding(all = 10.dp),
                         painter = painterResource(R.drawable.ic_arrow_left_line_black_24px),
                         contentDescription = "백버튼"
                     )
@@ -78,10 +89,12 @@ private fun RoomieTopBarPreview() {
                 title = "제목"
             )
 
-            //백버튼 있음
+            //leading 있음
             RoomieTopBar(
                 leadingIcon = {
                     Icon(
+                        modifier = Modifier
+                            .padding(all = 10.dp),
                         painter = painterResource(R.drawable.ic_arrow_left_line_black_24px),
                         contentDescription = "백버튼"
                     )
@@ -93,15 +106,52 @@ private fun RoomieTopBarPreview() {
                 backgroundColor = Color.Transparent,
                 leadingIcon = {
                     Icon(
+                        modifier = Modifier
+                            .padding(all = 10.dp),
                         painter = painterResource(R.drawable.ic_arrow_left_line_black_24px),
                         contentDescription = "백버튼"
                     )
                 },
             )
 
-            //타이틀 있음
+            //title 있음
             RoomieTopBar(
                 title = "제목"
+            )
+
+            //leading, trailing 있음
+            RoomieTopBar(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 3.dp),
+                backgroundColor = Color.Transparent,
+                leadingIcon = {
+                    Row(
+                        modifier = Modifier
+                            .padding(all = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "연남동",
+                            style = RoomieTheme.typography.title2Sb16,
+                            color = RoomieTheme.colors.grayScale12
+                        )
+                        Icon(
+                            painter = painterResource(R.drawable.ic_arrow_down_line_black_16px),
+                            contentDescription = "백버튼"
+                        )
+                    }
+                },
+                trailingIcon = {
+                    Icon(
+                        modifier = Modifier
+                            .noRippleClickable {
+                            }
+                            .padding(all = 8.dp),
+                        painter = painterResource(R.drawable.ic_heart_line_black_24px),
+                        contentDescription = null
+                    )
+                }
             )
         }
     }
