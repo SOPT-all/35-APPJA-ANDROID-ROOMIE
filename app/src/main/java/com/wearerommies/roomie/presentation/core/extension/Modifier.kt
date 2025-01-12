@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -47,4 +48,8 @@ fun Modifier.roundedBackgroundWithBorder(
             color = borderColor,
             shape = RoundedCornerShape(cornerRadius)
         )
+}
+
+fun Modifier.showIf(condition: Boolean): Modifier {
+    return if (condition) this else Modifier.size(0.dp)
 }
