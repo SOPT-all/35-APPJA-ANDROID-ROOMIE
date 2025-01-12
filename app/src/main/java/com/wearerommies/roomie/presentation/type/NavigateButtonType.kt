@@ -17,7 +17,6 @@ import com.wearerommies.roomie.ui.theme.PrimaryLight2
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 enum class NavigateButtonType(
-    val title: String,
     val paddingValues: PaddingValues,
     val backgroundColor: Color = Color.White,
     val borderColor: Color = Color.Transparent,
@@ -26,7 +25,6 @@ enum class NavigateButtonType(
     val arrowIconColor: Color = GrayScale10,
 ) {
     HOME(
-        title = "지도에서 더 많은 쉐어하우스 찾기",
         paddingValues = PaddingValues(
             vertical = 12.dp,
             horizontal = 20.dp
@@ -44,7 +42,6 @@ enum class NavigateButtonType(
         },
     ),
     DETAIL(
-        title = "내부 이미지 둘러보기",
         borderColor = GrayScale5,
         borderWidth = 1.dp,
         paddingValues = PaddingValues(
@@ -61,7 +58,6 @@ enum class NavigateButtonType(
         },
     ),
     MY(
-        title = "찜 리스트",
         paddingValues = PaddingValues(
             vertical = 16.dp,
             horizontal = 20.dp,

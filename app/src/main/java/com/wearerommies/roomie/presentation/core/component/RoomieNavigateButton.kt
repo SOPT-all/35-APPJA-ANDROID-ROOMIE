@@ -27,6 +27,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 @Composable
 fun RoomieNavigateButton(
     type: NavigateButtonType,
+    text: String,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = RoomieTheme.typography.body2Sb14,
     textColor: Color = RoomieTheme.colors.grayScale12,
@@ -52,7 +53,7 @@ fun RoomieNavigateButton(
         type.leadingIcon()
 
         Text(
-            text = type.title,
+            text = text,
             style = textStyle,
             color = textColor,
         )
@@ -83,17 +84,20 @@ private fun RoomieNavigateButtonPreview() {
         ) {
             //내부 이미지 둘러보기
             RoomieNavigateButton(
-                type = NavigateButtonType.DETAIL
+                type = NavigateButtonType.DETAIL,
+                text = "내부 이미지 둘러보기"
             )
 
             //지도에서 쉐어하우스 버튼 찾기
             RoomieNavigateButton(
-                type = NavigateButtonType.HOME
+                type = NavigateButtonType.HOME,
+                text = "지도에서 더 많은 쉐어하우스 찾기"
             )
 
             //찜 리스트
             RoomieNavigateButton(
-                type = NavigateButtonType.MY
+                type = NavigateButtonType.MY,
+                text = "찜 리스트"
             )
         }
     }
