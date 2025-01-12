@@ -35,12 +35,13 @@ import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.extension.customShadow
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
+import com.wearerommies.roomie.presentation.type.SearchTextFieldType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
-fun SearchTextField(
-    isReadOnly: Boolean,
+fun RoomieSearchTextField(
+    type: SearchTextFieldType,
     modifier: Modifier = Modifier,
     textFieldValue: String = "",
     onValueChange: (String) -> Unit = {}
@@ -58,15 +59,15 @@ fun SearchTextField(
         },
         textStyle = RoomieTheme.typography.title1R16.copy(RoomieTheme.colors.grayScale12),
         singleLine = true,
-        readOnly = isReadOnly,
+        readOnly = type.isReadOnly,
         modifier = modifier
             .fillMaxWidth()
             .focusRequester(focusRequester)
             .onFocusChanged { focusState ->
-                if (!isReadOnly) isFocused = focusState.isFocused
+                if (!type.isReadOnly) isFocused = focusState.isFocused
             }
             .then(
-                if (isReadOnly) {
+                if (type.isShadowUsed) {
                     modifier.customShadow(shape = RoundedCornerShape(8.dp))
                 } else {
                     modifier
@@ -84,11 +85,15 @@ fun SearchTextField(
                 }
             )
             .background(
-                color = if (!isReadOnly) RoomieTheme.colors.grayScale2 else RoomieTheme.colors.grayScale1,
+                color = type.backgroundColor,
                 shape = RoundedCornerShape(8.dp)
             )
-            .padding(vertical = 5.dp)
-            .padding(start = 14.dp, end = 6.dp),
+            .padding(
+                top = type.paddingTop,
+                bottom = type.paddingBottom,
+                start = type.paddingStart,
+                end = type.paddingEnd
+            ),
         cursorBrush = SolidColor(RoomieTheme.colors.primary),
         decorationBox = { innerTextField ->
             Row(
@@ -140,14 +145,16 @@ fun SearchTextField(
 
 @Preview
 @Composable
-fun SearchTextFieldPreview() {
+fun RoomieSearchTextFieldPreview() {
     RoomieAndroidTheme {
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            SearchTextField(isReadOnly = true)
+            RoomieSearchTextField(type = SearchTextFieldType.MAP)
 
-            SearchTextField(textFieldValue = "123456789", isReadOnly = false)
+            RoomieSearchTextField(type = SearchTextFieldType.SEARCH)
+
+            RoomieSearchTextField(textFieldValue = "123456789", type = SearchTextFieldType.SEARCH)
         }
     }
 }
