@@ -23,14 +23,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
+import com.wearerommies.roomie.presentation.type.DatePickerFieldType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun RoomieDatePickerFieldWithTitle(
-    title: String,
-    titleColor: Color,
-    backgroundColor:Color,
+    viewType: DatePickerFieldType,
     dateValue: String,
     onClick: () -> Unit, // TODO: date picker 열기
     modifier: Modifier = Modifier
@@ -40,8 +39,8 @@ fun RoomieDatePickerFieldWithTitle(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = title,
-            color = titleColor,
+            text = stringResource(viewType.title),
+            color = viewType.titleColor,
             style = RoomieTheme.typography.body2Sb14
         )
 
@@ -49,7 +48,7 @@ fun RoomieDatePickerFieldWithTitle(
 
         RoomieDatePickerField(
             dateValue = dateValue,
-            backgroundColor=backgroundColor,
+            backgroundColor = viewType.backgroundColor,
             onClick = onClick
         )
     }
@@ -58,7 +57,7 @@ fun RoomieDatePickerFieldWithTitle(
 @Composable
 fun RoomieDatePickerField(
     dateValue: String,
-    backgroundColor:Color,
+    backgroundColor: Color,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -99,17 +98,13 @@ fun RoomieDatePickerFieldPreview() {
     RoomieAndroidTheme {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             RoomieDatePickerFieldWithTitle(
-                title = "제목",
-                titleColor = RoomieTheme.colors.grayScale9,
-                backgroundColor = RoomieTheme.colors.grayScale1,
+                viewType = DatePickerFieldType.FILTER,
                 dateValue = "",
                 onClick = {}
             )
 
             RoomieDatePickerFieldWithTitle(
-                title = "제목",
-                titleColor = RoomieTheme.colors.grayScale10,
-                backgroundColor = RoomieTheme.colors.grayScale2,
+                viewType = DatePickerFieldType.TOUR,
                 dateValue = "2025/01/02",
                 onClick = {}
             )
