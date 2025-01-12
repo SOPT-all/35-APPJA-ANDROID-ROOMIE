@@ -17,24 +17,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
+import com.wearerommies.roomie.presentation.type.NavigateButtonType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun RoomieNavigateButton(
-    text: String,
+    type: NavigateButtonType,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = Color.White,
-    borderColor: Color = Color.Transparent,
-    borderWidth: Dp = 0.dp,
-    leadingIcon: @Composable () -> Unit = {},
     textStyle: TextStyle = RoomieTheme.typography.body2Sb14,
     textColor: Color = RoomieTheme.colors.grayScale12,
-    arrowIconColor: Color = RoomieTheme.colors.grayScale10,
     onClick: () -> Unit = {},
 ) {
     Row(
@@ -42,20 +37,22 @@ fun RoomieNavigateButton(
             .fillMaxWidth()
             .roundedBackgroundWithBorder(
                 cornerRadius = 8.dp,
-                backgroundColor = backgroundColor,
-                borderColor = borderColor,
-                borderWidth = borderWidth
+                backgroundColor = type.backgroundColor,
+                borderColor = type.borderColor,
+                borderWidth = type.borderWidth
             )
             .clickable {
                 onClick()
             }
-            .padding(12.dp),
+            .padding(
+                type.paddingValues
+            ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        leadingIcon()
+        type.leadingIcon()
 
         Text(
-            text = text,
+            text = type.title,
             style = textStyle,
             color = textColor,
         )
@@ -68,7 +65,7 @@ fun RoomieNavigateButton(
         Icon(
             painter = painterResource(R.drawable.ic_arrow_right_line_black_24px),
             contentDescription = "이동",
-            tint = arrowIconColor
+            tint = type.arrowIconColor
         )
     }
 
@@ -79,42 +76,24 @@ fun RoomieNavigateButton(
 private fun RoomieNavigateButtonPreview() {
     RoomieAndroidTheme {
         Column(
-            modifier = Modifier.background(color = RoomieTheme.colors.primaryLight4),
+            modifier = Modifier
+                .background(color = RoomieTheme.colors.primaryLight4)
+                .padding(vertical = 10.dp),
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             //내부 이미지 둘러보기
             RoomieNavigateButton(
-                borderColor = RoomieTheme.colors.grayScale5,
-                borderWidth = 1.dp,
-                leadingIcon = {
-                    Icon(
-                        modifier = Modifier
-                            .padding(3.dp)
-                            .padding(end = 8.dp),
-                        painter = painterResource(R.drawable.ic_image_24px),
-                        contentDescription = null,
-                        tint = RoomieTheme.colors.grayScale6
-                    )
-                },
-                text = "내부 이미지 둘러보기"
+                type = NavigateButtonType.DETAIL
             )
 
             //지도에서 쉐어하우스 버튼 찾기
             RoomieNavigateButton(
-                borderColor = RoomieTheme.colors.primaryLight2,
-                borderWidth = 1.dp,
-                leadingIcon = {
-                    Icon(
-                        modifier = Modifier
-                            .padding(start = 8.dp, end = 4.dp),
-                        painter = painterResource(R.drawable.ic_map_line_black_16px),
-                        contentDescription = null,
-                        tint = RoomieTheme.colors.grayScale10
-                    )
-                },
-                text = "지도에서 더 많은 쉐어하우스 찾기",
-                modifier = Modifier
-                    .padding(end = 8.dp)
+                type = NavigateButtonType.HOME
+            )
+
+            //찜 리스트
+            RoomieNavigateButton(
+                type = NavigateButtonType.MY
             )
         }
     }
