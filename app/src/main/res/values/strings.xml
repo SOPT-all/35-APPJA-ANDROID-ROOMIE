@@ -3,4 +3,7 @@
     <string name="home">홈</string>
     <string name="map">지도</string>
     <string name="mypage">마이페이지</string>
+
+    // common
+    <string name="date_picker_place_holder">2025/01/01</string>
 </resources>
