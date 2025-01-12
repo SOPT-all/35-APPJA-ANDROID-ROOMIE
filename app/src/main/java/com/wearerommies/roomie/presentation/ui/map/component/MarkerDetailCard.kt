@@ -1,6 +1,7 @@
 package com.wearerommies.roomie.presentation.ui.map.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -51,8 +52,8 @@ fun MarkerDetailCard(
             .customShadow(shape = RoundedCornerShape(8.dp))
             .clip(RoundedCornerShape(8.dp))
             .background(RoomieTheme.colors.grayScale1)
+            .clickable { onClick() }
             .padding(top = 8.dp, bottom = 16.dp, start = 16.dp, end = 8.dp)
-            .noRippleClickable { onClick() }
     ) {
         Column(
             modifier = Modifier.weight(1f),
