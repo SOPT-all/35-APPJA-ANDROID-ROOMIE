@@ -19,9 +19,10 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
-import com.wearerommies.roomie.presentation.core.component.SearchTextField
+import com.wearerommies.roomie.presentation.core.component.RoomieSearchTextField
 import com.wearerommies.roomie.presentation.core.extension.customShadow
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
+import com.wearerommies.roomie.presentation.type.SearchTextFieldType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
@@ -35,8 +36,8 @@ fun MapTopBar(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        SearchTextField(
-            isReadOnly = true,
+        RoomieSearchTextField(
+            type = SearchTextFieldType.MAP,
             modifier = Modifier
                 .weight(1f)
                 .noRippleClickable { onClickSearchTextField() }
