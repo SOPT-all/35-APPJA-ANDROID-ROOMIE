@@ -41,7 +41,8 @@ fun RoomieDatePickerFieldWithTitle(
     ) {
         Text(
             text = title,
-            color = titleColor
+            color = titleColor,
+            style = RoomieTheme.typography.body2Sb14
         )
 
         Spacer(modifier = Modifier.height(12.dp))
