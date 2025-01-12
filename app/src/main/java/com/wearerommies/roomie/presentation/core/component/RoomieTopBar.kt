@@ -74,6 +74,8 @@ fun RoomieTopBar(
 private fun RoomieTopBarPreview() {
     RoomieAndroidTheme {
         Column(
+            modifier = Modifier
+                .background(color = RoomieTheme.colors.primaryLight3),
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             //leading, title 있음

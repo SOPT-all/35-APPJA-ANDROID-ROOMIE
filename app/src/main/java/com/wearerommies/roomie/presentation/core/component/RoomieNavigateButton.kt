@@ -65,7 +65,7 @@ fun RoomieNavigateButton(
 
         Icon(
             painter = painterResource(R.drawable.ic_arrow_right_line_black_24px),
-            contentDescription = "이동",
+            contentDescription = null,
             tint = type.arrowIconColor
         )
     }

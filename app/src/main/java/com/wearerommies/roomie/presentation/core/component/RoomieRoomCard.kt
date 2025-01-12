@@ -39,6 +39,7 @@ fun RoomieRoomCard(
     roomCardEntity: RoomCardEntity,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
+    onLikeClick: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
@@ -78,6 +79,7 @@ fun RoomieRoomCard(
                 Icon(
                     modifier = Modifier
                         .noRippleClickable {
+                            onLikeClick()
                         },
                     painter = if (roomCardEntity.isPinned)
                         painterResource(R.drawable.ic_heart_filled_white_24px) else painterResource(
