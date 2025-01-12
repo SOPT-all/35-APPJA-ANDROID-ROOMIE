@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
+import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
@@ -62,14 +63,11 @@ fun SearchTextField(
             .onFocusChanged { focusState ->
                 isFocused = focusState.isFocused
             }
-            .border(
-                width = 1.dp,
-                shape = RoundedCornerShape(8.dp),
-                color = if (isFocused) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale5
-            )
-            .background(
-                color = RoomieTheme.colors.grayScale2,
-                shape = RoundedCornerShape(8.dp)
+            .roundedBackgroundWithBorder(
+                cornerRadius = 8.dp,
+                backgroundColor = RoomieTheme.colors.grayScale2,
+                borderColor = if (isFocused) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale5,
+                borderWidth =1.dp
             )
             .padding(vertical = 5.dp)
             .padding(start = 15.dp, end = 8.dp),
