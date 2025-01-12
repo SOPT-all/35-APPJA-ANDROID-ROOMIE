@@ -1,7 +1,5 @@
 package com.wearerommies.roomie.presentation.core.component
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
+import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
 import com.wearerommies.roomie.presentation.type.DatePickerFieldType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
@@ -65,14 +63,11 @@ fun RoomieDatePickerField(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .border(
-                width = 1.dp,
-                shape = RoundedCornerShape(8.dp),
-                color = RoomieTheme.colors.grayScale5
-            )
-            .background(
-                color = backgroundColor,
-                shape = RoundedCornerShape(8.dp)
+            .roundedBackgroundWithBorder(
+                cornerRadius = 8.dp,
+                backgroundColor = backgroundColor,
+                borderColor = RoomieTheme.colors.grayScale5,
+                borderWidth = 1.dp
             )
             .padding(horizontal = 16.dp, vertical = 14.dp)
     ) {
