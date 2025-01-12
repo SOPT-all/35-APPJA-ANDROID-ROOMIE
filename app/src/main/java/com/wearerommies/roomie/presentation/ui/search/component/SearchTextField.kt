@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.core.component
+package com.wearerommies.roomie.presentation.ui.search.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -33,18 +33,15 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
-import com.wearerommies.roomie.presentation.core.extension.customShadow
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
-import com.wearerommies.roomie.presentation.type.SearchTextFieldType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
-fun RoomieSearchTextField(
-    type: SearchTextFieldType,
+fun SearchTextField(
+    textFieldValue: String,
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    textFieldValue: String = "",
-    onValueChange: (String) -> Unit = {}
 ) {
     var textFieldState by remember { mutableStateOf(TextFieldValue(textFieldValue)) }
     var isFocused by remember { mutableStateOf(false) }
@@ -59,41 +56,23 @@ fun RoomieSearchTextField(
         },
         textStyle = RoomieTheme.typography.title1R16.copy(RoomieTheme.colors.grayScale12),
         singleLine = true,
-        readOnly = type.isReadOnly,
         modifier = modifier
             .fillMaxWidth()
             .focusRequester(focusRequester)
             .onFocusChanged { focusState ->
-                if (!type.isReadOnly) isFocused = focusState.isFocused
+                isFocused = focusState.isFocused
             }
-            .then(
-                if (type.isShadowUsed) {
-                    modifier.customShadow(shape = RoundedCornerShape(8.dp))
-                } else {
-                    modifier
-                }
-            )
-            .then(
-                if (isFocused) {
-                    modifier.border(
-                        width = 1.dp,
-                        shape = RoundedCornerShape(8.dp),
-                        color = RoomieTheme.colors.primary
-                    )
-                } else {
-                    modifier
-                }
+            .border(
+                width = 1.dp,
+                shape = RoundedCornerShape(8.dp),
+                color = if (isFocused) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale5
             )
             .background(
-                color = type.backgroundColor,
+                color = RoomieTheme.colors.grayScale2,
                 shape = RoundedCornerShape(8.dp)
             )
-            .padding(
-                top = type.paddingTop,
-                bottom = type.paddingBottom,
-                start = type.paddingStart,
-                end = type.paddingEnd
-            ),
+            .padding(vertical = 5.dp)
+            .padding(start = 15.dp, end = 8.dp),
         cursorBrush = SolidColor(RoomieTheme.colors.primary),
         decorationBox = { innerTextField ->
             Row(
@@ -150,11 +129,15 @@ fun RoomieSearchTextFieldPreview() {
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            RoomieSearchTextField(type = SearchTextFieldType.MAP)
+            SearchTextField(
+                textFieldValue = "",
+                onValueChange = {}
+            )
 
-            RoomieSearchTextField(type = SearchTextFieldType.SEARCH)
-
-            RoomieSearchTextField(textFieldValue = "123456789", type = SearchTextFieldType.SEARCH)
+            SearchTextField(
+                textFieldValue = "연남동",
+                onValueChange = {}
+            )
         }
     }
 }
