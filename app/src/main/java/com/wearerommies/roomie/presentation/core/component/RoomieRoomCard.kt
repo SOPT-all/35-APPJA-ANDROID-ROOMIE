@@ -56,8 +56,7 @@ fun RoomieRoomCard(
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(140.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(color = RoomieTheme.colors.grayScale5),
+                    .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop
             )
 
