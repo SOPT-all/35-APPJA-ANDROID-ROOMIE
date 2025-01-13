@@ -33,8 +33,7 @@ fun RoomieButton(
     enabledColor: Color = Color.Transparent,
     pressedColor: Color = Color.Transparent,
     borderColor: Color = Color.Transparent,
-    borderWidth: Dp = 0.dp,
-    horizontalPadding: Dp = 0.dp
+    borderWidth: Dp = 0.dp
 ) {
     Text(
         text = text,
@@ -59,7 +58,7 @@ fun RoomieButton(
                 borderColor = borderColor,
                 borderWidth = borderWidth
             )
-            .padding(vertical = 18.dp, horizontal = horizontalPadding)
+            .padding(vertical = 18.dp)
     )
 }
 
@@ -110,10 +109,10 @@ fun RoomieButtonPreview() {
                     textColor = RoomieTheme.colors.grayScale12,
                     onClick = {},
                     modifier = Modifier
-                        .padding(start = 20.dp),
+                        .padding(start = 20.dp)
+                        .weight(0.3093F),
                     borderColor = RoomieTheme.colors.grayScale5,
-                    borderWidth = 1.dp,
-                    horizontalPadding = 37.dp
+                    borderWidth = 1.dp
                 )
                 RoomieButton(
                     text = "적용하기",
@@ -122,10 +121,9 @@ fun RoomieButtonPreview() {
                     onClick = {},
                     modifier = Modifier
                         .padding(end = 20.dp)
-                        .fillMaxWidth(),
+                        .weight(0.552F),
                     pressedColor = RoomieTheme.colors.primaryLight1,
-                    isPressed = true,
-                    horizontalPadding = 76.dp
+                    isPressed = true
                 )
             }
 
@@ -136,10 +134,10 @@ fun RoomieButtonPreview() {
                     textColor = RoomieTheme.colors.grayScale8,
                     onClick = {},
                     modifier = Modifier
-                        .padding(start = 20.dp),
+                        .padding(start = 20.dp)
+                        .weight(0.4613F),
                     borderColor = RoomieTheme.colors.grayScale6,
-                    borderWidth = 1.dp,
-                    horizontalPadding = 34.dp
+                    borderWidth = 1.dp
                 )
                 RoomieButton(
                     text = "완료하기",
@@ -147,8 +145,8 @@ fun RoomieButtonPreview() {
                     textColor = RoomieTheme.colors.grayScale1,
                     onClick = {},
                     modifier = Modifier
-                        .padding(end = 20.dp),
-                    horizontalPadding = 44.5.dp,
+                        .padding(end = 20.dp)
+                        .weight(0.4F),
                     isPressed = true,
                     pressedColor = RoomieTheme.colors.primaryLight1
                 )
