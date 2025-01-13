@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -20,6 +21,20 @@ fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
         indication = null,
         interactionSource = remember { MutableInteractionSource() }
     ) { onClick() }
+}
+
+fun Modifier.roomieButtonClickable(
+    onClick: () -> Unit,
+    pressedColor: Color,
+    isPressed: Boolean = false,
+): Modifier = composed {
+    this
+        .clickable(
+            indication = if(isPressed) ripple(color = pressedColor) else null,
+            interactionSource = remember { MutableInteractionSource() }
+        ) {
+            onClick()
+        }
 }
 
 fun Modifier.topBorder(
@@ -42,7 +57,7 @@ fun Modifier.roundedBackgroundWithBorder(
     borderWidth: Dp = 0.dp,
 ): Modifier {
     return this
-        .background(backgroundColor, shape = RoundedCornerShape(cornerRadius))
+        .background(backgroundColor, shape = RoundedCornerShape(size = cornerRadius))
         .border(
             width = borderWidth,
             color = borderColor,
