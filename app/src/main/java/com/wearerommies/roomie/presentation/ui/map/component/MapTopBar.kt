@@ -66,7 +66,7 @@ fun FilterButton(
     Icon(
         imageVector = ImageVector.vectorResource(R.drawable.ic_map_fillter_20px),
         tint = Color.Unspecified,
-        contentDescription = stringResource(R.string.navigate_to_filter),
+        contentDescription = stringResource(R.string.navigate_button),
         modifier = modifier
             .customShadow(shape = RoundedCornerShape(8.dp))
             .clip(RoundedCornerShape(8.dp))
