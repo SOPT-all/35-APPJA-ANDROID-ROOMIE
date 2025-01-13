@@ -79,11 +79,10 @@ fun RommieTextField(
                 .roundedBackgroundWithBorder(
                     cornerRadius = 8.dp,
                     backgroundColor = RoomieTheme.colors.grayScale2,
-                    borderColor =
-                    when {
-                        isFocused -> RoomieTheme.colors.primary
+                    borderColor = when {
                         !isValidate -> RoomieTheme.colors.actionError
-                        else -> RoomieTheme.colors.grayScale5
+                        isFocused -> RoomieTheme.colors.primary
+                        else -> RoomieTheme.colors.grayScale5         // 기본값
                     },
                     borderWidth = 1.dp
                 )
