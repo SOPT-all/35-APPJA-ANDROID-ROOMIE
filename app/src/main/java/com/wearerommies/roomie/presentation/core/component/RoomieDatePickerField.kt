@@ -105,7 +105,7 @@ fun RoomieDatePickerFieldPreview() {
             )
 
             RoomieDatePickerFieldWithTitle(
-                viewType = DatePickerFieldType.BIRTHDAY,
+                viewType = DatePickerFieldType.BIRTHDATE,
                 dateValue = "2025/01/02",
                 onClick = {}
             )

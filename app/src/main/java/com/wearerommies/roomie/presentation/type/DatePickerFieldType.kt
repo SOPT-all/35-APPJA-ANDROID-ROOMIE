@@ -22,5 +22,10 @@ enum class DatePickerFieldType(
         title = R.string.desired_move_in_date,
         titleColor = GrayScale10,
         backgroundColor = GrayScale2
+    ),
+    BIRTHDATE(
+        title = R.string.desired_move_in_date,
+        titleColor = GrayScale10,
+        backgroundColor = GrayScale2
     )
 }
