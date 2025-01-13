@@ -70,6 +70,7 @@ fun RoomieDatePickerField(
                 borderWidth = 1.dp
             )
             .padding(horizontal = 16.dp, vertical = 14.dp)
+            .noRippleClickable { onClick() }
     ) {
         Text(
             text = dateValue.ifEmpty { stringResource(R.string.date_picker_place_holder) },
@@ -81,8 +82,7 @@ fun RoomieDatePickerField(
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_calender_24px),
             tint = Color.Unspecified,
-            contentDescription = null,
-            modifier = Modifier.noRippleClickable { onClick() }
+            contentDescription = null
         )
     }
 }
@@ -100,6 +100,12 @@ fun RoomieDatePickerFieldPreview() {
 
             RoomieDatePickerFieldWithTitle(
                 viewType = DatePickerFieldType.TOUR,
+                dateValue = "2025/01/02",
+                onClick = {}
+            )
+
+            RoomieDatePickerFieldWithTitle(
+                viewType = DatePickerFieldType.BIRTHDAY,
                 dateValue = "2025/01/02",
                 onClick = {}
             )
