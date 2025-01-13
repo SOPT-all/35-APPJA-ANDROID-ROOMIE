@@ -1,6 +1,5 @@
 package com.wearerommies.roomie.presentation.core.component
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -43,6 +41,7 @@ fun RommieTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     textAlign: TextAlign = TextAlign.Start,
     placeHolder: String = "",
+    isValidate: Boolean = true,
     content: @Composable () -> Unit = {}
 ) {
     var textFieldState by remember { mutableStateOf(TextFieldValue(textFieldValue)) }
@@ -72,7 +71,12 @@ fun RommieTextField(
             .roundedBackgroundWithBorder(
                 cornerRadius = 8.dp,
                 backgroundColor = RoomieTheme.colors.grayScale2,
-                borderColor = if (isFocused) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale5,
+                borderColor =
+                when {
+                    isFocused -> RoomieTheme.colors.primary
+                    !isValidate -> RoomieTheme.colors.actionError
+                    else -> RoomieTheme.colors.grayScale5
+                },
                 borderWidth = 1.dp
             )
             .padding(paddingValues),
@@ -82,7 +86,10 @@ fun RommieTextField(
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Box(modifier = Modifier.weight(1f)) {
+                Box(
+                    modifier = Modifier.weight(1f),
+                    contentAlignment = if (textAlign == TextAlign.End) Alignment.CenterEnd else Alignment.TopStart
+                ) {
                     innerTextField()
 
                     if (textFieldState.text.isEmpty()) {
@@ -149,6 +156,13 @@ fun RoomieTextFieldPreview() {
                 paddingValues = PaddingValues(16.dp),
                 textFieldValue = "연남동",
                 onValueChange = {}
+            )
+
+            RommieTextField(
+                paddingValues = PaddingValues(16.dp),
+                textFieldValue = "연남동",
+                onValueChange = {},
+                isValidate = false
             )
         }
     }
