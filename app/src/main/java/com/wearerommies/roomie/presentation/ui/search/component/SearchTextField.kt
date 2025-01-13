@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +28,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,6 +42,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun SearchTextField(
     textFieldValue: String,
     onValueChange: (String) -> Unit,
+    onClick: () -> Unit, // TODO: 검색 연결
     modifier: Modifier = Modifier,
 ) {
     var textFieldState by remember { mutableStateOf(TextFieldValue(textFieldValue)) }
@@ -69,6 +73,15 @@ fun SearchTextField(
             .padding(vertical = 5.dp)
             .padding(start = 15.dp, end = 8.dp),
         cursorBrush = SolidColor(RoomieTheme.colors.primary),
+        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                if (textFieldState.text.isNotEmpty()) {
+                    onClick()
+                    isTrailingIconClicked = true
+                }
+            }
+        ),
         decorationBox = { innerTextField ->
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -108,7 +121,10 @@ fun SearchTextField(
                             .padding(8.dp)
                             .noRippleClickable {
                                 if (textFieldState.text.isNotEmpty())
+                                {
+                                    onClick()
                                     isTrailingIconClicked = true
+                                }
                             }
                     )
                 }
@@ -126,11 +142,13 @@ fun RoomieSearchTextFieldPreview() {
         ) {
             SearchTextField(
                 textFieldValue = "",
+                onClick = {},
                 onValueChange = {}
             )
 
             SearchTextField(
                 textFieldValue = "연남동",
+                onClick = {},
                 onValueChange = {}
             )
         }
