@@ -43,6 +43,7 @@ val TransparentGray1250 = Color(0x80000000)
 val TransparentGray140 = Color(0x4DFFFFFF)
 val TransparentGray160 = Color(0x99FFFFFF)
 val TransparentGray1210 = Color(0x1A1A1A1A)
+val TransparentGray1180 = Color(0xCC323232)
 
 // Action
 val ActionError = Color(0xFFEA0000)
@@ -81,6 +82,7 @@ class RoomieColors(
     transparentGray140: Color,
     transparentGray160: Color,
     transparentGray1210: Color,
+    transparentGray1180: Color,
     actionError: Color,
     gradientPrimary: Color
 ) {
@@ -142,6 +144,8 @@ class RoomieColors(
         private set
     var transparentGray1210: Color by mutableStateOf(transparentGray1210)
         private set
+    var transparentGray1180: Color by mutableStateOf(transparentGray1180)
+        private set
     var actionError: Color by mutableStateOf(actionError)
         private set
     var gradientPrimary: Color by mutableStateOf(gradientPrimary)
@@ -177,6 +181,7 @@ class RoomieColors(
         transparentGray140: Color = this.transparentGray140,
         transparentGray160: Color = this.transparentGray160,
         transparentGray1210: Color = this.transparentGray1210,
+        transparentGray1180: Color = this.transparentGray1180,
         actionError: Color = this.actionError,
         gradientPrimary: Color = this.gradientPrimary
     ): RoomieColors = RoomieColors(
@@ -209,6 +214,7 @@ class RoomieColors(
         transparentGray140,
         transparentGray160,
         transparentGray1210,
+        transparentGray1180,
         actionError,
         gradientPrimary
     )
@@ -278,6 +284,7 @@ fun roomieColors(
     transparentGray140: Color = TransparentGray140,
     transparentGray160: Color = TransparentGray160,
     transparentGray1210: Color = TransparentGray1210,
+    transparentGray1180: Color = TransparentGray1180,
     actionError: Color = ActionError,
     gradientPrimary: Color = GradientPrimary
 ) = RoomieColors(
@@ -310,6 +317,7 @@ fun roomieColors(
     transparentGray140,
     transparentGray160,
     transparentGray1210,
+    transparentGray1180,
     actionError,
     gradientPrimary
 )
