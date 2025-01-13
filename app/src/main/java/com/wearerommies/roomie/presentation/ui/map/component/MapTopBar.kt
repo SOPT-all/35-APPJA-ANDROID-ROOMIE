@@ -42,7 +42,7 @@ fun MapTopBar(
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_search_24px),
                     tint = Color.Unspecified,
-                    contentDescription = null,
+                    contentDescription = stringResource(R.string.search_button),
                     modifier = Modifier
                         .padding(8.dp)
                 )

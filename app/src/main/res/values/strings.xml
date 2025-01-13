@@ -13,6 +13,9 @@
     <string name="navigate_to_filter">navigate to filter</string>
     <string name="search_textfield_placeholder">원하는 장소를 찾아보세요</string>
 
+    //
+    <string name="search_button">search button</string>
+
     // common
     <string name="slash">/</string>
     <string name="navigate_to_house_detail">navigate to house detail</string>
