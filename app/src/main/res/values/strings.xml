@@ -6,6 +6,7 @@
 
     // filter
     <string name="desired_move_in_date">희망 입주날짜</string>
+    <string name="birth_date">생년월일</string>
 
     // common
     <string name="date_picker_place_holder">2025/01/01</string>
