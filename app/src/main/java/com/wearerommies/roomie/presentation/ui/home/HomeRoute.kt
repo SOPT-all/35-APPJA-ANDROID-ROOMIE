@@ -13,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -26,6 +25,8 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import coil.compose.AsyncImage
+import com.wearerommies.roomie.domain.entity.RoomCardEntity
+import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.UiState
@@ -72,7 +73,7 @@ fun HomeScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(RoomieTheme.colors.primaryLight3)
             .padding(paddingValues),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -80,13 +81,20 @@ fun HomeScreen(
         when (state) {
             is UiState.Loading -> {
                 item {
-                    Text(
-                        modifier = Modifier
-                            .noRippleClickable { navigateUp() },
-                        text = "HOME",
-                        color = RoomieTheme.colors.primary,
-                        textAlign = TextAlign.Center,
-                        fontSize = 30.sp
+                    RoomieRoomCard(
+                        roomCardEntity = RoomCardEntity(
+                            houseId = 1,
+                            monthlyRent = "30~50",
+                            deposit = "200~300",
+                            occupancyType = "2인실",
+                            location = "서대문구 연희동",
+                            genderPolicy = "여성전용",
+                            locationDescription = "자이아파트",
+                            isPinned = false,
+                            moodTag = "#차분한",
+                            contract_term = 6,
+                            mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                        )
                     )
                 }
             }
