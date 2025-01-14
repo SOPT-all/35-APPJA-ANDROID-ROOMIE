@@ -27,11 +27,8 @@ import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.component.RoomieTextChip
 import com.wearerommies.roomie.presentation.core.extension.customShadow
-import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
-import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun MarkerDetailCard(
@@ -39,10 +36,10 @@ fun MarkerDetailCard(
     deposit: String,
     contractTerm: Int,
     gender: String,
-    occupancyList: PersistentList<String>,
+    occupancy: String,
     location: String,
     locationDescription: String,
-    moodList: PersistentList<String>,
+    moodTag: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -126,20 +123,13 @@ fun MarkerDetailCard(
                         contentDescription = null
                     )
 
-                    occupancyList.forEachIndexed { index, occupancy ->
-                        Text(
-                            text = occupancy,
-                            style = RoomieTheme.typography.body4R12,
-                            color = RoomieTheme.colors.grayScale7
-                        )
 
-                        if (index != occupancyList.lastIndex)
-                            Text(
-                                text = stringResource(R.string.slash),
-                                style = RoomieTheme.typography.body4R12,
-                                color = RoomieTheme.colors.grayScale7
-                            )
-                    }
+                    Text(
+                        text = occupancy,
+                        style = RoomieTheme.typography.body4R12,
+                        color = RoomieTheme.colors.grayScale7
+                    )
+
                 }
 
                 Row(
@@ -169,17 +159,14 @@ fun MarkerDetailCard(
             }
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                moodList.forEach { keyword ->
-                    RoomieTextChip(
-                        text = keyword,
-                        textStyle = RoomieTheme.typography.body4R12,
-                        textColor = RoomieTheme.colors.grayScale9,
-                        backgroundColor = RoomieTheme.colors.grayScale3
-                    )
-                }
+                RoomieTextChip(
+                    text = moodTag,
+                    textStyle = RoomieTheme.typography.body4R12,
+                    textColor = RoomieTheme.colors.grayScale9,
+                    backgroundColor = RoomieTheme.colors.grayScale3
+                )
             }
         }
 
@@ -204,10 +191,10 @@ fun MarkerDetailCardPreview() {
             deposit = "200~300",
             contractTerm = 6,
             gender = "여성전용",
-            occupancyList = persistentListOf("1인실", "2인실"),
+            occupancy = "1인실",
             location = "서대문구 연희동",
             locationDescription = "sk스카이뷰12345678912345687912356798123456789123",
-            moodList = persistentListOf("#깔끔한", "#활기찬"),
+            moodTag = "#활기찬",
             onClick = {}
         )
     }
