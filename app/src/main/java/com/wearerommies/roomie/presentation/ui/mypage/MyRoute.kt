@@ -31,7 +31,9 @@ import com.wearerommies.roomie.presentation.core.component.RoomieNavigateButton
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
+import com.wearerommies.roomie.presentation.core.extension.topBorder
 import com.wearerommies.roomie.presentation.core.util.UiState
+import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.type.MyType
 import com.wearerommies.roomie.presentation.type.NavigateButtonType
 import com.wearerommies.roomie.presentation.ui.mypage.component.MyButtonWithHelperText
@@ -116,6 +118,11 @@ fun MyScreen(
                     )
 
                     MyProfileCard(
+                        modifier = Modifier
+                            .topBorder(
+                                convertDpToFloat(1.dp),
+                                color = RoomieTheme.colors.grayScale4
+                            ),
                         profileImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg",
                         nickname = "이루미",
                         onClick = {}
@@ -123,12 +130,21 @@ fun MyScreen(
 
                     Spacer(
                         modifier = Modifier
+                            .topBorder(
+                                convertDpToFloat(1.dp),
+                                color = RoomieTheme.colors.grayScale4
+                            )
                             .background(color = RoomieTheme.colors.grayScale3)
                             .fillMaxWidth()
                             .height(12.dp)
                     )
 
                     MyTitleBox(
+                        modifier = Modifier
+                            .topBorder(
+                                convertDpToFloat(1.dp),
+                                color = RoomieTheme.colors.grayScale4
+                            ),
                         text = stringResource(R.string.show_more_roomie)
                     )
 
