@@ -128,7 +128,6 @@ fun RoomieHouseNameChip(
 ) {
     Text(
         modifier = modifier
-            .width((LocalConfiguration.current.screenWidthDp * 0.275).dp)
             .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(size = 4.dp))
             .background(color = backgroundColor, shape = RoundedCornerShape(size = 4.dp))
             .noRippleClickable {
