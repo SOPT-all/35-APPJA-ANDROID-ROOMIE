@@ -60,7 +60,7 @@ enum class NavigateButtonType(
     ),
     MY(
         paddingValues = PaddingValues(
-            vertical = 16.dp,
+            vertical = 14.dp,
             horizontal = 20.dp,
         ),
         arrowIconColor = GrayScale7,
