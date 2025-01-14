@@ -9,6 +9,7 @@ import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.ui.home.navigation.homeNavGraph
 import com.wearerommies.roomie.presentation.ui.map.navigation.mapNavGraph
 import com.wearerommies.roomie.presentation.ui.mypage.navigation.myNavGraph
+import com.wearerommies.roomie.presentation.ui.search.navigation.searchNavGraph
 
 @Composable
 fun RoomieNavHost(
@@ -21,7 +22,13 @@ fun RoomieNavHost(
         startDestination = MainTabRoute.Home
     ) {
         homeNavGraph()
-        mapNavGraph()
+        mapNavGraph(
+            navigateToSearch = navigator::navigateToSearch
+        )
         myNavGraph()
+        searchNavGraph(
+            paddingValues = padding,
+            navigateUp = navigator::popBackStackIfNotHome
+        )
     }
 }
