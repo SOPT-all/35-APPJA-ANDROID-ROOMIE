@@ -49,7 +49,9 @@ fun SearchResultCard(
         Text(
             text = location,
             style = RoomieTheme.typography.title2Sb16,
-            color = RoomieTheme.colors.grayScale12
+            color = RoomieTheme.colors.grayScale12,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         Spacer(modifier = Modifier.height(16.dp))
