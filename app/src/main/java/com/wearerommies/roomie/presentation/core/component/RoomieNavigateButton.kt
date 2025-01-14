@@ -95,6 +95,14 @@ private fun RoomieNavigateButtonPreview() {
                 text = "지도에서 더 많은 쉐어하우스 찾기"
             )
 
+            //업데이트 배너
+            RoomieNavigateButton(
+                type = NavigateButtonType.UPDATE,
+                text = "1월 1일 루미 업데이트 알아보기",
+                textStyle = RoomieTheme.typography.body3M14,
+                textColor = RoomieTheme.colors.grayScale10
+            )
+
             //찜 리스트
             RoomieNavigateButton(
                 type = NavigateButtonType.MY,

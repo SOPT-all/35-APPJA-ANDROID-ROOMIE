@@ -15,7 +15,9 @@ import com.wearerommies.roomie.ui.theme.GrayScale10
 import com.wearerommies.roomie.ui.theme.GrayScale5
 import com.wearerommies.roomie.ui.theme.GrayScale7
 import com.wearerommies.roomie.ui.theme.PrimaryLight2
+import com.wearerommies.roomie.ui.theme.PrimaryLight3
 import com.wearerommies.roomie.ui.theme.RoomieTheme
+import com.wearerommies.roomie.ui.theme.TransparentGray160
 
 enum class NavigateButtonType(
     val paddingValues: PaddingValues,
@@ -41,6 +43,17 @@ enum class NavigateButtonType(
                 tint = RoomieTheme.colors.grayScale10
             )
         },
+    ),
+    UPDATE(
+        paddingValues = PaddingValues(
+            top = 12.dp,
+            bottom = 12.dp,
+            start = 16.dp,
+            end = 24.dp
+        ),
+        backgroundColor = TransparentGray160,
+        borderColor = PrimaryLight3,
+        borderWidth = 1.dp,
     ),
     DETAIL(
         borderColor = GrayScale5,
