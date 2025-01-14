@@ -33,6 +33,7 @@
 
     // detail
     <string name="house_main_image">쉐어하우스 메인 이미지</string>
+    <string name="inner_image_button_text">"내부 이미지 둘러보기"</string>
 
     // common
     <string name="dismiss">취소</string>
