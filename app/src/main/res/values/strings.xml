@@ -8,6 +8,7 @@
     <string name="mood_tag_calm">차분한</string>
     <string name="mood_tag_active">활기찬</string>
     <string name="mood_tag_clean">깔끔한</string>
+    <string name="mood_card_sub_text">분위기의\n방이 궁금하신가요?</string>
 
     // filter
     <string name="desired_move_in_date">희망 입주날짜</string>

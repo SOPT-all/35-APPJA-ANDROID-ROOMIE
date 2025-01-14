@@ -33,7 +33,6 @@ fun HomeMoodCard(
 ) {
     Column(
         modifier = modifier
-            .width((LocalConfiguration.current.screenWidthDp * 0.289).dp)
             .height((LocalConfiguration.current.screenHeightDp * 0.251).dp)
             .roundedBackgroundWithBorder(
                 cornerRadius = 8.dp,
@@ -56,7 +55,7 @@ fun HomeMoodCard(
         )
 
         Text(
-            text = stringResource(homeMoodCardType.moodTag) + " 분위기의\n방이 궁금하신가요?",
+            text = stringResource(homeMoodCardType.moodTag) + " " + stringResource(R.string.mood_card_sub_text),
             style = RoomieTheme.typography.caption3M10,
             color = RoomieTheme.colors.primary,
         )
@@ -82,10 +81,7 @@ private fun MoodCardMainText(homeMoodCardType: HomeMoodCardType) {
             color = RoomieTheme.colors.primary,
         )
 
-        Spacer(
-            modifier = Modifier
-                .weight(1f)
-        )
+        Spacer(modifier = Modifier.width(20.dp))
 
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_right_line_black_16px),
