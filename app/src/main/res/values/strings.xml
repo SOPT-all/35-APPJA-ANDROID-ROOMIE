@@ -37,6 +37,7 @@
     <string name="house_price_text">"월세 %s/보증금 %s"</string>
     <string name="occupancy_status">"%s인"</string>
     <string name="contract_term">"%d개월 이상 계약"</string>
+    <string name="ground_rule">그라운드 룰</string>
 
     // common
     <string name="dismiss">취소</string>
