@@ -21,7 +21,7 @@ import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 
 @Composable
-fun ImageWithBackButton(
+fun DetailMainImageWithBackButton(
     imageUrl: String,
     onBackButtonClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -56,9 +56,9 @@ fun ImageWithBackButton(
 
 @Composable
 @Preview
-fun ImageWithBackButtonPreview() {
+fun DetailMainImageWithBackButtonPreview() {
     RoomieAndroidTheme {
-        ImageWithBackButton(
+        DetailMainImageWithBackButton(
             imageUrl = "",
             onBackButtonClick = {},
             modifier = Modifier
