@@ -226,76 +226,9 @@ fun HomeScreen(
                             .height(20.dp)
                     )
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                color = Color.White, shape = RoundedCornerShape(
-                                    topStart = 20.dp,
-                                    topEnd = 20.dp
-                                )
-                            )
-                            .padding(top = 24.dp, start = 16.dp, end = 16.dp)
-                    ) {
-                        Column {
-                            Text(
-                                text = stringResource(R.string.find_mood),
-                                style = RoomieTheme.typography.heading5Sb18,
-                                color = RoomieTheme.colors.grayScale12
-                            )
+                    MoodCardGroup()
 
-                            Spacer(
-                                modifier = Modifier
-                                    .height(16.dp)
-                            )
-
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                HomeMoodCard(
-                                    modifier = Modifier.weight(1f),
-                                    homeMoodCardType = HomeMoodCardType.CALM,
-                                    onClick = {}
-                                )
-
-                                HomeMoodCard(
-                                    modifier = Modifier.weight(1f),
-                                    homeMoodCardType = HomeMoodCardType.ACTIVE,
-                                    onClick = {}
-                                )
-
-                                HomeMoodCard(
-                                    modifier = Modifier.weight(1f),
-                                    homeMoodCardType = HomeMoodCardType.CLEAN,
-                                    onClick = {}
-                                )
-                            }
-                        }
-                    }
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = Color.White)
-                            .padding(horizontal = 12.dp)
-                    ) {
-                        Spacer(
-                            modifier = Modifier
-                                .height(32.dp)
-                        )
-
-                        Text(
-                            text = stringResource(R.string.find_recent_room),
-                            style = RoomieTheme.typography.heading5Sb18,
-                            color = RoomieTheme.colors.grayScale12
-                        )
-
-                        Spacer(
-                            modifier = Modifier
-                                .height(16.dp)
-                        )
-
-                    }
+                    RecentCardTitle()
                 }
 
                 items(count = 3, key = { it }) {
@@ -388,6 +321,87 @@ fun HomeScreen(
                         fontSize = 30.sp,
                     )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun RecentCardTitle(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = Color.White)
+            .padding(horizontal = 12.dp)
+    ) {
+        Spacer(
+            modifier = Modifier
+                .height(32.dp)
+        )
+
+        Text(
+            text = stringResource(R.string.find_recent_room),
+            style = RoomieTheme.typography.heading5Sb18,
+            color = RoomieTheme.colors.grayScale12
+        )
+
+        Spacer(
+            modifier = Modifier
+                .height(16.dp)
+        )
+
+    }
+}
+
+@Composable
+private fun MoodCardGroup(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(
+                color = Color.White, shape = RoundedCornerShape(
+                    topStart = 20.dp,
+                    topEnd = 20.dp
+                )
+            )
+            .padding(top = 24.dp, start = 16.dp, end = 16.dp)
+    ) {
+        Column {
+            Text(
+                text = stringResource(R.string.find_mood),
+                style = RoomieTheme.typography.heading5Sb18,
+                color = RoomieTheme.colors.grayScale12
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .height(16.dp)
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                HomeMoodCard(
+                    modifier = Modifier.weight(1f),
+                    homeMoodCardType = HomeMoodCardType.CALM,
+                    onClick = {}
+                )
+
+                HomeMoodCard(
+                    modifier = Modifier.weight(1f),
+                    homeMoodCardType = HomeMoodCardType.ACTIVE,
+                    onClick = {}
+                )
+
+                HomeMoodCard(
+                    modifier = Modifier.weight(1f),
+                    homeMoodCardType = HomeMoodCardType.CLEAN,
+                    onClick = {}
+                )
             }
         }
     }
