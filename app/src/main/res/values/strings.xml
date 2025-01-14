@@ -34,6 +34,9 @@
     // detail
     <string name="house_main_image">쉐어하우스 메인 이미지</string>
     <string name="inner_image_button_text">"내부 이미지 둘러보기"</string>
+    <string name="house_price_text">"월세 %s/보증금 %s"</string>
+    <string name="occupancy_status">"%s인"</string>
+    <string name="contract_term">"%d개월 이상 계약"</string>
 
     // common
     <string name="dismiss">취소</string>
