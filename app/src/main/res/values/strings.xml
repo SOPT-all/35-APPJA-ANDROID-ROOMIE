@@ -21,16 +21,14 @@
 
     // search
     <string name="search_button">search button</string>
-
-    // common
-    <string name="slash">/</string>
-    <string name="navigate_to_house_detail">navigate to house detail</string>
   
     // filter
     <string name="desired_move_in_date">희망 입주날짜</string>
     <string name="birth_date">생년월일</string>
 
     // common
+    <string name="dismiss">취소</string>
+    <string name="confirm">확인</string>
     <string name="slash">/</string>
     <string name="date_picker_place_holder">2025/01/01</string>
     <string name="navigate_to_house_detail">navigate to house detail</string>
