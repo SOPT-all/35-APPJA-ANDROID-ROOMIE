@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -119,13 +120,13 @@ fun HomeScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = "연남동",
+                                    text = stringResource(R.string.home_location),
                                     style = RoomieTheme.typography.title2Sb16,
                                     color = RoomieTheme.colors.grayScale12
                                 )
                                 Icon(
                                     imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_down_line_black_16px),
-                                    contentDescription = "백버튼"
+                                    contentDescription = stringResource(R.string.back)
                                 )
                             }
                         },
@@ -137,7 +138,7 @@ fun HomeScreen(
                                     }
                                     .padding(all = 8.dp),
                                 imageVector = ImageVector.vectorResource(R.drawable.ic_heart_line_black_24px),
-                                contentDescription = "찜 리스트로 넘어가기"
+                                contentDescription = stringResource(R.string.navigate_to_bookmark)
                             )
                         }
                     )
@@ -151,7 +152,7 @@ fun HomeScreen(
                         modifier = Modifier.padding(
                             start = 20.dp
                         ),
-                        nickname = "닉네임"
+                        nickname = stringResource(R.string.user_nickname)
                     )
 
                     Spacer(
@@ -163,7 +164,7 @@ fun HomeScreen(
                         modifier = Modifier
                             .padding(horizontal = 20.dp),
                         type = NavigateButtonType.UPDATE,
-                        text = "1월 1일 루미 업데이트 알아보기",
+                        text = stringResource(R.string.today_find_out_update),
                         textStyle = RoomieTheme.typography.body3M14,
                         textColor = RoomieTheme.colors.grayScale10
                     )
@@ -186,7 +187,7 @@ fun HomeScreen(
                     ) {
                         Column {
                             Text(
-                                text = "분위기 별로 보기",
+                                text = stringResource(R.string.find_mood),
                                 style = RoomieTheme.typography.heading5Sb18,
                                 color = RoomieTheme.colors.grayScale12
                             )
@@ -232,7 +233,7 @@ fun HomeScreen(
                         )
 
                         Text(
-                            text = "최근 본 방",
+                            text = stringResource(R.string.find_recent_room),
                             style = RoomieTheme.typography.heading5Sb18,
                             color = RoomieTheme.colors.grayScale12
                         )
@@ -287,7 +288,7 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp),
                             type = NavigateButtonType.HOME,
-                            text = "지도에서 더 많은 쉐어하우스 찾기"
+                            text = stringResource(R.string.find_more_sharehouses_in_map)
                         )
 
                         Spacer(
@@ -349,7 +350,7 @@ private fun HomeGreetingMessage(
         )
 
         Text(
-            text = "님,",
+            text = stringResource(R.string.user_is),
             style = RoomieTheme.typography.heading2Sb20,
             color = RoomieTheme.colors.grayScale12
         )
@@ -362,7 +363,7 @@ private fun HomeGreetingMessage(
 
     Text(
         modifier = modifier,
-        text = "루미에 오신 걸 환영해요",
+        text = stringResource(R.string.welcome_to_roomie),
         style = RoomieTheme.typography.heading2Sb20,
         color = RoomieTheme.colors.grayScale12
     )
@@ -374,7 +375,7 @@ private fun HomeGreetingMessage(
 
     Text(
         modifier = modifier,
-        text = "루미가 ${nickname}님의 완벽한 집을\n찾아드릴게요",
+        text = stringResource(R.string.roomie_find_perfect_home, nickname),
         style = RoomieTheme.typography.body4R12,
         color = RoomieTheme.colors.grayScale7
     )
