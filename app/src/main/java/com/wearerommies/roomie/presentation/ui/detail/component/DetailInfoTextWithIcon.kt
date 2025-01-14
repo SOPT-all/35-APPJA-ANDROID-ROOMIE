@@ -21,7 +21,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun DetailInfoTextWithIcon(
-    leadingIcon: @Composable () -> Unit,
+    icon: ImageVector,
     text: String,
     modifier: Modifier = Modifier
 ) {
@@ -29,7 +29,11 @@ fun DetailInfoTextWithIcon(
         modifier = modifier
             .fillMaxWidth()
     ){
-        leadingIcon()
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = RoomieTheme.colors.grayScale10
+        )
 
         Spacer(Modifier.width(4.dp))
 
@@ -55,35 +59,17 @@ fun DetailInfoTextWithIconPreview(){
                 modifier = Modifier.weight(1f)
             ){
                 DetailInfoTextWithIcon(
-                    leadingIcon = {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_detail_location_20px),
-                            contentDescription = null,
-                            tint = RoomieTheme.colors.grayScale10
-                        )
-                    },
+                    icon = ImageVector.vectorResource(R.drawable.ic_detail_location_20px),
                     text = "서대문구 연희동"
                 )
 
                 DetailInfoTextWithIcon(
-                    leadingIcon = {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_detail_totalpeople_20px),
-                            contentDescription = null,
-                            tint = RoomieTheme.colors.grayScale10
-                        )
-                    },
+                    icon = ImageVector.vectorResource(R.drawable.ic_detail_totalpeople_20px),
                     text = "2/4인"
                 )
 
                 DetailInfoTextWithIcon(
-                    leadingIcon = {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_detail__calendar_20px),
-                            contentDescription = null,
-                            tint = RoomieTheme.colors.grayScale10
-                        )
-                    },
+                    icon = ImageVector.vectorResource(R.drawable.ic_detail__calendar_20px),
                     text = "3개월 이상 계약"
                 )
             }
@@ -93,24 +79,12 @@ fun DetailInfoTextWithIconPreview(){
                 modifier = Modifier.weight(1f)
             ){
                 DetailInfoTextWithIcon(
-                    leadingIcon = {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_detail_room_20px),
-                            contentDescription = null,
-                            tint = RoomieTheme.colors.grayScale10
-                        )
-                    },
+                    icon = ImageVector.vectorResource(R.drawable.ic_detail_room_20px),
                     text = "1,2인실"
                 )
 
                 DetailInfoTextWithIcon(
-                    leadingIcon = {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_detail_gender_20px),
-                            contentDescription = null,
-                            tint = RoomieTheme.colors.grayScale10
-                        )
-                    },
+                    icon = ImageVector.vectorResource(R.drawable.ic_detail_gender_20px),
                     text = "여성전용"
                 )
             }
