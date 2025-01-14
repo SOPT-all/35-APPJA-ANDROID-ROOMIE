@@ -1,6 +1,7 @@
 package com.wearerommies.roomie.presentation.core.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -26,7 +27,8 @@ fun RoomieEmptyView(
 ) {
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Image(
             painter = painterResource(R.drawable.img_crying),
@@ -35,15 +37,11 @@ fun RoomieEmptyView(
                 .size((LocalConfiguration.current.screenWidthDp * 0.5).dp)
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
         Text(
             text = stringResource(viewType.title),
             color = RoomieTheme.colors.grayScale12,
             style = RoomieTheme.typography.title2Sb16,
         )
-
-        Spacer(modifier = Modifier.height(4.dp))
 
         Text(
             text = stringResource(viewType.description),
