@@ -10,4 +10,6 @@
 
     // common
     <string name="date_picker_place_holder">2025/01/01</string>
+    <string name="dismiss">취소</string>
+    <string name="confirm">확인</string>
 </resources>
