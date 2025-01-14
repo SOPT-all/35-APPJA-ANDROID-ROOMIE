@@ -17,3 +17,20 @@ fun DetailMoodTagChips(
         }
     }
 }
+
+@Composable
+fun DetailGroundRuleTexts(
+    groundRule: PersistentList<String>,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ){
+        itemsIndexed(groundRule) { index, item ->
+            DetailTextWithCheckIcon(
+                text = item
+            )
+        }
+    }
+}
