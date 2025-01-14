@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.ui.home.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,12 +22,13 @@ import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
+import com.wearerommies.roomie.presentation.type.HomeMoodCardType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun HomeMoodCard(
-    moodTag: String,
+    homeMoodCardType: HomeMoodCardType,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
 ) {
@@ -48,7 +51,7 @@ fun HomeMoodCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = moodTag,
+                text = "# " + stringResource(homeMoodCardType.moodTag),
                 style = RoomieTheme.typography.body2Sb14,
                 color = RoomieTheme.colors.primary,
                 textAlign = TextAlign.Center
@@ -72,7 +75,7 @@ fun HomeMoodCard(
         )
 
         Text(
-            text = "${moodTag} 분위기의\n방이 궁금하신가요?",
+            text = stringResource(homeMoodCardType.moodTag) + " 분위기의\n방이 궁금하신가요?",
             style = RoomieTheme.typography.caption3M10,
             color = RoomieTheme.colors.primary,
         )
@@ -83,8 +86,20 @@ fun HomeMoodCard(
 @Composable
 private fun HomeMoodCardPreview() {
     RoomieAndroidTheme {
-        HomeMoodCard(
-            moodTag = "차분한"
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            HomeMoodCard(
+                homeMoodCardType = HomeMoodCardType.CALM
+            )
+
+            HomeMoodCard(
+                homeMoodCardType = HomeMoodCardType.ACTIVE
+            )
+
+            HomeMoodCard(
+                homeMoodCardType = HomeMoodCardType.CLEAN
+            )
+        }
     }
 }

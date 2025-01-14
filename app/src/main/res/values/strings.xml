@@ -3,7 +3,12 @@
     <string name="home">홈</string>
     <string name="map">지도</string>
     <string name="mypage">마이페이지</string>
-  
+
+    //home
+    <string name="mood_tag_calm">차분한</string>
+    <string name="mood_tag_active">활기찬</string>
+    <string name="mood_tag_clean">깔끔한</string>
+
     // filter
     <string name="desired_move_in_date">희망 입주날짜</string>
     <string name="birth_date">생년월일</string>
