@@ -22,6 +22,8 @@ fun RoomieNavHost(
     ) {
         homeNavGraph()
         mapNavGraph()
-        myNavGraph()
+        myNavGraph(
+            paddingValues = padding
+        )
     }
 }
