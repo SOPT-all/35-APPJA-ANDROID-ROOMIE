@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -87,35 +86,17 @@ fun DetailInfoWithIcons(
             modifier = Modifier.weight(1f)
         ){
             DetailInfoTextWithIcon(
-                leadingIcon = {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_detail_location_20px),
-                        contentDescription = null,
-                        tint = RoomieTheme.colors.grayScale10
-                    )
-                },
+                icon = ImageVector.vectorResource(R.drawable.ic_detail_location_20px),
                 text = location
             )
 
             DetailInfoTextWithIcon(
-                leadingIcon = {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_detail_totalpeople_20px),
-                        contentDescription = null,
-                        tint = RoomieTheme.colors.grayScale10
-                    )
-                },
+                icon = ImageVector.vectorResource(R.drawable.ic_detail_totalpeople_20px),
                 text = stringResource(R.string.occupancy_status, occupancyStatus)
             )
 
             DetailInfoTextWithIcon(
-                leadingIcon = {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_detail__calendar_20px),
-                        contentDescription = null,
-                        tint = RoomieTheme.colors.grayScale10
-                    )
-                },
+                icon = ImageVector.vectorResource(R.drawable.ic_detail__calendar_20px),
                 text = stringResource(R.string.contract_term, contractTerm)
             )
         }
@@ -125,24 +106,12 @@ fun DetailInfoWithIcons(
             modifier = Modifier.weight(1f)
         ){
             DetailInfoTextWithIcon(
-                leadingIcon = {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_detail_room_20px),
-                        contentDescription = null,
-                        tint = RoomieTheme.colors.grayScale10
-                    )
-                },
+                icon = ImageVector.vectorResource(R.drawable.ic_detail_room_20px),
                 text = occupancyTypes
             )
 
             DetailInfoTextWithIcon(
-                leadingIcon = {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_detail_gender_20px),
-                        contentDescription = null,
-                        tint = RoomieTheme.colors.grayScale10
-                    )
-                },
+                icon = ImageVector.vectorResource(R.drawable.ic_detail_gender_20px),
                 text = genderPolicy
             )
         }
