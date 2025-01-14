@@ -33,11 +33,11 @@ fun MyTitleBox(
 @Composable
 private fun MyTitleBoxPreview() {
     RoomieAndroidTheme {
-        Column (
+        Column(
             modifier = Modifier
                 .background(color = Color.White),
             verticalArrangement = Arrangement.spacedBy(5.dp)
-        ){
+        ) {
             MyTitleBox(
                 text = "루미 더보기"
             )

@@ -3,6 +3,7 @@ package com.wearerommies.roomie.presentation.ui.mypage.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,13 +27,13 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun MyButtonWithHelperText(
     mainText: String,
     helperText: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(color = Color.White)
+            .background(color = Color.Transparent)
             .clickable {
                 onClick()
             }
@@ -80,9 +81,15 @@ fun MyButtonWithHelperText(
 @Composable
 private fun MyButtonWithHelperTextPreview() {
     RoomieAndroidTheme {
-        MyButtonWithHelperText(
-            mainText = "쉐어하우스 찾기",
-            helperText = "원하는 매물이 없다면 새로 요청해보세요"
-        )
+        Box(
+            modifier = Modifier
+                .background(color = Color.White)
+        ) {
+            MyButtonWithHelperText(
+                mainText = "쉐어하우스 찾기",
+                helperText = "원하는 매물이 없다면 새로 요청해보세요",
+                onClick = {}
+            )
+        }
     }
 }

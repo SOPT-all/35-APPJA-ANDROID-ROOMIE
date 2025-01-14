@@ -22,15 +22,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.wearerommies.roomie.R
-import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
@@ -39,13 +35,13 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun MyProfileCard(
     profileImgUrl: String,
     nickname: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(color = Color.White)
+            .background(color = Color.Transparent)
             .clickable {
                 onClick()
             }
@@ -73,35 +69,23 @@ fun MyProfileCard(
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(
-                buildAnnotatedString {
-                    withStyle(style = SpanStyle(color = RoomieTheme.colors.primary)) {
-                        append(nickname)
-                    }
-                    withStyle(style = SpanStyle(color = RoomieTheme.colors.grayScale12)) {
-                        append(stringResource(R.string.user_hello))
-                    }
-                },
-                style = RoomieTheme.typography.title2Sb16,
-            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                Text(
+                    text = nickname,
+                    style = RoomieTheme.typography.title2Sb16,
+                    color = RoomieTheme.colors.primary
+                )
 
-            Text(
-                modifier = Modifier
-                    .roundedBackgroundWithBorder(
-                        cornerRadius = 50.dp,
-                        backgroundColor = Color.White,
-                        borderColor = RoomieTheme.colors.grayScale5,
-                        borderWidth = 1.dp
-                    )
-                    .noRippleClickable {
-                        onClick()
-                    }
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
-                text = stringResource(R.string.user_login_type),
-                style = RoomieTheme.typography.caption1R10,
-                color = RoomieTheme.colors.grayScale9,
-                textAlign = TextAlign.Center
-            )
+                Text(
+                    text = stringResource(R.string.user_hello),
+                    style = RoomieTheme.typography.title2Sb16,
+                    color = RoomieTheme.colors.grayScale12
+                )
+            }
+
+            UserLoginTypeChip()
         }
 
         Spacer(
@@ -119,13 +103,32 @@ fun MyProfileCard(
     }
 }
 
+@Composable
+private fun UserLoginTypeChip() {
+    Text(
+        modifier = Modifier
+            .roundedBackgroundWithBorder(
+                cornerRadius = 50.dp,
+                backgroundColor = Color.Transparent,
+                borderColor = RoomieTheme.colors.grayScale5,
+                borderWidth = 1.dp
+            )
+            .padding(horizontal = 8.dp, vertical = 4.dp),
+        text = stringResource(R.string.user_login_type),
+        style = RoomieTheme.typography.caption1R10,
+        color = RoomieTheme.colors.grayScale9,
+        textAlign = TextAlign.Center
+    )
+}
+
 @Preview
 @Composable
 private fun MyProfileCardPreview() {
     RoomieAndroidTheme {
         MyProfileCard(
             profileImgUrl = "https://example.com/images/house1.jpg",
-            nickname = "이루미"
+            nickname = "이루미",
+            onClick = {}
         )
     }
 }

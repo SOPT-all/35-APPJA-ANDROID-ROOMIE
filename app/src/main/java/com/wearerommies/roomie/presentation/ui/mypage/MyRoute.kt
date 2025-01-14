@@ -82,7 +82,8 @@ fun MyScreen(
                 item {
                     MyProfileCard(
                         profileImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg",
-                        nickname = "이루미"
+                        nickname = "이루미",
+                        onClick = {}
                     )
                 }
             }
