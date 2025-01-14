@@ -196,7 +196,7 @@ private fun RoomieRoomCardPreview() {
                 isPinned = false,
                 moodTag = "#차분한",
                 contract_term = 6,
-                mainImgUrl = "https://example.com/images/house1.jpg"
+                mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
             ),
             onClick = {},
             onLikeClick = {}

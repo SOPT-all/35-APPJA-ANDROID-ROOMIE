@@ -81,7 +81,7 @@ private fun MoodCardMainText(homeMoodCardType: HomeMoodCardType) {
             color = RoomieTheme.colors.primary,
         )
 
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_right_line_black_16px),
