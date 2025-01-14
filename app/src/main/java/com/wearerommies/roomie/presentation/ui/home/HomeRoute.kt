@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.ui.home
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -44,9 +46,11 @@ import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieNavigateButton
 import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
+import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.UiState
+import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.type.HomeMoodCardType
 import com.wearerommies.roomie.presentation.type.NavigateButtonType
 import com.wearerommies.roomie.presentation.ui.home.component.HomeMoodCard
@@ -80,6 +84,7 @@ fun HomeRoute(
 
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     paddingValues: PaddingValues,
@@ -90,7 +95,14 @@ fun HomeScreen(
     val screenWeight = LocalConfiguration.current.screenWidthDp
     val height = (screenWeight * 0.5).dp
 
+    val scrollState = rememberLazyListState()
+    val scrollOffset = scrollState.firstVisibleItemScrollOffset
+    val topBarBackgroundColor = if (scrollOffset > 1) Color.White else Color.Transparent
+    val topBarBorderColor =
+        if (scrollOffset > 1) RoomieTheme.colors.grayScale4 else Color.Transparent
+
     LazyColumn(
+        state = scrollState,
         modifier = modifier
             .statusBarsPadding()
             .fillMaxSize()
@@ -107,11 +119,16 @@ fun HomeScreen(
     ) {
         when (state) {
             is UiState.Loading -> {
-                item {
+                stickyHeader {
                     RoomieTopBar(
                         modifier = Modifier
+                            .background(color = topBarBackgroundColor)
+                            .bottomBorder(
+                                color = topBarBorderColor,
+                                height = convertDpToFloat(1.dp)
+                            )
                             .padding(horizontal = 20.dp, vertical = 4.dp),
-                        backgroundColor = Color.Transparent,
+                        backgroundColor = topBarBackgroundColor,
                         leadingIcon = {
                             Row(
                                 modifier = Modifier
@@ -142,7 +159,9 @@ fun HomeScreen(
                             )
                         }
                     )
+                }
 
+                item {
                     Spacer(
                         modifier = Modifier
                             .height(32.dp)
