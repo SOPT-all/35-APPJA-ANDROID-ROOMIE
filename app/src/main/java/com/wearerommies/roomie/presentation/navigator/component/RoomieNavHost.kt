@@ -21,7 +21,11 @@ fun RoomieNavHost(
         startDestination = MainTabRoute.Home
     ) {
         homeNavGraph()
-        mapNavGraph()
+        mapNavGraph(
+            paddingValues = padding,
+            navigateToSearch = navigator::navigateToSearch
+        )
         myNavGraph()
     }
 }
+
