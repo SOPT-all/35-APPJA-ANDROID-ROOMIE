@@ -28,4 +28,6 @@
     <string name="slash">/</string>
     <string name="date_picker_place_holder">2025/01/01</string>
     <string name="navigate_to_house_detail">navigate to house detail</string>
+    <string name="roomie_all_rights_reserved">Roomie. All Rights Reserved.</string>
+    <string name="main_room_image">방 이미지</string>
 </resources>
