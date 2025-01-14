@@ -37,7 +37,7 @@ import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.EmptyUiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.type.EmptyViewType
-import com.wearerommies.roomie.presentation.ui.search.component.EmptyView
+import com.wearerommies.roomie.presentation.core.component.RoomieEmptyView
 import com.wearerommies.roomie.presentation.ui.search.component.SearchResultCard
 import com.wearerommies.roomie.presentation.ui.search.component.SearchTextField
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
@@ -125,7 +125,7 @@ fun SearchScreen(
 
         when (state) {
             EmptyUiState.Empty -> {
-                EmptyView(
+                RoomieEmptyView(
                     viewType = EmptyViewType.SEARCH,
                     modifier = Modifier.padding(top = (LocalConfiguration.current.screenHeightDp * 0.182).dp)
                 )

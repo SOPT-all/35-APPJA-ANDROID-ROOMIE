@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui.search.component
+package com.wearerommies.roomie.presentation.core.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -23,7 +23,7 @@ import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
-fun EmptyView(
+fun RoomieEmptyView(
     viewType: EmptyViewType,
     modifier: Modifier = Modifier
 ) {
@@ -61,6 +61,6 @@ fun EmptyView(
 @Composable
 fun EmptyViewPreview() {
     RoomieAndroidTheme {
-        EmptyView(viewType = EmptyViewType.LIST)
+        RoomieEmptyView(viewType = EmptyViewType.LIST)
     }
 }
