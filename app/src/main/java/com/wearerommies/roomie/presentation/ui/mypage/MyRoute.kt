@@ -32,6 +32,7 @@ import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.UiState
+import com.wearerommies.roomie.presentation.type.MyType
 import com.wearerommies.roomie.presentation.type.NavigateButtonType
 import com.wearerommies.roomie.presentation.ui.mypage.component.MyButtonWithHelperText
 import com.wearerommies.roomie.presentation.ui.mypage.component.MyProfileCard
@@ -166,25 +167,12 @@ fun MyScreen(
                         text = stringResource(R.string.service_infomation)
                     )
 
-                    RoomieNavigateButton(
-                        type = NavigateButtonType.MY,
-                        text = stringResource(R.string.service_introduction)
-                    )
-
-                    RoomieNavigateButton(
-                        type = NavigateButtonType.MY,
-                        text = stringResource(R.string.recent_updates)
-                    )
-
-                    RoomieNavigateButton(
-                        type = NavigateButtonType.MY,
-                        text = stringResource(R.string.policy_and_terms)
-                    )
-
-                    RoomieNavigateButton(
-                        type = NavigateButtonType.MY,
-                        text = stringResource(R.string.app_version)
-                    )
+                    MyType.entries.forEach { type ->
+                        RoomieNavigateButton(
+                            type = NavigateButtonType.MY,
+                            text = stringResource(type.title)
+                        )
+                    }
                 }
             }
         }
