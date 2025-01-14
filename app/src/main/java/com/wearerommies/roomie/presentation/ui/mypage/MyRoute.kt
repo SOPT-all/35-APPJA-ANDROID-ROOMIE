@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
+import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.component.RoomieNavigateButton
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
@@ -109,7 +111,7 @@ fun MyScreen(
             is UiState.Success -> {
                 item {
                     RoomieTopBar(
-                        title = "마이페이지"
+                        title = stringResource(R.string.mypage)
                     )
 
                     MyProfileCard(
@@ -126,30 +128,30 @@ fun MyScreen(
                     )
 
                     MyTitleBox(
-                        text = "루미 더보기"
+                        text = stringResource(R.string.show_more_roomie)
                     )
 
 
                     RoomieNavigateButton(
                         type = NavigateButtonType.MY,
-                        text = "찜 리스트"
+                        text = stringResource(R.string.bookmark_list)
                     )
 
                     MyButtonWithHelperText(
-                        mainText = "쉐어하우스 찾기",
-                        helperText = "원하는 매물이 없다면 새로 요청해보세요",
+                        mainText = stringResource(R.string.find_sharehouses),
+                        helperText = stringResource(R.string.request_new_room),
                         onClick = {}
                     )
 
                     MyButtonWithHelperText(
-                        mainText = "매물 등록하기",
-                        helperText = "쉐어하우스 사장님이라면 매물을 등록해보세요",
+                        mainText = stringResource(R.string.add_new_room),
+                        helperText = stringResource(R.string.register_sharehouse_owner),
                         onClick = {}
                     )
 
                     RoomieNavigateButton(
                         type = NavigateButtonType.MY,
-                        text = "의견 보내기"
+                        text = stringResource(R.string.send_feedback)
                     )
 
                     Spacer(
@@ -161,27 +163,27 @@ fun MyScreen(
                     )
 
                     MyTitleBox(
-                        text = "루미 서비스 정보"
+                        text = stringResource(R.string.service_infomation)
                     )
 
                     RoomieNavigateButton(
                         type = NavigateButtonType.MY,
-                        text = "서비스 소개"
+                        text = stringResource(R.string.service_introduction)
                     )
 
                     RoomieNavigateButton(
                         type = NavigateButtonType.MY,
-                        text = "최근 소식"
+                        text = stringResource(R.string.recent_updates)
                     )
 
                     RoomieNavigateButton(
                         type = NavigateButtonType.MY,
-                        text = "약관 및 정책"
+                        text = stringResource(R.string.policy_and_terms)
                     )
 
                     RoomieNavigateButton(
                         type = NavigateButtonType.MY,
-                        text = "앱 버전"
+                        text = stringResource(R.string.app_version)
                     )
                 }
             }
