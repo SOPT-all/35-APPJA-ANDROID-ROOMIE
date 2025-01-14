@@ -23,7 +23,7 @@ fun RoomieNavHost(
         homeNavGraph()
         mapNavGraph(
             paddingValues = padding,
-            navigateToSearch = navigator::navigateToSearch
+            navigateToSearch = {}
         )
         myNavGraph()
     }
