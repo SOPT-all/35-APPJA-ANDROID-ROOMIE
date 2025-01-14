@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
+import com.wearerommies.roomie.presentation.core.util.todayFormatted
 import com.wearerommies.roomie.presentation.type.DatePickerFieldType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
@@ -72,8 +74,10 @@ fun RoomieDatePickerField(
             .padding(horizontal = 16.dp, vertical = 14.dp)
             .noRippleClickable { onClick() }
     ) {
+        val todayDate = remember { todayFormatted() }
+
         Text(
-            text = dateValue.ifEmpty { stringResource(R.string.date_picker_place_holder) },
+            text = dateValue.ifEmpty { todayDate },
             color = if (dateValue.isEmpty()) RoomieTheme.colors.grayScale6 else RoomieTheme.colors.grayScale12,
             style = RoomieTheme.typography.body1R14,
             modifier = Modifier.weight(1f)

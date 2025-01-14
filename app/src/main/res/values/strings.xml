@@ -6,6 +6,12 @@
     <string name="map">지도</string>
     <string name="mypage">마이페이지</string>
 
+    //home
+    <string name="mood_tag_calm">차분한</string>
+    <string name="mood_tag_active">활기찬</string>
+    <string name="mood_tag_clean">깔끔한</string>
+    <string name="mood_card_sub_text">분위기의\n방이 궁금하신가요?</string>
+
     // map
     <string name="monthly_rent">월세</string>
     <string name="deposit_variable">보증금 %1$s</string>
@@ -15,16 +21,19 @@
 
     // search
     <string name="search_button">search button</string>
-
-    // common
-    <string name="slash">/</string>
-    <string name="navigate_to_house_detail">navigate to house detail</string>
   
     // filter
     <string name="desired_move_in_date">희망 입주날짜</string>
     <string name="birth_date">생년월일</string>
 
+    //my
+    <string name="profile_image">프로필 이미지</string>
+    <string name="user_hello">님 안녕하세요!</string>
+    <string name="user_login_type">카카오 계정 회원</string>
+
     // common
+    <string name="dismiss">취소</string>
+    <string name="confirm">확인</string>
     <string name="slash">/</string>
     <string name="date_picker_place_holder">2025/01/01</string>
     <string name="navigate_to_house_detail">navigate to house detail</string>
