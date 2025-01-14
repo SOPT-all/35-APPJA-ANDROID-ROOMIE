@@ -15,10 +15,6 @@
 
     // search
     <string name="search_button">search button</string>
-
-    // common
-    <string name="slash">/</string>
-    <string name="navigate_to_house_detail">navigate to house detail</string>
   
     // filter
     <string name="desired_move_in_date">희망 입주날짜</string>
