@@ -6,6 +6,12 @@
     <string name="map">지도</string>
     <string name="mypage">마이페이지</string>
 
+    //home
+    <string name="mood_tag_calm">차분한</string>
+    <string name="mood_tag_active">활기찬</string>
+    <string name="mood_tag_clean">깔끔한</string>
+    <string name="mood_card_sub_text">분위기의\n방이 궁금하신가요?</string>
+
     // map
     <string name="monthly_rent">월세</string>
     <string name="deposit_variable">보증금 %1$s</string>
