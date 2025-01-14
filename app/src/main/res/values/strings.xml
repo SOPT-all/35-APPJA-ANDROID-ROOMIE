@@ -44,4 +44,6 @@
     <string name="check_again">정확하게 입력했는지 다시 확인해주세요</string>
     <string name="location_no_room">해당 위치에는 방이 없어요</string>
     <string name="search_other_place">다른 장소를 검색해보세요</string>
+    <string name="roadAddress">도로명</string>
+    <string name="address">지번</string>
 </resources>
