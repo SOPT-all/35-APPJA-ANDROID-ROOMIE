@@ -39,4 +39,9 @@
     <string name="navigate_to_house_detail">navigate to house detail</string>
     <string name="roomie_all_rights_reserved">Roomie. All Rights Reserved.</string>
     <string name="main_room_image">방 이미지</string>
+    <string name="move_back">뒤로가기</string>
+    <string name="no_search_result">검색결과가 없어요</string>
+    <string name="check_again">정확하게 입력했는지 다시 확인해주세요</string>
+    <string name="location_no_room">해당 위치에는 방이 없어요</string>
+    <string name="search_other_place">다른 장소를 검색해보세요</string>
 </resources>
