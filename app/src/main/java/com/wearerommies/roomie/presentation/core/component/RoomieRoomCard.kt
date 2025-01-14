@@ -22,9 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -81,8 +82,8 @@ fun RoomieRoomCard(
                         .noRippleClickable {
                             onLikeClick()
                         },
-                    painter = if (roomCardEntity.isPinned)
-                        painterResource(R.drawable.ic_heart_filled_white_24px) else painterResource(
+                    imageVector = if (roomCardEntity.isPinned)
+                        ImageVector.vectorResource(R.drawable.ic_heart_filled_white_24px) else ImageVector.vectorResource(
                         R.drawable.ic_heart_linewithfill_white_24px
                     ),
                     contentDescription = null,
@@ -166,7 +167,7 @@ private fun DotWithText(
             color = RoomieTheme.colors.grayScale7
         )
         Icon(
-            painter = painterResource(R.drawable.ic_middle_dot),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_middle_dot),
             contentDescription = "dot",
             tint = RoomieTheme.colors.grayScale7
         )

@@ -14,7 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -64,7 +65,7 @@ fun RoomieNavigateButton(
         )
 
         Icon(
-            painter = painterResource(R.drawable.ic_arrow_right_line_black_24px),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_right_line_black_24px),
             contentDescription = null,
             tint = type.arrowIconColor
         )

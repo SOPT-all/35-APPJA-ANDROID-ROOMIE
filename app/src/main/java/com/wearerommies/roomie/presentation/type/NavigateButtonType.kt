@@ -6,7 +6,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
@@ -35,7 +36,7 @@ enum class NavigateButtonType(
             Icon(
                 modifier = Modifier
                     .padding(end = 4.dp),
-                painter = painterResource(R.drawable.ic_map_line_black_16px),
+                imageVector = ImageVector.vectorResource(R.drawable.ic_map_line_black_16px),
                 contentDescription = null,
                 tint = RoomieTheme.colors.grayScale10
             )
@@ -51,7 +52,7 @@ enum class NavigateButtonType(
             Icon(
                 modifier = Modifier
                     .padding(end = 8.dp),
-                painter = painterResource(R.drawable.ic_image_24px),
+                imageVector = ImageVector.vectorResource(R.drawable.ic_image_24px),
                 contentDescription = null,
                 tint = RoomieTheme.colors.grayScale6
             )
