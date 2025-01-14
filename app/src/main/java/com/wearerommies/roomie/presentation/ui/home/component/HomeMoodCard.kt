@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
@@ -24,7 +25,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun HomeMoodCard(
-    mood: String,
+    moodTag: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
 ) {
@@ -43,9 +44,11 @@ fun HomeMoodCard(
             }
             .padding(top = 12.dp, bottom = 12.dp, start = 12.dp, end = 10.dp),
     ) {
-        Row {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
-                text = mood,
+                text = moodTag,
                 style = RoomieTheme.typography.body2Sb14,
                 color = RoomieTheme.colors.primary,
                 textAlign = TextAlign.Center
@@ -69,7 +72,7 @@ fun HomeMoodCard(
         )
 
         Text(
-            text = "${mood} 분위기의\n방이 궁금하신가요?",
+            text = "${moodTag} 분위기의\n방이 궁금하신가요?",
             style = RoomieTheme.typography.caption3M10,
             color = RoomieTheme.colors.primary,
         )
@@ -81,7 +84,7 @@ fun HomeMoodCard(
 private fun HomeMoodCardPreview() {
     RoomieAndroidTheme {
         HomeMoodCard(
-            mood = "차분한"
+            moodTag = "차분한"
         )
     }
 }
