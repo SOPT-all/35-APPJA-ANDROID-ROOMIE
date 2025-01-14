@@ -12,15 +12,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -36,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -45,6 +50,7 @@ import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieNavigateButton
 import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
+import com.wearerommies.roomie.presentation.core.component.RoomieSnackbar
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
@@ -56,6 +62,7 @@ import com.wearerommies.roomie.presentation.type.NavigateButtonType
 import com.wearerommies.roomie.presentation.ui.home.component.HomeMoodCard
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeRoute(
@@ -66,18 +73,27 @@ fun HomeRoute(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val snackBarHost = remember { SnackbarHostState() }
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle)
             .collect { sideEffect ->
                 when (sideEffect) {
                     is HomeSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
+                    is HomeSideEffect.SnackBar -> {
+                        snackBarHost.currentSnackbarData?.dismiss()
+                        snackBarHost.showSnackbar(
+                            message = context.getString(sideEffect.message),
+                            duration = SnackbarDuration.Short
+                        )
+                    }
                 }
             }
     }
 
     HomeScreen(
         paddingValues = paddingValues,
+        snackBarHost = snackBarHost,
         navigateUp = navigateUp,
         state = state.uiState
     )
@@ -88,6 +104,7 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     paddingValues: PaddingValues,
+    snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
     state: UiState<String>,
     modifier: Modifier = Modifier
@@ -96,15 +113,31 @@ fun HomeScreen(
     val height = (screenWeight * 0.5).dp
 
     val scrollState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
     val scrollOffset = scrollState.firstVisibleItemScrollOffset
     val topBarBackgroundColor = if (scrollOffset > 1) Color.White else Color.Transparent
     val topBarBorderColor =
         if (scrollOffset > 1) RoomieTheme.colors.grayScale4 else Color.Transparent
 
+    Popup(
+        alignment = Alignment.BottomCenter
+    ) {
+        SnackbarHost(hostState = snackBarHost) { snackbarData ->
+            RoomieSnackbar(
+                modifier = Modifier
+                    .padding(
+                        bottom = paddingValues.calculateBottomPadding(),
+                        start = 12.dp,
+                        end = 12.dp
+                    ),
+                message = snackbarData.visuals.message
+            )
+        }
+    }
+
     LazyColumn(
         state = scrollState,
         modifier = modifier
-            .statusBarsPadding()
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
@@ -282,13 +315,20 @@ fun HomeScreen(
                                 location = "서대문구 연희동",
                                 genderPolicy = "여성전용",
                                 locationDescription = "자이아파트",
-                                isPinned = false,
+                                isPinned = true,
                                 moodTag = "#차분한",
                                 contract_term = 6,
                                 mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
                             ),
                             onClick = { },
-                            onLikeClick = { }
+                            onLikeClick = {
+                                coroutineScope.launch {
+                                    snackBarHost.showSnackbar(
+                                        message = "찜 목록에 추가되었습니다!",
+                                        duration = SnackbarDuration.Short
+                                    )
+                                }
+                            }
                         )
                     }
                 }
@@ -312,7 +352,7 @@ fun HomeScreen(
 
                         Spacer(
                             modifier = Modifier
-                                .height(120.dp)
+                                .height(24.dp)
                         )
                     }
                 }
@@ -406,6 +446,7 @@ fun HomeScreenPreview() {
     RoomieAndroidTheme {
         HomeScreen(
             paddingValues = PaddingValues(),
+            snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
             state = UiState.Loading
         )
