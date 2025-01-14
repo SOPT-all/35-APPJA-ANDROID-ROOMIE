@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.navigator
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -7,6 +8,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.wearerommies.roomie.presentation.navigator.component.MainBottomBar
 import com.wearerommies.roomie.presentation.navigator.component.RoomieNavHost
@@ -42,7 +44,9 @@ private fun MainScreenContent(
         },
         bottomBar = {
             MainBottomBar(
-                modifier = Modifier.navigationBarsPadding(),
+                modifier = Modifier
+                    .background(color = Color.White)
+                    .navigationBarsPadding(),
                 isVisible = navigator.showBottomBar(),
                 tabs = MainTabType.entries.toImmutableList(),
                 currentTabSelected = navigator.currentTab,

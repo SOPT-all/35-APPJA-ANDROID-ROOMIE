@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -27,7 +28,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -86,11 +86,12 @@ fun HomeScreen(
     state: UiState<String>,
     modifier: Modifier = Modifier
 ) {
-    val screenWeigth = LocalConfiguration.current.screenWidthDp
-    val height = (screenWeigth * 0.5).dp
+    val screenWeight = LocalConfiguration.current.screenWidthDp
+    val height = (screenWeight * 0.5).dp
 
     LazyColumn(
         modifier = modifier
+            .statusBarsPadding()
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
@@ -132,10 +133,11 @@ fun HomeScreen(
                             Icon(
                                 modifier = Modifier
                                     .noRippleClickable {
+                                        //todo: 찜 리스트로 넘어가기
                                     }
                                     .padding(all = 8.dp),
                                 imageVector = ImageVector.vectorResource(R.drawable.ic_heart_line_black_24px),
-                                contentDescription = null
+                                contentDescription = "찜 리스트로 넘어가기"
                             )
                         }
                     )
@@ -148,7 +150,8 @@ fun HomeScreen(
                     HomeGreetingMessage(
                         modifier = Modifier.padding(
                             start = 20.dp
-                        )
+                        ),
+                        nickname = "닉네임"
                     )
 
                     Spacer(
@@ -158,7 +161,7 @@ fun HomeScreen(
 
                     RoomieNavigateButton(
                         modifier = Modifier
-                            .padding(start = 19.dp, end = 21.dp),
+                            .padding(horizontal = 20.dp),
                         type = NavigateButtonType.UPDATE,
                         text = "1월 1일 루미 업데이트 알아보기",
                         textStyle = RoomieTheme.typography.body3M14,
@@ -217,30 +220,28 @@ fun HomeScreen(
                         }
                     }
 
-                    Box(
+                    Column(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(color = Color.White)
                             .padding(horizontal = 12.dp)
                     ) {
-                        Column {
-                            Spacer(
-                                modifier = Modifier
-                                    .height(32.dp)
-                            )
+                        Spacer(
+                            modifier = Modifier
+                                .height(32.dp)
+                        )
 
-                            Text(
-                                text = "최근 본 방",
-                                style = RoomieTheme.typography.heading5Sb18,
-                                color = RoomieTheme.colors.grayScale12
-                            )
+                        Text(
+                            text = "최근 본 방",
+                            style = RoomieTheme.typography.heading5Sb18,
+                            color = RoomieTheme.colors.grayScale12
+                        )
 
-                            Spacer(
-                                modifier = Modifier
-                                    .height(16.dp)
-                            )
+                        Spacer(
+                            modifier = Modifier
+                                .height(16.dp)
+                        )
 
-                        }
                     }
                 }
 
@@ -279,7 +280,7 @@ fun HomeScreen(
                     ) {
                         Spacer(
                             modifier = Modifier
-                                .height(20.dp)
+                                .height(16.dp)
                         )
 
                         RoomieNavigateButton(
@@ -334,6 +335,7 @@ fun HomeScreen(
 
 @Composable
 private fun HomeGreetingMessage(
+    nickname: String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -341,17 +343,29 @@ private fun HomeGreetingMessage(
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = "nickname",
+            text = nickname,
             style = RoomieTheme.typography.heading2Sb20,
             color = RoomieTheme.colors.primary
         )
 
         Text(
-            text = stringResource(R.string.user_hello),
+            text = "님,",
             style = RoomieTheme.typography.heading2Sb20,
             color = RoomieTheme.colors.grayScale12
         )
     }
+
+    Spacer(
+        modifier = Modifier
+            .height(4.dp)
+    )
+
+    Text(
+        modifier = modifier,
+        text = "루미에 오신 걸 환영해요",
+        style = RoomieTheme.typography.heading2Sb20,
+        color = RoomieTheme.colors.grayScale12
+    )
 
     Spacer(
         modifier = Modifier
@@ -360,7 +374,7 @@ private fun HomeGreetingMessage(
 
     Text(
         modifier = modifier,
-        text = "루미가 루미님의 완벽한 집을\n찾아드릴게요",
+        text = "루미가 ${nickname}님의 완벽한 집을\n찾아드릴게요",
         style = RoomieTheme.typography.body4R12,
         color = RoomieTheme.colors.grayScale7
     )
