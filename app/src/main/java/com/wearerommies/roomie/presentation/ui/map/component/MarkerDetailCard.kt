@@ -112,9 +112,11 @@ fun MarkerDetailCard(
                     horizontalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
                     Text(
-                        text = gender,
+                        text = occupancy,
                         style = RoomieTheme.typography.body4R12,
-                        color = RoomieTheme.colors.grayScale7
+                        color = RoomieTheme.colors.grayScale7,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
 
                     Icon(
@@ -123,13 +125,13 @@ fun MarkerDetailCard(
                         contentDescription = null
                     )
 
-
                     Text(
-                        text = occupancy,
+                        text = gender,
                         style = RoomieTheme.typography.body4R12,
-                        color = RoomieTheme.colors.grayScale7
+                        color = RoomieTheme.colors.grayScale7,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
-
                 }
 
                 Row(
@@ -139,7 +141,9 @@ fun MarkerDetailCard(
                     Text(
                         text = location,
                         style = RoomieTheme.typography.body4R12,
-                        color = RoomieTheme.colors.grayScale7
+                        color = RoomieTheme.colors.grayScale7,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
 
                     Icon(
@@ -192,7 +196,7 @@ fun MarkerDetailCardPreview() {
             contractTerm = 6,
             gender = "여성전용",
             occupancy = "1인실",
-            location = "서대문구 연희동",
+            location = "서대문구 연희동sk스카이뷰12345678912345687912356798123456789123",
             locationDescription = "sk스카이뷰12345678912345687912356798123456789123",
             moodTag = "#활기찬",
             onClick = {}
