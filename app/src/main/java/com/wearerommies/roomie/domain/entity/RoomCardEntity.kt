@@ -10,6 +10,6 @@ data class RoomCardEntity(
     val locationDescription: String,
     val isPinned: Boolean = true,
     val moodTag: String,
-    val contract_term: Int,
+    val contractTerm: Int,
     val mainImgUrl: String,
 )

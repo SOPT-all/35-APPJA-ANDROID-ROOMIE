@@ -128,7 +128,7 @@ fun RoomieRoomCard(
                     )
 
                     Text(
-                        text = "${roomCardEntity.contract_term}개월",
+                        text = "${roomCardEntity.contractTerm}개월",
                         style = RoomieTheme.typography.body5Sb12,
                         color = RoomieTheme.colors.primary
                     )
@@ -195,7 +195,7 @@ private fun RoomieRoomCardPreview() {
                 locationDescription = "자이아파트",
                 isPinned = false,
                 moodTag = "#차분한",
-                contract_term = 6,
+                contractTerm = 6,
                 mainImgUrl = "https://example.com/images/house1.jpg"
             ),
             onClick = {},

@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,6 +33,7 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.overlay.OverlayImage
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.HouseEntity
+import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.ui.map.component.MapTopBar
 import com.wearerommies.roomie.presentation.ui.map.component.MarkerDetailCard
@@ -79,7 +82,7 @@ fun MapRoute(
     )
 }
 
-@OptIn(ExperimentalNaverMapApi::class)
+@OptIn(ExperimentalNaverMapApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MapScreen(
     paddingValues: PaddingValues,
