@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,9 +39,9 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 @Composable
 fun RoomieRoomCard(
     roomCardEntity: RoomCardEntity,
+    onClick: () -> Unit,
+    onLikeClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
-    onLikeClick: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
@@ -54,7 +55,7 @@ fun RoomieRoomCard(
         Box {
             AsyncImage(
                 model = roomCardEntity.mainImgUrl,
-                contentDescription = null,
+                contentDescription = stringResource(R.string.main_room_image),
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(140.dp)
@@ -168,7 +169,7 @@ private fun DotWithText(
         )
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_middle_dot),
-            contentDescription = "dot",
+            contentDescription = null,
             tint = RoomieTheme.colors.grayScale7
         )
         Text(
@@ -196,7 +197,9 @@ private fun RoomieRoomCardPreview() {
                 moodTag = "#차분한",
                 contract_term = 6,
                 mainImgUrl = "https://example.com/images/house1.jpg"
-            )
+            ),
+            onClick = {},
+            onLikeClick = {}
         )
 
     }
