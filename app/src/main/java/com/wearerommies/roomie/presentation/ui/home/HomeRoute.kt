@@ -240,41 +240,59 @@ fun HomeScreen(
                                     .height(16.dp)
                             )
 
-                            RoomieRoomCard(
-                                roomCardEntity = RoomCardEntity(
-                                    houseId = 1,
-                                    monthlyRent = "30~50",
-                                    deposit = "200~300",
-                                    occupancyType = "2인실",
-                                    location = "서대문구 연희동",
-                                    genderPolicy = "여성전용",
-                                    locationDescription = "자이아파트",
-                                    isPinned = false,
-                                    moodTag = "#차분한",
-                                    contract_term = 6,
-                                    mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
-                                ),
-                                onClick = { },
-                                onLikeClick = { }
-                            )
-
-                            Spacer(
-                                modifier = Modifier
-                                    .height(20.dp)
-                            )
-
-                            RoomieNavigateButton(
-                                modifier = Modifier
-                                    .padding(horizontal = 4.dp),
-                                type = NavigateButtonType.HOME,
-                                text = "지도에서 더 많은 쉐어하우스 찾기"
-                            )
-
-                            Spacer(
-                                modifier = Modifier
-                                    .height(24.dp)
-                            )
                         }
+                    }
+                }
+
+                items(count = 3, key = { it }) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(color = Color.White)
+                    ) {
+                        RoomieRoomCard(
+                            modifier = Modifier
+                                .padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
+                            roomCardEntity = RoomCardEntity(
+                                houseId = 1,
+                                monthlyRent = "30~50",
+                                deposit = "200~300",
+                                occupancyType = "2인실",
+                                location = "서대문구 연희동",
+                                genderPolicy = "여성전용",
+                                locationDescription = "자이아파트",
+                                isPinned = false,
+                                moodTag = "#차분한",
+                                contract_term = 6,
+                                mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                            ),
+                            onClick = { },
+                            onLikeClick = { }
+                        )
+                    }
+                }
+
+                item {
+                    Column(
+                        modifier = Modifier
+                            .background(color = Color.White)
+                    ) {
+                        Spacer(
+                            modifier = Modifier
+                                .height(20.dp)
+                        )
+
+                        RoomieNavigateButton(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp),
+                            type = NavigateButtonType.HOME,
+                            text = "지도에서 더 많은 쉐어하우스 찾기"
+                        )
+
+                        Spacer(
+                            modifier = Modifier
+                                .height(120.dp)
+                        )
                     }
                 }
             }
