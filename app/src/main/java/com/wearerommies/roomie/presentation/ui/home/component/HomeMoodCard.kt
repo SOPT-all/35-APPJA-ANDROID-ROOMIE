@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
@@ -29,8 +28,8 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 @Composable
 fun HomeMoodCard(
     homeMoodCardType: HomeMoodCardType,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -47,27 +46,9 @@ fun HomeMoodCard(
             }
             .padding(top = 12.dp, bottom = 12.dp, start = 12.dp, end = 10.dp),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "# " + stringResource(homeMoodCardType.moodTag),
-                style = RoomieTheme.typography.body2Sb14,
-                color = RoomieTheme.colors.primary,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .weight(1f)
-            )
-
-            Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_right_line_black_16px),
-                contentDescription = null,
-                tint = RoomieTheme.colors.primary
-            )
-        }
+        MoodCardMainText(
+            homeMoodCardType = homeMoodCardType
+        )
 
         Spacer(
             modifier = Modifier
@@ -82,6 +63,38 @@ fun HomeMoodCard(
     }
 }
 
+@Composable
+private fun MoodCardMainText(homeMoodCardType: HomeMoodCardType) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "#",
+            style = RoomieTheme.typography.body2Sb14,
+            color = RoomieTheme.colors.primary,
+        )
+
+        Spacer(modifier = Modifier.width(4.dp))
+
+        Text(
+            text = stringResource(homeMoodCardType.moodTag),
+            style = RoomieTheme.typography.body2Sb14,
+            color = RoomieTheme.colors.primary,
+        )
+
+        Spacer(
+            modifier = Modifier
+                .weight(1f)
+        )
+
+        Icon(
+            imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_right_line_black_16px),
+            contentDescription = null,
+            tint = RoomieTheme.colors.primary
+        )
+    }
+}
+
 @Preview
 @Composable
 private fun HomeMoodCardPreview() {
@@ -90,15 +103,18 @@ private fun HomeMoodCardPreview() {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             HomeMoodCard(
-                homeMoodCardType = HomeMoodCardType.CALM
+                homeMoodCardType = HomeMoodCardType.CALM,
+                onClick = {}
             )
 
             HomeMoodCard(
-                homeMoodCardType = HomeMoodCardType.ACTIVE
+                homeMoodCardType = HomeMoodCardType.ACTIVE,
+                onClick = {}
             )
 
             HomeMoodCard(
-                homeMoodCardType = HomeMoodCardType.CLEAN
+                homeMoodCardType = HomeMoodCardType.CLEAN,
+                onClick = {}
             )
         }
     }
