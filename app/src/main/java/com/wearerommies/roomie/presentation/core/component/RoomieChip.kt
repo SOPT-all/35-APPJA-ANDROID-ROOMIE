@@ -14,8 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -66,7 +67,10 @@ fun RoomieTextWithDotChip(
             }
             .padding(horizontal = 8.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(2.dp, alignment = Alignment.CenterHorizontally),
+        horizontalArrangement = Arrangement.spacedBy(
+            2.dp,
+            alignment = Alignment.CenterHorizontally
+        ),
     ) {
         Text(
             text = firstText,
@@ -74,8 +78,8 @@ fun RoomieTextWithDotChip(
             color = contentColor
         )
         Icon(
-            painter = painterResource(R.drawable.ic_middle_dot),
-            contentDescription = "dot",
+            imageVector = ImageVector.vectorResource(R.drawable.ic_middle_dot),
+            contentDescription = null,
             tint = contentColor
         )
         Text(
