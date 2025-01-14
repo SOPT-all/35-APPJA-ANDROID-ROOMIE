@@ -6,12 +6,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -20,6 +24,20 @@ fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
         indication = null,
         interactionSource = remember { MutableInteractionSource() }
     ) { onClick() }
+}
+
+fun Modifier.roomieButtonClickable(
+    onClick: () -> Unit,
+    pressedColor: Color,
+    isPressed: Boolean = false,
+): Modifier = composed {
+    this
+        .clickable(
+            indication = if(isPressed) ripple(color = pressedColor) else null,
+            interactionSource = remember { MutableInteractionSource() }
+        ) {
+            onClick()
+        }
 }
 
 fun Modifier.topBorder(
@@ -35,6 +53,20 @@ fun Modifier.topBorder(
     )
 }
 
+fun Modifier.customShadow(
+    elevation: Dp = 4.dp,
+    shape: Shape = RectangleShape,
+    spotColor: Color = Color(0x40000000),
+    ambientColor: Color = Color(0x40000000),
+    clip: Boolean = false
+): Modifier = this.shadow(
+    elevation = elevation,
+    shape = shape,
+    clip = clip,
+    spotColor = spotColor,
+    ambientColor = ambientColor
+)
+
 fun Modifier.roundedBackgroundWithBorder(
     cornerRadius: Dp,
     backgroundColor: Color,
@@ -42,7 +74,7 @@ fun Modifier.roundedBackgroundWithBorder(
     borderWidth: Dp = 0.dp,
 ): Modifier {
     return this
-        .background(backgroundColor, shape = RoundedCornerShape(cornerRadius))
+        .background(backgroundColor, shape = RoundedCornerShape(size = cornerRadius))
         .border(
             width = borderWidth,
             color = borderColor,

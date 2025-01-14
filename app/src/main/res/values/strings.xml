@@ -1,9 +1,25 @@
 <resources>
     <string name="app_name">Roomie Android</string>
+
+    // main tab
     <string name="home">홈</string>
     <string name="map">지도</string>
     <string name="mypage">마이페이지</string>
 
+    // map
+    <string name="monthly_rent">월세</string>
+    <string name="deposit_variable">보증금 %1$s</string>
+    <string name="contract_term_variable">%1$s개월</string>
+    <string name="navigate_button">filter button</string>
+    <string name="search_textfield_placeholder">원하는 장소를 찾아보세요</string>
+
+    // search
+    <string name="search_button">search button</string>
+
+    // common
+    <string name="slash">/</string>
+    <string name="navigate_to_house_detail">navigate to house detail</string>
+  
     // filter
     <string name="desired_move_in_date">희망 입주날짜</string>
     <string name="birth_date">생년월일</string>
@@ -11,4 +27,9 @@
     // common
     <string name="dismiss">취소</string>
     <string name="confirm">확인</string>
+    <string name="slash">/</string>
+    <string name="date_picker_place_holder">2025/01/01</string>
+    <string name="navigate_to_house_detail">navigate to house detail</string>
+    <string name="roomie_all_rights_reserved">Roomie. All Rights Reserved.</string>
+    <string name="main_room_image">방 이미지</string>
 </resources>
