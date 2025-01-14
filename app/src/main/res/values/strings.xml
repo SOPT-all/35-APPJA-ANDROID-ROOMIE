@@ -31,6 +31,9 @@
     <string name="user_hello">님 안녕하세요!</string>
     <string name="user_login_type">카카오 계정 회원</string>
 
+    // detail
+    <string name="house_main_image">쉐어하우스 메인 이미지</string>
+
     // common
     <string name="dismiss">취소</string>
     <string name="confirm">확인</string>
@@ -39,4 +42,5 @@
     <string name="navigate_to_house_detail">navigate to house detail</string>
     <string name="roomie_all_rights_reserved">Roomie. All Rights Reserved.</string>
     <string name="main_room_image">방 이미지</string>
+    <string name="back_button">뒤로가기 버튼</string>
 </resources>
