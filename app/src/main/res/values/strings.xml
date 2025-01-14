@@ -48,4 +48,6 @@
     <string name="roomie_all_rights_reserved">Roomie. All Rights Reserved.</string>
     <string name="main_room_image">방 이미지</string>
     <string name="back_button">뒤로가기 버튼</string>
+    <string name="heart_button">찜하기 버튼</string>
+    <string name="chat_button">채팅 버튼</string>
 </resources>
