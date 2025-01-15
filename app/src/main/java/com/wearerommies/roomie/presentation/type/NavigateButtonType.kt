@@ -11,6 +11,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.ui.theme.GrayScale1
 import com.wearerommies.roomie.ui.theme.GrayScale10
 import com.wearerommies.roomie.ui.theme.GrayScale5
 import com.wearerommies.roomie.ui.theme.GrayScale7
@@ -21,7 +22,7 @@ import com.wearerommies.roomie.ui.theme.TransparentGray160
 
 enum class NavigateButtonType(
     val paddingValues: PaddingValues,
-    val backgroundColor: Color = Color.White,
+    val backgroundColor: Color = GrayScale1,
     val borderColor: Color = Color.Transparent,
     val borderWidth: Dp = 0.dp,
     val leadingIcon: @Composable () -> Unit = {},

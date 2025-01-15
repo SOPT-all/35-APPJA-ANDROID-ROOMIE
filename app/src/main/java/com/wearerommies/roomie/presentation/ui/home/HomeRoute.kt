@@ -1,6 +1,7 @@
 package com.wearerommies.roomie.presentation.ui.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,7 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,6 +35,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -45,7 +47,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
-import coil.compose.AsyncImage
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieNavigateButton
@@ -74,6 +75,10 @@ fun HomeRoute(
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackBarHost = remember { SnackbarHostState() }
+
+    LaunchedEffect(true) {
+        viewModel.getHomeData()
+    }
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle)
@@ -115,7 +120,8 @@ fun HomeScreen(
     val scrollState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
     val scrollOffset = scrollState.firstVisibleItemScrollOffset
-    val topBarBackgroundColor = if (scrollOffset > 1) Color.White else Color.Transparent
+    val topBarBackgroundColor =
+        if (scrollOffset > 1) RoomieTheme.colors.grayScale1 else Color.Transparent
     val topBarBorderColor =
         if (scrollOffset > 1) RoomieTheme.colors.grayScale4 else Color.Transparent
 
@@ -142,7 +148,7 @@ fun HomeScreen(
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color.White,
+                        RoomieTheme.colors.grayScale1,
                         RoomieTheme.colors.primary
                     )
                 ),
@@ -152,6 +158,28 @@ fun HomeScreen(
     ) {
         when (state) {
             is UiState.Loading -> {
+                item {
+                    Text(
+                        text = "데이터 로딩중",
+                        textAlign = TextAlign.Center,
+                        fontSize = 30.sp
+                    )
+                }
+            }
+
+            is UiState.Failure -> {
+                item {
+                    Text(
+                        modifier = Modifier
+                            .noRippleClickable { navigateUp() },
+                        text = "데이터 불러오기 실패",
+                        textAlign = TextAlign.Center,
+                        fontSize = 30.sp
+                    )
+                }
+            }
+
+            is UiState.Success -> {
                 stickyHeader {
                     RoomieTopBar(
                         modifier = Modifier
@@ -176,7 +204,7 @@ fun HomeScreen(
                                 )
                                 Icon(
                                     imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_down_line_black_16px),
-                                    contentDescription = stringResource(R.string.back)
+                                    contentDescription = stringResource(R.string.home_location)
                                 )
                             }
                         },
@@ -197,26 +225,49 @@ fun HomeScreen(
                 item {
                     Spacer(
                         modifier = Modifier
-                            .height(32.dp)
+                            .height(14.dp)
                     )
 
-                    HomeGreetingMessage(
-                        modifier = Modifier.padding(
-                            start = 20.dp
-                        ),
-                        nickname = stringResource(R.string.user_nickname)
-                    )
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.CenterEnd
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .width((LocalConfiguration.current.screenWidthDp * 0.556).dp),
+                                painter = painterResource(R.drawable.ic_home_character),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            HomeGreetingMessage(
+                                modifier = Modifier.padding(
+                                    start = 20.dp
+                                ),
+                                nickname = stringResource(R.string.user_nickname)
+                            )
+                        }
+                    }
 
                     Spacer(
                         modifier = Modifier
-                            .height(66.dp)
+                            .height(12.dp)
                     )
 
                     RoomieNavigateButton(
                         modifier = Modifier
                             .padding(horizontal = 20.dp),
                         type = NavigateButtonType.UPDATE,
-                        text = stringResource(R.string.today_find_out_update),
+                        text = stringResource(R.string.update_banner_message),
                         textStyle = RoomieTheme.typography.body3M14,
                         textColor = RoomieTheme.colors.grayScale10
                     )
@@ -235,7 +286,7 @@ fun HomeScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(color = Color.White)
+                            .background(color = RoomieTheme.colors.grayScale1)
                     ) {
                         RoomieRoomCard(
                             modifier = Modifier
@@ -269,7 +320,7 @@ fun HomeScreen(
                 item {
                     Column(
                         modifier = Modifier
-                            .background(color = Color.White)
+                            .background(color = RoomieTheme.colors.grayScale1)
                     ) {
                         Spacer(
                             modifier = Modifier
@@ -290,38 +341,6 @@ fun HomeScreen(
                     }
                 }
             }
-
-            is UiState.Failure -> {
-                item {
-                    Text(
-                        modifier = Modifier
-                            .noRippleClickable { navigateUp() },
-                        text = "데이터 불러오기 실패",
-                        textAlign = TextAlign.Center,
-                        fontSize = 30.sp
-                    )
-                }
-            }
-
-            is UiState.Success -> {
-                item {
-                    AsyncImage(
-                        model = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg",
-                        contentDescription = "iloveandroidroomies",
-                        modifier = Modifier.size(height),
-                        contentScale = ContentScale.Crop
-                    )
-                }
-
-                item {
-                    Text(
-                        modifier = Modifier.padding(top = 30.dp),
-                        text = state.data,
-                        textAlign = TextAlign.Center,
-                        fontSize = 30.sp,
-                    )
-                }
-            }
         }
     }
 }
@@ -333,7 +352,7 @@ private fun RecentCardTitle(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color = Color.White)
+            .background(color = RoomieTheme.colors.grayScale1)
             .padding(horizontal = 12.dp)
     ) {
         Spacer(
@@ -363,7 +382,7 @@ private fun MoodCardGroup(
         modifier = modifier
             .fillMaxSize()
             .background(
-                color = Color.White, shape = RoundedCornerShape(
+                color = RoomieTheme.colors.grayScale1, shape = RoundedCornerShape(
                     topStart = 20.dp,
                     topEnd = 20.dp
                 )
@@ -412,46 +431,48 @@ private fun HomeGreetingMessage(
     nickname: String,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
-    ) {
-        Text(
-            text = nickname,
-            style = RoomieTheme.typography.heading2Sb20,
-            color = RoomieTheme.colors.primary
+    Column {
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Text(
+                text = nickname,
+                style = RoomieTheme.typography.heading2Sb20,
+                color = RoomieTheme.colors.primary
+            )
+
+            Text(
+                text = stringResource(R.string.user_is),
+                style = RoomieTheme.typography.heading2Sb20,
+                color = RoomieTheme.colors.grayScale12
+            )
+        }
+
+        Spacer(
+            modifier = Modifier
+                .height(4.dp)
         )
 
         Text(
-            text = stringResource(R.string.user_is),
+            modifier = modifier,
+            text = stringResource(R.string.welcome_to_roomie),
             style = RoomieTheme.typography.heading2Sb20,
             color = RoomieTheme.colors.grayScale12
         )
+
+        Spacer(
+            modifier = Modifier
+                .height(12.dp)
+        )
+
+        Text(
+            modifier = modifier,
+            text = stringResource(R.string.roomie_find_perfect_home, nickname),
+            style = RoomieTheme.typography.body4R12,
+            color = RoomieTheme.colors.grayScale7
+        )
     }
-
-    Spacer(
-        modifier = Modifier
-            .height(4.dp)
-    )
-
-    Text(
-        modifier = modifier,
-        text = stringResource(R.string.welcome_to_roomie),
-        style = RoomieTheme.typography.heading2Sb20,
-        color = RoomieTheme.colors.grayScale12
-    )
-
-    Spacer(
-        modifier = Modifier
-            .height(12.dp)
-    )
-
-    Text(
-        modifier = modifier,
-        text = stringResource(R.string.roomie_find_perfect_home, nickname),
-        style = RoomieTheme.typography.body4R12,
-        color = RoomieTheme.colors.grayScale7
-    )
 }
 
 @Preview
@@ -462,7 +483,7 @@ fun HomeScreenPreview() {
             paddingValues = PaddingValues(),
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
-            state = UiState.Loading
+            state = UiState.Success("")
         )
     }
 }
