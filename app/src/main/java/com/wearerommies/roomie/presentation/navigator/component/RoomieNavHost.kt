@@ -28,7 +28,8 @@ fun RoomieNavHost(
     ) {
         homeNavGraph(
             paddingValues = padding,
-            navigateToBookmark = navigator::navigateToBookmark
+            navigateToBookmark = navigator::navigateToBookmark,
+            navigateToMood = navigator::navigateToMood
         )
         mapNavGraph(
             paddingValues = padding,

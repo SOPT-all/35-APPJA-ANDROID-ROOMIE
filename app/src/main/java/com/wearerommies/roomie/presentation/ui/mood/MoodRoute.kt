@@ -98,6 +98,7 @@ fun MoodRoute(
         paddingValues = paddingValues,
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
+        onLikeClick = viewModel::patchHousePin,
         state = state.uiState
     )
 
@@ -108,6 +109,7 @@ fun MoodScreen(
     paddingValues: PaddingValues,
     snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
+    onLikeClick: () -> Unit,
     state: UiState<String>,
     modifier: Modifier = Modifier
 ) {
@@ -252,12 +254,7 @@ fun MoodScreen(
                             ),
                             onClick = { },
                             onLikeClick = {
-                                coroutineScope.launch {
-                                    snackBarHost.showSnackbar(
-                                        message = "찜 목록에 추가되었습니다!",
-                                        duration = SnackbarDuration.Short
-                                    )
-                                }
+                                coroutineScope.launch { onLikeClick() }
                             }
                         )
                     }
@@ -330,6 +327,7 @@ fun MoodScreenPreview() {
             paddingValues = PaddingValues(),
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
+            onLikeClick = {},
             state = UiState.Success("")
         )
     }

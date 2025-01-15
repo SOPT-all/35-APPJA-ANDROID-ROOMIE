@@ -70,6 +70,7 @@ fun HomeRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
     navigateToBookmark: () -> Unit,
+    navigateToMood: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -93,6 +94,8 @@ fun HomeRoute(
                             duration = SnackbarDuration.Short
                         )
                     }
+                    is HomeSideEffect.NavigateToBookMark -> navigateToBookmark()
+                    is HomeSideEffect.NavigateToMood -> navigateToMood()
                 }
             }
     }
@@ -101,7 +104,9 @@ fun HomeRoute(
         paddingValues = paddingValues,
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
-        navigateToBookmark = navigateToBookmark,
+        navigateToBookmark = viewModel::navigateToBookmark,
+        navigateToMood = viewModel::navigateToMood,
+        onLikeClick = viewModel::patchHousePin,
         state = state.uiState
     )
 
@@ -114,6 +119,8 @@ fun HomeScreen(
     snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
     navigateToBookmark: () -> Unit,
+    navigateToMood: () -> Unit,
+    onLikeClick: () -> Unit,
     state: UiState<String>,
     modifier: Modifier = Modifier
 ) {
@@ -283,7 +290,9 @@ fun HomeScreen(
                             .height(20.dp)
                     )
 
-                    MoodCardGroup()
+                    MoodCardGroup(
+                        onClick = navigateToMood
+                    )
 
                     RecentCardTitle()
                 }
@@ -312,12 +321,7 @@ fun HomeScreen(
                             ),
                             onClick = { },
                             onLikeClick = {
-                                coroutineScope.launch {
-                                    snackBarHost.showSnackbar(
-                                        message = "찜 목록에 추가되었습니다!",
-                                        duration = SnackbarDuration.Short
-                                    )
-                                }
+                                coroutineScope.launch { onLikeClick() }
                             }
                         )
                     }
@@ -382,6 +386,7 @@ private fun RecentCardTitle(
 
 @Composable
 private fun MoodCardGroup(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -413,19 +418,19 @@ private fun MoodCardGroup(
                 HomeMoodCard(
                     modifier = Modifier.weight(1f),
                     homeMoodCardType = HomeMoodCardType.CALM,
-                    onClick = {}
+                    onClick = onClick
                 )
 
                 HomeMoodCard(
                     modifier = Modifier.weight(1f),
                     homeMoodCardType = HomeMoodCardType.ACTIVE,
-                    onClick = {}
+                    onClick = onClick
                 )
 
                 HomeMoodCard(
                     modifier = Modifier.weight(1f),
                     homeMoodCardType = HomeMoodCardType.CLEAN,
-                    onClick = {}
+                    onClick = onClick
                 )
             }
         }
@@ -490,6 +495,8 @@ fun HomeScreenPreview() {
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
             navigateToBookmark = {},
+            navigateToMood = {},
+            onLikeClick = {},
             state = UiState.Success("")
         )
     }
