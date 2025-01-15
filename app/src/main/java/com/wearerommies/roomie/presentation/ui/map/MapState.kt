@@ -8,7 +8,7 @@ import kotlinx.collections.immutable.persistentListOf
 data class MapState(
     val latitude: Double = 37.563974138508,
     val longitude: Double = 126.93836946793,
-    val isBottomSheetOpened: Boolean = false,
+    val isBottomSheetOpened: Boolean = true,
     val houseList: PersistentList<HouseEntity> = persistentListOf(),
     val markerDetail: MarkerDetailModel = MarkerDetailModel(
         houseId = 0,
