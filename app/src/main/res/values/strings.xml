@@ -30,6 +30,18 @@
     <string name="profile_image">프로필 이미지</string>
     <string name="user_hello">님 안녕하세요!</string>
     <string name="user_login_type">카카오 계정 회원</string>
+    <string name="show_more_roomie">루미 더보기</string>
+    <string name="bookmark_list">찜 리스트</string>
+    <string name="find_sharehouses">쉐어하우스 찾기</string>
+    <string name="request_new_room">원하는 매물이 없다면 새로 요청해보세요</string>
+    <string name="add_new_room">매물 등록하기</string>
+    <string name="register_sharehouse_owner">쉐어하우스 사장님이라면 매물을 등록해보세요</string>
+    <string name="send_feedback">의견 보내기</string>
+    <string name="service_infomation">루미 서비스 정보</string>
+    <string name="service_introduction">서비스 소개</string>
+    <string name="recent_updates">최근 소식</string>
+    <string name="policy_and_terms">약관 및 정책</string>
+    <string name="app_version">앱 버전</string>
 
     // common
     <string name="dismiss">취소</string>

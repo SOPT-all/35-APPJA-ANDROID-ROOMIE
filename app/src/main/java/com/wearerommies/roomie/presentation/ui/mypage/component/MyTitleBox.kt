@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
@@ -35,7 +34,7 @@ private fun MyTitleBoxPreview() {
     RoomieAndroidTheme {
         Column(
             modifier = Modifier
-                .background(color = Color.White),
+                .background(color = RoomieTheme.colors.grayScale1),
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             MyTitleBox(
