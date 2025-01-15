@@ -31,7 +31,6 @@ fun DetailBottomBar(
         modifier = modifier
             .fillMaxWidth()
             .topBorder(height = convertDpToFloat(1.dp), color = RoomieTheme.colors.grayScale5)
-            .bottomBorder(height = convertDpToFloat(1.dp), color = RoomieTheme.colors.grayScale5)
             .padding(vertical = 12.dp, horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
