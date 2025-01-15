@@ -3,10 +3,9 @@ package com.wearerommies.roomie.presentation.ui.map
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,8 +32,8 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.overlay.OverlayImage
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.HouseEntity
-import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
 import com.wearerommies.roomie.presentation.core.extension.showToast
+import com.wearerommies.roomie.presentation.ui.map.component.MapBotomSheet
 import com.wearerommies.roomie.presentation.ui.map.component.MapTopBar
 import com.wearerommies.roomie.presentation.ui.map.component.MarkerDetailCard
 import com.wearerommies.roomie.presentation.ui.map.model.MarkerDetailModel
@@ -72,6 +71,7 @@ fun MapRoute(
         paddingValues = paddingValues,
         navigateToSearch = navigateToSearch,
         navigateToFilter = navigateToFilter,
+        isBottomSheetOpened = state.isBottomSheetOpened,
         latitude = state.latitude,
         longitude = state.longitude,
         houseList = state.houseList,
@@ -79,15 +79,17 @@ fun MapRoute(
         markerDetail = state.markerDetail,
         clickedMarkerId = state.clickedMarkerId,
         resetClickedMarker = viewModel::resetClickedMarker,
+        setBottomSheetState = viewModel::setBottomSheetState
     )
 }
 
-@OptIn(ExperimentalNaverMapApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalNaverMapApi::class)
 @Composable
 fun MapScreen(
     paddingValues: PaddingValues,
     navigateToSearch: () -> Unit,
     navigateToFilter: () -> Unit,
+    isBottomSheetOpened: Boolean,
     latitude: Double,
     longitude: Double,
     houseList: PersistentList<HouseEntity>,
@@ -95,6 +97,7 @@ fun MapScreen(
     markerDetail: MarkerDetailModel,
     clickedMarkerId: Int?,
     resetClickedMarker: () -> Unit,
+    setBottomSheetState: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val initialCameraPosition = LatLng(latitude, longitude) // 초기 위치 임시 고정
@@ -105,8 +108,9 @@ fun MapScreen(
 
     Box(
         modifier = modifier
-            .padding(bottom = paddingValues.calculateBottomPadding())
+            .fillMaxSize()
             .background(RoomieTheme.colors.grayScale1)
+            .padding(bottom = paddingValues.calculateBottomPadding())
     ) {
         // TODO: 기획-디자인과 카메라 범위 자동 조정 -> 현재는 모든 마커가 나타나도록 조정되어 있음
         LaunchedEffect(houseList) {
@@ -127,7 +131,7 @@ fun MapScreen(
             uiSettings = MapUiSettings(isZoomControlEnabled = false),
             onMapClick = { _, _ ->
                 resetClickedMarker()
-
+                setBottomSheetState(true)
                 cameraPositionState.move(
                     CameraUpdate.scrollAndZoomTo(initialCameraPosition, initialZoomLevel)
                         .animate(CameraAnimation.Fly)
@@ -142,6 +146,7 @@ fun MapScreen(
                     else OverlayImage.fromResource(R.drawable.ic_map_pin_normal),
                     onClick = {
                         onMarkerClicked(marker.houseId)
+                        setBottomSheetState(false)
                         cameraPositionState.move(
                             CameraUpdate.scrollAndZoomTo(
                                 LatLng(marker.x, marker.y),
@@ -183,6 +188,8 @@ fun MapScreen(
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 16.dp),
             )
+
+        if (isBottomSheetOpened) MapBotomSheet()
     }
 }
 
@@ -194,6 +201,7 @@ fun MapScreenPreview() {
             paddingValues = PaddingValues(),
             navigateToSearch = {},
             navigateToFilter = {},
+            isBottomSheetOpened = false,
             latitude = 0.0,
             longitude = 0.0,
             houseList = persistentListOf(),
@@ -210,7 +218,8 @@ fun MapScreenPreview() {
                 moodTag = "#차분한"
             ),
             clickedMarkerId = null,
-            resetClickedMarker = {}
+            resetClickedMarker = {},
+            setBottomSheetState = {}
         )
     }
 }
