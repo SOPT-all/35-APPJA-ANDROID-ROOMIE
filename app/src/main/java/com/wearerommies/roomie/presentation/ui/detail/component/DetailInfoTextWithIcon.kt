@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
@@ -40,7 +41,8 @@ fun DetailInfoTextWithIcon(
         Text(
             text = text,
             style = RoomieTheme.typography.body1R14,
-            color = RoomieTheme.colors.grayScale10
+            color = RoomieTheme.colors.grayScale10,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }
