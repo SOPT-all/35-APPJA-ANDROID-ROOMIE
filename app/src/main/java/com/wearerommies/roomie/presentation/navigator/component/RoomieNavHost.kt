@@ -21,11 +21,15 @@ fun RoomieNavHost(
         navController = navigator.navController,
         startDestination = MainTabRoute.Home
     ) {
-        homeNavGraph()
+        homeNavGraph(
+            paddingValues = padding
+        )
         mapNavGraph(
             navigateToSearch = navigator::navigateToSearch
         )
-        myNavGraph()
+        myNavGraph(
+            paddingValues = padding
+        )
         searchNavGraph(
             paddingValues = padding,
             navigateUp = navigator::popBackStackIfNotHome

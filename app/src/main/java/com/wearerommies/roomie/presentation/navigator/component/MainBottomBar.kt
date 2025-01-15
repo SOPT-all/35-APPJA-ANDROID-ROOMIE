@@ -15,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
@@ -44,7 +43,7 @@ fun MainBottomBar(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .background(color = Color.White)
+                .background(color = RoomieTheme.colors.grayScale1)
                 .topBorder(height = convertDpToFloat(1.dp), color = RoomieTheme.colors.grayScale4),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(
@@ -114,7 +113,7 @@ fun MainBottomBarPreview() {
             isVisible = true,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.White)
+                .background(RoomieTheme.colors.grayScale1)
                 .padding(vertical = 12.dp),
             tabs = MainTabType.entries.toPersistentList(),
             currentTabSelected = MainTabType.HOME,
