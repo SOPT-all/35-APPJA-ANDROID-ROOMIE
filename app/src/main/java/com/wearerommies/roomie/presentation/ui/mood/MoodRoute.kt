@@ -121,7 +121,7 @@ fun MoodScreen(
             RoomieSnackbar(
                 modifier = Modifier
                     .padding(
-                        bottom = 24.dp,
+                        bottom = 23.dp,
                         start = 12.dp,
                         end = 12.dp
                     ),
@@ -133,11 +133,13 @@ fun MoodScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
+            .background(color = RoomieTheme.colors.grayScale1)
             .padding(paddingValues),
     ) {
         when (state) {
             is UiState.Loading -> {
                 item {
+                    //todo: 로딩뷰
                     Text(
                         modifier = Modifier
                             .noRippleClickable { navigateUp() },
@@ -202,7 +204,7 @@ fun MoodScreen(
                                 modifier = Modifier
                                     .padding(end = 12.dp)
                                     .align(Alignment.CenterEnd),
-                                painter = painterResource(R.drawable.img_home_character),
+                                painter = painterResource(R.drawable.img_home_character), //todo: 이미지 교체
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop
                             )
@@ -222,7 +224,6 @@ fun MoodScreen(
                                 .height(24.dp)
                         )
                     }
-
                 }
 
                 items(count = 3, key = { it }) {
@@ -243,7 +244,7 @@ fun MoodScreen(
                                 genderPolicy = "여성전용",
                                 locationDescription = "자이아파트",
                                 isPinned = true,
-                                moodTag = "#차분한",
+                                moodTag = "#차분한", //todo: 태그 없애야함
                                 contract_term = 6,
                                 mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
                             ),
@@ -298,11 +299,6 @@ private fun MoodHeaderMessage(
             )
         }
 
-        Spacer(
-            modifier = Modifier
-                .height(4.dp)
-        )
-
         Text(
             modifier = modifier,
             text = "이 집은 어때요?",
@@ -329,8 +325,6 @@ private fun MoodHeaderMessage(
 fun MoodScreenPreview() {
     RoomieAndroidTheme {
         MoodScreen(
-            modifier = Modifier
-                .background(color = RoomieTheme.colors.grayScale1),
             paddingValues = PaddingValues(),
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
