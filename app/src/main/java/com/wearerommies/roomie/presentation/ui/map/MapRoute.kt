@@ -6,16 +6,14 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -34,7 +32,6 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.overlay.OverlayImage
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.HouseEntity
-import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.ui.map.component.MapBotomSheet
 import com.wearerommies.roomie.presentation.ui.map.component.MapTopBar
