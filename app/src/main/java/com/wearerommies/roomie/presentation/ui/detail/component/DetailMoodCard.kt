@@ -43,7 +43,6 @@ fun DetailMoodCard(
                 borderColor = RoomieTheme.colors.grayScale5,
             )
             .padding(16.dp)
-
     ) {
         Text(
             text = roomMood,
