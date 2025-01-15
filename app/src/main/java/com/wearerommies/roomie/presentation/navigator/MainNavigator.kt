@@ -10,11 +10,11 @@ import androidx.navigation.navOptions
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.type.MainTabType
+import com.wearerommies.roomie.presentation.ui.bookmark.navigation.navigateToBookmark
 import com.wearerommies.roomie.presentation.ui.filter.navigation.navigateToFilter
 import com.wearerommies.roomie.presentation.ui.home.navigation.navigateToHome
 import com.wearerommies.roomie.presentation.ui.map.navigation.navigateToMap
 import com.wearerommies.roomie.presentation.ui.mypage.navigation.navigateToMy
-import com.wearerommies.roomie.presentation.ui.navigateToBookmark
 import com.wearerommies.roomie.presentation.ui.navigateToDetail
 import com.wearerommies.roomie.presentation.ui.navigateToDetailAllImage
 import com.wearerommies.roomie.presentation.ui.navigateToDetailRoomsImage
