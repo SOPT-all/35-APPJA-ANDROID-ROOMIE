@@ -1,10 +1,19 @@
 package com.wearerommies.roomie.presentation.ui.mood
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,10 +21,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,9 +39,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
+import com.wearerommies.roomie.R
+import com.wearerommies.roomie.domain.entity.RoomCardEntity
+import com.wearerommies.roomie.presentation.core.component.RoomieFooter
+import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
+import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
+import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.UiState
+import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
@@ -77,7 +99,15 @@ fun MoodScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        RoomieTheme.colors.primary,
+                        RoomieTheme.colors.grayScale1,
+                    )
+                ),
+                shape = RectangleShape,
+            )
             .padding(paddingValues),
     ) {
         when (state) {
@@ -108,17 +138,150 @@ fun MoodScreen(
 
             is UiState.Success -> {
                 item {
-                    Text(
+                    RoomieTopBar(
                         modifier = Modifier
-                            .noRippleClickable { navigateUp() },
-                        text = "MOOD",
-                        color = RoomieTheme.colors.primaryLight1,
-                        textAlign = TextAlign.Center,
-                        fontSize = 30.sp
+                            .bottomBorder(
+                                height = convertDpToFloat(1.dp),
+                                color = RoomieTheme.colors.grayScale4
+                            ),
+                        leadingIcon = {
+                            Icon(
+                                modifier = Modifier
+                                    .padding(all = 10.dp),
+                                imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_line_black_24px),
+                                contentDescription = "뒤로가기" //todo: 머지 후 스트링 적용
+                            )
+                        },
+                        title = "#차분한" //todo: 더미
                     )
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = 37.dp, bottom = 8.dp),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        Image(
+                            modifier = Modifier
+                                .padding(end = 12.dp)
+                                .align(Alignment.CenterEnd),
+                            painter = painterResource(R.drawable.img_home_character),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
+                        )
+
+                        MoodHeaderMessage(
+                            modifier = Modifier
+                                .padding(
+                                    start = 20.dp
+                                )
+                                .align(Alignment.CenterStart),
+                            mood = "#차분한"
+                        )
+                    }
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(24.dp)
+                    )
+                }
+
+                items(count = 3, key = { it }) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(color = RoomieTheme.colors.grayScale1)
+                    ) {
+                        RoomieRoomCard(
+                            modifier = Modifier
+                                .padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
+                            roomCardEntity = RoomCardEntity(
+                                houseId = 1,
+                                monthlyRent = "30~50",
+                                deposit = "200~300",
+                                occupancyType = "2인실",
+                                location = "서대문구 연희동",
+                                genderPolicy = "여성전용",
+                                locationDescription = "자이아파트",
+                                isPinned = true,
+                                moodTag = "#차분한",
+                                contract_term = 6,
+                                mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                            ),
+                            onClick = { },
+                            onLikeClick = {
+//                                coroutineScope.launch {
+//                                    snackBarHost.showSnackbar(
+//                                        message = "찜 목록에 추가되었습니다!",
+//                                        duration = SnackbarDuration.Short
+//                                    )
+//                                }
+                            }
+                        )
+                    }
+                }
+
+                item {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(color = RoomieTheme.colors.grayScale1)
+                            .height(20.dp)
+                    )
+
+                    RoomieFooter()
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun MoodHeaderMessage(
+    mood: String,
+    modifier: Modifier = Modifier
+) {
+    Column {
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Text(
+                text = mood,
+                style = RoomieTheme.typography.heading5Sb18,
+                color = RoomieTheme.colors.primary
+            )
+
+            Text(
+                text = "집 찾으신다면",
+                style = RoomieTheme.typography.heading5Sb18,
+                color = RoomieTheme.colors.grayScale12
+            )
+        }
+
+        Spacer(
+            modifier = Modifier
+                .height(4.dp)
+        )
+
+        Text(
+            modifier = modifier,
+            text = "이 집은 어때요?",
+            style = RoomieTheme.typography.heading5Sb18,
+            color = RoomieTheme.colors.grayScale12
+        )
+
+        Spacer(
+            modifier = Modifier
+                .height(4.dp)
+        )
+
+        Text(
+            modifier = modifier,
+            text = "차분함이 돋보이는 집 리스트예요",
+            style = RoomieTheme.typography.body4R12,
+            color = RoomieTheme.colors.grayScale8
+        )
     }
 }
 
