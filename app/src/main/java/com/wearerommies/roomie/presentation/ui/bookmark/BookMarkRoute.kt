@@ -23,10 +23,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -125,7 +125,7 @@ fun BookMarkScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(RoomieTheme.colors.grayScale1)
             .padding(paddingValues),
     ) {
         when (state) {
@@ -158,7 +158,10 @@ fun BookMarkScreen(
                 item {
                     RoomieTopBar(
                         modifier = Modifier
-                            .bottomBorder(height = convertDpToFloat(1.dp), color = RoomieTheme.colors.grayScale4),
+                            .bottomBorder(
+                                height = convertDpToFloat(1.dp),
+                                color = RoomieTheme.colors.grayScale4
+                            ),
                         leadingIcon = {
                             Icon(
                                 modifier = Modifier
@@ -167,7 +170,7 @@ fun BookMarkScreen(
                                 contentDescription = "뒤로가기" //todo: 머지 후 스트링 적용
                             )
                         },
-                        title = "찜 목록"
+                        title = stringResource(R.string.bookmark_list)
                     )
                 }
 
