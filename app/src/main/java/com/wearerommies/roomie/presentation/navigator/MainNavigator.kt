@@ -13,6 +13,7 @@ import com.wearerommies.roomie.presentation.type.MainTabType
 import com.wearerommies.roomie.presentation.ui.home.navigation.navigateToHome
 import com.wearerommies.roomie.presentation.ui.map.navigation.navigateToMap
 import com.wearerommies.roomie.presentation.ui.mypage.navigation.navigateToMy
+import com.wearerommies.roomie.presentation.ui.search.navigation.navigateToSearch
 
 class MainNavigator(
     val navController: NavHostController,
@@ -52,6 +53,10 @@ class MainNavigator(
         if (!isSameCurrentDestination<MainTabRoute.Home>()) {
             navigateUp()
         }
+    }
+
+    fun navigateToSearch() {
+        navController.navigateToSearch()
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =

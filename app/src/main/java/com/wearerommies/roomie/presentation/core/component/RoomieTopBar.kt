@@ -28,7 +28,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 @Composable
 fun RoomieTopBar(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = Color.White,
+    backgroundColor: Color = RoomieTheme.colors.grayScale1,
     leadingIcon: @Composable () -> Unit = {},
     title: String? = null,
     titleStyle: TextStyle = RoomieTheme.typography.heading5Sb18,

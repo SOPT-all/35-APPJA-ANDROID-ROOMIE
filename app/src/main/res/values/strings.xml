@@ -11,17 +11,29 @@
     <string name="mood_tag_active">활기찬</string>
     <string name="mood_tag_clean">깔끔한</string>
     <string name="mood_card_sub_text">분위기의\n방이 궁금하신가요?</string>
+    <string name="home_location">연남동</string>
+    <string name="update_banner_message">1월 1일 루미 업데이트 알아보기</string>
+    <string name="find_mood">분위기 별로 보기</string>
+    <string name="find_recent_room">최근 본 방</string>
+    <string name="find_more_sharehouses_in_map">지도에서 더 많은 쉐어하우스 찾기</string>
+    <string name="user_is">님,</string>
+    <string name="welcome_to_roomie">루미에 오신 걸 환영해요</string>
+    <string name="roomie_find_perfect_home">루미가 %1$s님의 완벽한 집을\n찾아드릴게요</string>
 
     // map
     <string name="monthly_rent">월세</string>
     <string name="deposit_variable">보증금 %1$s</string>
     <string name="contract_term_variable">%1$s개월</string>
-    <string name="navigate_button">filter button</string>
+    <string name="filter_button">필터 버튼</string>
     <string name="search_textfield_placeholder">원하는 장소를 찾아보세요</string>
+    <string name="location_no_room">해당 위치에는 방이 없어요</string>
+    <string name="search_other_place">다른 장소를 검색해보세요</string>
 
     // search
-    <string name="search_button">search button</string>
-  
+    <string name="search_button">검색 버튼</string>
+    <string name="no_search_result">검색결과가 없어요</string>
+    <string name="check_again">정확하게 입력했는지 다시 확인해주세요</string>
+
     // filter
     <string name="desired_move_in_date">희망 입주날짜</string>
     <string name="birth_date">생년월일</string>
@@ -30,6 +42,18 @@
     <string name="profile_image">프로필 이미지</string>
     <string name="user_hello">님 안녕하세요!</string>
     <string name="user_login_type">카카오 계정 회원</string>
+    <string name="show_more_roomie">루미 더보기</string>
+    <string name="bookmark_list">찜 리스트</string>
+    <string name="find_sharehouses">쉐어하우스 찾기</string>
+    <string name="request_new_room">원하는 매물이 없다면 새로 요청해보세요</string>
+    <string name="add_new_room">매물 등록하기</string>
+    <string name="register_sharehouse_owner">쉐어하우스 사장님이라면 매물을 등록해보세요</string>
+    <string name="send_feedback">의견 보내기</string>
+    <string name="service_infomation">루미 서비스 정보</string>
+    <string name="service_introduction">서비스 소개</string>
+    <string name="recent_updates">최근 소식</string>
+    <string name="policy_and_terms">약관 및 정책</string>
+    <string name="app_version">앱 버전</string>
 
     // detail
     <string name="house_main_image">쉐어하우스 메인 이미지</string>
@@ -63,6 +87,16 @@
     <string name="navigate_to_house_detail">navigate to house detail</string>
     <string name="roomie_all_rights_reserved">Roomie. All Rights Reserved.</string>
     <string name="main_room_image">방 이미지</string>
+    <string name="house">매물</string>
+    <string name="monthly_rent_value">월세 %1$s</string>
+    <string name="deposit_value">보증금 %1$s</string>
+    <string name="contract_term_value">%1$s개월</string>
+    <string name="bar">|</string>
+    <string name="move_back">뒤로가기</string>
+    <string name="roadAddress">도로명</string>
+    <string name="address">지번</string>
+    <string name="user_nickname">닉네임</string>
+    <string name="navigate_to_bookmark">찜 리스트로 넘어가기</string>
     <string name="back_button">뒤로가기 버튼</string>
     <string name="heart_button">찜하기 버튼</string>
     <string name="chat_button">채팅 버튼</string>
