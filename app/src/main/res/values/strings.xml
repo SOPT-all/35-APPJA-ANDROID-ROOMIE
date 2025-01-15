@@ -39,4 +39,5 @@
     <string name="navigate_to_house_detail">navigate to house detail</string>
     <string name="roomie_all_rights_reserved">Roomie. All Rights Reserved.</string>
     <string name="main_room_image">방 이미지</string>
+    <string name="house">매물</string>
 </resources>
