@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.component.RoomieOutlinedChip
+import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
@@ -37,11 +38,11 @@ fun SearchResultCard(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .background(RoomieTheme.colors.grayScale1)
-            .border(
-                width = 1.dp,
-                shape = RoundedCornerShape(8.dp),
-                color = RoomieTheme.colors.grayScale5
+            .roundedBackgroundWithBorder(
+                cornerRadius = 8.dp,
+                backgroundColor = RoomieTheme.colors.grayScale1,
+                borderColor = RoomieTheme.colors.grayScale5,
+                borderWidth = 1.dp
             )
             .clickable { onClick() }
             .padding(12.dp)
