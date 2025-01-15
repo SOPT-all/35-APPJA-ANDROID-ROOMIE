@@ -19,6 +19,7 @@ import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.util.RegexConstants
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun DetailRoomInfoTexts(
@@ -47,7 +48,7 @@ fun DetailRoomInfoTexts(
 
             DetailRoomPriceText(
                 textTitle = R.string.room_prepaid_utilities,
-                text = prepaidUtilities
+                price = prepaidUtilities
             )
 
             DetailRoomContractPeriodText(
@@ -62,17 +63,17 @@ fun DetailRoomInfoTexts(
 
             DetailRoomPriceText(
                 textTitle = R.string.room_deposit,
-                text = deposit
+                price = deposit
             )
 
             DetailRoomPriceText(
                 textTitle = R.string.room_monthly_rent,
-                text = monthlyRent
+                price = monthlyRent
             )
 
             DetailRoomPriceText(
                 textTitle = R.string.room_management_fee,
-                text = managementFee
+                price = managementFee
             )
         }
     }
@@ -123,7 +124,7 @@ fun DetailRoomTypeText(
 @Composable
 fun DetailRoomPriceText(
     @StringRes textTitle: Int,
-    text: String,
+    price: String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -138,7 +139,7 @@ fun DetailRoomPriceText(
         )
 
         Text(
-            text = text,
+            text = price,
             style = RoomieTheme.typography.body1R14,
             color = RoomieTheme.colors.grayScale10,
             modifier = Modifier.weight(1f)
@@ -164,7 +165,7 @@ fun DetailRoomContractPeriodText(
 
         val dateList = RegexConstants.DATE_SPLIT_REGEX.findAll(contractPeriod).map{
             it.value
-        }.toList()
+        }.toPersistentList()
 
         Row(
             modifier = Modifier.weight(1f)
