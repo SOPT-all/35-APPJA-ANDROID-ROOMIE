@@ -248,7 +248,6 @@ fun MoodScreen(
                                 genderPolicy = "여성전용",
                                 locationDescription = "자이아파트",
                                 isPinned = true,
-                                moodTag = "#차분한", //todo: 태그 없애야함
                                 contractTerm = 6,
                                 mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
                             ),
