@@ -1,7 +1,8 @@
-package com.wearerommies.roomie.presentation.ui.mypage
+package com.wearerommies.roomie.presentation.ui.bookmark
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,19 +16,19 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class MyViewModel @Inject constructor(
+class BookMarkViewModel @Inject constructor(
 ) : ViewModel() {
     // state 관리
-    private val _state = MutableStateFlow(MyState())
-    val state: StateFlow<MyState>
+    private val _state = MutableStateFlow(BookMarkState())
+    val state: StateFlow<BookMarkState>
         get() = _state.asStateFlow()
 
     // side effect 관리
-    private val _sideEffect: MutableSharedFlow<MySideEffect> = MutableSharedFlow()
-    val sideEffect: SharedFlow<MySideEffect>
+    private val _sideEffect: MutableSharedFlow<BookMarkSideEffect> = MutableSharedFlow()
+    val sideEffect: SharedFlow<BookMarkSideEffect>
         get() = _sideEffect.asSharedFlow()
 
-    fun getUserInfo() {
+    fun getBookMarkList() {
         viewModelScope.launch {
             runCatching {
                 //todo: api 연결
@@ -41,9 +42,20 @@ class MyViewModel @Inject constructor(
         }
     }
 
-    fun navigateToBookmark() {
+    fun patchHousePin() {
         viewModelScope.launch {
-            _sideEffect.emit(MySideEffect.NavigateToBookMark)
+            runCatching {
+                //todo: api 연결
+            }.onSuccess {
+                _sideEffect.emit(
+                    BookMarkSideEffect.SnackBar(
+                        message = R.string.add_to_bookmark_list
+                    )
+                )
+            }.onFailure { error ->
+                _state.value = _state.value.copy(uiState = UiState.Failure)
+                Timber.e(error)
+            }
         }
     }
 }

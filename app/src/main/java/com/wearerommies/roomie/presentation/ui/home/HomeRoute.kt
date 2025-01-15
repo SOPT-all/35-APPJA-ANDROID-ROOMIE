@@ -69,6 +69,7 @@ import kotlinx.coroutines.launch
 fun HomeRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
+    navigateToBookmark: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -100,6 +101,7 @@ fun HomeRoute(
         paddingValues = paddingValues,
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
+        navigateToBookmark = navigateToBookmark,
         state = state.uiState
     )
 
@@ -111,6 +113,7 @@ fun HomeScreen(
     paddingValues: PaddingValues,
     snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
+    navigateToBookmark: () -> Unit,
     state: UiState<String>,
     modifier: Modifier = Modifier
 ) {
@@ -223,9 +226,7 @@ fun HomeScreen(
                         trailingIcon = {
                             Icon(
                                 modifier = Modifier
-                                    .noRippleClickable {
-                                        //todo: 찜 리스트로 넘어가기
-                                    }
+                                    .noRippleClickable { navigateToBookmark() }
                                     .padding(all = 8.dp),
                                 imageVector = ImageVector.vectorResource(R.drawable.ic_heart_line_black_24px),
                                 contentDescription = stringResource(R.string.navigate_to_bookmark)
@@ -488,6 +489,7 @@ fun HomeScreenPreview() {
             paddingValues = PaddingValues(),
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
+            navigateToBookmark = {},
             state = UiState.Success("")
         )
     }

@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui
+package com.wearerommies.roomie.presentation.ui.bookmark.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.wearerommies.roomie.presentation.navigator.route.Route
+import com.wearerommies.roomie.presentation.ui.bookmark.BookMarkRoute
 
 fun NavController.navigateToBookmark(navOptions: NavOptions? = null) {
     navigate(
@@ -19,9 +20,9 @@ fun NavGraphBuilder.bookmarkNavGraph(
     navigateUp: () -> Unit
 ) {
     composable<Route.Bookmark> {
-//        BookmarkRoute(
-//            paddingValues = paddingValues,
-//            navigateUp = navigateUp
-//        )
+        BookMarkRoute(
+            paddingValues = paddingValues,
+            navigateUp = navigateUp
+        )
     }
 }
