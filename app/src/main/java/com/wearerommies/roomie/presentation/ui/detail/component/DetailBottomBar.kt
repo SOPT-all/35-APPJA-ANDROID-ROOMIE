@@ -38,7 +38,7 @@ fun DetailBottomBar(
         DetailBottomIconButton(
             icon = { isPinned ->
                 Icon(
-                    imageVector = if (isPinned) ImageVector.vectorResource(R.drawable.ic_heart_24px_active) else ImageVector.vectorResource(R.drawable.ic_heart_24px_active),
+                    imageVector = if (isPinned) ImageVector.vectorResource(R.drawable.ic_heart_24px_active) else ImageVector.vectorResource(R.drawable.ic_heart_line_black_24px),
                     contentDescription = stringResource(R.string.heart_button),
                     tint = if(isPinned) RoomieTheme.colors.actionError else RoomieTheme.colors.grayScale6
                 )
