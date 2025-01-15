@@ -14,12 +14,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -43,6 +48,7 @@ import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieFooter
 import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
+import com.wearerommies.roomie.presentation.core.component.RoomieSnackbar
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
@@ -51,6 +57,7 @@ import com.wearerommies.roomie.presentation.core.util.UiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun MoodRoute(
@@ -61,6 +68,7 @@ fun MoodRoute(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val snackBarHost = remember { SnackbarHostState() }
     val counter by remember { mutableIntStateOf(0) }
 
     val currentCounter by rememberUpdatedState(counter)
@@ -74,12 +82,20 @@ fun MoodRoute(
             .collect { sideEffect ->
                 when (sideEffect) {
                     is MoodSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
+                    is MoodSideEffect.SnackBar -> {
+                        snackBarHost.currentSnackbarData?.dismiss()
+                        snackBarHost.showSnackbar(
+                            message = context.getString(sideEffect.message),
+                            duration = SnackbarDuration.Short
+                        )
+                    }
                 }
             }
     }
 
     MoodScreen(
         paddingValues = paddingValues,
+        snackBarHost = snackBarHost,
         navigateUp = navigateUp,
         state = state.uiState
     )
@@ -89,25 +105,34 @@ fun MoodRoute(
 @Composable
 fun MoodScreen(
     paddingValues: PaddingValues,
+    snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
     state: UiState<String>,
     modifier: Modifier = Modifier
 ) {
     val screenWeigth = LocalConfiguration.current.screenWidthDp
     val height = (screenWeigth * 0.5).dp
+    val coroutineScope = rememberCoroutineScope()
+
+    Popup(
+        alignment = Alignment.BottomCenter
+    ) {
+        SnackbarHost(hostState = snackBarHost) { snackbarData ->
+            RoomieSnackbar(
+                modifier = Modifier
+                    .padding(
+                        bottom = 24.dp,
+                        start = 12.dp,
+                        end = 12.dp
+                    ),
+                message = snackbarData.visuals.message
+            )
+        }
+    }
 
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        RoomieTheme.colors.primary,
-                        RoomieTheme.colors.grayScale1,
-                    )
-                ),
-                shape = RectangleShape,
-            )
             .padding(paddingValues),
     ) {
         when (state) {
@@ -138,52 +163,66 @@ fun MoodScreen(
 
             is UiState.Success -> {
                 item {
-                    RoomieTopBar(
+                    Column(
                         modifier = Modifier
-                            .bottomBorder(
-                                height = convertDpToFloat(1.dp),
-                                color = RoomieTheme.colors.grayScale4
-                            ),
-                        leadingIcon = {
-                            Icon(
-                                modifier = Modifier
-                                    .padding(all = 10.dp),
-                                imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_line_black_24px),
-                                contentDescription = "뒤로가기" //todo: 머지 후 스트링 적용
+                            .background(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        RoomieTheme.colors.primary.copy(alpha = 0.2f),
+                                        RoomieTheme.colors.grayScale1,
+                                    )
+                                ),
+                                shape = RectangleShape,
                             )
-                        },
-                        title = "#차분한" //todo: 더미
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(top = 37.dp, bottom = 8.dp),
-                        contentAlignment = Alignment.CenterStart
                     ) {
-                        Image(
+                        RoomieTopBar(
                             modifier = Modifier
-                                .padding(end = 12.dp)
-                                .align(Alignment.CenterEnd),
-                            painter = painterResource(R.drawable.img_home_character),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop
+                                .bottomBorder(
+                                    height = convertDpToFloat(1.dp),
+                                    color = RoomieTheme.colors.grayScale4
+                                ),
+                            leadingIcon = {
+                                Icon(
+                                    modifier = Modifier
+                                        .padding(all = 10.dp),
+                                    imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_line_black_24px),
+                                    contentDescription = "뒤로가기" //todo: 머지 후 스트링 적용
+                                )
+                            },
+                            title = "#차분한" //todo: 더미
                         )
 
-                        MoodHeaderMessage(
+                        Box(
                             modifier = Modifier
-                                .padding(
-                                    start = 20.dp
-                                )
-                                .align(Alignment.CenterStart),
-                            mood = "#차분한"
+                                .fillMaxSize()
+                                .padding(top = 37.dp, bottom = 8.dp),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .padding(end = 12.dp)
+                                    .align(Alignment.CenterEnd),
+                                painter = painterResource(R.drawable.img_home_character),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop
+                            )
+
+                            MoodHeaderMessage(
+                                modifier = Modifier
+                                    .padding(
+                                        start = 20.dp
+                                    )
+                                    .align(Alignment.CenterStart),
+                                mood = "#차분한"
+                            )
+                        }
+
+                        Spacer(
+                            modifier = Modifier
+                                .height(24.dp)
                         )
                     }
 
-                    Spacer(
-                        modifier = Modifier
-                            .height(24.dp)
-                    )
                 }
 
                 items(count = 3, key = { it }) {
@@ -210,12 +249,12 @@ fun MoodScreen(
                             ),
                             onClick = { },
                             onLikeClick = {
-//                                coroutineScope.launch {
-//                                    snackBarHost.showSnackbar(
-//                                        message = "찜 목록에 추가되었습니다!",
-//                                        duration = SnackbarDuration.Short
-//                                    )
-//                                }
+                                coroutineScope.launch {
+                                    snackBarHost.showSnackbar(
+                                        message = "찜 목록에 추가되었습니다!",
+                                        duration = SnackbarDuration.Short
+                                    )
+                                }
                             }
                         )
                     }
@@ -290,7 +329,10 @@ private fun MoodHeaderMessage(
 fun MoodScreenPreview() {
     RoomieAndroidTheme {
         MoodScreen(
+            modifier = Modifier
+                .background(color = RoomieTheme.colors.grayScale1),
             paddingValues = PaddingValues(),
+            snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
             state = UiState.Success("")
         )
