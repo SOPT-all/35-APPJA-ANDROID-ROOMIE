@@ -40,4 +40,8 @@
     <string name="roomie_all_rights_reserved">Roomie. All Rights Reserved.</string>
     <string name="main_room_image">방 이미지</string>
     <string name="house">매물</string>
+    <string name="monthly_rent_value">월세 %1$s</string>
+    <string name="deposit_value">보증금 %1$s</string>
+    <string name="contract_term_value">%1$s개월</string>
+    <string name="bar">|</string>
 </resources>
