@@ -57,7 +57,7 @@ fun DetailBottomBar(
         )
 
         RoomieButton(
-            text = "투어신청하기",
+            text = stringResource(R.string.tour_apply),
             backgroundColor = RoomieTheme.colors.primary,
             textColor = RoomieTheme.colors.grayScale1,
             onClick = {},
