@@ -10,13 +10,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -27,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -35,12 +41,14 @@ import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieFooter
 import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
+import com.wearerommies.roomie.presentation.core.component.RoomieSnackbar
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.UiState
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun BookMarkRoute(
@@ -51,6 +59,7 @@ fun BookMarkRoute(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val snackBarHost = remember { SnackbarHostState() }
     val counter by remember { mutableIntStateOf(0) }
 
     val currentCounter by rememberUpdatedState(counter)
@@ -64,12 +73,20 @@ fun BookMarkRoute(
             .collect { sideEffect ->
                 when (sideEffect) {
                     is BookMarkSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
+                    is BookMarkSideEffect.SnackBar -> {
+                        snackBarHost.currentSnackbarData?.dismiss()
+                        snackBarHost.showSnackbar(
+                            message = context.getString(sideEffect.message),
+                            duration = SnackbarDuration.Short
+                        )
+                    }
                 }
             }
     }
 
     BookMarkScreen(
         paddingValues = paddingValues,
+        snackBarHost = snackBarHost,
         navigateUp = navigateUp,
         state = state.uiState
     )
@@ -78,12 +95,30 @@ fun BookMarkRoute(
 @Composable
 fun BookMarkScreen(
     paddingValues: PaddingValues,
+    snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
     state: UiState<String>,
     modifier: Modifier = Modifier
 ) {
     val screenWeight = LocalConfiguration.current.screenWidthDp
     val height = (screenWeight * 0.5).dp
+    val coroutineScope = rememberCoroutineScope()
+
+    Popup(
+        alignment = Alignment.BottomCenter
+    ) {
+        SnackbarHost(hostState = snackBarHost) { snackbarData ->
+            RoomieSnackbar(
+                modifier = Modifier
+                    .padding(
+                        bottom = 24.dp,
+                        start = 12.dp,
+                        end = 12.dp
+                    ),
+                message = snackbarData.visuals.message
+            )
+        }
+    }
 
     LazyColumn(
         modifier = modifier
@@ -157,12 +192,12 @@ fun BookMarkScreen(
                             ),
                             onClick = { },
                             onLikeClick = {
-//                                coroutineScope.launch {
-//                                    snackBarHost.showSnackbar(
-//                                        message = "찜 목록에 추가되었습니다!",
-//                                        duration = SnackbarDuration.Short
-//                                    )
-//                                }
+                                coroutineScope.launch {
+                                    snackBarHost.showSnackbar(
+                                        message = "찜 목록에 추가되었습니다!",
+                                        duration = SnackbarDuration.Short
+                                    )
+                                }
                             }
                         )
                     }
@@ -189,6 +224,7 @@ fun BookMarkScreenPreview() {
     RoomieAndroidTheme {
         BookMarkScreen(
             paddingValues = PaddingValues(),
+            snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
             state = UiState.Success("")
         )
