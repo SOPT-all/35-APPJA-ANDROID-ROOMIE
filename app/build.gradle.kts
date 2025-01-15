@@ -30,6 +30,7 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", properties["dev.base.url"].toString())
+            manifestPlaceholders["NAVER_MAP_CLIENT_ID"] = properties.getProperty("naverMapDevClientId")
         }
 
         release {

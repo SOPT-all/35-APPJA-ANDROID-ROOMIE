@@ -159,10 +159,22 @@ fun HomeScreen(
         when (state) {
             is UiState.Loading -> {
                 item {
-                    Text(
-                        text = "데이터 로딩중",
-                        textAlign = TextAlign.Center,
-                        fontSize = 30.sp
+                    RoomieRoomCard(
+                        roomCardEntity = RoomCardEntity(
+                            houseId = 1,
+                            monthlyRent = "30~50",
+                            deposit = "200~300",
+                            occupancyType = "2인실",
+                            location = "서대문구 연희동",
+                            genderPolicy = "여성전용",
+                            locationDescription = "자이아파트",
+                            isPinned = false,
+                            moodTag = "#차분한",
+                            contractTerm = 6,
+                            mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                        ),
+                        onClick = {},
+                        onLikeClick = {}
                     )
                 }
             }
@@ -294,7 +306,7 @@ fun HomeScreen(
                                 locationDescription = "자이아파트",
                                 isPinned = true,
                                 moodTag = "#차분한",
-                                contract_term = 6,
+                                contractTerm = 6,
                                 mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
                             ),
                             onClick = { },
