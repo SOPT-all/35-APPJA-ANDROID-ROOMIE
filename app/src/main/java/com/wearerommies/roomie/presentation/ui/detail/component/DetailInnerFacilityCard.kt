@@ -9,10 +9,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -33,35 +34,37 @@ fun DetailInnerFacilityCard(
     facility: PersistentList<String>,
     onClickExpandedButton: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    isExpanded: Boolean = false,
     imageContent: @Composable () -> Unit = {},
-    isExpanded: Boolean = false
 ) {
     Column(
         modifier = modifier
             .roundedBackgroundWithBorder(
-                cornerRadius = 8.dp,
+                cornerRadius = 10.dp,
                 backgroundColor = RoomieTheme.colors.grayScale1,
                 borderColor = RoomieTheme.colors.grayScale5,
                 borderWidth = 1.dp
             )
-            .padding(horizontal = 8.dp, vertical = 16.dp)
+            .padding(
+                top = 16.dp,
+                bottom = if (isExpanded) 12.dp else 16.dp,
+                start = 8.dp,
+                end = 8.dp
+            )
             .noRippleClickable {
                 onClickExpandedButton(isExpanded)
             }
     ) {
 
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = text,
                 style = RoomieTheme.typography.body2Sb14,
                 color = RoomieTheme.colors.grayScale10,
-                modifier = Modifier.padding(
-                    start = 6.dp,
-                    top = 2.dp,
-                    bottom = 2.dp
-                )
+                modifier = Modifier.padding(start = 6.dp)
             )
 
             Spacer(Modifier.weight(1f))
@@ -86,12 +89,14 @@ fun DetailInnerFacilityCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.SpaceEvenly,
                 content = {
-                    items(facility) { facilityName ->
+                    itemsIndexed(facility) { index, facilityName ->
                         DetailTextWithCheckIcon(
                             text = facilityName,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 8.dp)
+                                .padding(
+                                    bottom = if (index == facility.lastIndex) 0.dp else 8.dp
+                                )
                         )
                     }
                 }
