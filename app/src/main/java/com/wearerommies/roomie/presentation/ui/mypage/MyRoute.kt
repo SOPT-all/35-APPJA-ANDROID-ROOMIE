@@ -91,13 +91,7 @@ fun MyScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         when (state) {
-            is UiState.Loading -> {
-                item {
-                    RoomieTopBar(
-                        title = "로딩중.."
-                    )
-                }
-            }
+            is UiState.Loading -> { }
 
             is UiState.Failure -> {
                 item {
@@ -147,7 +141,6 @@ fun MyScreen(
                             ),
                         text = stringResource(R.string.show_more_roomie)
                     )
-
 
                     RoomieNavigateButton(
                         type = NavigateButtonType.MY,
