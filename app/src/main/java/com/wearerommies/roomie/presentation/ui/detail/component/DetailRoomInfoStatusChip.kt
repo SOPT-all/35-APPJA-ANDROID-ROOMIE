@@ -14,15 +14,15 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun DetailRoomInfoStatusChip(
-    status: Boolean,
+    isAvailable: Boolean,
     modifier: Modifier = Modifier
 ) {
     RoomieTextChip(
-        text = if (status) stringResource(R.string.room_status_true) else stringResource(R.string.room_status_false),
+        text = if (isAvailable) stringResource(R.string.room_status_true) else stringResource(R.string.room_status_false),
         modifier = modifier,
         textStyle = RoomieTheme.typography.body4R12,
-        textColor = if (status) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale9,
-        backgroundColor = if (status) RoomieTheme.colors.primaryLight4 else RoomieTheme.colors.grayScale3
+        textColor = if (isAvailable) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale9,
+        backgroundColor = if (isAvailable) RoomieTheme.colors.primaryLight4 else RoomieTheme.colors.grayScale3
     )
 }
 
@@ -34,11 +34,11 @@ fun DetailRoomInfoStatusChipPreview() {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             DetailRoomInfoStatusChip(
-                status = true
+                isAvailable = true
             )
 
             DetailRoomInfoStatusChip(
-                status = false
+                isAvailable = false
             )
         }
     }

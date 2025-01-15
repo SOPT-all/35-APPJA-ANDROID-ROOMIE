@@ -49,7 +49,7 @@ fun DetailRoomInfoCard(
 
         Row{
             DetailRoomInfoStatusChip(
-                status = roomStatus
+                isAvailable = roomStatus
             )
 
             Spacer(Modifier.weight(1f))
