@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.component.RoomieButton
+import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.topBorder
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
@@ -29,8 +30,8 @@ fun DetailBottomBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .topBorder(convertDpToFloat(1.dp), RoomieTheme.colors.grayScale5)
-            // TODO: 수현이가 만든 bottom border 추가하기
+            .topBorder(height = convertDpToFloat(1.dp), color = RoomieTheme.colors.grayScale5)
+            .bottomBorder(height = convertDpToFloat(1.dp), color = RoomieTheme.colors.grayScale5)
             .padding(vertical = 12.dp, horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
