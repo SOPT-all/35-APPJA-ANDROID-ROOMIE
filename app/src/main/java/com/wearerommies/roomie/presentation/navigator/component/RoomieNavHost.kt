@@ -11,7 +11,7 @@ import com.wearerommies.roomie.presentation.ui.detailNavGraph
 import com.wearerommies.roomie.presentation.ui.filter.navigation.filterNavGraph
 import com.wearerommies.roomie.presentation.ui.home.navigation.homeNavGraph
 import com.wearerommies.roomie.presentation.ui.map.navigation.mapNavGraph
-import com.wearerommies.roomie.presentation.ui.moodNavGraph
+import com.wearerommies.roomie.presentation.ui.mood.navigation.moodNavGraph
 import com.wearerommies.roomie.presentation.ui.mypage.navigation.myNavGraph
 import com.wearerommies.roomie.presentation.ui.search.navigation.searchNavGraph
 import com.wearerommies.roomie.presentation.ui.tour.navigation.tourNavGraph

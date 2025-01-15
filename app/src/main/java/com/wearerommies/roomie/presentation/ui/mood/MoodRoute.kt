@@ -187,9 +187,10 @@ fun MoodScreen(
                             leadingIcon = {
                                 Icon(
                                     modifier = Modifier
+                                        .noRippleClickable { navigateUp() }
                                         .padding(all = 10.dp),
                                     imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_line_black_24px),
-                                    contentDescription = "뒤로가기" //todo: 머지 후 스트링 적용
+                                    contentDescription = stringResource(R.string.move_back)
                                 )
                             },
                             title = "#차분한" //todo: 더미
@@ -246,7 +247,7 @@ fun MoodScreen(
                                 locationDescription = "자이아파트",
                                 isPinned = true,
                                 moodTag = "#차분한", //todo: 태그 없애야함
-                                contract_term = 6,
+                                contractTerm = 6,
                                 mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
                             ),
                             onClick = { },

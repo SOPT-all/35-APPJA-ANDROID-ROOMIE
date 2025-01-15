@@ -18,7 +18,7 @@ import com.wearerommies.roomie.presentation.ui.navigateToBookmark
 import com.wearerommies.roomie.presentation.ui.navigateToDetail
 import com.wearerommies.roomie.presentation.ui.navigateToDetailAllImage
 import com.wearerommies.roomie.presentation.ui.navigateToDetailRoomsImage
-import com.wearerommies.roomie.presentation.ui.navigateToMood
+import com.wearerommies.roomie.presentation.ui.mood.navigation.navigateToMood
 import com.wearerommies.roomie.presentation.ui.search.navigation.navigateToSearch
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTour
 
