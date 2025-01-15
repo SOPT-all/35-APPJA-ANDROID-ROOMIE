@@ -1,6 +1,7 @@
 package com.wearerommies.roomie.presentation.ui.detail.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +25,7 @@ import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWith
 import com.wearerommies.roomie.presentation.core.util.RegexConstants
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun DetailRoomMateCard(
@@ -44,7 +46,12 @@ fun DetailRoomMateCard(
                 backgroundColor = RoomieTheme.colors.grayScale1,
                 borderColor = RoomieTheme.colors.grayScale5,
             )
-            .padding(16.dp)
+            .padding(
+                top = 12.dp,
+                bottom = 12.dp,
+                start = 12.dp,
+                end = 23.dp
+            )
     ) {
         Image(
             imageVector = image,
@@ -61,7 +68,8 @@ fun DetailRoomMateCard(
                 .weight(1f)
         ) {
             Row(
-                modifier = Modifier
+                modifier = Modifier,
+                horizontalArrangement = Arrangement.Center
             ){
                 Text(
                     text = stringResource(R.string.roommate_age_job, roomMateAge, roomMateJob),
@@ -104,7 +112,7 @@ fun RoomMateTimeText(
 ) {
     // TODO: 추후에 뷰모델에서 처리?
     val timeParts = RegexConstants.TIME_SPLIT_REGEX.split(text).flatMapIndexed { index, part ->
-        if (index == 0) listOf(part) else listOf(text[text.indexOf(part) - 1].toString(), part)
+        if (index == 0) persistentListOf(part) else persistentListOf(text[text.indexOf(part) - 1].toString(), part)
     }
 
     Row(
