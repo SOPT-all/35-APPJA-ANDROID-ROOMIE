@@ -10,9 +10,17 @@ import androidx.navigation.navOptions
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.type.MainTabType
+import com.wearerommies.roomie.presentation.ui.filter.navigation.navigateToFilter
 import com.wearerommies.roomie.presentation.ui.home.navigation.navigateToHome
 import com.wearerommies.roomie.presentation.ui.map.navigation.navigateToMap
 import com.wearerommies.roomie.presentation.ui.mypage.navigation.navigateToMy
+import com.wearerommies.roomie.presentation.ui.navigateToBookmark
+import com.wearerommies.roomie.presentation.ui.navigateToDetail
+import com.wearerommies.roomie.presentation.ui.navigateToDetailAllImage
+import com.wearerommies.roomie.presentation.ui.navigateToDetailRoomsImage
+import com.wearerommies.roomie.presentation.ui.navigateToMood
+import com.wearerommies.roomie.presentation.ui.search.navigation.navigateToSearch
+import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTour
 
 class MainNavigator(
     val navController: NavHostController,
@@ -52,6 +60,38 @@ class MainNavigator(
         if (!isSameCurrentDestination<MainTabRoute.Home>()) {
             navigateUp()
         }
+    }
+
+    fun navigateToSearch() {
+        navController.navigateToSearch()
+    }
+
+    fun navigateToMood() {
+        navController.navigateToMood()
+    }
+
+    fun navigateToBookmark() {
+        navController.navigateToBookmark()
+    }
+
+    fun navigateToFilter() {
+        navController.navigateToFilter()
+    }
+
+    fun navigateToDetail() {
+        navController.navigateToDetail()
+    }
+
+    fun navigateToDetailAllImage() {
+        navController.navigateToDetailAllImage()
+    }
+
+    fun navigateToDetailRoomsImage() {
+        navController.navigateToDetailRoomsImage()
+    }
+
+    fun navigateToTour() {
+        navController.navigateToTour()
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =
