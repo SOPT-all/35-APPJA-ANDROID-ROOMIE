@@ -109,7 +109,6 @@ class MapViewModel @Inject constructor(
         if (house != null) {
             _state.value = _state.value.copy(
                 markerDetail = house.toMarkerDetailModel(),
-                isBottomSheetOpened = false,
                 clickedMarkerId = id
             )
         }
@@ -118,6 +117,12 @@ class MapViewModel @Inject constructor(
     fun resetClickedMarker() {
         _state.value = _state.value.copy(
             clickedMarkerId = null
+        )
+    }
+
+    fun setBottomSheetState(state: Boolean) {
+        _state.value = _state.value.copy(
+            isBottomSheetOpened = state
         )
     }
 }
