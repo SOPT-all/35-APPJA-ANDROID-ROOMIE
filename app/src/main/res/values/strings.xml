@@ -24,12 +24,16 @@
     <string name="monthly_rent">월세</string>
     <string name="deposit_variable">보증금 %1$s</string>
     <string name="contract_term_variable">%1$s개월</string>
-    <string name="navigate_button">filter button</string>
+    <string name="filter_button">필터 버튼</string>
     <string name="search_textfield_placeholder">원하는 장소를 찾아보세요</string>
+    <string name="location_no_room">해당 위치에는 방이 없어요</string>
+    <string name="search_other_place">다른 장소를 검색해보세요</string>
 
     // search
-    <string name="search_button">search button</string>
-  
+    <string name="search_button">검색 버튼</string>
+    <string name="no_search_result">검색결과가 없어요</string>
+    <string name="check_again">정확하게 입력했는지 다시 확인해주세요</string>
+
     // filter
     <string name="desired_move_in_date">희망 입주날짜</string>
     <string name="birth_date">생년월일</string>
@@ -59,6 +63,9 @@
     <string name="navigate_to_house_detail">navigate to house detail</string>
     <string name="roomie_all_rights_reserved">Roomie. All Rights Reserved.</string>
     <string name="main_room_image">방 이미지</string>
+    <string name="move_back">뒤로가기</string>
+    <string name="roadAddress">도로명</string>
+    <string name="address">지번</string>
     <string name="user_nickname">닉네임</string>
     <string name="navigate_to_bookmark">찜 리스트로 넘어가기</string>
 </resources>

@@ -2,7 +2,10 @@ package com.wearerommies.roomie.presentation.navigator.route
 
 import kotlinx.serialization.Serializable
 
-sealed interface Route
+sealed interface Route {
+    @Serializable
+    data object Search : Route
+}
 
 sealed interface MainTabRoute : Route {
     @Serializable

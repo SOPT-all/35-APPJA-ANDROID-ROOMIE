@@ -15,11 +15,14 @@ fun NavController.navigateToMap(navOptions: NavOptions) {
     )
 }
 
-fun NavGraphBuilder.mapNavGraph() {
+fun NavGraphBuilder.mapNavGraph(
+    navigateToSearch: () -> Unit
+) {
     composable<MainTabRoute.Map> {
         MapRoute(
             paddingValues = PaddingValues(),
-            navigateUp = {}
+            navigateUp = {},
+            navigateToSearch = { navigateToSearch() }
         )
     }
 }
