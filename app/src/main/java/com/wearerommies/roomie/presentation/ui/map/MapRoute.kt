@@ -9,6 +9,9 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -52,8 +55,10 @@ fun MapRoute(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val initial by remember { mutableIntStateOf(0) }
+    val initialKey by rememberUpdatedState(initial)
 
-    LaunchedEffect(true) {
+    LaunchedEffect(initialKey) {
         viewModel.fetchInitialLocation()
         viewModel.fetchHouseList()
     }
