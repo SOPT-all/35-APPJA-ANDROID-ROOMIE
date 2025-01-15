@@ -20,7 +20,9 @@ fun RoomieNavHost(
         navController = navigator.navController,
         startDestination = MainTabRoute.Home
     ) {
-        homeNavGraph()
+        homeNavGraph(
+            paddingValues = padding
+        )
         mapNavGraph()
         myNavGraph(
             paddingValues = padding

@@ -53,6 +53,19 @@ fun Modifier.topBorder(
     )
 }
 
+fun Modifier.bottomBorder(
+    color: Color,
+    height: Float,
+) = this.drawWithContent {
+    drawContent()
+    drawLine(
+        color = color,
+        start = Offset(0f, size.height),
+        end = Offset(size.width, size.height),
+        strokeWidth = height,
+    )
+}
+
 fun Modifier.customShadow(
     elevation: Dp = 4.dp,
     shape: Shape = RectangleShape,

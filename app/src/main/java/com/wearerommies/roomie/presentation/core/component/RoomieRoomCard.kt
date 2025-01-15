@@ -21,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -47,7 +46,10 @@ fun RoomieRoomCard(
         modifier = modifier
             .fillMaxWidth()
             .height((LocalConfiguration.current.screenHeightDp * 0.144).dp)
-            .background(color = Color.White, shape = RoundedCornerShape(size = 8.dp))
+            .background(
+                color = RoomieTheme.colors.grayScale1,
+                shape = RoundedCornerShape(size = 8.dp)
+            )
             .clickable { onClick() }
             .padding(all = 4.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -88,7 +90,7 @@ fun RoomieRoomCard(
                         R.drawable.ic_heart_linewithfill_white_24px
                     ),
                     contentDescription = null,
-                    tint = Color.White
+                    tint = RoomieTheme.colors.grayScale1
                 )
             }
 
@@ -196,7 +198,7 @@ private fun RoomieRoomCardPreview() {
                 isPinned = false,
                 moodTag = "#차분한",
                 contract_term = 6,
-                mainImgUrl = "https://example.com/images/house1.jpg"
+                mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
             ),
             onClick = {},
             onLikeClick = {}
