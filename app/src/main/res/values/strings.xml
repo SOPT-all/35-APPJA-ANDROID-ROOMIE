@@ -38,6 +38,10 @@
     <string name="occupancy_status">"%s인"</string>
     <string name="contract_term">"%d개월 이상 계약"</string>
     <string name="ground_rule">그라운드 룰</string>
+    <string name="roommate_image">룸메이트 이미지</string>
+    <string name="roommate_age_job">%d세 %s</string>
+    <string name="roommate_sleep_time">수면시간</string>
+    <string name="roommate_activity_time">활동시간</string>
 
     // common
     <string name="dismiss">취소</string>
