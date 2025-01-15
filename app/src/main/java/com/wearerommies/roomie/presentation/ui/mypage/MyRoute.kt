@@ -12,9 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -51,8 +53,11 @@ fun MyRoute(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val counter by remember { mutableIntStateOf(0) }
 
-    LaunchedEffect(true) {
+    val currentCounter by rememberUpdatedState(counter)
+
+    LaunchedEffect(currentCounter) {
         viewModel.getUserInfo()
     }
 
@@ -86,12 +91,12 @@ fun MyScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(RoomieTheme.colors.grayScale1)
             .padding(paddingValues),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         when (state) {
-            is UiState.Loading -> { }
+            is UiState.Loading -> {}
 
             is UiState.Failure -> {
                 item {

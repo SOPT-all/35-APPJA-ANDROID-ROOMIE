@@ -83,7 +83,7 @@ private fun MyButtonWithHelperTextPreview() {
     RoomieAndroidTheme {
         Box(
             modifier = Modifier
-                .background(color = Color.White)
+                .background(color = RoomieTheme.colors.grayScale1)
         ) {
             MyButtonWithHelperText(
                 mainText = "쉐어하우스 찾기",
