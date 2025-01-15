@@ -43,9 +43,11 @@ import com.wearerommies.roomie.presentation.core.component.RoomieFooter
 import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
 import com.wearerommies.roomie.presentation.core.component.RoomieSnackbar
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
+import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.UiState
+import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.coroutines.launch
@@ -155,7 +157,8 @@ fun BookMarkScreen(
             is UiState.Success -> {
                 item {
                     RoomieTopBar(
-                        //todo: bottomBorder 적용
+                        modifier = Modifier
+                            .bottomBorder(height = convertDpToFloat(1.dp), color = RoomieTheme.colors.grayScale4),
                         leadingIcon = {
                             Icon(
                                 modifier = Modifier
