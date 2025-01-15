@@ -34,7 +34,8 @@ fun DetailTextWithCheckIcon(
 
         Text(
             text = text,
-            style = RoomieTheme.typography.body1R14
+            style = RoomieTheme.typography.body1R14,
+            color = RoomieTheme.colors.grayScale12
         )
     }
 }
