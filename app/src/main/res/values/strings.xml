@@ -44,6 +44,14 @@
     <string name="roommate_activity_time">활동시간</string>
     <string name="room_status_true">입주가능</string>
     <string name="room_status_false">입주불가</string>
+    <string name="room_type">방 형태</string>
+    <string name="room_occupany_type">%d 인실</string>
+    <string name="room_prepaid_utilities">선불공과금</string>
+    <string name="room_deposit">보증금</string>
+    <string name="room_monthly_rent">월세</string>
+    <string name="room_management_fee">관리비</string>
+    <string name="room_contract_period">계약기간</string>
+
 
     // common
     <string name="dismiss">취소</string>
