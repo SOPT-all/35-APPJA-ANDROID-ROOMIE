@@ -35,7 +35,7 @@ fun DetailContentHeader(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
         RoomieHouseNameChip(
