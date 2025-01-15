@@ -2,8 +2,8 @@ package com.wearerommies.roomie.presentation.ui.detail.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -20,6 +20,7 @@ import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 
+// TODO: 탑바 화면에 직접 구현
 @Composable
 fun DetailMainImageWithBackButton(
     imageUrl: String,
@@ -49,7 +50,7 @@ fun DetailMainImageWithBackButton(
             model = imageUrl,
             contentDescription = stringResource(R.string.house_main_image),
             modifier = Modifier
-                .height(272.dp)
+                .aspectRatio(360f / 304f)
         )
     }
 }
