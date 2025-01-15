@@ -40,7 +40,7 @@ fun DetailMainImageWithBackButton(
                             onBackButtonClick()
                         },
                     imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_line_black_24px),
-                    contentDescription = stringResource(R.string.back_button)
+                    contentDescription = stringResource(R.string.move_back)
                 )
             },
         )
