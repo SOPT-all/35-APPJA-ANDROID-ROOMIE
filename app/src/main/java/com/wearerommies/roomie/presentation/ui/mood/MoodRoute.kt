@@ -34,6 +34,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -293,7 +294,7 @@ private fun MoodHeaderMessage(
             )
 
             Text(
-                text = "집 찾으신다면",
+                text = stringResource(R.string.find_house),
                 style = RoomieTheme.typography.heading5Sb18,
                 color = RoomieTheme.colors.grayScale12
             )
@@ -301,7 +302,7 @@ private fun MoodHeaderMessage(
 
         Text(
             modifier = modifier,
-            text = "이 집은 어때요?",
+            text = stringResource(R.string.recommend_house),
             style = RoomieTheme.typography.heading5Sb18,
             color = RoomieTheme.colors.grayScale12
         )
@@ -313,7 +314,7 @@ private fun MoodHeaderMessage(
 
         Text(
             modifier = modifier,
-            text = "차분함이 돋보이는 집 리스트예요",
+            text = stringResource(R.string.mood_house_list),
             style = RoomieTheme.typography.body4R12,
             color = RoomieTheme.colors.grayScale8
         )

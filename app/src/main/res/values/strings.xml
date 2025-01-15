@@ -51,6 +51,11 @@
     <string name="policy_and_terms">약관 및 정책</string>
     <string name="app_version">앱 버전</string>
 
+    //mood list
+    <string name="find_house">집 찾으신다면</string>
+    <string name="recommend_house">이 집은 어때요?</string>
+    <string name="mood_house_list">차분함이 돋보이는 집 리스트예요</string>
+
     // common
     <string name="dismiss">취소</string>
     <string name="confirm">확인</string>
