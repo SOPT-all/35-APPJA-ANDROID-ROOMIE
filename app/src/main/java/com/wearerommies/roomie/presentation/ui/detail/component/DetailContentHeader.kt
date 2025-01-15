@@ -36,7 +36,7 @@ fun DetailContentHeader(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+            .padding(16.dp)
     ) {
         RoomieHouseNameChip(
             text = houseName
@@ -60,11 +60,9 @@ fun DetailContentHeader(
             genderPolicy = genderPolicy
         )
 
-        Spacer(Modifier.height(32.dp))
+        Spacer(Modifier.height(36.dp))
 
         DetailInnerImageButton()
-
-        Spacer(Modifier.height(16.dp))
     }
 }
 
