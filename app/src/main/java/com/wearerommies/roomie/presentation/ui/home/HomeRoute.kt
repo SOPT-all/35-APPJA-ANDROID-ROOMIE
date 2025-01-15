@@ -203,7 +203,7 @@ fun HomeScreen(
                                     color = RoomieTheme.colors.grayScale12
                                 )
                                 Icon(
-                                    imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_down_line_black_16px),
+                                    imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_down_filled_black_16px),
                                     contentDescription = stringResource(R.string.home_location)
                                 )
                             }
@@ -230,32 +230,25 @@ fun HomeScreen(
 
                     Box(
                         modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.CenterStart
                     ) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.CenterEnd
-                        ) {
-                            Image(
-                                modifier = Modifier
-                                    .width((LocalConfiguration.current.screenWidthDp * 0.556).dp),
-                                painter = painterResource(R.drawable.ic_home_character),
-                                contentDescription = null,
-                                contentScale = ContentScale.Crop
-                            )
-                        }
+                        Image(
+                            modifier = Modifier
+                                .width((LocalConfiguration.current.screenWidthDp * 0.556).dp)
+                                .align(Alignment.CenterEnd),
+                            painter = painterResource(R.drawable.img_home_character),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
+                        )
 
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.CenterStart
-                        ) {
-                            HomeGreetingMessage(
-                                modifier = Modifier.padding(
+                        HomeGreetingMessage(
+                            modifier = Modifier
+                                .padding(
                                     start = 20.dp
-                                ),
-                                nickname = stringResource(R.string.user_nickname)
-                            )
-                        }
+                                )
+                                .align(Alignment.CenterStart),
+                            nickname = stringResource(R.string.user_nickname)
+                        )
                     }
 
                     Spacer(
