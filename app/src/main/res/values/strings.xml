@@ -11,17 +11,29 @@
     <string name="mood_tag_active">활기찬</string>
     <string name="mood_tag_clean">깔끔한</string>
     <string name="mood_card_sub_text">분위기의\n방이 궁금하신가요?</string>
+    <string name="home_location">연남동</string>
+    <string name="update_banner_message">1월 1일 루미 업데이트 알아보기</string>
+    <string name="find_mood">분위기 별로 보기</string>
+    <string name="find_recent_room">최근 본 방</string>
+    <string name="find_more_sharehouses_in_map">지도에서 더 많은 쉐어하우스 찾기</string>
+    <string name="user_is">님,</string>
+    <string name="welcome_to_roomie">루미에 오신 걸 환영해요</string>
+    <string name="roomie_find_perfect_home">루미가 %1$s님의 완벽한 집을\n찾아드릴게요</string>
 
     // map
     <string name="monthly_rent">월세</string>
     <string name="deposit_variable">보증금 %1$s</string>
     <string name="contract_term_variable">%1$s개월</string>
-    <string name="navigate_button">filter button</string>
+    <string name="filter_button">필터 버튼</string>
     <string name="search_textfield_placeholder">원하는 장소를 찾아보세요</string>
+    <string name="location_no_room">해당 위치에는 방이 없어요</string>
+    <string name="search_other_place">다른 장소를 검색해보세요</string>
 
     // search
-    <string name="search_button">search button</string>
-  
+    <string name="search_button">검색 버튼</string>
+    <string name="no_search_result">검색결과가 없어요</string>
+    <string name="check_again">정확하게 입력했는지 다시 확인해주세요</string>
+
     // filter
     <string name="desired_move_in_date">희망 입주날짜</string>
     <string name="birth_date">생년월일</string>
@@ -56,4 +68,9 @@
     <string name="deposit_value">보증금 %1$s</string>
     <string name="contract_term_value">%1$s개월</string>
     <string name="bar">|</string>
+    <string name="move_back">뒤로가기</string>
+    <string name="roadAddress">도로명</string>
+    <string name="address">지번</string>
+    <string name="user_nickname">닉네임</string>
+    <string name="navigate_to_bookmark">찜 리스트로 넘어가기</string>
 </resources>
