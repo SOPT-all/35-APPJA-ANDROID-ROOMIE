@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +32,7 @@ fun DetailTextWithCheckIcon(
             tint = RoomieTheme.colors.primary
         )
 
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.width(4.dp))
 
         Text(
             text = text,
