@@ -57,7 +57,11 @@ fun DetailInnerFacilityCard(
                 text = text,
                 style = RoomieTheme.typography.body2Sb14,
                 color = RoomieTheme.colors.grayScale10,
-                modifier = Modifier.padding(start = 6.dp)
+                modifier = Modifier.padding(
+                    start = 6.dp,
+                    top = 2.dp,
+                    bottom = 2.dp
+                )
             )
 
             Spacer(Modifier.weight(1f))
