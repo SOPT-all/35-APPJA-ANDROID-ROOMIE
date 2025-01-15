@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
@@ -30,21 +31,26 @@ fun DetailBottomSheetTourOptionButton(
             .fillMaxWidth()
             .roundedBackgroundWithBorder(
                 cornerRadius = 8.dp,
-                backgroundColor = if(!isEnabled) RoomieTheme.colors.grayScale4 else if(isSelected) RoomieTheme.colors.primaryLight4 else RoomieTheme.colors.grayScale1,
+                backgroundColor = when {
+                    isSelected -> RoomieTheme.colors.primaryLight4
+                    !isEnabled -> RoomieTheme.colors.grayScale4
+                    else -> RoomieTheme.colors.grayScale1
+                },
                 borderColor = if(isSelected) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale6,
                 borderWidth = 1.dp
             )
-            .padding(vertical = 8.dp)
+            .padding(8.dp)
         ,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = roomName,
             style = RoomieTheme.typography.title2Sb16,
-            color = if(!isEnabled) RoomieTheme.colors.grayScale7 else RoomieTheme.colors.grayScale12
+            color = if(!isEnabled) RoomieTheme.colors.grayScale7 else RoomieTheme.colors.grayScale12,
+            overflow = TextOverflow.Ellipsis
         )
 
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(2.dp))
 
         Text(
             text = roomPrice,
