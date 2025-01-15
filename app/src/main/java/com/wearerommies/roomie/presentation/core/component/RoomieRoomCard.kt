@@ -104,7 +104,7 @@ fun RoomieRoomCard(
         ) {
             Column {
                 Text(
-                    text = "월세 ${roomCardEntity.monthlyRent}",
+                    text = stringResource(R.string.monthly_rent_value, roomCardEntity.monthlyRent),
                     style = RoomieTheme.typography.title2Sb16,
                     color = RoomieTheme.colors.grayScale12
                 )
@@ -118,19 +118,22 @@ fun RoomieRoomCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "보증금 ${roomCardEntity.deposit}",
+                        text = stringResource(R.string.deposit_value, roomCardEntity.deposit),
                         style = RoomieTheme.typography.body5Sb12,
                         color = RoomieTheme.colors.primary
                     )
 
                     Text(
-                        text = "|",
+                        text = stringResource(R.string.bar),
                         style = RoomieTheme.typography.body5Sb12,
                         color = RoomieTheme.colors.primary
                     )
 
                     Text(
-                        text = "${roomCardEntity.contract_term}개월",
+                        text = stringResource(
+                            R.string.contract_term_value,
+                            roomCardEntity.contractTerm
+                        ),
                         style = RoomieTheme.typography.body5Sb12,
                         color = RoomieTheme.colors.primary
                     )
@@ -197,7 +200,7 @@ private fun RoomieRoomCardPreview() {
                 locationDescription = "자이아파트",
                 isPinned = false,
                 moodTag = "#차분한",
-                contract_term = 6,
+                contractTerm = 6,
                 mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
             ),
             onClick = {},
