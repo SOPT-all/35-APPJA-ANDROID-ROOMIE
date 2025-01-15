@@ -62,7 +62,6 @@ fun DetailBottomBar(
             textColor = RoomieTheme.colors.grayScale1,
             onClick = {},
             modifier = Modifier
-                .padding(end = 20.dp)
                 .weight(1f)
                 .fillMaxWidth(),
             pressedColor = RoomieTheme.colors.primaryLight1,
