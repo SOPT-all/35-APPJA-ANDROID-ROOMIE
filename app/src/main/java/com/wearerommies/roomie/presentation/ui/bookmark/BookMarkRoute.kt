@@ -213,7 +213,6 @@ fun BookMarkScreen(
                     Spacer(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(color = RoomieTheme.colors.grayScale1)
                             .height(20.dp)
                     )
 
