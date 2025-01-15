@@ -67,6 +67,7 @@ fun MyRoute(
             .collect { sideEffect ->
                 when (sideEffect) {
                     is MySideEffect.ShowToast -> context.showToast(message = sideEffect.message)
+                    is MySideEffect.NavigateToBookMark -> navigateToBookmark()
                 }
             }
     }
@@ -74,7 +75,7 @@ fun MyRoute(
     MyScreen(
         paddingValues = paddingValues,
         navigateUp = navigateUp,
-        navigateToBookmark = navigateToBookmark,
+        navigateToBookmark = viewModel::navigateToBookmark,
         state = state.uiState
     )
 
@@ -153,7 +154,7 @@ fun MyScreen(
                     RoomieNavigateButton(
                         type = NavigateButtonType.MY,
                         text = stringResource(R.string.bookmark_list),
-                        onClick = { navigateToBookmark() }
+                        onClick = navigateToBookmark
                     )
 
                     MyButtonWithHelperText(

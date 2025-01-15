@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.ui.bookmark
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -90,16 +91,19 @@ fun BookMarkRoute(
         paddingValues = paddingValues,
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
+        onLikeClick = viewModel::patchHousePin,
         state = state.uiState
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BookMarkScreen(
     paddingValues: PaddingValues,
     snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
     state: UiState<String>,
+    onLikeClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val screenWeight = LocalConfiguration.current.screenWidthDp
@@ -155,7 +159,7 @@ fun BookMarkScreen(
             }
 
             is UiState.Success -> {
-                item {
+                stickyHeader {
                     RoomieTopBar(
                         modifier = Modifier
                             .bottomBorder(
@@ -199,12 +203,7 @@ fun BookMarkScreen(
                             ),
                             onClick = { },
                             onLikeClick = {
-                                coroutineScope.launch {
-                                    snackBarHost.showSnackbar(
-                                        message = "찜 목록에 추가되었습니다!",
-                                        duration = SnackbarDuration.Short
-                                    )
-                                }
+                                coroutineScope.launch { onLikeClick() }
                             }
                         )
                     }
@@ -233,6 +232,7 @@ fun BookMarkScreenPreview() {
             paddingValues = PaddingValues(),
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
+            onLikeClick = {},
             state = UiState.Success("")
         )
     }

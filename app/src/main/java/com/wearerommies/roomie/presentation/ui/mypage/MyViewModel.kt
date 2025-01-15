@@ -40,4 +40,10 @@ class MyViewModel @Inject constructor(
             }
         }
     }
+
+    fun navigateToBookmark() {
+        viewModelScope.launch {
+            _sideEffect.emit(MySideEffect.NavigateToBookMark)
+        }
+    }
 }
