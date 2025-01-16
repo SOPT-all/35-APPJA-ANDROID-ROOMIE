@@ -26,7 +26,7 @@ fun RoomieFooter(
     modifier: Modifier = Modifier,
     textStyle: TextStyle = RoomieTheme.typography.caption1R10,
     textColor: Color = RoomieTheme.colors.grayScale6,
-    backgroundColor: Color = RoomieTheme.colors.grayScale2,
+    backgroundColor: Color = RoomieTheme.colors.grayScale1,
 ) {
     Column(
         modifier = modifier

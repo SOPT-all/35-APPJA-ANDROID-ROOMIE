@@ -20,7 +20,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,7 +50,6 @@ import com.wearerommies.roomie.presentation.core.util.UiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
-import kotlinx.coroutines.launch
 
 @Composable
 fun BookMarkRoute(
@@ -108,7 +106,6 @@ fun BookMarkScreen(
 ) {
     val screenWeight = LocalConfiguration.current.screenWidthDp
     val height = (screenWeight * 0.5).dp
-    val coroutineScope = rememberCoroutineScope()
 
     Popup(
         alignment = Alignment.BottomCenter
@@ -202,9 +199,7 @@ fun BookMarkScreen(
                                 mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
                             ),
                             onClick = { },
-                            onLikeClick = {
-                                coroutineScope.launch { onLikeClick() }
-                            }
+                            onLikeClick = onLikeClick
                         )
                     }
                 }

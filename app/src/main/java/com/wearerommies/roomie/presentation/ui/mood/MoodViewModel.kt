@@ -28,19 +28,18 @@ class MoodViewModel @Inject constructor(
     val sideEffect: SharedFlow<MoodSideEffect>
         get() = _sideEffect.asSharedFlow()
 
-    fun getMoodList() {
-        viewModelScope.launch {
-            runCatching {
-                //todo: api 연결
-            }.onSuccess {
-                _state.value = _state.value.copy(uiState = UiState.Success("성공"))
+    fun getMoodList() = viewModelScope.launch {
+        runCatching {
+            //todo: api 연결
+        }.onSuccess {
+            _state.value = _state.value.copy(uiState = UiState.Success("성공"))
 
-            }.onFailure { error ->
-                _state.value = _state.value.copy(uiState = UiState.Failure)
-                Timber.e(error)
-            }
+        }.onFailure { error ->
+            _state.value = _state.value.copy(uiState = UiState.Failure)
+            Timber.e(error)
         }
     }
+
 
     fun patchHousePin() {
         viewModelScope.launch {

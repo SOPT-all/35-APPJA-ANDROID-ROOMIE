@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -63,7 +62,6 @@ import com.wearerommies.roomie.presentation.type.NavigateButtonType
 import com.wearerommies.roomie.presentation.ui.home.component.HomeMoodCard
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
-import kotlinx.coroutines.launch
 
 @Composable
 fun HomeRoute(
@@ -94,6 +92,7 @@ fun HomeRoute(
                             duration = SnackbarDuration.Short
                         )
                     }
+
                     is HomeSideEffect.NavigateToBookMark -> navigateToBookmark()
                     is HomeSideEffect.NavigateToMood -> navigateToMood()
                 }
@@ -128,7 +127,6 @@ fun HomeScreen(
     val height = (screenWeight * 0.5).dp
 
     val scrollState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
     val scrollOffset = scrollState.firstVisibleItemScrollOffset
     val topBarBackgroundColor =
         if (scrollOffset > 1) RoomieTheme.colors.grayScale1 else Color.Transparent
@@ -320,9 +318,7 @@ fun HomeScreen(
                                 mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
                             ),
                             onClick = { },
-                            onLikeClick = {
-                                coroutineScope.launch { onLikeClick() }
-                            }
+                            onLikeClick = onLikeClick
                         )
                     }
                 }
