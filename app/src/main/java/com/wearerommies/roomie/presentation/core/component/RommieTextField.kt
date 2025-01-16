@@ -27,6 +27,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -91,7 +92,7 @@ fun RommieTextField(
             decorationBox = { innerTextField ->
                 Row(
                     horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.Top
                 ) {
                     Box(
                         modifier = Modifier.weight(1f),
@@ -192,6 +193,14 @@ fun RoomieTextFieldPreview() {
                 onValueChange = {},
                 isValidate = false,
                 errorMessage = "에러메세지 동작 테스트"
+            )
+
+            RommieTextField(
+                paddingValues = PaddingValues(16.dp),
+                placeHolder = "문의내용을 적어주세요",
+                onValueChange = {},
+                textFieldValue = "",
+                modifier = Modifier.height((LocalConfiguration.current.screenHeightDp * 0.14).dp)
             )
         }
     }

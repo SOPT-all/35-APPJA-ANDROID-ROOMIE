@@ -35,6 +35,7 @@ fun DetailInnerFacilityCard(
     onClickExpandedButton: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     isExpanded: Boolean = false,
+    roomStatus: Boolean = true,
     imageContent: @Composable () -> Unit = {},
 ) {
     Column(
@@ -66,6 +67,13 @@ fun DetailInnerFacilityCard(
                 color = RoomieTheme.colors.grayScale10,
                 modifier = Modifier.padding(start = 6.dp)
             )
+
+            if(!roomStatus){
+                DetailRoomInfoStatusChip(
+                    isAvailable = roomStatus,
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
 
             Spacer(Modifier.weight(1f))
 
@@ -127,7 +135,8 @@ fun DetailInnerFacilityCardPreview() {
                     "스타일러"
                 ),
                 onClickExpandedButton = {},
-                isExpanded = true
+                isExpanded = true,
+                roomStatus = true
             )
 
             DetailInnerFacilityCard(
@@ -146,6 +155,44 @@ fun DetailInnerFacilityCardPreview() {
                 ),
                 onClickExpandedButton = {},
                 isExpanded = false
+            )
+
+            DetailInnerFacilityCard(
+                text = "룸 A",
+                facility = persistentListOf(
+                    "세탁기",
+                    "건조기",
+                    "에어컨",
+                    "선풍기",
+                    "청소기",
+                    "소화전",
+                    "세탁용품",
+                    "전기장판",
+                    "빨래건조대",
+                    "스타일러"
+                ),
+                onClickExpandedButton = {},
+                isExpanded = true,
+                roomStatus = false
+            )
+
+            DetailInnerFacilityCard(
+                text = "룸 A",
+                facility = persistentListOf(
+                    "세탁기",
+                    "건조기",
+                    "에어컨",
+                    "선풍기",
+                    "청소기",
+                    "소화전",
+                    "세탁용품",
+                    "전기장판",
+                    "빨래건조대",
+                    "스타일러"
+                ),
+                onClickExpandedButton = {},
+                isExpanded = false,
+                roomStatus = false
             )
         }
     }
