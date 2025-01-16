@@ -78,6 +78,7 @@
     <string name="room_safety_living_facility">안전 및 생활시설</string>
     <string name="room_kitchen_facility">주방시설</string>
     <string name="tour_apply">투어신청하기</string>
+    <string name="detail_image_indicator">%s / %s</string>
 
 
     // common
