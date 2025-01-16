@@ -259,7 +259,7 @@ fun MoodScreen(
                             .height(20.dp)
                     )
 
-                    RoomieFooter()
+                    RoomieFooter() //todo: 리스트 적어도 무조건 하단에 배치
                 }
             }
         }
@@ -303,7 +303,7 @@ private fun MoodHeaderMessage(
 
         Text(
             modifier = modifier
-                .padding(bottom = 8.dp),
+                .padding(bottom = 6.dp),
             text = stringResource(R.string.mood_house_list),
             style = RoomieTheme.typography.body4R12,
             color = RoomieTheme.colors.grayScale8
