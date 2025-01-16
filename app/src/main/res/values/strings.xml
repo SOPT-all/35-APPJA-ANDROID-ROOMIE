@@ -100,4 +100,6 @@
     <string name="navigate_to_bookmark">찜 리스트로 넘어가기</string>
     <string name="heart_button">찜하기 버튼</string>
     <string name="chat_button">채팅 버튼</string>
+    <string name="add_to_bookmark_list">찜 목록에 추가되었습니다!</string>
+  
 </resources>
