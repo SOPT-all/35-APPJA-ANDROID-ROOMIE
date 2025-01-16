@@ -18,7 +18,7 @@ fun NavController.navigateToHome(navOptions: NavOptions) {
 fun NavGraphBuilder.homeNavGraph(
     paddingValues: PaddingValues,
     navigateToBookmark: () -> Unit,
-    navigateToMood: () -> Unit
+    navigateToMood: (String) -> Unit
 ) {
     composable<MainTabRoute.Home> {
         HomeRoute(

@@ -48,9 +48,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun navigateToMood() {
+    fun navigateToMood(moodTag: String) {
         viewModelScope.launch {
-            _sideEffect.emit(HomeSideEffect.NavigateToMood)
+            _sideEffect.emit(
+                HomeSideEffect.NavigateToMood(
+                    moodTag = moodTag
+                )
+            )
         }
     }
 

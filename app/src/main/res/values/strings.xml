@@ -58,7 +58,10 @@
     //mood list
     <string name="find_house">집 찾으신다면</string>
     <string name="recommend_house">이 집은 어때요?</string>
-    <string name="mood_house_list">차분함이 돋보이는 집 리스트예요</string>
+    <string name="mood_house_list">%1$s이 돋보이는 집 리스트예요</string>
+    <string name="mood_calm">차분함</string>
+    <string name="mood_active">활기참</string>
+    <string name="mood_clean">깔끔함</string>
 
     // common
     <string name="dismiss">취소</string>

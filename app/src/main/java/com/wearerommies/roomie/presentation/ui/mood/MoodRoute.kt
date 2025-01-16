@@ -62,6 +62,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun MoodRoute(
+    moodTag: String,
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
     viewModel: MoodViewModel = hiltViewModel()
@@ -98,6 +99,7 @@ fun MoodRoute(
         paddingValues = paddingValues,
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
+        moodTag = moodTag,
         onLikeClick = viewModel::patchHousePin,
         state = state.uiState
     )
@@ -109,6 +111,7 @@ fun MoodRoute(
 fun MoodScreen(
     paddingValues: PaddingValues,
     snackBarHost: SnackbarHostState,
+    moodTag: String,
     navigateUp: () -> Unit,
     onLikeClick: () -> Unit,
     state: UiState<String>,
@@ -183,7 +186,7 @@ fun MoodScreen(
                                 contentDescription = stringResource(R.string.move_back)
                             )
                         },
-                        title = "#차분한" //todo: 더미
+                        title = moodTag
                     )
                 }
 
@@ -211,7 +214,12 @@ fun MoodScreen(
                                     .size(160.dp)
                                     .padding(end = 10.dp)
                                     .align(Alignment.CenterEnd),
-                                painter = painterResource(R.drawable.img_moodview_calm),
+                                painter = when (moodTag) {
+                                    "#" + stringResource(R.string.mood_tag_calm) -> painterResource(R.drawable.img_moodview_calm)
+                                    "#" + stringResource(R.string.mood_tag_active) -> painterResource(R.drawable.img_moodview_exciting)
+                                    "#" + stringResource(R.string.mood_tag_clean) -> painterResource(R.drawable.img_moodview_clean)
+                                    else -> painterResource(R.drawable.img_moodview_calm)
+                                },
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop
                             )
@@ -222,7 +230,13 @@ fun MoodScreen(
                                         start = 20.dp
                                     )
                                     .align(Alignment.CenterStart),
-                                mood = "#차분한"
+                                moodTag = moodTag,
+                                mood = when (moodTag) {
+                                    "#" + stringResource(R.string.mood_tag_calm) -> stringResource(R.string.mood_calm)
+                                    "#" + stringResource(R.string.mood_tag_active) -> stringResource(R.string.mood_active)
+                                    "#" + stringResource(R.string.mood_tag_clean) -> stringResource(R.string.mood_clean)
+                                    else -> stringResource(R.string.mood_calm)
+                                }
                             )
                         }
 
@@ -274,6 +288,7 @@ fun MoodScreen(
 
 @Composable
 private fun MoodHeaderMessage(
+    moodTag: String,
     mood: String,
     modifier: Modifier = Modifier
 ) {
@@ -283,7 +298,7 @@ private fun MoodHeaderMessage(
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
-                text = mood,
+                text = moodTag,
                 style = RoomieTheme.typography.heading5Sb18,
                 color = RoomieTheme.colors.primary
             )
@@ -310,7 +325,7 @@ private fun MoodHeaderMessage(
         Text(
             modifier = modifier
                 .padding(bottom = 6.dp),
-            text = stringResource(R.string.mood_house_list),
+            text = stringResource(R.string.mood_house_list, mood),
             style = RoomieTheme.typography.body4R12,
             color = RoomieTheme.colors.grayScale8
         )
@@ -326,6 +341,7 @@ fun MoodScreenPreview() {
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
             onLikeClick = {},
+            moodTag = "차분한",
             state = UiState.Success("")
         )
     }

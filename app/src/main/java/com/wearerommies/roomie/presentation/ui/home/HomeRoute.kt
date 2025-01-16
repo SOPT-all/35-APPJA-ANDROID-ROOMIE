@@ -68,7 +68,7 @@ fun HomeRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
     navigateToBookmark: () -> Unit,
-    navigateToMood: () -> Unit,
+    navigateToMood: (String) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -94,7 +94,7 @@ fun HomeRoute(
                     }
 
                     is HomeSideEffect.NavigateToBookMark -> navigateToBookmark()
-                    is HomeSideEffect.NavigateToMood -> navigateToMood()
+                    is HomeSideEffect.NavigateToMood -> navigateToMood(sideEffect.moodTag)
                 }
             }
     }
@@ -104,7 +104,7 @@ fun HomeRoute(
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
         navigateToBookmark = viewModel::navigateToBookmark,
-        navigateToMood = viewModel::navigateToMood,
+        navigateToMood = { moodTag -> viewModel.navigateToMood(moodTag = moodTag) },
         onLikeClick = viewModel::patchHousePin,
         state = state.uiState
     )
@@ -118,7 +118,7 @@ fun HomeScreen(
     snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
     navigateToBookmark: () -> Unit,
-    navigateToMood: () -> Unit,
+    navigateToMood: (String) -> Unit,
     onLikeClick: () -> Unit,
     state: UiState<String>,
     modifier: Modifier = Modifier
@@ -289,7 +289,9 @@ fun HomeScreen(
                     )
 
                     MoodCardGroup(
-                        onClick = navigateToMood
+                        onCalmClick = { navigateToMood("#차분한") },
+                        onActiveClick = { navigateToMood("#활기찬") },
+                        onCleanClick = { navigateToMood("#깔끔한") },
                     )
 
                     RecentCardTitle()
@@ -382,7 +384,9 @@ private fun RecentCardTitle(
 
 @Composable
 private fun MoodCardGroup(
-    onClick: () -> Unit,
+    onCalmClick: () -> Unit,
+    onActiveClick: () -> Unit,
+    onCleanClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -414,19 +418,19 @@ private fun MoodCardGroup(
                 HomeMoodCard(
                     modifier = Modifier.weight(1f),
                     homeMoodCardType = HomeMoodCardType.CALM,
-                    onClick = onClick
+                    onClick = onCalmClick
                 )
 
                 HomeMoodCard(
                     modifier = Modifier.weight(1f),
                     homeMoodCardType = HomeMoodCardType.ACTIVE,
-                    onClick = onClick
+                    onClick = onActiveClick
                 )
 
                 HomeMoodCard(
                     modifier = Modifier.weight(1f),
                     homeMoodCardType = HomeMoodCardType.CLEAN,
-                    onClick = onClick
+                    onClick = onCleanClick
                 )
             }
         }
