@@ -28,7 +28,7 @@ fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
 
 fun Modifier.roomieButtonClickable(
     onClick: () -> Unit,
-    pressedColor: Color,
+    pressedColor: Color = Color.Transparent,
     isPressed: Boolean = false,
 ): Modifier = composed {
     this
