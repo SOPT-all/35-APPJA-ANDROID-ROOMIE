@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,6 +30,7 @@ fun DetailContentHeader(
     contractTerm: Int,
     occupancyTypes: String,
     genderPolicy: String,
+    onClickDetailInnerButton: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -62,7 +62,9 @@ fun DetailContentHeader(
 
         Spacer(Modifier.height(36.dp))
 
-        DetailInnerImageButton()
+        DetailInnerImageButton(
+            onClickDetailInnerButton = onClickDetailInnerButton
+        )
     }
 }
 
@@ -128,7 +130,8 @@ fun DetailContentHeaderPreview() {
             occupancyStatus = "2/5",
             contractTerm = 3,
             occupancyTypes = "1,2인실",
-            genderPolicy = "여성 전용"
+            genderPolicy = "여성 전용",
+            onClickDetailInnerButton = {}
         )
     }
 }

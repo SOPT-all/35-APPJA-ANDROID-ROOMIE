@@ -10,15 +10,19 @@ import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.component.RoomieNavigateButton
 import com.wearerommies.roomie.presentation.type.NavigateButtonType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
+import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun DetailInnerImageButton(
+    onClickDetailInnerButton: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     RoomieNavigateButton(
         type = NavigateButtonType.DETAIL,
         text = stringResource(R.string.inner_image_button_text),
-        modifier = modifier
+        modifier = modifier,
+        onClick = onClickDetailInnerButton,
+        pressedColor = RoomieTheme.colors.grayScale2
     )
 }
 
@@ -27,7 +31,8 @@ fun DetailInnerImageButton(
 fun DetailInnerImageButtonPreview() {
     RoomieAndroidTheme {
         DetailInnerImageButton(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
+            onClickDetailInnerButton = {}
         )
     }
 }

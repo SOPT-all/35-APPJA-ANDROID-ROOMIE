@@ -20,6 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.presentation.core.extension.roomieButtonClickable
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
 import com.wearerommies.roomie.presentation.type.NavigateButtonType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
@@ -32,6 +33,7 @@ fun RoomieNavigateButton(
     modifier: Modifier = Modifier,
     textStyle: TextStyle = RoomieTheme.typography.body2Sb14,
     textColor: Color = RoomieTheme.colors.grayScale12,
+    pressedColor: Color = Color.Transparent,
     onClick: () -> Unit = {},
 ) {
     Row(
@@ -43,9 +45,10 @@ fun RoomieNavigateButton(
                 borderColor = type.borderColor,
                 borderWidth = type.borderWidth
             )
-            .clickable {
-                onClick()
-            }
+            .roomieButtonClickable(
+                onClick = onClick,
+                isPressed = true
+            )
             .padding(
                 type.paddingValues
             ),
