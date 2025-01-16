@@ -140,6 +140,24 @@ fun DetailInnerFacilityCardPreview() {
             )
 
             DetailInnerFacilityCard(
+                text = stringResource(R.string.room_kitchen_facility),
+                facility = persistentListOf(
+                    "세탁기",
+                    "건조기",
+                    "에어컨",
+                    "선풍기",
+                    "청소기",
+                    "소화전",
+                    "세탁용품",
+                    "전기장판",
+                    "빨래건조대",
+                    "스타일러"
+                ),
+                onClickExpandedButton = {},
+                isExpanded = false
+            )
+
+            DetailInnerFacilityCard(
                 text = "룸 A",
                 facility = persistentListOf(
                     "세탁기",
@@ -159,7 +177,7 @@ fun DetailInnerFacilityCardPreview() {
             )
 
             DetailInnerFacilityCard(
-                text = stringResource(R.string.room_kitchen_facility),
+                text = "룸 A",
                 facility = persistentListOf(
                     "세탁기",
                     "건조기",
@@ -173,7 +191,8 @@ fun DetailInnerFacilityCardPreview() {
                     "스타일러"
                 ),
                 onClickExpandedButton = {},
-                isExpanded = false
+                isExpanded = false,
+                roomStatus = false
             )
         }
     }
