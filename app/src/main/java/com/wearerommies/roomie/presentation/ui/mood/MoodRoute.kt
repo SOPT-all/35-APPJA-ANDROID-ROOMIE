@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -256,7 +257,12 @@ fun MoodScreen(
                 item {
                     Spacer(
                         modifier = Modifier
+                            .fillMaxWidth()
                             .height(20.dp)
+                            .bottomBorder(
+                                height = convertDpToFloat(1.dp),
+                                color = RoomieTheme.colors.grayScale5
+                            )
                     )
 
                     RoomieFooter() //todo: 리스트 적어도 무조건 하단에 배치
