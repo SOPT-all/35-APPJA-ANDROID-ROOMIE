@@ -55,6 +55,14 @@
     <string name="policy_and_terms">약관 및 정책</string>
     <string name="app_version">앱 버전</string>
 
+    //mood list
+    <string name="find_house">집 찾으신다면</string>
+    <string name="recommend_house">이 집은 어때요?</string>
+    <string name="mood_house_list">%1$s이 돋보이는 집 리스트예요</string>
+    <string name="mood_calm">차분함</string>
+    <string name="mood_active">활기참</string>
+    <string name="mood_clean">깔끔함</string>
+
     // detail
     <string name="house_main_image">쉐어하우스 메인 이미지</string>
     <string name="inner_image_button_text">"내부 이미지 둘러보기"</string>
@@ -79,7 +87,6 @@
     <string name="room_kitchen_facility">주방시설</string>
     <string name="tour_apply">투어신청하기</string>
     <string name="detail_image_indicator">%s / %s</string>
-
 
     // common
     <string name="dismiss">취소</string>
