@@ -63,6 +63,12 @@ import com.wearerommies.roomie.presentation.ui.home.component.HomeMoodCard
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
+object MoodKey {
+    const val CALM = "#차분한"
+    const val ACTIVE = "#활기찬"
+    const val CLEAN = "#깔끔한"
+}
+
 @Composable
 fun HomeRoute(
     paddingValues: PaddingValues,
@@ -104,7 +110,7 @@ fun HomeRoute(
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
         navigateToBookmark = viewModel::navigateToBookmark,
-        navigateToMood = { moodTag -> viewModel.navigateToMood(moodTag = moodTag) },
+        navigateToMood = viewModel::navigateToMood,
         onLikeClick = viewModel::patchHousePin,
         state = state.uiState
     )
@@ -289,9 +295,9 @@ fun HomeScreen(
                     )
 
                     MoodCardGroup(
-                        onCalmClick = { navigateToMood("#차분한") },
-                        onActiveClick = { navigateToMood("#활기찬") },
-                        onCleanClick = { navigateToMood("#깔끔한") },
+                        onCalmClick = { navigateToMood(MoodKey.CALM) },
+                        onActiveClick = { navigateToMood(MoodKey.ACTIVE) },
+                        onCleanClick = { navigateToMood(MoodKey.CLEAN) },
                     )
 
                     RecentCardTitle()

@@ -279,7 +279,7 @@ fun MoodScreen(
                             )
                     )
 
-                    RoomieFooter() //todo: 리스트 적어도 무조건 하단에 배치
+                    RoomieFooter()
                 }
             }
         }
@@ -289,7 +289,7 @@ fun MoodScreen(
 @Composable
 private fun MoodHeaderMessage(
     moodTag: String,
-    mood: String,
+    mood: String, //todo: 서버랑 데이터 논의
     modifier: Modifier = Modifier
 ) {
     Column {
