@@ -48,6 +48,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun MyRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
+    navigateToBookmark: () -> Unit,
     viewModel: MyViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -66,6 +67,7 @@ fun MyRoute(
             .collect { sideEffect ->
                 when (sideEffect) {
                     is MySideEffect.ShowToast -> context.showToast(message = sideEffect.message)
+                    is MySideEffect.NavigateToBookMark -> navigateToBookmark()
                 }
             }
     }
@@ -73,6 +75,7 @@ fun MyRoute(
     MyScreen(
         paddingValues = paddingValues,
         navigateUp = navigateUp,
+        navigateToBookmark = viewModel::navigateToBookmark,
         state = state.uiState
     )
 
@@ -82,6 +85,7 @@ fun MyRoute(
 fun MyScreen(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
+    navigateToBookmark: () -> Unit,
     state: UiState<String>,
     modifier: Modifier = Modifier
 ) {
@@ -149,7 +153,8 @@ fun MyScreen(
 
                     RoomieNavigateButton(
                         type = NavigateButtonType.MY,
-                        text = stringResource(R.string.bookmark_list)
+                        text = stringResource(R.string.bookmark_list),
+                        onClick = navigateToBookmark
                     )
 
                     MyButtonWithHelperText(
@@ -200,6 +205,7 @@ fun MyScreenPreview() {
         MyScreen(
             paddingValues = PaddingValues(),
             navigateUp = {},
+            navigateToBookmark = {},
             state = UiState.Loading
         )
     }

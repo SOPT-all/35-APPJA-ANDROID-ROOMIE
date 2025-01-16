@@ -55,6 +55,31 @@
     <string name="policy_and_terms">약관 및 정책</string>
     <string name="app_version">앱 버전</string>
 
+    // detail
+    <string name="house_main_image">쉐어하우스 메인 이미지</string>
+    <string name="inner_image_button_text">"내부 이미지 둘러보기"</string>
+    <string name="house_price_text">"월세 %s/보증금 %s"</string>
+    <string name="occupancy_status">"%s인"</string>
+    <string name="contract_term">"%d개월 이상 계약"</string>
+    <string name="ground_rule">그라운드 룰</string>
+    <string name="roommate_image">룸메이트 이미지</string>
+    <string name="roommate_age_job">%d세 %s</string>
+    <string name="roommate_sleep_time">수면시간</string>
+    <string name="roommate_activity_time">활동시간</string>
+    <string name="room_status_true">입주가능</string>
+    <string name="room_status_false">입주불가</string>
+    <string name="room_type">방 형태</string>
+    <string name="room_occupany_type">%d 인실</string>
+    <string name="room_prepaid_utilities">선불공과금</string>
+    <string name="room_deposit">보증금</string>
+    <string name="room_monthly_rent">월세</string>
+    <string name="room_management_fee">관리비</string>
+    <string name="room_contract_period">계약기간</string>
+    <string name="room_safety_living_facility">안전 및 생활시설</string>
+    <string name="room_kitchen_facility">주방시설</string>
+    <string name="tour_apply">투어신청하기</string>
+
+
     // common
     <string name="dismiss">취소</string>
     <string name="confirm">확인</string>
@@ -73,4 +98,8 @@
     <string name="address">지번</string>
     <string name="user_nickname">닉네임</string>
     <string name="navigate_to_bookmark">찜 리스트로 넘어가기</string>
+    <string name="heart_button">찜하기 버튼</string>
+    <string name="chat_button">채팅 버튼</string>
+    <string name="add_to_bookmark_list">찜 목록에 추가되었습니다!</string>
+  
 </resources>
