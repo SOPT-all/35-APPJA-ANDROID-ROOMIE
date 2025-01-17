@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -36,7 +35,6 @@ fun HomeMoodCard(
 ) {
     Column(
         modifier = modifier
-            .height((LocalConfiguration.current.screenHeightDp * 0.251).dp)
             .roundedBackgroundWithBorder(
                 cornerRadius = 8.dp,
                 backgroundColor = RoomieTheme.colors.primaryLight5,

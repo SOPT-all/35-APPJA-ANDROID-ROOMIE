@@ -289,7 +289,7 @@ fun MoodScreen(
 @Composable
 private fun MoodHeaderMessage(
     moodTag: String,
-    mood: String, //todo: 서버랑 데이터 논의
+    mood: String,
     modifier: Modifier = Modifier
 ) {
     Column {

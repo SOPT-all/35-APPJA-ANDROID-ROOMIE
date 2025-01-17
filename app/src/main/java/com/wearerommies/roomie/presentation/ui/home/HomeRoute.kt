@@ -283,7 +283,7 @@ fun HomeScreen(
                         modifier = Modifier
                             .padding(horizontal = 20.dp),
                         type = NavigateButtonType.UPDATE,
-                        text = stringResource(R.string.update_banner_message),
+                        text = stringResource(R.string.home_banner_message),
                         textStyle = RoomieTheme.typography.body3M14,
                         textColor = RoomieTheme.colors.grayScale10
                     )
@@ -398,7 +398,8 @@ private fun MoodCardGroup(
         modifier = modifier
             .fillMaxSize()
             .background(
-                color = RoomieTheme.colors.grayScale1, shape = RoundedCornerShape(
+                color = RoomieTheme.colors.grayScale1,
+                shape = RoundedCornerShape(
                     topStart = 20.dp,
                     topEnd = 20.dp
                 )

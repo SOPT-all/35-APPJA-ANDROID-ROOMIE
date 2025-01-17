@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.ui.mypage.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -33,7 +35,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun MyProfileCard(
-    profileImgUrl: String,
+    profileImgUrl: String?,
     nickname: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -53,14 +55,27 @@ fun MyProfileCard(
             ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        AsyncImage(
-            model = profileImgUrl,
-            contentDescription = stringResource(R.string.profile_image),
-            modifier = Modifier
-                .size(60.dp)
-                .clip(CircleShape),
-            contentScale = ContentScale.Crop
-        )
+        if (profileImgUrl.isNullOrEmpty()) {
+            Image(
+                modifier = Modifier
+                    .size(60.dp)
+                    .clip(CircleShape),
+                painter = painterResource(R.drawable.img_profile),
+                contentDescription = stringResource(R.string.profile_image),
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            AsyncImage(
+                model = profileImgUrl,
+                contentDescription = stringResource(R.string.profile_image),
+                modifier = Modifier
+                    .size(60.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
+        }
+
+
 
         Spacer(
             modifier = Modifier.width(12.dp)

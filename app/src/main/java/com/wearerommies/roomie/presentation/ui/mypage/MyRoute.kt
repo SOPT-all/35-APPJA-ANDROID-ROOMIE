@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.ui.mypage
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -81,6 +82,7 @@ fun MyRoute(
 
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MyScreen(
     paddingValues: PaddingValues,
@@ -115,18 +117,20 @@ fun MyScreen(
             }
 
             is UiState.Success -> {
-                item {
+                stickyHeader {
                     RoomieTopBar(
                         title = stringResource(R.string.mypage)
                     )
+                }
 
+                item {
                     MyProfileCard(
                         modifier = Modifier
                             .topBorder(
                                 convertDpToFloat(1.dp),
                                 color = RoomieTheme.colors.grayScale4
                             ),
-                        profileImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg",
+                        profileImgUrl = "",
                         nickname = "이루미",
                         onClick = {}
                     )
@@ -206,7 +210,7 @@ fun MyScreenPreview() {
             paddingValues = PaddingValues(),
             navigateUp = {},
             navigateToBookmark = {},
-            state = UiState.Loading
+            state = UiState.Success(data = "")
         )
     }
 }
