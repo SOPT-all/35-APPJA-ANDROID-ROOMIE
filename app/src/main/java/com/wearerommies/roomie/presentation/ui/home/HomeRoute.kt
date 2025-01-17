@@ -114,7 +114,6 @@ fun HomeRoute(
         onLikeClick = viewModel::patchHousePin,
         state = state.uiState
     )
-
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -450,7 +449,8 @@ private fun HomeGreetingMessage(
 ) {
     Column {
         Row(
-            modifier = modifier,
+            modifier = modifier
+                .padding(top = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
