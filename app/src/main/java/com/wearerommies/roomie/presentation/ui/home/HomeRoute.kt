@@ -75,6 +75,7 @@ fun HomeRoute(
     navigateUp: () -> Unit,
     navigateToBookmark: () -> Unit,
     navigateToMood: (String) -> Unit,
+    navigateToMap: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -101,6 +102,7 @@ fun HomeRoute(
 
                     is HomeSideEffect.NavigateToBookMark -> navigateToBookmark()
                     is HomeSideEffect.NavigateToMood -> navigateToMood(sideEffect.moodTag)
+                    is HomeSideEffect.NavigateToMap -> navigateToMap()
                 }
             }
     }
@@ -111,6 +113,7 @@ fun HomeRoute(
         navigateUp = navigateUp,
         navigateToBookmark = viewModel::navigateToBookmark,
         navigateToMood = viewModel::navigateToMood,
+        navigateToMap = viewModel::navigateToMap,
         onLikeClick = viewModel::patchHousePin,
         state = state.uiState
     )
@@ -124,6 +127,7 @@ fun HomeScreen(
     navigateUp: () -> Unit,
     navigateToBookmark: () -> Unit,
     navigateToMood: (String) -> Unit,
+    navigateToMap: () -> Unit,
     onLikeClick: () -> Unit,
     state: UiState<String>,
     modifier: Modifier = Modifier
@@ -344,7 +348,8 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp),
                             type = NavigateButtonType.HOME,
-                            text = stringResource(R.string.find_more_sharehouses_in_map)
+                            text = stringResource(R.string.find_more_sharehouses_in_map),
+                            onClick = { navigateToMap() }
                         )
 
                         Spacer(
@@ -503,6 +508,7 @@ fun HomeScreenPreview() {
             navigateUp = {},
             navigateToBookmark = {},
             navigateToMood = {},
+            navigateToMap = {},
             onLikeClick = {},
             state = UiState.Success("")
         )

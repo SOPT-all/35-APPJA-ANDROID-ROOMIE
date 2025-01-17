@@ -18,14 +18,16 @@ fun NavController.navigateToHome(navOptions: NavOptions) {
 fun NavGraphBuilder.homeNavGraph(
     paddingValues: PaddingValues,
     navigateToBookmark: () -> Unit,
-    navigateToMood: (String) -> Unit
-) {
+    navigateToMood: (String) -> Unit,
+    navigateToMap: () -> Unit
+    ) {
     composable<MainTabRoute.Home> {
         HomeRoute(
             paddingValues = paddingValues,
             navigateUp = {},
             navigateToBookmark = navigateToBookmark,
             navigateToMood = navigateToMood,
+            navigateToMap = navigateToMap
         )
     }
 }

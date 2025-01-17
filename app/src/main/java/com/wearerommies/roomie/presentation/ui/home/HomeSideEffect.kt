@@ -9,4 +9,5 @@ sealed class HomeSideEffect {
     data class NavigateToMood(
         val moodTag: String
     ) : HomeSideEffect()
+    data object NavigateToMap : HomeSideEffect()
 }
