@@ -39,7 +39,7 @@ fun TourCompletedStepRoute(
 fun TourCompletedStepScreen(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateHome: () -> Unit,
+    navigateToHome: () -> Unit,
     state: TourState,
     modifier: Modifier = Modifier
 ) {
@@ -117,7 +117,7 @@ fun TourCompletedStepScreenPreview() {
         TourCompletedStepScreen(
             paddingValues = PaddingValues(0.dp),
             navigateUp = {},
-            navigateHome = {},
+            navigateToHome = {},
             state = TourState(
                 houseName = "해피쉐어 루미 건대점",
                 roomName = "1A(싱글배드)"
