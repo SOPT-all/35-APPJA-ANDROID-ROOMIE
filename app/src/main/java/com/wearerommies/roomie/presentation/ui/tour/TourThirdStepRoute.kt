@@ -148,7 +148,7 @@ fun TourThirdStepScreenPreview() {
             onClickGenderButton = {},
             state = TourState(
                 houseName = "해피쉐어 루미 건대점",
-                roomName = listOf("1A(싱글배드)", "1B(싱글배드)")
+                roomName = "1A(싱글배드)"
             )
         )
     }

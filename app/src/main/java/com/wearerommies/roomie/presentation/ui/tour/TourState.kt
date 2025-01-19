@@ -6,5 +6,5 @@ import com.wearerommies.roomie.presentation.core.util.UiState
 data class TourState(
     //val uiState: TourEntity = TourEntity()
     val houseName: String,
-    val roomName: List<String>
+    val roomName: String
 )

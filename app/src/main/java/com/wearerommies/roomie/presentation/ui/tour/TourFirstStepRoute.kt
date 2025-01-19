@@ -115,19 +115,10 @@ fun TourFirstStepScreen(
                 color = RoomieTheme.colors.grayScale7,
             )
 
-            LazyColumn (
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.SpaceEvenly,
-                content = {
-                    itemsIndexed(state.roomName) { index, roomName ->
-                        DetailTextWithCheckIcon(
-                            text = roomName,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 8.dp)
-                        )
-                    }
-                }
+            DetailTextWithCheckIcon(
+                text = state.roomName,
+                modifier = Modifier
+                    .fillMaxWidth()
             )
 
         }
@@ -162,7 +153,7 @@ fun TourFirstStepScreen(){
             navigateSecondStep = {},
             state = TourState(
                 houseName = "해피쉐어 루미 건대점",
-                roomName = listOf("1A(싱글배드)", "1B(싱글배드)")
+                roomName = "1A(싱글배드)"
             )
         )
     }
