@@ -24,8 +24,8 @@ const val UTC: String = "UTC"
 
 @Composable
 fun RoomieDatePicker(
-    onConfirm: (selectedDateMillis: Long?) -> Unit, // 선택한 날짜 전달
-    onDismiss: () -> Unit, // dialog visible 등을 false로 변환
+    onConfirm: (selectedDateMillis: Long?) -> Unit,
+    onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     DatePickerModal(
