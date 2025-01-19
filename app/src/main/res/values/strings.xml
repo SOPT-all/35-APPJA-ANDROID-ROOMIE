@@ -80,6 +80,25 @@
     <string name="tour_apply">투어신청하기</string>
     <string name="detail_image_indicator">%s / %s</string>
 
+    // tour
+    <string name="room_correct_check">선택하신 방이 맞는지\n확인해주세요</string>
+    <string name="house_apply_location">신청 지점</string>
+    <string name="tour_target">대상</string>
+    <string name="room_correct">이 방이 맞아요</string>
+    <string name="host_connect_title">호스트와 연락하기 위한\n정보를 알려주세요</string>
+    <string name="private_safety">개인정보는 안전하게 지키고 있어요</string>
+    <string name="name">이름</string>
+    <string name="date_birth">생년월일</string>
+    <string name="phone_number">연락처</string>
+    <string name="next">다음으로</string>
+    <string name="preferred_date_message_title">입주희망일과\n문의하고 싶은 내용을 적어주세요</string>
+    <string name="tour_message">문의내용</string>
+    <string name="tour_message_placeholder">문의내용을 적어주세요</string>
+    <string name="tour_apply_write_complete">다 작성했어요</string>
+    <string name="tour_apply_complete">투어 신청이 완료되었어요!</string>
+    <string name="tour_apply_complete_kakaotalk">신청내용은 카카오톡으로 전달드렸어요</string>
+
+
 
     // common
     <string name="dismiss">취소</string>
@@ -102,5 +121,8 @@
     <string name="heart_button">찜하기 버튼</string>
     <string name="chat_button">채팅 버튼</string>
     <string name="add_to_bookmark_list">찜 목록에 추가되었습니다!</string>
+    <string name="gender">성별</string>
+    <string name="man">남자</string>
+    <string name="woman">여성</string>
   
 </resources>
