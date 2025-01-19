@@ -29,11 +29,13 @@ fun FilterBottomBar(
             text = stringResource(R.string.reset),
             backgroundColor = RoomieTheme.colors.grayScale1,
             textColor = RoomieTheme.colors.grayScale12,
-            onClick = onClickResetButton, // TODO: 초기화 로직
+            onClick = onClickResetButton,
             modifier = Modifier
                 .weight(0.323f),
             borderColor = RoomieTheme.colors.grayScale5,
-            borderWidth = 1.dp
+            borderWidth = 1.dp,
+            isPressed = true,
+            pressedColor = RoomieTheme.colors.grayScale12
         )
 
         Spacer(
@@ -44,11 +46,11 @@ fun FilterBottomBar(
             text = stringResource(R.string.apply),
             backgroundColor = RoomieTheme.colors.primary,
             textColor = RoomieTheme.colors.grayScale1,
-            onClick = onClickApplyButton, // TODO: 필터 적용
+            onClick = onClickApplyButton,
             modifier = Modifier
                 .weight(0.556f),
+            isPressed = true,
             pressedColor = RoomieTheme.colors.primaryLight1,
-            isPressed = true
         )
     }
 }
