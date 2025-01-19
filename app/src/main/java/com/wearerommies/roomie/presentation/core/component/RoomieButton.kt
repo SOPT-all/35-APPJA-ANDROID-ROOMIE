@@ -33,13 +33,14 @@ fun RoomieButton(
     enabledColor: Color = Color.Transparent,
     pressedColor: Color = Color.Transparent,
     borderColor: Color = Color.Transparent,
-    borderWidth: Dp = 0.dp
+    borderWidth: Dp = 0.dp,
+    verticalPadding: Dp = 18.dp
 ) {
     Text(
         text = text,
         textAlign = TextAlign.Center,
-        style = RoomieTheme.typography.body2Sb14,
-        color = textColor,
+        style = RoomieTheme.typography.title2Sb16,
+        color = textColor                          ,
         modifier = modifier
             .let {
                 if (isEnabled) {
@@ -58,7 +59,7 @@ fun RoomieButton(
                 borderColor = borderColor,
                 borderWidth = borderWidth
             )
-            .padding(vertical = 18.dp)
+            .padding(vertical = verticalPadding)
     )
 }
 
