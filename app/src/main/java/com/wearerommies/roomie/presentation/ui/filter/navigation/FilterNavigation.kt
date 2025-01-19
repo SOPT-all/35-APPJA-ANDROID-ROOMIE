@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.wearerommies.roomie.presentation.navigator.route.Route
+import com.wearerommies.roomie.presentation.ui.filter.FilterRoute
 
 fun NavController.navigateToFilter(navOptions: NavOptions? = null) {
     navigate(
@@ -16,12 +17,12 @@ fun NavController.navigateToFilter(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.filterNavGraph(
     paddingValues: PaddingValues,
-    navigateUp: () -> Unit
+    navigateUp:()->Unit,
 ) {
     composable<Route.Filter> {
-//        FilterRoute(
-//            paddingValues = paddingValues,
-//            navigateUp = navigateUp
-//        )
+        FilterRoute(
+            paddingValues = paddingValues,
+            navigateUp = navigateUp
+        )
     }
 }
