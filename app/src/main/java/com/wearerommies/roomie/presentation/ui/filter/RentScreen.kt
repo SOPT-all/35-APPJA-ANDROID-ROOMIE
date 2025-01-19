@@ -65,9 +65,7 @@ fun RentScreen(
                                 style = RoomieTheme.typography.body3M14,
                                 color = RoomieTheme.colors.grayScale10
                             )
-                        },
-                        initValue = 0,
-                        maxValue = 500
+                        }
                     )
 
                     Spacer(
@@ -88,9 +86,7 @@ fun RentScreen(
                                 style = RoomieTheme.typography.body3M14,
                                 color = RoomieTheme.colors.grayScale10
                             )
-                        },
-                        initValue = 500,
-                        maxValue = 500
+                        }
                     )
                 }
             }
@@ -118,9 +114,7 @@ fun RentScreen(
                                 style = RoomieTheme.typography.body3M14,
                                 color = RoomieTheme.colors.grayScale10
                             )
-                        },
-                        initValue = 0,
-                        maxValue = 150
+                        }
                     )
 
                     Spacer(
@@ -141,9 +135,7 @@ fun RentScreen(
                                 style = RoomieTheme.typography.body3M14,
                                 color = RoomieTheme.colors.grayScale10
                             )
-                        },
-                        initValue = 150,
-                        maxValue = 150
+                        }
                     )
                 }
             }

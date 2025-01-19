@@ -36,8 +36,6 @@ fun FilterTextField(
     paddingValues: PaddingValues,
     textFieldValue: String,
     onValueChange: (String) -> Unit,
-    initValue: Int,
-    maxValue: Int,
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Number,
     textAlign: TextAlign = TextAlign.End,
@@ -50,12 +48,7 @@ fun FilterTextField(
         BasicTextField(
             value = textFieldValue,
             onValueChange = { newValue ->
-                val newValueAsLong = newValue.toIntOrNull() ?: initValue
-                if (newValueAsLong > maxValue) {
-                    onValueChange(initValue.toString())
-                } else {
-                    onValueChange(newValue)
-                }
+                onValueChange(newValue)
             },
             textStyle = RoomieTheme.typography.title1R16.copy(
                 color = RoomieTheme.colors.grayScale12,
@@ -95,7 +88,7 @@ fun FilterTextField(
 
                         if (textFieldValue.isEmpty()) {
                             Text(
-                                text = initValue.toString(),
+                                text = textFieldValue,
                                 color = RoomieTheme.colors.grayScale7,
                                 style = RoomieTheme.typography.title1R16,
                                 textAlign = textAlign,
@@ -132,9 +125,7 @@ fun RoomieTextFieldPreview() {
                         style = RoomieTheme.typography.body3M14,
                         color = RoomieTheme.colors.grayScale10
                     )
-                },
-                initValue = 0,
-                maxValue = 500
+                }
             )
         }
     }
