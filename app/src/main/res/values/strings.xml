@@ -97,8 +97,8 @@
     <string name="tour_apply_write_complete">다 작성했어요</string>
     <string name="tour_apply_complete">투어 신청이 완료되었어요!</string>
     <string name="tour_apply_complete_kakaotalk">신청내용은 카카오톡으로 전달드렸어요</string>
-
-
+    <string name="tour_other_room">다른 방 보러가기</string>
+    <string name="tour_completed">완료하기</string>
 
     // common
     <string name="dismiss">취소</string>

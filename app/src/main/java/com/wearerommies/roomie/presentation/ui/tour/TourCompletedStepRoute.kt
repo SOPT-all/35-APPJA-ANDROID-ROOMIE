@@ -87,7 +87,7 @@ fun TourCompletedStepScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             RoomieButton(
-                text = "다른 방 보러가기",
+                text = stringResource(R.string.tour_other_room),
                 backgroundColor = RoomieTheme.colors.grayScale1,
                 textColor = RoomieTheme.colors.grayScale8,
                 onClick = {},
@@ -97,7 +97,7 @@ fun TourCompletedStepScreen(
                 borderWidth = 1.dp
             )
             RoomieButton(
-                text = "완료하기",
+                text = stringResource(R.string.tour_completed),
                 backgroundColor = RoomieTheme.colors.primary,
                 textColor = RoomieTheme.colors.grayScale1,
                 onClick = {},
