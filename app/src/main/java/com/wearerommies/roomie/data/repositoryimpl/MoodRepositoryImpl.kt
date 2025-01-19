@@ -10,6 +10,6 @@ internal class MoodRepositoryImpl @Inject constructor(
 ) : MoodRepository {
     override suspend fun getMoodLists(moodTag: String): Result<MoodCardEntity> =
         runCatching {
-            moodDataSource.getMoodLists(moodTag = moodTag).toEntity()
+            moodDataSource.getMoodLists(moodTag = moodTag).data.toEntity()
         }
 }
