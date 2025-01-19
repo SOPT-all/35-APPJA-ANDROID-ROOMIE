@@ -12,7 +12,7 @@
     <string name="mood_tag_clean">깔끔한</string>
     <string name="mood_card_sub_text">분위기의\n방이 궁금하신가요?</string>
     <string name="home_location">연남동</string>
-    <string name="update_banner_message">1월 1일 루미 업데이트 알아보기</string>
+    <string name="home_banner_message">루미가 궁금하다면?</string>
     <string name="find_mood">분위기 별로 보기</string>
     <string name="find_recent_room">최근 본 방</string>
     <string name="find_more_sharehouses_in_map">지도에서 더 많은 쉐어하우스 찾기</string>
@@ -43,7 +43,7 @@
     <string name="user_hello">님 안녕하세요!</string>
     <string name="user_login_type">카카오 계정 회원</string>
     <string name="show_more_roomie">루미 더보기</string>
-    <string name="bookmark_list">찜 리스트</string>
+    <string name="bookmark_list">찜 목록</string>
     <string name="find_sharehouses">쉐어하우스 찾기</string>
     <string name="request_new_room">원하는 매물이 없다면 새로 요청해보세요</string>
     <string name="add_new_room">매물 등록하기</string>
@@ -54,6 +54,14 @@
     <string name="recent_updates">최근 소식</string>
     <string name="policy_and_terms">약관 및 정책</string>
     <string name="app_version">앱 버전</string>
+
+    //mood list
+    <string name="find_house">집 찾으신다면</string>
+    <string name="recommend_house">이 집은 어때요?</string>
+    <string name="mood_house_list">%1$s이 돋보이는 집 리스트예요</string>
+    <string name="mood_calm">차분함</string>
+    <string name="mood_active">활기참</string>
+    <string name="mood_clean">깔끔함</string>
 
     // detail
     <string name="house_main_image">쉐어하우스 메인 이미지</string>
@@ -67,7 +75,7 @@
     <string name="roommate_sleep_time">수면시간</string>
     <string name="roommate_activity_time">활동시간</string>
     <string name="room_status_true">입주가능</string>
-    <string name="room_status_false">입주불가</string>
+    <string name="room_status_false">입주완료</string>
     <string name="room_type">방 형태</string>
     <string name="room_occupany_type">%d 인실</string>
     <string name="room_prepaid_utilities">선불공과금</string>
@@ -78,7 +86,27 @@
     <string name="room_safety_living_facility">안전 및 생활시설</string>
     <string name="room_kitchen_facility">주방시설</string>
     <string name="tour_apply">투어신청하기</string>
+    <string name="detail_image_indicator">%s / %s</string>
 
+    // tour
+    <string name="room_correct_check">선택하신 방이 맞는지\n확인해주세요</string>
+    <string name="house_apply_location">신청 지점</string>
+    <string name="tour_target">대상</string>
+    <string name="room_correct">이 방이 맞아요</string>
+    <string name="host_connect_title">호스트와 연락하기 위한\n정보를 알려주세요</string>
+    <string name="private_safety">개인정보는 안전하게 지키고 있어요</string>
+    <string name="name">이름</string>
+    <string name="date_birth">생년월일</string>
+    <string name="phone_number">연락처</string>
+    <string name="next">다음으로</string>
+    <string name="preferred_date_message_title">입주희망일과\n문의하고 싶은 내용을 적어주세요</string>
+    <string name="tour_message">문의내용</string>
+    <string name="tour_message_placeholder">문의내용을 적어주세요</string>
+    <string name="tour_apply_write_complete">다 작성했어요</string>
+    <string name="tour_apply_complete">투어 신청이 완료되었어요!</string>
+    <string name="tour_apply_complete_kakaotalk">신청내용은 카카오톡으로 전달드렸어요</string>
+    <string name="tour_other_room">다른 방 보러가기</string>
+    <string name="tour_completed">완료하기</string>
 
     // common
     <string name="dismiss">취소</string>
@@ -101,5 +129,8 @@
     <string name="heart_button">찜하기 버튼</string>
     <string name="chat_button">채팅 버튼</string>
     <string name="add_to_bookmark_list">찜 목록에 추가되었습니다!</string>
+    <string name="gender">성별</string>
+    <string name="man">남자</string>
+    <string name="woman">여성</string>
   
 </resources>

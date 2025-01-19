@@ -1,14 +1,19 @@
-package com.wearerommies.roomie.presentation.ui.bookmark
+package com.wearerommies.roomie.presentation.ui.mood
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarDuration
@@ -23,9 +28,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -52,10 +61,11 @@ import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
-fun BookMarkRoute(
+fun MoodRoute(
+    moodTag: String,
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    viewModel: BookMarkViewModel = hiltViewModel()
+    viewModel: MoodViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -66,15 +76,15 @@ fun BookMarkRoute(
     val currentCounter by rememberUpdatedState(counter)
 
     LaunchedEffect(currentCounter) {
-        viewModel.getBookMarkList()
+        viewModel.getMoodList()
     }
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle)
             .collect { sideEffect ->
                 when (sideEffect) {
-                    is BookMarkSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
-                    is BookMarkSideEffect.SnackBar -> {
+                    is MoodSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
+                    is MoodSideEffect.SnackBar -> {
                         snackBarHost.currentSnackbarData?.dismiss()
                         snackBarHost.showSnackbar(
                             message = context.getString(sideEffect.message),
@@ -85,27 +95,30 @@ fun BookMarkRoute(
             }
     }
 
-    BookMarkScreen(
+    MoodScreen(
         paddingValues = paddingValues,
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
+        moodTag = moodTag,
         onLikeClick = viewModel::patchHousePin,
         state = state.uiState
     )
+
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BookMarkScreen(
+fun MoodScreen(
     paddingValues: PaddingValues,
     snackBarHost: SnackbarHostState,
+    moodTag: String,
     navigateUp: () -> Unit,
-    state: UiState<String>,
     onLikeClick: () -> Unit,
+    state: UiState<String>,
     modifier: Modifier = Modifier
 ) {
-    val screenWeight = LocalConfiguration.current.screenWidthDp
-    val height = (screenWeight * 0.5).dp
+    val screenWeigth = LocalConfiguration.current.screenWidthDp
+    val height = (screenWeigth * 0.5).dp
 
     Popup(
         alignment = Alignment.BottomCenter
@@ -114,7 +127,7 @@ fun BookMarkScreen(
             RoomieSnackbar(
                 modifier = Modifier
                     .padding(
-                        bottom = 24.dp,
+                        bottom = 23.dp,
                         start = 12.dp,
                         end = 12.dp
                     ),
@@ -126,12 +139,13 @@ fun BookMarkScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(RoomieTheme.colors.grayScale1)
+            .background(color = RoomieTheme.colors.grayScale1)
             .padding(paddingValues),
     ) {
         when (state) {
             is UiState.Loading -> {
                 item {
+                    //todo: 로딩뷰
                     Text(
                         modifier = Modifier
                             .noRippleClickable { navigateUp() },
@@ -172,42 +186,86 @@ fun BookMarkScreen(
                                 contentDescription = stringResource(R.string.move_back)
                             )
                         },
-                        title = stringResource(R.string.bookmark_list)
+                        title = moodTag
                     )
                 }
 
                 item {
-                    Spacer(
+                    Column(
                         modifier = Modifier
-                            .height(12.dp)
-                    )
+                            .background(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        RoomieTheme.colors.primary.copy(alpha = 0.2f),
+                                        RoomieTheme.colors.grayScale1,
+                                    )
+                                ),
+                                shape = RectangleShape,
+                            )
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = 10.dp, bottom = 25.dp),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .size(160.dp)
+                                    .padding(end = 10.dp)
+                                    .align(Alignment.CenterEnd),
+                                painter = when (moodTag) {
+                                    "#" + stringResource(R.string.mood_tag_calm) -> painterResource(R.drawable.img_moodview_calm)
+                                    "#" + stringResource(R.string.mood_tag_active) -> painterResource(R.drawable.img_moodview_exciting)
+                                    "#" + stringResource(R.string.mood_tag_clean) -> painterResource(R.drawable.img_moodview_clean)
+                                    else -> painterResource(R.drawable.img_moodview_calm)
+                                },
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop
+                            )
+
+                            MoodHeaderMessage(
+                                modifier = Modifier
+                                    .padding(
+                                        start = 20.dp
+                                    )
+                                    .align(Alignment.CenterStart),
+                                moodTag = moodTag,
+                                mood = when (moodTag) {
+                                    "#" + stringResource(R.string.mood_tag_calm) -> stringResource(R.string.mood_calm)
+                                    "#" + stringResource(R.string.mood_tag_active) -> stringResource(R.string.mood_active)
+                                    "#" + stringResource(R.string.mood_tag_clean) -> stringResource(R.string.mood_clean)
+                                    else -> stringResource(R.string.mood_calm)
+                                }
+                            )
+                        }
+
+                        Spacer(
+                            modifier = Modifier
+                                .height(24.dp)
+                        )
+                    }
                 }
 
                 items(count = 3, key = { it }) {
-                    Box(
+                    RoomieRoomCard(
                         modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        RoomieRoomCard(
-                            modifier = Modifier
-                                .padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
-                            roomCardEntity = RoomCardEntity(
-                                houseId = 1,
-                                monthlyRent = "30~50",
-                                deposit = "200~300",
-                                occupancyType = "2인실",
-                                location = "서대문구 연희동",
-                                genderPolicy = "여성전용",
-                                locationDescription = "자이아파트",
-                                isPinned = true,
-                                moodTag = "#차분한",
-                                contractTerm = 6,
-                                mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
-                            ),
-                            onClick = { },
-                            onLikeClick = onLikeClick
-                        )
-                    }
+                            .padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
+                        roomCardEntity = RoomCardEntity(
+                            houseId = 1,
+                            monthlyRent = "30~50",
+                            deposit = "200~300",
+                            occupancyType = "2인실",
+                            location = "서대문구 연희동",
+                            genderPolicy = "여성전용",
+                            locationDescription = "자이아파트",
+                            isPinned = true,
+                            contractTerm = 6,
+                            mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                        ),
+                        onClick = { },
+                        onLikeClick = onLikeClick
+                    )
                 }
 
                 item {
@@ -228,15 +286,62 @@ fun BookMarkScreen(
     }
 }
 
+@Composable
+private fun MoodHeaderMessage(
+    moodTag: String,
+    mood: String,
+    modifier: Modifier = Modifier
+) {
+    Column {
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Text(
+                text = moodTag,
+                style = RoomieTheme.typography.heading5Sb18,
+                color = RoomieTheme.colors.primary
+            )
+
+            Text(
+                text = stringResource(R.string.find_house),
+                style = RoomieTheme.typography.heading5Sb18,
+                color = RoomieTheme.colors.grayScale12
+            )
+        }
+
+        Text(
+            modifier = modifier,
+            text = stringResource(R.string.recommend_house),
+            style = RoomieTheme.typography.heading5Sb18,
+            color = RoomieTheme.colors.grayScale12
+        )
+
+        Spacer(
+            modifier = Modifier
+                .height(4.dp)
+        )
+
+        Text(
+            modifier = modifier
+                .padding(bottom = 6.dp),
+            text = stringResource(R.string.mood_house_list, mood),
+            style = RoomieTheme.typography.body4R12,
+            color = RoomieTheme.colors.grayScale8
+        )
+    }
+}
+
 @Preview
 @Composable
-fun BookMarkScreenPreview() {
+fun MoodScreenPreview() {
     RoomieAndroidTheme {
-        BookMarkScreen(
+        MoodScreen(
             paddingValues = PaddingValues(),
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
             onLikeClick = {},
+            moodTag = "차분한",
             state = UiState.Success("")
         )
     }

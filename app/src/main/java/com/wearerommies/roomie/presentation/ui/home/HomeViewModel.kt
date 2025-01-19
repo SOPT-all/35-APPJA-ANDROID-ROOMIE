@@ -2,6 +2,7 @@ package com.wearerommies.roomie.presentation.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -34,6 +35,44 @@ class HomeViewModel @Inject constructor(
             }.onSuccess {
                 _state.value = _state.value.copy(uiState = UiState.Success("성공"))
 
+            }.onFailure { error ->
+                _state.value = _state.value.copy(uiState = UiState.Failure)
+                Timber.e(error)
+            }
+        }
+    }
+
+    fun navigateToBookmark() {
+        viewModelScope.launch {
+            _sideEffect.emit(HomeSideEffect.NavigateToBookMark)
+        }
+    }
+
+    fun navigateToMap() = viewModelScope.launch {
+        _sideEffect.emit(HomeSideEffect.NavigateToMap)
+    }
+
+
+    fun navigateToMood(moodTag: String) {
+        viewModelScope.launch {
+            _sideEffect.emit(
+                HomeSideEffect.NavigateToMood(
+                    moodTag = moodTag
+                )
+            )
+        }
+    }
+
+    fun patchHousePin() {
+        viewModelScope.launch {
+            runCatching {
+                //todo: api 연결
+            }.onSuccess {
+                _sideEffect.emit(
+                    HomeSideEffect.SnackBar(
+                        message = R.string.add_to_bookmark_list
+                    )
+                )
             }.onFailure { error ->
                 _state.value = _state.value.copy(uiState = UiState.Failure)
                 Timber.e(error)

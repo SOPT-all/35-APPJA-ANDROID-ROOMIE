@@ -9,7 +9,7 @@ data class RoomCardEntity(
     val genderPolicy: String,
     val locationDescription: String,
     val isPinned: Boolean = true,
-    val moodTag: String,
+    val moodTag: String? = "",
     val contractTerm: Int,
     val mainImgUrl: String,
 )

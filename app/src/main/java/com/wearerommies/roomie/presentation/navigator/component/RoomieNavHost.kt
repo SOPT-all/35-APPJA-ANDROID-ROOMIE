@@ -6,12 +6,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.wearerommies.roomie.presentation.navigator.MainNavigator
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
+import com.wearerommies.roomie.presentation.type.MainTabType
 import com.wearerommies.roomie.presentation.ui.bookmark.navigation.bookmarkNavGraph
 import com.wearerommies.roomie.presentation.ui.detailNavGraph
 import com.wearerommies.roomie.presentation.ui.filter.navigation.filterNavGraph
 import com.wearerommies.roomie.presentation.ui.home.navigation.homeNavGraph
 import com.wearerommies.roomie.presentation.ui.map.navigation.mapNavGraph
-import com.wearerommies.roomie.presentation.ui.moodNavGraph
+import com.wearerommies.roomie.presentation.ui.mood.navigation.moodNavGraph
 import com.wearerommies.roomie.presentation.ui.mypage.navigation.myNavGraph
 import com.wearerommies.roomie.presentation.ui.search.navigation.searchNavGraph
 import com.wearerommies.roomie.presentation.ui.tour.navigation.tourNavGraph
@@ -28,7 +29,9 @@ fun RoomieNavHost(
     ) {
         homeNavGraph(
             paddingValues = padding,
-            navigateToBookmark = navigator::navigateToBookmark
+            navigateToBookmark = navigator::navigateToBookmark,
+            navigateToMood = navigator::navigateToMood,
+            navigateToMap = { navigator.navigate(tab = MainTabType.MAP) }
         )
         mapNavGraph(
             paddingValues = padding,

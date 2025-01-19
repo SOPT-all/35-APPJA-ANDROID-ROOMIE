@@ -50,6 +50,9 @@ fun RoomieRoomCard(
                 color = RoomieTheme.colors.grayScale1,
                 shape = RoundedCornerShape(size = 8.dp)
             )
+            .clip(
+                shape = RoundedCornerShape(8.dp)
+            )
             .clickable { onClick() }
             .padding(all = 4.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -65,14 +68,16 @@ fun RoomieRoomCard(
                 contentScale = ContentScale.Crop
             )
 
-            RoomieTextChip(
-                modifier = Modifier
-                    .padding(start = 6.dp, top = 6.dp),
-                text = roomCardEntity.moodTag,
-                textStyle = RoomieTheme.typography.caption2Sb10,
-                textColor = RoomieTheme.colors.grayScale12,
-                backgroundColor = RoomieTheme.colors.transparentGray160,
-            )
+            if (!roomCardEntity.moodTag.isNullOrEmpty()) {
+                RoomieTextChip(
+                    modifier = Modifier
+                        .padding(start = 6.dp, top = 6.dp),
+                    text = roomCardEntity.moodTag,
+                    textStyle = RoomieTheme.typography.caption2Sb10,
+                    textColor = RoomieTheme.colors.grayScale12,
+                    backgroundColor = RoomieTheme.colors.transparentGray160,
+                )
+            }
 
             Box(
                 modifier = Modifier

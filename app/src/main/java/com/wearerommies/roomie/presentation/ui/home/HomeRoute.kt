@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -63,13 +62,20 @@ import com.wearerommies.roomie.presentation.type.NavigateButtonType
 import com.wearerommies.roomie.presentation.ui.home.component.HomeMoodCard
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
-import kotlinx.coroutines.launch
+
+object MoodKey {
+    const val CALM = "#차분한"
+    const val ACTIVE = "#활기찬"
+    const val CLEAN = "#깔끔한"
+}
 
 @Composable
 fun HomeRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
     navigateToBookmark: () -> Unit,
+    navigateToMood: (String) -> Unit,
+    navigateToMap: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -93,6 +99,10 @@ fun HomeRoute(
                             duration = SnackbarDuration.Short
                         )
                     }
+
+                    is HomeSideEffect.NavigateToBookMark -> navigateToBookmark()
+                    is HomeSideEffect.NavigateToMood -> navigateToMood(sideEffect.moodTag)
+                    is HomeSideEffect.NavigateToMap -> navigateToMap()
                 }
             }
     }
@@ -101,10 +111,12 @@ fun HomeRoute(
         paddingValues = paddingValues,
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
-        navigateToBookmark = navigateToBookmark,
+        navigateToBookmark = viewModel::navigateToBookmark,
+        navigateToMood = viewModel::navigateToMood,
+        navigateToMap = viewModel::navigateToMap,
+        onLikeClick = viewModel::patchHousePin,
         state = state.uiState
     )
-
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -114,6 +126,9 @@ fun HomeScreen(
     snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
     navigateToBookmark: () -> Unit,
+    navigateToMood: (String) -> Unit,
+    navigateToMap: () -> Unit,
+    onLikeClick: () -> Unit,
     state: UiState<String>,
     modifier: Modifier = Modifier
 ) {
@@ -121,7 +136,6 @@ fun HomeScreen(
     val height = (screenWeight * 0.5).dp
 
     val scrollState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
     val scrollOffset = scrollState.firstVisibleItemScrollOffset
     val topBarBackgroundColor =
         if (scrollOffset > 1) RoomieTheme.colors.grayScale1 else Color.Transparent
@@ -273,7 +287,7 @@ fun HomeScreen(
                         modifier = Modifier
                             .padding(horizontal = 20.dp),
                         type = NavigateButtonType.UPDATE,
-                        text = stringResource(R.string.update_banner_message),
+                        text = stringResource(R.string.home_banner_message),
                         textStyle = RoomieTheme.typography.body3M14,
                         textColor = RoomieTheme.colors.grayScale10
                     )
@@ -283,7 +297,11 @@ fun HomeScreen(
                             .height(20.dp)
                     )
 
-                    MoodCardGroup()
+                    MoodCardGroup(
+                        onCalmClick = { navigateToMood(MoodKey.CALM) },
+                        onActiveClick = { navigateToMood(MoodKey.ACTIVE) },
+                        onCleanClick = { navigateToMood(MoodKey.CLEAN) },
+                    )
 
                     RecentCardTitle()
                 }
@@ -311,14 +329,7 @@ fun HomeScreen(
                                 mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
                             ),
                             onClick = { },
-                            onLikeClick = {
-                                coroutineScope.launch {
-                                    snackBarHost.showSnackbar(
-                                        message = "찜 목록에 추가되었습니다!",
-                                        duration = SnackbarDuration.Short
-                                    )
-                                }
-                            }
+                            onLikeClick = onLikeClick
                         )
                     }
                 }
@@ -337,7 +348,8 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp),
                             type = NavigateButtonType.HOME,
-                            text = stringResource(R.string.find_more_sharehouses_in_map)
+                            text = stringResource(R.string.find_more_sharehouses_in_map),
+                            onClick = { navigateToMap() }
                         )
 
                         Spacer(
@@ -382,13 +394,17 @@ private fun RecentCardTitle(
 
 @Composable
 private fun MoodCardGroup(
+    onCalmClick: () -> Unit,
+    onActiveClick: () -> Unit,
+    onCleanClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(
-                color = RoomieTheme.colors.grayScale1, shape = RoundedCornerShape(
+                color = RoomieTheme.colors.grayScale1,
+                shape = RoundedCornerShape(
                     topStart = 20.dp,
                     topEnd = 20.dp
                 )
@@ -413,19 +429,19 @@ private fun MoodCardGroup(
                 HomeMoodCard(
                     modifier = Modifier.weight(1f),
                     homeMoodCardType = HomeMoodCardType.CALM,
-                    onClick = {}
+                    onClick = onCalmClick
                 )
 
                 HomeMoodCard(
                     modifier = Modifier.weight(1f),
                     homeMoodCardType = HomeMoodCardType.ACTIVE,
-                    onClick = {}
+                    onClick = onActiveClick
                 )
 
                 HomeMoodCard(
                     modifier = Modifier.weight(1f),
                     homeMoodCardType = HomeMoodCardType.CLEAN,
-                    onClick = {}
+                    onClick = onCleanClick
                 )
             }
         }
@@ -439,7 +455,8 @@ private fun HomeGreetingMessage(
 ) {
     Column {
         Row(
-            modifier = modifier,
+            modifier = modifier
+                .padding(top = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
@@ -490,6 +507,9 @@ fun HomeScreenPreview() {
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
             navigateToBookmark = {},
+            navigateToMood = {},
+            navigateToMap = {},
+            onLikeClick = {},
             state = UiState.Success("")
         )
     }

@@ -15,7 +15,4 @@ enum class MyType (
     POLICY(
         title = R.string.policy_and_terms
     ),
-    VERSION(
-        title = R.string.app_version
-    )
 }

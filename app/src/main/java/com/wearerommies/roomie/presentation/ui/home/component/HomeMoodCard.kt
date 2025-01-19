@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.ui.home.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,13 +9,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,38 +37,56 @@ fun HomeMoodCard(
 ) {
     Column(
         modifier = modifier
-            .height((LocalConfiguration.current.screenHeightDp * 0.251).dp)
             .roundedBackgroundWithBorder(
                 cornerRadius = 8.dp,
                 backgroundColor = RoomieTheme.colors.primaryLight5,
                 borderColor = RoomieTheme.colors.primaryLight3,
                 borderWidth = 1.dp
             )
+            .clip(
+                shape = RoundedCornerShape(8.dp)
+            )
             .clickable {
                 onClick()
             }
-            .padding(top = 12.dp, bottom = 12.dp, start = 12.dp, end = 10.dp),
+            .padding(top = 12.dp),
     ) {
         MoodCardMainText(
+            modifier = Modifier
+                .padding(start = 12.dp, end = 10.dp),
             homeMoodCardType = homeMoodCardType
         )
 
         Spacer(
             modifier = Modifier
-                .weight(1f)
+                .height(4.dp)
         )
 
         Text(
+            modifier = Modifier
+                .padding(start = 12.dp),
             text = stringResource(homeMoodCardType.moodTag) + " " + stringResource(R.string.mood_card_sub_text),
-            style = RoomieTheme.typography.caption3M10,
-            color = RoomieTheme.colors.primary,
+            style = RoomieTheme.typography.caption1R10,
+            color = RoomieTheme.colors.primaryLight1,
+        )
+
+        Spacer(
+            modifier = Modifier
+                .height(4.dp)
+        )
+
+        Image(
+            painter = painterResource(homeMoodCardType.moodDrawableResId),
+            contentDescription = null,
+            contentScale = ContentScale.Crop
         )
     }
 }
 
 @Composable
-private fun MoodCardMainText(homeMoodCardType: HomeMoodCardType) {
+private fun MoodCardMainText(homeMoodCardType: HomeMoodCardType, modifier: Modifier = Modifier) {
     Row(
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
