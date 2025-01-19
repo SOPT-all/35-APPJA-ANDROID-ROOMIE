@@ -35,11 +35,17 @@ class FilterViewModel @Inject constructor(
         _state.value = _state.value.copy(
             depositStart = value.toIntOrNull() ?: 0
         )
+//        뷰모델에서 범위 관리 - 초기화/max값 넘었을때 갑설정
+//        depositStart = when {
+//            value.isEmpty() -> return
+//            value.toInt() > 500 -> 500
+//            else -> value.toInt()
+//        }
     }
 
     fun setDepositRangeEnd(value: String) {
         _state.value = _state.value.copy(
-            depositEnd = value.toIntOrNull() ?: 500
+            depositEnd = value.toIntOrNull() ?: 0
         )
     }
 
