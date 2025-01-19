@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
@@ -50,6 +51,7 @@ fun RommieTextField(
     placeHolder: String = "",
     isValidate: Boolean = true,
     errorMessage: String? = "",
+    singleLine: Boolean = true,
     content: @Composable () -> Unit = {}
 ) {
     var textFieldState by remember { mutableStateOf(TextFieldValue(textFieldValue)) }
@@ -67,7 +69,7 @@ fun RommieTextField(
                 color = RoomieTheme.colors.grayScale12,
                 textAlign = textAlign,
             ),
-            singleLine = true,
+            singleLine = singleLine,
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType
             ),
@@ -179,6 +181,7 @@ fun RoomieTextFieldPreview() {
                 placeHolder = "500",
                 keyboardType = KeyboardType.Number,
                 textAlign = TextAlign.End
+
             )
 
             RommieTextField(
