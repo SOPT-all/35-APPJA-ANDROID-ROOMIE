@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -47,6 +48,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.domain.entity.HomeDataEntity
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieNavigateButton
 import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
@@ -129,7 +131,7 @@ fun HomeScreen(
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
     onLikeClick: () -> Unit,
-    state: UiState<String>,
+    state: UiState<HomeDataEntity>,
     modifier: Modifier = Modifier
 ) {
     val screenWeight = LocalConfiguration.current.screenWidthDp
@@ -227,7 +229,7 @@ fun HomeScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = stringResource(R.string.home_location),
+                                    text = state.data.location,
                                     style = RoomieTheme.typography.title2Sb16,
                                     color = RoomieTheme.colors.grayScale12
                                 )
@@ -274,7 +276,7 @@ fun HomeScreen(
                                     start = 20.dp
                                 )
                                 .align(Alignment.CenterStart),
-                            nickname = stringResource(R.string.user_nickname)
+                            nickname = state.data.name
                         )
                     }
 
@@ -289,7 +291,10 @@ fun HomeScreen(
                         type = NavigateButtonType.UPDATE,
                         text = stringResource(R.string.home_banner_message),
                         textStyle = RoomieTheme.typography.body3M14,
-                        textColor = RoomieTheme.colors.grayScale10
+                        textColor = RoomieTheme.colors.grayScale10,
+                        onClick = {
+                            //todo: 웹뷰 띄우기
+                        }
                     )
 
                     Spacer(
@@ -306,7 +311,7 @@ fun HomeScreen(
                     RecentCardTitle()
                 }
 
-                items(count = 3, key = { it }) {
+                itemsIndexed(items = state.data.recentlyViewedHouses) { index, item ->
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -316,20 +321,22 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
                             roomCardEntity = RoomCardEntity(
-                                houseId = 1,
-                                monthlyRent = "30~50",
-                                deposit = "200~300",
-                                occupancyType = "2인실",
-                                location = "서대문구 연희동",
-                                genderPolicy = "여성전용",
-                                locationDescription = "자이아파트",
-                                isPinned = true,
-                                moodTag = "#차분한",
-                                contractTerm = 6,
-                                mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                                houseId = item.houseId,
+                                monthlyRent = item.monthlyRent,
+                                deposit = item.deposit,
+                                occupancyType = item.occupancyType,
+                                location = item.location,
+                                genderPolicy = item.genderPolicy,
+                                locationDescription = item.locationDescription,
+                                isPinned = item.isPinned,
+                                moodTag = item.moodTag,
+                                contractTerm = item.contractTerm,
+                                mainImgUrl = item.mainImgUrl
                             ),
-                            onClick = { },
-                            onLikeClick = onLikeClick
+                            onClick = {
+                                //todo: 상세 매물 페이지로 이동
+                            },
+                            onLikeClick = onLikeClick //todo: bookmark api 로직 구현
                         )
                     }
                 }
@@ -510,7 +517,27 @@ fun HomeScreenPreview() {
             navigateToMood = {},
             navigateToMap = {},
             onLikeClick = {},
-            state = UiState.Success("")
+            state = UiState.Success(
+                HomeDataEntity(
+                    name = "닉넴",
+                    location = "연남동",
+                    recentlyViewedHouses = listOf(
+                        RoomCardEntity(
+                            houseId = 1,
+                            monthlyRent = "30~50",
+                            deposit = "200~300",
+                            occupancyType = "2인실",
+                            location = "서대문구 연희동",
+                            genderPolicy = "여성전용",
+                            locationDescription = "자이아파트",
+                            isPinned = false,
+                            moodTag = "#차분한",
+                            contractTerm = 6,
+                            mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                        ),
+                    )
+                )
+            )
         )
     }
 }
