@@ -7,7 +7,9 @@ sealed interface Route {
     data object Search : Route
 
     @Serializable
-    data object Mood : Route
+    data class Mood(
+        val moodTag: String
+    ) : Route
 
     @Serializable
     data object Bookmark : Route

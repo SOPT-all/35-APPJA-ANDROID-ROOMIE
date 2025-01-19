@@ -65,14 +65,16 @@ fun RoomieRoomCard(
                 contentScale = ContentScale.Crop
             )
 
-            RoomieTextChip(
-                modifier = Modifier
-                    .padding(start = 6.dp, top = 6.dp),
-                text = roomCardEntity.moodTag,
-                textStyle = RoomieTheme.typography.caption2Sb10,
-                textColor = RoomieTheme.colors.grayScale12,
-                backgroundColor = RoomieTheme.colors.transparentGray160,
-            )
+            if (!roomCardEntity.moodTag.isNullOrEmpty()) {
+                RoomieTextChip(
+                    modifier = Modifier
+                        .padding(start = 6.dp, top = 6.dp),
+                    text = roomCardEntity.moodTag,
+                    textStyle = RoomieTheme.typography.caption2Sb10,
+                    textColor = RoomieTheme.colors.grayScale12,
+                    backgroundColor = RoomieTheme.colors.transparentGray160,
+                )
+            }
 
             Box(
                 modifier = Modifier
