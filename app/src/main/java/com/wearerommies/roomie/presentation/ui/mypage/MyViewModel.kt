@@ -2,6 +2,7 @@ package com.wearerommies.roomie.presentation.ui.mypage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wearerommies.roomie.data.service.MyService
 import com.wearerommies.roomie.presentation.core.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyViewModel @Inject constructor(
+    private val myService: MyService,
 ) : ViewModel() {
     // state 관리
     private val _state = MutableStateFlow(MyState())
@@ -30,10 +32,9 @@ class MyViewModel @Inject constructor(
     fun getUserInfo() {
         viewModelScope.launch {
             runCatching {
-                //todo: api 연결
-            }.onSuccess {
-                _state.value = _state.value.copy(uiState = UiState.Success("성공"))
-
+                myService.getMyPageData()
+            }.onSuccess { response ->
+                _state.value = _state.value.copy(uiState = UiState.Success(response.data.name))
             }.onFailure { error ->
                 _state.value = _state.value.copy(uiState = UiState.Failure)
                 Timber.e(error)

@@ -30,6 +30,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.domain.entity.MyPageEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieNavigateButton
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
@@ -88,7 +89,7 @@ fun MyScreen(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
     navigateToBookmark: () -> Unit,
-    state: UiState<String>,
+    state: UiState<MyPageEntity>,
     modifier: Modifier = Modifier
 ) {
     val screenWeigth = LocalConfiguration.current.screenWidthDp
@@ -131,7 +132,7 @@ fun MyScreen(
                                 color = RoomieTheme.colors.grayScale4
                             ),
                         profileImgUrl = "",
-                        nickname = "이루미",
+                        nickname = state.data.name,
                         onClick = {}
                     )
 
@@ -210,7 +211,11 @@ fun MyScreenPreview() {
             paddingValues = PaddingValues(),
             navigateUp = {},
             navigateToBookmark = {},
-            state = UiState.Success(data = "")
+            state = UiState.Success(
+                data = MyPageEntity(
+                    name = "루미"
+                )
+            )
         )
     }
 }
