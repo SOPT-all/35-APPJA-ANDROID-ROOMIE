@@ -50,6 +50,9 @@ fun RoomieRoomCard(
                 color = RoomieTheme.colors.grayScale1,
                 shape = RoundedCornerShape(size = 8.dp)
             )
+            .clip(
+                shape = RoundedCornerShape(8.dp)
+            )
             .clickable { onClick() }
             .padding(all = 4.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp)

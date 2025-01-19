@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.wearerommies.roomie.presentation.navigator.MainNavigator
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
+import com.wearerommies.roomie.presentation.type.MainTabType
 import com.wearerommies.roomie.presentation.ui.bookmark.navigation.bookmarkNavGraph
 import com.wearerommies.roomie.presentation.ui.detailNavGraph
 import com.wearerommies.roomie.presentation.ui.filter.navigation.filterNavGraph
@@ -29,7 +30,8 @@ fun RoomieNavHost(
         homeNavGraph(
             paddingValues = padding,
             navigateToBookmark = navigator::navigateToBookmark,
-            navigateToMood = navigator::navigateToMood
+            navigateToMood = navigator::navigateToMood,
+            navigateToMap = { navigator.navigate(tab = MainTabType.MAP) }
         )
         mapNavGraph(
             paddingValues = padding,

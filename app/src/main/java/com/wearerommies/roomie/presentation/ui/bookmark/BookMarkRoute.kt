@@ -176,15 +176,21 @@ fun BookMarkScreen(
                     )
                 }
 
+                item {
+                    Spacer(
+                        modifier = Modifier
+                            .height(12.dp)
+                    )
+                }
+
                 items(count = 3, key = { it }) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(color = RoomieTheme.colors.grayScale1)
                     ) {
                         RoomieRoomCard(
                             modifier = Modifier
-                                .padding(start = 12.dp, end = 12.dp, top = 12.dp, bottom = 4.dp),
+                                .padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
                             roomCardEntity = RoomCardEntity(
                                 houseId = 1,
                                 monthlyRent = "30~50",
@@ -209,6 +215,10 @@ fun BookMarkScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(20.dp)
+                            .bottomBorder(
+                                height = convertDpToFloat(1.dp),
+                                color = RoomieTheme.colors.grayScale5
+                            )
                     )
 
                     RoomieFooter()

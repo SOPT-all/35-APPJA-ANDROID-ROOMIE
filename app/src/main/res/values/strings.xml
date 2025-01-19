@@ -12,7 +12,7 @@
     <string name="mood_tag_clean">깔끔한</string>
     <string name="mood_card_sub_text">분위기의\n방이 궁금하신가요?</string>
     <string name="home_location">연남동</string>
-    <string name="update_banner_message">1월 1일 루미 업데이트 알아보기</string>
+    <string name="home_banner_message">루미가 궁금하다면?</string>
     <string name="find_mood">분위기 별로 보기</string>
     <string name="find_recent_room">최근 본 방</string>
     <string name="find_more_sharehouses_in_map">지도에서 더 많은 쉐어하우스 찾기</string>
@@ -43,7 +43,7 @@
     <string name="user_hello">님 안녕하세요!</string>
     <string name="user_login_type">카카오 계정 회원</string>
     <string name="show_more_roomie">루미 더보기</string>
-    <string name="bookmark_list">찜 리스트</string>
+    <string name="bookmark_list">찜 목록</string>
     <string name="find_sharehouses">쉐어하우스 찾기</string>
     <string name="request_new_room">원하는 매물이 없다면 새로 요청해보세요</string>
     <string name="add_new_room">매물 등록하기</string>
