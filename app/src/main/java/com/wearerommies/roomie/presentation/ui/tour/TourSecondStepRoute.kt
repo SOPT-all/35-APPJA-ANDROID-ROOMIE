@@ -121,7 +121,6 @@ fun TourSecondStepScreen(
 
         Spacer(Modifier.height(28.dp))
 
-
         Row(
             modifier = Modifier.padding(
                 horizontal = 16.dp
