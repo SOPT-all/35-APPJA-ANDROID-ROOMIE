@@ -1,8 +1,10 @@
 package com.wearerommies.roomie.data.di
 
 import com.wearerommies.roomie.data.repositoryimpl.HomeRepositoryImpl
+import com.wearerommies.roomie.data.repositoryimpl.MoodRepositoryImpl
 import com.wearerommies.roomie.data.repositoryimpl.ReqresRepositoryImpl
 import com.wearerommies.roomie.domain.repository.HomeRepository
+import com.wearerommies.roomie.domain.repository.MoodRepository
 import com.wearerommies.roomie.domain.repository.ReqresRepository
 import dagger.Binds
 import dagger.Module
@@ -20,4 +22,8 @@ internal interface RepositoryModule {
     @Binds
     @Singleton
     fun bindsHomeRepository(homeRepositoryImpl: HomeRepositoryImpl): HomeRepository
+
+    @Binds
+    @Singleton
+    fun bindsMoodRepository(moodRepositoryImpl: MoodRepositoryImpl): MoodRepository
 }
