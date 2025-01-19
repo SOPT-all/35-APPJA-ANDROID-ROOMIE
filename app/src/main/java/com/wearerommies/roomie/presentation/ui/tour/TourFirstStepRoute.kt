@@ -77,7 +77,7 @@ fun TourFirstStepScreen(
                 )
         )
 
-        Spacer(Modifier.height(36.dp))
+        Spacer(Modifier.height(44.dp))
 
         Row(
             modifier = Modifier

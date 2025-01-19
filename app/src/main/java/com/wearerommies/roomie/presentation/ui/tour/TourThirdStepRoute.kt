@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -23,7 +22,6 @@ import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.component.RommieTextField
 import com.wearerommies.roomie.presentation.core.component.RoomieButton
 import com.wearerommies.roomie.presentation.core.component.RoomieDatePickerFieldWithTitle
-import com.wearerommies.roomie.presentation.core.component.RoomieTextFieldWithTitle
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.type.DatePickerFieldType
@@ -100,8 +98,7 @@ fun TourThirdStepScreen(
             color = RoomieTheme.colors.grayScale12,
             modifier = Modifier
                 .padding(
-                    horizontal = 16.dp,
-                    vertical = 12.dp
+                    horizontal = 16.dp
                 )
         )
 
