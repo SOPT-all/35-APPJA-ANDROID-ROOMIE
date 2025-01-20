@@ -37,6 +37,7 @@ fun MapTopBar(
         MapShadowTextField(
             textFieldValue = "", // TODO: state 값 연결
             onValueChange = {},
+            onClick = onClickSearchTextField,
             content = {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_search_24px),
@@ -48,7 +49,6 @@ fun MapTopBar(
             },
             modifier = Modifier
                 .weight(1f)
-                .noRippleClickable { onClickSearchTextField() }
         )
 
         Spacer(modifier = Modifier.width(8.dp))
