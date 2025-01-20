@@ -3,7 +3,6 @@ package com.wearerommies.roomie.presentation.ui.bookmark
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.R
-import com.wearerommies.roomie.data.service.BookmarkListService
 import com.wearerommies.roomie.data.service.HouseService
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.util.EmptyUiState
