@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -47,6 +48,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.domain.entity.MoodCardEntity
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieFooter
 import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
@@ -76,7 +78,7 @@ fun MoodRoute(
     val currentCounter by rememberUpdatedState(counter)
 
     LaunchedEffect(currentCounter) {
-        viewModel.getMoodList()
+        viewModel.getMoodList(moodTag = moodTag)
     }
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
@@ -114,7 +116,7 @@ fun MoodScreen(
     moodTag: String,
     navigateUp: () -> Unit,
     onLikeClick: () -> Unit,
-    state: UiState<String>,
+    state: UiState<MoodCardEntity>,
     modifier: Modifier = Modifier
 ) {
     val screenWeigth = LocalConfiguration.current.screenWidthDp
@@ -215,9 +217,18 @@ fun MoodScreen(
                                     .padding(end = 10.dp)
                                     .align(Alignment.CenterEnd),
                                 painter = when (moodTag) {
-                                    "#" + stringResource(R.string.mood_tag_calm) -> painterResource(R.drawable.img_moodview_calm)
-                                    "#" + stringResource(R.string.mood_tag_active) -> painterResource(R.drawable.img_moodview_exciting)
-                                    "#" + stringResource(R.string.mood_tag_clean) -> painterResource(R.drawable.img_moodview_clean)
+                                    stringResource(R.string.hashtag) + stringResource(R.string.mood_tag_calm) -> painterResource(
+                                        R.drawable.img_moodview_calm
+                                    )
+
+                                    stringResource(R.string.hashtag) + stringResource(R.string.mood_tag_active) -> painterResource(
+                                        R.drawable.img_moodview_exciting
+                                    )
+
+                                    stringResource(R.string.hashtag) + stringResource(R.string.mood_tag_clean) -> painterResource(
+                                        R.drawable.img_moodview_clean
+                                    )
+
                                     else -> painterResource(R.drawable.img_moodview_calm)
                                 },
                                 contentDescription = null,
@@ -230,11 +241,20 @@ fun MoodScreen(
                                         start = 20.dp
                                     )
                                     .align(Alignment.CenterStart),
-                                moodTag = moodTag,
+                                moodTag = state.data.moodTag,
                                 mood = when (moodTag) {
-                                    "#" + stringResource(R.string.mood_tag_calm) -> stringResource(R.string.mood_calm)
-                                    "#" + stringResource(R.string.mood_tag_active) -> stringResource(R.string.mood_active)
-                                    "#" + stringResource(R.string.mood_tag_clean) -> stringResource(R.string.mood_clean)
+                                    stringResource(R.string.hashtag) + stringResource(R.string.mood_tag_calm) -> stringResource(
+                                        R.string.mood_calm
+                                    )
+
+                                    stringResource(R.string.hashtag) + stringResource(R.string.mood_tag_active) -> stringResource(
+                                        R.string.mood_active
+                                    )
+
+                                    stringResource(R.string.hashtag) + stringResource(R.string.mood_tag_clean) -> stringResource(
+                                        R.string.mood_clean
+                                    )
+
                                     else -> stringResource(R.string.mood_calm)
                                 }
                             )
@@ -247,23 +267,25 @@ fun MoodScreen(
                     }
                 }
 
-                items(count = 3, key = { it }) {
+                itemsIndexed(items = state.data.houses) { index, item ->
                     RoomieRoomCard(
                         modifier = Modifier
                             .padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
                         roomCardEntity = RoomCardEntity(
-                            houseId = 1,
-                            monthlyRent = "30~50",
-                            deposit = "200~300",
-                            occupancyType = "2인실",
-                            location = "서대문구 연희동",
-                            genderPolicy = "여성전용",
-                            locationDescription = "자이아파트",
-                            isPinned = true,
-                            contractTerm = 6,
-                            mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                            houseId = item.houseId,
+                            monthlyRent = item.monthlyRent,
+                            deposit = item.deposit,
+                            occupancyType = item.occupancyTypes,
+                            location = item.location,
+                            genderPolicy = item.genderPolicy,
+                            locationDescription = item.locationDescription,
+                            isPinned = item.isPinned,
+                            contractTerm = item.contractTerm,
+                            mainImgUrl = item.mainImgUrl
                         ),
-                        onClick = { },
+                        onClick = {
+                            //todo: 상세 페이지 이동
+                        },
                         onLikeClick = onLikeClick
                     )
                 }
@@ -342,7 +364,25 @@ fun MoodScreenPreview() {
             navigateUp = {},
             onLikeClick = {},
             moodTag = "차분한",
-            state = UiState.Success("")
+            state = UiState.Success(
+                MoodCardEntity(
+                    moodTag = "#차분한",
+                    houses = listOf(
+                        MoodCardEntity.House(
+                            houseId = 1,
+                            monthlyRent = "30~50",
+                            deposit = "200~300",
+                            occupancyTypes = "2인실",
+                            location = "서대문구 연희동",
+                            genderPolicy = "여성전용",
+                            locationDescription = "자이아파트",
+                            isPinned = false,
+                            contractTerm = 6,
+                            mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                        )
+                    )
+                )
+            )
         )
     }
 }
