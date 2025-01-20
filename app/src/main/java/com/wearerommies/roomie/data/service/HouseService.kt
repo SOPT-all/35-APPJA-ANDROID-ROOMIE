@@ -5,7 +5,7 @@ import com.wearerommies.roomie.data.dto.response.ResponseMoodDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface MoodService {
+interface HouseService {
     @GET("/v1/houses")
     suspend fun getMoodLists(
         @Query("moodTag") moodTag: String
