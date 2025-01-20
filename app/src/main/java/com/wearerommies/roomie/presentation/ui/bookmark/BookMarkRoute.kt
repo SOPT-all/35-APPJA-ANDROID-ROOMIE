@@ -47,11 +47,11 @@ import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
-import com.wearerommies.roomie.presentation.core.util.UiState
+import com.wearerommies.roomie.presentation.core.util.EmptyUiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
+import com.wearerommies.roomie.presentation.ui.bookmark.component.BookmarkEmptyView
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
-import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun BookMarkRoute(
@@ -102,7 +102,7 @@ fun BookMarkScreen(
     paddingValues: PaddingValues,
     snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
-    state: UiState<List<RoomCardEntity>>,
+    state: EmptyUiState<List<RoomCardEntity>>,
     onLikeClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -132,7 +132,7 @@ fun BookMarkScreen(
             .padding(paddingValues),
     ) {
         when (state) {
-            is UiState.Loading -> {
+            is EmptyUiState.Loading -> {
                 item {
                     Text(
                         modifier = Modifier
@@ -145,7 +145,7 @@ fun BookMarkScreen(
                 }
             }
 
-            is UiState.Failure -> {
+            is EmptyUiState.Failure -> {
                 item {
                     Text(
                         modifier = Modifier
@@ -157,7 +157,40 @@ fun BookMarkScreen(
                 }
             }
 
-            is UiState.Success -> {
+            is EmptyUiState.Empty -> {
+                stickyHeader {
+                    RoomieTopBar(
+                        modifier = Modifier
+                            .bottomBorder(
+                                height = convertDpToFloat(1.dp),
+                                color = RoomieTheme.colors.grayScale4
+                            ),
+                        leadingIcon = {
+                            Icon(
+                                modifier = Modifier
+                                    .noRippleClickable { navigateUp() }
+                                    .padding(all = 10.dp),
+                                imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_line_black_24px),
+                                contentDescription = stringResource(R.string.move_back)
+                            )
+                        },
+                        title = stringResource(R.string.bookmark_list)
+                    )
+                }
+
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .height((LocalConfiguration.current.screenHeightDp - 48).dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        BookmarkEmptyView()
+                    }
+                }
+            }
+
+            is EmptyUiState.Success -> {
                 stickyHeader {
                     RoomieTopBar(
                         modifier = Modifier
@@ -241,23 +274,25 @@ fun BookMarkScreenPreview() {
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
             onLikeClick = {},
-            state = UiState.Success(
-                listOf(
-                    RoomCardEntity(
-                        houseId = 1,
-                        monthlyRent = "30~50",
-                        deposit = "200~300",
-                        occupancyType = "2인실",
-                        location = "서대문구 연희동",
-                        genderPolicy = "여성전용",
-                        locationDescription = "자이아파트",
-                        isPinned = true,
-                        moodTag = "#차분한",
-                        contractTerm = 6,
-                        mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
-                    )
-                ).toPersistentList()
-            )
+            state = EmptyUiState.Empty
+
+//            EmptyUiState.Success(
+//                listOf(
+//                    RoomCardEntity(
+//                        houseId = 1,
+//                        monthlyRent = "30~50",
+//                        deposit = "200~300",
+//                        occupancyType = "2인실",
+//                        location = "서대문구 연희동",
+//                        genderPolicy = "여성전용",
+//                        locationDescription = "자이아파트",
+//                        isPinned = true,
+//                        moodTag = "#차분한",
+//                        contractTerm = 6,
+//                        mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+//                    )
+//                ).toPersistentList()
+//            )
         )
     }
 }

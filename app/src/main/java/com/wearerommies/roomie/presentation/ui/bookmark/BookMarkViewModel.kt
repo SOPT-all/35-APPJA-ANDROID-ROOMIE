@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.data.service.BookmarkListService
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
-import com.wearerommies.roomie.presentation.core.util.UiState
+import com.wearerommies.roomie.presentation.core.util.EmptyUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -52,10 +52,14 @@ class BookMarkViewModel @Inject constructor(
                     )
                 }
 
-                _state.value = _state.value.copy(uiState = UiState.Success(bookmarkList))
+                if (response.data.pinnedHouses.isEmpty()) {
+                    _state.value = _state.value.copy(uiState = EmptyUiState.Empty)
+                } else {
+                    _state.value = _state.value.copy(uiState = EmptyUiState.Success(bookmarkList))
+                }
 
             }.onFailure { error ->
-                _state.value = _state.value.copy(uiState = UiState.Failure)
+                _state.value = _state.value.copy(uiState = EmptyUiState.Failure)
                 Timber.e(error)
             }
         }
@@ -72,7 +76,7 @@ class BookMarkViewModel @Inject constructor(
                     )
                 )
             }.onFailure { error ->
-                _state.value = _state.value.copy(uiState = UiState.Failure)
+                _state.value = _state.value.copy(uiState = EmptyUiState.Failure)
                 Timber.e(error)
             }
         }
