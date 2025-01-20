@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.domain.entity.MyPageEntity
 import com.wearerommies.roomie.domain.repository.UserRepository
-import com.wearerommies.roomie.presentation.core.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,14 +33,11 @@ class MyViewModel @Inject constructor(
         userRepository.getUserInformation()
             .onSuccess { response ->
                 _state.value = _state.value.copy(
-                    uiState = UiState.Success(
-                        MyPageEntity(
-                            name = response.name
-                        )
+                    uiState = MyPageEntity(
+                        name = response.name
                     )
                 )
             }.onFailure { error ->
-                _state.value = _state.value.copy(uiState = UiState.Failure)
                 Timber.e(error)
             }
     }
