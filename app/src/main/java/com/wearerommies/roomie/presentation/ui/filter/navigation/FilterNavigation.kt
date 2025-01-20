@@ -17,7 +17,7 @@ fun NavController.navigateToFilter(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.filterNavGraph(
     paddingValues: PaddingValues,
-    navigateUp:()->Unit,
+    navigateUp: () -> Unit,
 ) {
     composable<Route.Filter> {
         FilterRoute(
