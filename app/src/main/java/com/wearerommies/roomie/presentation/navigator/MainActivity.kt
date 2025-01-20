@@ -6,8 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.wearerommies.roomie.presentation.ui.splash.SplashScreen
@@ -28,12 +30,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navigator: MainNavigator = rememberMainNavigator()
             var showSplash by remember { mutableStateOf(true) }
+            val counter by remember { mutableIntStateOf(0) }
+            val currentCounter by rememberUpdatedState(counter)
+
+            LaunchedEffect(currentCounter) {
+                delay(SPLASH_SCREEN_DELAY)
+                showSplash = false
+            }
 
             RoomieAndroidTheme {
-                LaunchedEffect(Unit) {
-                    delay(SPLASH_SCREEN_DELAY)
-                    showSplash = false
-                }
                 if (showSplash) {
                     SplashScreen()
                 } else {
@@ -44,6 +49,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
     companion object {
         const val SPLASH_SCREEN_DELAY = 2000L
     }
