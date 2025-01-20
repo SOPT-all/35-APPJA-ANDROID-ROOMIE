@@ -14,16 +14,16 @@ fun NavController.navigateToDetail(navOptions: NavOptions? = null) {
     )
 }
 
-fun NavController.navigateToDetailAllImage(navOptions: NavOptions? = null) {
+fun NavController.navigateToDetailHouse(navOptions: NavOptions? = null) {
     navigate(
         route = Route.DetailHouse,
         navOptions = navOptions
     )
 }
 
-fun NavController.navigateToDetailRoomsImage(navOptions: NavOptions? = null) {
+fun NavController.navigateToDetailRoom(navOptions: NavOptions? = null) {
     navigate(
-        route = Route.DetailRoomsImage,
+        route = Route.DetailRoom,
         navOptions = navOptions
     )
 }
@@ -44,7 +44,7 @@ fun NavGraphBuilder.detailNavGraph(
 //            navigateUp = navigateUp
 //        )
     }
-    composable<Route.DetailRoomsImage> {
+    composable<Route.DetailRoom> {
 //        DetailRoomsImageRoute(
 //            paddingValues = paddingValues,
 //            navigateUp = navigateUp
