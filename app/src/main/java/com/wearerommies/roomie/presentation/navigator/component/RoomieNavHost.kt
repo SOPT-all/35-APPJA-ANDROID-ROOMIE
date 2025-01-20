@@ -8,7 +8,7 @@ import com.wearerommies.roomie.presentation.navigator.MainNavigator
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.type.MainTabType
 import com.wearerommies.roomie.presentation.ui.bookmark.navigation.bookmarkNavGraph
-import com.wearerommies.roomie.presentation.ui.detailNavGraph
+import com.wearerommies.roomie.presentation.ui.detail.navigation.detailNavGraph
 import com.wearerommies.roomie.presentation.ui.filter.navigation.filterNavGraph
 import com.wearerommies.roomie.presentation.ui.home.navigation.homeNavGraph
 import com.wearerommies.roomie.presentation.ui.map.navigation.mapNavGraph
