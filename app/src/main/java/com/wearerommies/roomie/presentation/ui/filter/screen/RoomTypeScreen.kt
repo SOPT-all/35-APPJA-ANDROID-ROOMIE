@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui.filter
+package com.wearerommies.roomie.presentation.ui.filter.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

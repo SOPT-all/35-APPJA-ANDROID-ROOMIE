@@ -36,6 +36,9 @@ import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.ui.filter.component.FilterBottomBar
 import com.wearerommies.roomie.presentation.ui.filter.component.FilterTab
 import com.wearerommies.roomie.presentation.ui.filter.component.FilterTabRow
+import com.wearerommies.roomie.presentation.ui.filter.screen.ContractTypeScreen
+import com.wearerommies.roomie.presentation.ui.filter.screen.RentScreen
+import com.wearerommies.roomie.presentation.ui.filter.screen.RoomTypeScreen
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.collections.immutable.PersistentList
