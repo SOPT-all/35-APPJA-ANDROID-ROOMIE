@@ -119,7 +119,7 @@ fun HomeRoute(
         navigateToBookmark = viewModel::navigateToBookmark,
         navigateToMood = viewModel::navigateToMood,
         navigateToMap = viewModel::navigateToMap,
-        onLikeClick = viewModel::patchHousePin,
+        onLikeClick = { viewModel.bookmarkHouse(houseId = 1) },
         state = state.uiState
     )
 }

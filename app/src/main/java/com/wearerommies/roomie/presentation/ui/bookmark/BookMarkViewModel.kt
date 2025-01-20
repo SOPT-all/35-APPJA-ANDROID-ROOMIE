@@ -62,7 +62,7 @@ class BookMarkViewModel @Inject constructor(
             }
     }
 
-    fun patchHousePin() {
+    fun bookmarkHouse() {
         viewModelScope.launch {
             runCatching {
                 //todo: api 연결

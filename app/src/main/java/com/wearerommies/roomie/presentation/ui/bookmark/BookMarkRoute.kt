@@ -93,7 +93,7 @@ fun BookMarkRoute(
         paddingValues = paddingValues,
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
-        onLikeClick = viewModel::patchHousePin,
+        onLikeClick = viewModel::bookmarkHouse,
         state = state.uiState
     )
 }

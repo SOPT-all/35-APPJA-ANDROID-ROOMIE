@@ -102,7 +102,7 @@ fun MoodRoute(
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
         moodTag = moodTag,
-        onLikeClick = viewModel::patchHousePin,
+        onLikeClick = viewModel::bookmarkHouse,
         state = state.uiState
     )
 
