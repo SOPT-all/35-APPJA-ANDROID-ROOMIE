@@ -83,7 +83,7 @@ fun SearchScreen(
     state: EmptyUiState<PersistentList<SearchResultEntity>>,
     searchKeyword: String,
     setSearchKeyword: (String) -> Unit,
-    fetchResult: () -> Unit, // TODO: 추후 String으로 변경 필요
+    fetchResult: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -118,7 +118,7 @@ fun SearchScreen(
             SearchTextField(
                 textFieldValue = searchKeyword,
                 onValueChange = setSearchKeyword,
-                onClick = { fetchResult() },
+                onClick = fetchResult,
                 modifier = Modifier.fillMaxWidth()
             )
         }
@@ -134,7 +134,9 @@ fun SearchScreen(
 
             EmptyUiState.Failure -> {}
 
-            EmptyUiState.Loading -> { RoomieLoadingView() }
+            EmptyUiState.Loading -> {
+                RoomieLoadingView()
+            }
 
             is EmptyUiState.Success -> {
                 LazyColumn {
@@ -180,22 +182,22 @@ fun SearchScreenSuccessPreview() {
             state = EmptyUiState.Success(
                 persistentListOf(
                     SearchResultEntity(
-                        x = 1.0,
-                        y = 1.0,
+                        x = 1.0F,
+                        y = 1.0F,
                         location = "으아아아아아아",
                         address = "으아아아아아",
                         roadAddress = "으아아아아아"
                     ),
                     SearchResultEntity(
-                        x = 1.0,
-                        y = 1.0,
+                        x = 1.0F,
+                        y = 1.0F,
                         location = "으아아아아아아아을망라미ㅓ리아ㅓㄹ",
                         address = "으아아아아아",
                         roadAddress = "으아아아아아"
                     ),
                     SearchResultEntity(
-                        x = 1.0,
-                        y = 1.0,
+                        x = 1.0F,
+                        y = 1.0F,
                         location = "으아아아아ㅣ마어라ㅓㄻ이ㅏ러미아아",
                         address = "으아아아아아",
                         roadAddress = "으아아아아아"
