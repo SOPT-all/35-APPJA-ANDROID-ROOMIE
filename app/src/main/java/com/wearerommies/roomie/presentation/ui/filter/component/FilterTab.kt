@@ -31,7 +31,7 @@ fun FilterTab(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    selectedContentColor: Color = RoomieTheme.colors.primary,
+    selectedContentColor: Color = RoomieTheme.colors.primaryDark1,
     unselectedContentColor: Color = RoomieTheme.colors.grayScale12,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable ColumnScope.() -> Unit
