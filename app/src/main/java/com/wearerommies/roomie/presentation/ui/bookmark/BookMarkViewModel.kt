@@ -31,7 +31,7 @@ class BookMarkViewModel @Inject constructor(
     val sideEffect: SharedFlow<BookMarkSideEffect>
         get() = _sideEffect.asSharedFlow()
 
-    fun getBookMarkList() = viewModelScope.launch {
+    suspend fun getBookMarkList() {
         houseRepository.getBookmarkLists()
             .onSuccess { result ->
                 val bookmarkList = result.map { item ->

@@ -41,6 +41,7 @@ import androidx.lifecycle.flowWithLifecycle
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieFooter
+import com.wearerommies.roomie.presentation.core.component.RoomieLoadingView
 import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
 import com.wearerommies.roomie.presentation.core.component.RoomieSnackbar
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
@@ -52,6 +53,7 @@ import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.ui.bookmark.component.BookmarkEmptyView
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun BookMarkRoute(
@@ -134,14 +136,12 @@ fun BookMarkScreen(
         when (state) {
             is EmptyUiState.Loading -> {
                 item {
-                    Text(
+                    Box(
                         modifier = Modifier
-                            .noRippleClickable { navigateUp() },
-                        text = "LOADING",
-                        color = RoomieTheme.colors.primaryLight1,
-                        textAlign = TextAlign.Center,
-                        fontSize = 30.sp
-                    )
+                            .height((LocalConfiguration.current.screenHeightDp).dp),
+                    ) {
+                        RoomieLoadingView()
+                    }
                 }
             }
 
@@ -274,25 +274,23 @@ fun BookMarkScreenPreview() {
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
             onLikeClick = {},
-            state = EmptyUiState.Empty
-
-//            EmptyUiState.Success(
-//                listOf(
-//                    RoomCardEntity(
-//                        houseId = 1,
-//                        monthlyRent = "30~50",
-//                        deposit = "200~300",
-//                        occupancyType = "2인실",
-//                        location = "서대문구 연희동",
-//                        genderPolicy = "여성전용",
-//                        locationDescription = "자이아파트",
-//                        isPinned = true,
-//                        moodTag = "#차분한",
-//                        contractTerm = 6,
-//                        mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
-//                    )
-//                ).toPersistentList()
-//            )
+            state = EmptyUiState.Success(
+                listOf(
+                    RoomCardEntity(
+                        houseId = 1,
+                        monthlyRent = "30~50",
+                        deposit = "200~300",
+                        occupancyType = "2인실",
+                        location = "서대문구 연희동",
+                        genderPolicy = "여성전용",
+                        locationDescription = "자이아파트",
+                        isPinned = true,
+                        moodTag = "#차분한",
+                        contractTerm = 6,
+                        mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                    )
+                ).toPersistentList()
+            )
         )
     }
 }
