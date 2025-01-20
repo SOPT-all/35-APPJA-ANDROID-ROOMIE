@@ -23,7 +23,6 @@
     <string name="press_heart_to_bookmark_property">하트를 눌러 마음에 드는 매물을 찜해보세요</string>
 
     // map
-    <string name="monthly_rent">월세</string>
     <string name="deposit_variable">보증금 %1$s</string>
     <string name="contract_term_variable">%1$s개월</string>
     <string name="filter_button">필터 버튼</string>
@@ -37,8 +36,24 @@
     <string name="check_again">정확하게 입력했는지 다시 확인해주세요</string>
 
     // filter
-    <string name="desired_move_in_date">희망 입주날짜</string>
+    <string name="desired_move_in_date">희망 입주 날짜</string>
     <string name="birth_date">생년월일</string>
+    <string name="room_type">룸 타입</string>
+    <string name="desired_contract_period">희망계약기간</string>
+    <string name="filter">필터</string>
+    <string name="man_only">남성전용</string>
+    <string name="woman_only">여성전용</string>
+    <string name="gender_seperate">남녀분리</string>
+    <string name="gender_free">성별무관</string>
+    <string name="one_person">1인실</string>
+    <string name="two_person">2인실</string>
+    <string name="three_person">3인실</string>
+    <string name="four_person">4인실</string>
+    <string name="five_person">5인실</string>
+    <string name="six_person">6인실</string>
+    <string name="three_month">3개월</string>
+    <string name="six_month">6개월</string>
+    <string name="one_year">1년</string>
 
     //my
     <string name="profile_image">프로필 이미지</string>
@@ -77,14 +92,13 @@
     <string name="roommate_sleep_time">수면시간</string>
     <string name="roommate_activity_time">활동시간</string>
     <string name="room_status_true">입주가능</string>
-    <string name="room_status_false">입주완료</string>
-    <string name="room_type">방 형태</string>
+    <string name="room_status_false">입주불가</string>
+    <string name="room_shape">방 형태</string>
     <string name="room_occupany_type">%d 인실</string>
     <string name="room_prepaid_utilities">선불공과금</string>
     <string name="room_deposit">보증금</string>
     <string name="room_monthly_rent">월세</string>
     <string name="room_management_fee">관리비</string>
-    <string name="room_contract_period">계약기간</string>
     <string name="room_safety_living_facility">안전 및 생활시설</string>
     <string name="room_kitchen_facility">주방시설</string>
     <string name="tour_apply">투어신청하기</string>
@@ -133,11 +147,18 @@
     <string name="address">지번</string>
     <string name="user_nickname">닉네임</string>
     <string name="navigate_to_bookmark">찜 리스트로 넘어가기</string>
+    <string name="apply">적용하기</string>
+    <string name="reset">초기화</string>
     <string name="heart_button">찜하기 버튼</string>
     <string name="chat_button">채팅 버튼</string>
     <string name="add_to_bookmark_list">찜 목록에 추가되었습니다!</string>
+    <string name="monthly_rent">월세</string>
+    <string name="deposit">보증금</string>
+    <string name="ten_thousand_won">만원</string>
     <string name="gender">성별</string>
     <string name="man">남자</string>
     <string name="woman">여성</string>
+    <string name="price">금액</string>
     <string name="hashtag">#</string>
+    <string name="contract_period">계약기간</string>
 </resources>

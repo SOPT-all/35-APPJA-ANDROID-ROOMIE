@@ -89,7 +89,7 @@ fun DetailRoomTypeText(
         modifier = modifier
     ) {
         Text(
-            text = stringResource(R.string.room_type),
+            text = stringResource(R.string.room_shape),
             style = RoomieTheme.typography.body3M14,
             color = RoomieTheme.colors.grayScale8,
             modifier = Modifier.weight(1f)
@@ -157,7 +157,7 @@ fun DetailRoomContractPeriodText(
             .fillMaxWidth()
     ) {
         Text(
-            text = stringResource(R.string.room_contract_period),
+            text = stringResource(R.string.contract_period),
             style = RoomieTheme.typography.body3M14,
             color = RoomieTheme.colors.grayScale8,
             modifier = Modifier.weight(1f)
