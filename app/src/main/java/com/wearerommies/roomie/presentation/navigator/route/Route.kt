@@ -21,7 +21,7 @@ sealed interface Route {
     data object Detail : Route
 
     @Serializable
-    data object DetailAllImage : Route
+    data object DetailHouse : Route
 
     @Serializable
     data object DetailRoomsImage : Route

@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui
+package com.wearerommies.roomie.presentation.ui.detail
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
@@ -16,7 +16,7 @@ fun NavController.navigateToDetail(navOptions: NavOptions? = null) {
 
 fun NavController.navigateToDetailAllImage(navOptions: NavOptions? = null) {
     navigate(
-        route = Route.DetailAllImage,
+        route = Route.DetailHouse,
         navOptions = navOptions
     )
 }
@@ -38,8 +38,8 @@ fun NavGraphBuilder.detailNavGraph(
 //            navigateUp = navigateUp
 //        )
     }
-    composable<Route.DetailAllImage> {
-//        DetailAllImageRoute(
+    composable<Route.DetailHouse> {
+//        DetailHouseRoute(
 //            paddingValues = paddingValues,
 //            navigateUp = navigateUp
 //        )
