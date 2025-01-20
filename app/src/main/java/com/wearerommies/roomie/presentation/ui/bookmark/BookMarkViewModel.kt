@@ -3,8 +3,8 @@ package com.wearerommies.roomie.presentation.ui.bookmark
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.R
-import com.wearerommies.roomie.data.service.HouseService
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
+import com.wearerommies.roomie.domain.repository.HouseRepository
 import com.wearerommies.roomie.presentation.core.util.EmptyUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookMarkViewModel @Inject constructor(
-    private val houseService: HouseService,
+    private val houseRepository: HouseRepository
 ) : ViewModel() {
     // state 관리
     private val _state = MutableStateFlow(BookMarkState())
@@ -31,17 +31,15 @@ class BookMarkViewModel @Inject constructor(
     val sideEffect: SharedFlow<BookMarkSideEffect>
         get() = _sideEffect.asSharedFlow()
 
-    fun getBookMarkList() {
-        viewModelScope.launch {
-            runCatching {
-                houseService.getBookmarkLists()
-            }.onSuccess { response ->
-                val bookmarkList = response.data.pinnedHouses.map { item ->
+    fun getBookMarkList() = viewModelScope.launch {
+        houseRepository.getBookmarkLists()
+            .onSuccess { result ->
+                val bookmarkList = result.map { item ->
                     RoomCardEntity(
                         houseId = item.houseId,
                         monthlyRent = item.monthlyRent,
                         deposit = item.deposit,
-                        occupancyType = item.occupancyTypes,
+                        occupancyType = item.occupancyType,
                         location = item.location,
                         genderPolicy = item.genderPolicy,
                         locationDescription = item.locationDescription,
@@ -52,7 +50,7 @@ class BookMarkViewModel @Inject constructor(
                     )
                 }
 
-                if (response.data.pinnedHouses.isEmpty()) {
+                if (result.isEmpty()) {
                     _state.value = _state.value.copy(uiState = EmptyUiState.Empty)
                 } else {
                     _state.value = _state.value.copy(uiState = EmptyUiState.Success(bookmarkList))
@@ -62,7 +60,6 @@ class BookMarkViewModel @Inject constructor(
                 _state.value = _state.value.copy(uiState = EmptyUiState.Failure)
                 Timber.e(error)
             }
-        }
     }
 
     fun patchHousePin() {
