@@ -28,7 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.DetailHouseEntity
-import com.wearerommies.roomie.domain.entity.DetailRoomImageEntity
+import com.wearerommies.roomie.domain.entity.DetailRoomEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
@@ -166,17 +166,12 @@ fun DetailHouseScreen(
                                     borderWidth = 1.dp
                                 )
                         ) {
-                            AsyncImage(
-                                model = state.data.mainImageUrl,
-                                contentDescription = stringResource(R.string.main_image),
+                            DetailImagePager(
+                                images = state.data.facilityImageUrls,
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height((screenHeight * 0.235).dp)
                                     .padding(8.dp)
-                                    .clip(
-                                        shape = RoundedCornerShape(8.dp)
-                                    ),
-                                contentScale = ContentScale.Crop
+                                    .height((screenHeight * 0.235).dp),
+                                contentDescription = stringResource(R.string.house_facility)
                             )
 
                             Text(
@@ -303,11 +298,11 @@ fun DetailHouseScreenPreview() {
                 DetailHouseEntity(
                     mainImageUrl = "https://i.pravatar.cc/300",
                     mainImageDescription = "테스트",
-                    facilityImageUrls = listOf("https://i.pravatar.cc/300", "https://i.pravatar.cc/300"),
+                    facilityImageUrls = persistentListOf("https://i.pravatar.cc/300", "https://i.pravatar.cc/300"),
                     facilityImageDescription = "테스트",
                     floorImageUrl = "https://i.pravatar.cc/300",
-                    rooms = listOf(
-                        DetailRoomImageEntity(
+                    rooms = persistentListOf(
+                        DetailRoomEntity(
                             roomId = 1L,
                             name = "테스트",
                             facility = persistentListOf("테스트", "테스트", "테스트"),
@@ -318,7 +313,7 @@ fun DetailHouseScreenPreview() {
                                 "https://i.pravatar.cc/300"
                             )
                         ),
-                        DetailRoomImageEntity(
+                        DetailRoomEntity(
                             roomId = 2L,
                             name = "테스트",
                             facility = persistentListOf("테스트", "테스트"),
