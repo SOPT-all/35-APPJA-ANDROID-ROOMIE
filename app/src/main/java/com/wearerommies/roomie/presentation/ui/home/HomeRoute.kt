@@ -119,7 +119,7 @@ fun HomeRoute(
         navigateToBookmark = viewModel::navigateToBookmark,
         navigateToMood = viewModel::navigateToMood,
         navigateToMap = viewModel::navigateToMap,
-        onLikeClick = { viewModel.bookmarkHouse(houseId = 1) },
+        onLikeClick = { viewModel.bookmarkHouse(houseId = it) },
         state = state.uiState
     )
 }
@@ -133,7 +133,7 @@ fun HomeScreen(
     navigateToBookmark: () -> Unit,
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
-    onLikeClick: () -> Unit,
+    onLikeClick: (Long) -> Unit,
     state: HomeDataEntity,
     modifier: Modifier = Modifier
 ) {
@@ -308,7 +308,7 @@ fun HomeScreen(
                         onClick = {
                             //todo: 상세 매물 페이지로 이동
                         },
-                        onLikeClick = onLikeClick //todo: bookmark api 로직 구현
+                        onLikeClick = { onLikeClick(item.houseId) }
                     )
                 }
             }
@@ -526,8 +526,7 @@ fun HomeScreenPreview() {
             navigateToMood = {},
             navigateToMap = {},
             onLikeClick = {},
-            state =
-            HomeDataEntity(
+            state = HomeDataEntity(
                 name = "닉넴",
                 location = "연남동",
                 recentlyViewedHouses = listOf(
