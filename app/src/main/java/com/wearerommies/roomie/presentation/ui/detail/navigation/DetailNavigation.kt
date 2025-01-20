@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui.detail
+package com.wearerommies.roomie.presentation.ui.detail.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
