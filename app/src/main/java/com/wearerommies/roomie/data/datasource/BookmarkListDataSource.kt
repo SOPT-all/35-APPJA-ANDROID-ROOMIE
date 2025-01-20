@@ -8,6 +8,5 @@ import javax.inject.Inject
 internal class BookmarkListDataSource @Inject constructor(
     private val bookmarkListService: BookmarkListService
 ) {
-    suspend fun getBookmarkLists(): BaseResponse<ResponseBookmarkListDto> =
-        bookmarkListService.getBookmarkLists()
+
 }

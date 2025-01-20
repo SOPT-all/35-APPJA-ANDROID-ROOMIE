@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.data.service.BookmarkListService
+import com.wearerommies.roomie.data.service.HouseService
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.util.EmptyUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookMarkViewModel @Inject constructor(
-    private val bookmarkListService: BookmarkListService,
+    private val houseService: HouseService,
 ) : ViewModel() {
     // state 관리
     private val _state = MutableStateFlow(BookMarkState())
@@ -34,7 +35,7 @@ class BookMarkViewModel @Inject constructor(
     fun getBookMarkList() {
         viewModelScope.launch {
             runCatching {
-                bookmarkListService.getBookmarkLists()
+                houseService.getBookmarkLists()
             }.onSuccess { response ->
                 val bookmarkList = response.data.pinnedHouses.map { item ->
                     RoomCardEntity(
