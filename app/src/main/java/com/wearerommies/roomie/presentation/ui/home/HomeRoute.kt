@@ -41,10 +41,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -60,7 +58,6 @@ import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
-import com.wearerommies.roomie.presentation.core.util.UiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.type.HomeMoodCardType
 import com.wearerommies.roomie.presentation.type.NavigateButtonType
@@ -137,7 +134,7 @@ fun HomeScreen(
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
     onLikeClick: () -> Unit,
-    state: UiState<HomeDataEntity>,
+    state: HomeDataEntity,
     modifier: Modifier = Modifier
 ) {
     val screenWeight = LocalConfiguration.current.screenWidthDp
@@ -181,203 +178,164 @@ fun HomeScreen(
             )
             .padding(paddingValues),
     ) {
-        when (state) {
-            is UiState.Loading -> {
-                item {
-                    //todo: 로딩뷰
+        stickyHeader {
+            RoomieTopBar(
+                modifier = Modifier
+                    .background(color = topBarBackgroundColor)
+                    .bottomBorder(
+                        color = topBarBorderColor,
+                        height = convertDpToFloat(1.dp)
+                    )
+                    .padding(horizontal = 20.dp, vertical = 4.dp),
+                backgroundColor = topBarBackgroundColor,
+                leadingIcon = {
+                    Row(
+                        modifier = Modifier
+                            .padding(all = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = state.location,
+                            style = RoomieTheme.typography.title2Sb16,
+                            color = RoomieTheme.colors.grayScale12
+                        )
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_down_filled_black_16px),
+                            contentDescription = stringResource(R.string.home_location)
+                        )
+                    }
+                },
+                trailingIcon = {
+                    Icon(
+                        modifier = Modifier
+                            .noRippleClickable { navigateToBookmark() }
+                            .padding(all = 8.dp),
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_heart_line_black_24px),
+                        contentDescription = stringResource(R.string.navigate_to_bookmark)
+                    )
+                }
+            )
+        }
+
+        item {
+            Spacer(
+                modifier = Modifier
+                    .height(14.dp)
+            )
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Image(
+                    modifier = Modifier
+                        .width((LocalConfiguration.current.screenWidthDp * 0.556).dp)
+                        .align(Alignment.CenterEnd),
+                    painter = painterResource(R.drawable.img_home_character),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop
+                )
+
+                HomeGreetingMessage(
+                    modifier = Modifier
+                        .padding(
+                            start = 20.dp
+                        )
+                        .align(Alignment.CenterStart),
+                    nickname = state.name
+                )
+            }
+
+            Spacer(
+                modifier = Modifier
+                    .height(12.dp)
+            )
+
+            RoomieNavigateButton(
+                modifier = Modifier
+                    .padding(horizontal = 20.dp),
+                type = NavigateButtonType.UPDATE,
+                text = stringResource(R.string.home_banner_message),
+                textStyle = RoomieTheme.typography.body3M14,
+                textColor = RoomieTheme.colors.grayScale10,
+                onClick = {
+                    //todo: 웹뷰 띄우기
+                }
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+            )
+
+            MoodCardGroup(
+                onCalmClick = { navigateToMood(MoodKey.CALM) },
+                onActiveClick = { navigateToMood(MoodKey.ACTIVE) },
+                onCleanClick = { navigateToMood(MoodKey.CLEAN) },
+            )
+
+            RecentCardTitle()
+        }
+
+        if (state.recentlyViewedHouses.isEmpty()) {
+            item {
+                RecentlyViewedHousesEmptyView()
+            }
+        } else {
+            itemsIndexed(items = state.recentlyViewedHouses) { index, item ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = RoomieTheme.colors.grayScale1)
+                ) {
                     RoomieRoomCard(
+                        modifier = Modifier
+                            .padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
                         roomCardEntity = RoomCardEntity(
-                            houseId = 1,
-                            monthlyRent = "30~50",
-                            deposit = "200~300",
-                            occupancyType = "2인실",
-                            location = "서대문구 연희동",
-                            genderPolicy = "여성전용",
-                            locationDescription = "자이아파트",
-                            isPinned = false,
-                            moodTag = "#차분한",
-                            contractTerm = 6,
-                            mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                            houseId = item.houseId,
+                            monthlyRent = item.monthlyRent,
+                            deposit = item.deposit,
+                            occupancyType = item.occupancyType,
+                            location = item.location,
+                            genderPolicy = item.genderPolicy,
+                            locationDescription = item.locationDescription,
+                            isPinned = item.isPinned,
+                            moodTag = item.moodTag,
+                            contractTerm = item.contractTerm,
+                            mainImgUrl = item.mainImgUrl
                         ),
-                        onClick = {},
-                        onLikeClick = {}
-                    )
-                }
-            }
-
-            is UiState.Failure -> {
-                item {
-                    Text(
-                        modifier = Modifier
-                            .noRippleClickable { navigateUp() },
-                        text = "데이터 불러오기 실패",
-                        textAlign = TextAlign.Center,
-                        fontSize = 30.sp
-                    )
-                }
-            }
-
-            is UiState.Success -> {
-                stickyHeader {
-                    RoomieTopBar(
-                        modifier = Modifier
-                            .background(color = topBarBackgroundColor)
-                            .bottomBorder(
-                                color = topBarBorderColor,
-                                height = convertDpToFloat(1.dp)
-                            )
-                            .padding(horizontal = 20.dp, vertical = 4.dp),
-                        backgroundColor = topBarBackgroundColor,
-                        leadingIcon = {
-                            Row(
-                                modifier = Modifier
-                                    .padding(all = 8.dp),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = state.data.location,
-                                    style = RoomieTheme.typography.title2Sb16,
-                                    color = RoomieTheme.colors.grayScale12
-                                )
-                                Icon(
-                                    imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_down_filled_black_16px),
-                                    contentDescription = stringResource(R.string.home_location)
-                                )
-                            }
-                        },
-                        trailingIcon = {
-                            Icon(
-                                modifier = Modifier
-                                    .noRippleClickable { navigateToBookmark() }
-                                    .padding(all = 8.dp),
-                                imageVector = ImageVector.vectorResource(R.drawable.ic_heart_line_black_24px),
-                                contentDescription = stringResource(R.string.navigate_to_bookmark)
-                            )
-                        }
-                    )
-                }
-
-                item {
-                    Spacer(
-                        modifier = Modifier
-                            .height(14.dp)
-                    )
-
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        Image(
-                            modifier = Modifier
-                                .width((LocalConfiguration.current.screenWidthDp * 0.556).dp)
-                                .align(Alignment.CenterEnd),
-                            painter = painterResource(R.drawable.img_home_character),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop
-                        )
-
-                        HomeGreetingMessage(
-                            modifier = Modifier
-                                .padding(
-                                    start = 20.dp
-                                )
-                                .align(Alignment.CenterStart),
-                            nickname = state.data.name
-                        )
-                    }
-
-                    Spacer(
-                        modifier = Modifier
-                            .height(12.dp)
-                    )
-
-                    RoomieNavigateButton(
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp),
-                        type = NavigateButtonType.UPDATE,
-                        text = stringResource(R.string.home_banner_message),
-                        textStyle = RoomieTheme.typography.body3M14,
-                        textColor = RoomieTheme.colors.grayScale10,
                         onClick = {
-                            //todo: 웹뷰 띄우기
-                        }
+                            //todo: 상세 매물 페이지로 이동
+                        },
+                        onLikeClick = onLikeClick //todo: bookmark api 로직 구현
                     )
-
-                    Spacer(
-                        modifier = Modifier
-                            .height(20.dp)
-                    )
-
-                    MoodCardGroup(
-                        onCalmClick = { navigateToMood(MoodKey.CALM) },
-                        onActiveClick = { navigateToMood(MoodKey.ACTIVE) },
-                        onCleanClick = { navigateToMood(MoodKey.CLEAN) },
-                    )
-
-                    RecentCardTitle()
                 }
+            }
+        }
 
-                if (state.data.recentlyViewedHouses.isEmpty()) {
-                    item {
-                        RecentlyViewedHousesEmptyView()
-                    }
-                } else {
-                    itemsIndexed(items = state.data.recentlyViewedHouses) { index, item ->
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(color = RoomieTheme.colors.grayScale1)
-                        ) {
-                            RoomieRoomCard(
-                                modifier = Modifier
-                                    .padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
-                                roomCardEntity = RoomCardEntity(
-                                    houseId = item.houseId,
-                                    monthlyRent = item.monthlyRent,
-                                    deposit = item.deposit,
-                                    occupancyType = item.occupancyType,
-                                    location = item.location,
-                                    genderPolicy = item.genderPolicy,
-                                    locationDescription = item.locationDescription,
-                                    isPinned = item.isPinned,
-                                    moodTag = item.moodTag,
-                                    contractTerm = item.contractTerm,
-                                    mainImgUrl = item.mainImgUrl
-                                ),
-                                onClick = {
-                                    //todo: 상세 매물 페이지로 이동
-                                },
-                                onLikeClick = onLikeClick //todo: bookmark api 로직 구현
-                            )
-                        }
-                    }
-                }
+        item {
+            Column(
+                modifier = Modifier
+                    .background(color = RoomieTheme.colors.grayScale1)
+            ) {
+                Spacer(
+                    modifier = Modifier
+                        .height(16.dp)
+                )
 
-                item {
-                    Column(
-                        modifier = Modifier
-                            .background(color = RoomieTheme.colors.grayScale1)
-                    ) {
-                        Spacer(
-                            modifier = Modifier
-                                .height(16.dp)
-                        )
+                RoomieNavigateButton(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp),
+                    type = NavigateButtonType.HOME,
+                    text = stringResource(R.string.find_more_sharehouses_in_map),
+                    onClick = { navigateToMap() }
+                )
 
-                        RoomieNavigateButton(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp),
-                            type = NavigateButtonType.HOME,
-                            text = stringResource(R.string.find_more_sharehouses_in_map),
-                            onClick = { navigateToMap() }
-                        )
-
-                        Spacer(
-                            modifier = Modifier
-                                .height(24.dp)
-                        )
-                    }
-                }
+                Spacer(
+                    modifier = Modifier
+                        .height(24.dp)
+                )
             }
         }
     }
@@ -568,27 +526,27 @@ fun HomeScreenPreview() {
             navigateToMood = {},
             navigateToMap = {},
             onLikeClick = {},
-            state = UiState.Success(
-                HomeDataEntity(
-                    name = "닉넴",
-                    location = "연남동",
-                    recentlyViewedHouses = listOf(
-                        RoomCardEntity(
-                            houseId = 1,
-                            monthlyRent = "30~50",
-                            deposit = "200~300",
-                            occupancyType = "2인실",
-                            location = "서대문구 연희동",
-                            genderPolicy = "여성전용",
-                            locationDescription = "자이아파트",
-                            isPinned = false,
-                            moodTag = "#차분한",
-                            contractTerm = 6,
-                            mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
-                        ),
-                    )
+            state =
+            HomeDataEntity(
+                name = "닉넴",
+                location = "연남동",
+                recentlyViewedHouses = listOf(
+                    RoomCardEntity(
+                        houseId = 1,
+                        monthlyRent = "30~50",
+                        deposit = "200~300",
+                        occupancyType = "2인실",
+                        location = "서대문구 연희동",
+                        genderPolicy = "여성전용",
+                        locationDescription = "자이아파트",
+                        isPinned = false,
+                        moodTag = "#차분한",
+                        contractTerm = 6,
+                        mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                    ),
                 )
             )
+
         )
     }
 }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -21,10 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -33,10 +30,8 @@ import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.MyPageEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieNavigateButton
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
-import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.extension.topBorder
-import com.wearerommies.roomie.presentation.core.util.UiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.type.MyType
 import com.wearerommies.roomie.presentation.type.NavigateButtonType
@@ -89,7 +84,7 @@ fun MyScreen(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
     navigateToBookmark: () -> Unit,
-    state: UiState<MyPageEntity>,
+    state: MyPageEntity,
     modifier: Modifier = Modifier
 ) {
     val screenWeigth = LocalConfiguration.current.screenWidthDp
@@ -102,102 +97,84 @@ fun MyScreen(
             .padding(paddingValues),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        when (state) {
-            is UiState.Loading -> {}
+        stickyHeader {
+            RoomieTopBar(
+                title = stringResource(R.string.mypage)
+            )
+        }
 
-            is UiState.Failure -> {
-                item {
-                    Text(
-                        modifier = Modifier
-                            .noRippleClickable { navigateUp() },
-                        text = "데이터 불러오기 실패",
-                        textAlign = TextAlign.Center,
-                        fontSize = 30.sp
+        item {
+            MyProfileCard(
+                modifier = Modifier
+                    .topBorder(
+                        convertDpToFloat(1.dp),
+                        color = RoomieTheme.colors.grayScale4
+                    ),
+                profileImgUrl = "",
+                nickname = state.name,
+                onClick = {}
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .topBorder(
+                        convertDpToFloat(1.dp),
+                        color = RoomieTheme.colors.grayScale4
                     )
-                }
-            }
+                    .background(color = RoomieTheme.colors.grayScale3)
+                    .fillMaxWidth()
+                    .height(12.dp)
+            )
 
-            is UiState.Success -> {
-                stickyHeader {
-                    RoomieTopBar(
-                        title = stringResource(R.string.mypage)
-                    )
-                }
+            MyTitleBox(
+                modifier = Modifier
+                    .topBorder(
+                        convertDpToFloat(1.dp),
+                        color = RoomieTheme.colors.grayScale4
+                    ),
+                text = stringResource(R.string.show_more_roomie)
+            )
 
-                item {
-                    MyProfileCard(
-                        modifier = Modifier
-                            .topBorder(
-                                convertDpToFloat(1.dp),
-                                color = RoomieTheme.colors.grayScale4
-                            ),
-                        profileImgUrl = "",
-                        nickname = state.data.name,
-                        onClick = {}
-                    )
+            RoomieNavigateButton(
+                type = NavigateButtonType.MY,
+                text = stringResource(R.string.bookmark_list),
+                onClick = navigateToBookmark
+            )
 
-                    Spacer(
-                        modifier = Modifier
-                            .topBorder(
-                                convertDpToFloat(1.dp),
-                                color = RoomieTheme.colors.grayScale4
-                            )
-                            .background(color = RoomieTheme.colors.grayScale3)
-                            .fillMaxWidth()
-                            .height(12.dp)
-                    )
+            MyButtonWithHelperText(
+                mainText = stringResource(R.string.find_sharehouses),
+                helperText = stringResource(R.string.request_new_room),
+                onClick = {}
+            )
 
-                    MyTitleBox(
-                        modifier = Modifier
-                            .topBorder(
-                                convertDpToFloat(1.dp),
-                                color = RoomieTheme.colors.grayScale4
-                            ),
-                        text = stringResource(R.string.show_more_roomie)
-                    )
+            MyButtonWithHelperText(
+                mainText = stringResource(R.string.add_new_room),
+                helperText = stringResource(R.string.register_sharehouse_owner),
+                onClick = {}
+            )
 
-                    RoomieNavigateButton(
-                        type = NavigateButtonType.MY,
-                        text = stringResource(R.string.bookmark_list),
-                        onClick = navigateToBookmark
-                    )
+            RoomieNavigateButton(
+                type = NavigateButtonType.MY,
+                text = stringResource(R.string.send_feedback)
+            )
 
-                    MyButtonWithHelperText(
-                        mainText = stringResource(R.string.find_sharehouses),
-                        helperText = stringResource(R.string.request_new_room),
-                        onClick = {}
-                    )
+            Spacer(
+                modifier = Modifier
+                    .padding(horizontal = 20.dp, vertical = 8.dp)
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(color = RoomieTheme.colors.grayScale4)
+            )
 
-                    MyButtonWithHelperText(
-                        mainText = stringResource(R.string.add_new_room),
-                        helperText = stringResource(R.string.register_sharehouse_owner),
-                        onClick = {}
-                    )
+            MyTitleBox(
+                text = stringResource(R.string.service_infomation)
+            )
 
-                    RoomieNavigateButton(
-                        type = NavigateButtonType.MY,
-                        text = stringResource(R.string.send_feedback)
-                    )
-
-                    Spacer(
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp, vertical = 8.dp)
-                            .fillMaxWidth()
-                            .height(1.dp)
-                            .background(color = RoomieTheme.colors.grayScale4)
-                    )
-
-                    MyTitleBox(
-                        text = stringResource(R.string.service_infomation)
-                    )
-
-                    MyType.entries.forEach { type ->
-                        RoomieNavigateButton(
-                            type = NavigateButtonType.MY,
-                            text = stringResource(type.title)
-                        )
-                    }
-                }
+            MyType.entries.forEach { type ->
+                RoomieNavigateButton(
+                    type = NavigateButtonType.MY,
+                    text = stringResource(type.title)
+                )
             }
         }
     }
@@ -211,10 +188,8 @@ fun MyScreenPreview() {
             paddingValues = PaddingValues(),
             navigateUp = {},
             navigateToBookmark = {},
-            state = UiState.Success(
-                data = MyPageEntity(
-                    name = "루미"
-                )
+            state = MyPageEntity(
+                name = "루미"
             )
         )
     }
