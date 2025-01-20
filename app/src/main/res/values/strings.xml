@@ -87,6 +87,11 @@
     <string name="room_kitchen_facility">주방시설</string>
     <string name="tour_apply">투어신청하기</string>
     <string name="detail_image_indicator">%s / %s</string>
+    <string name="main_image">대표사진</string>
+    <string name="house_facility">공용시설</string>
+    <string name="room_facility">각 방 시설</string>
+    <string name="floor_image">평면도</string>
+    <string name="room_image">방 이미지</string>
 
     // tour
     <string name="room_correct_check">선택하신 방이 맞는지\n확인해주세요</string>
