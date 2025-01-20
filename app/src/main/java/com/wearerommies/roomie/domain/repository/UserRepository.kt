@@ -5,5 +5,5 @@ import com.wearerommies.roomie.domain.entity.MyPageEntity
 
 interface UserRepository {
     suspend fun getHomeData() : Result<HomeDataEntity>
-    suspend fun getMyPageData(): Result<MyPageEntity>
+    suspend fun getUserInformation(): Result<MyPageEntity>
 }

@@ -14,8 +14,8 @@ internal class UserRepositoryImpl @Inject constructor(
             userDataSource.getHomeData().data.toEntity()
         }
 
-    override suspend fun getMyPageData(): Result<MyPageEntity> =
+    override suspend fun getUserInformation(): Result<MyPageEntity> =
         runCatching {
-            userDataSource.getMyPageData().data.toEntity()
+            userDataSource.getUserInformation().data.toEntity()
         }
 }

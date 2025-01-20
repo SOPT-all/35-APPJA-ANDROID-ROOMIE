@@ -12,6 +12,6 @@ internal class UserDataSource @Inject constructor(
     suspend fun getHomeData(): BaseResponse<ResponseHomeDto> =
         userService.getHomeData()
 
-    suspend fun getMyPageData(): BaseResponse<ResponseMyPageDto> =
-        userService.getMyPageData()
+    suspend fun getUserInformation(): BaseResponse<ResponseMyPageDto> =
+        userService.getUserInformation()
 }

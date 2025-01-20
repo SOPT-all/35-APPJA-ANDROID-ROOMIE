@@ -10,5 +10,5 @@ interface UserService {
     suspend fun getHomeData(): BaseResponse<ResponseHomeDto>
 
     @GET("/v1/users/mypage")
-    suspend fun getMyPageData(): BaseResponse<ResponseMyPageDto>
+    suspend fun getUserInformation(): BaseResponse<ResponseMyPageDto>
 }

@@ -30,10 +30,10 @@ class MyViewModel @Inject constructor(
     val sideEffect: SharedFlow<MySideEffect>
         get() = _sideEffect.asSharedFlow()
 
-    fun getUserInfo() {
+    fun getUserInformation() {
         viewModelScope.launch {
             runCatching {
-                userService.getMyPageData()
+                userService.getUserInformation()
             }.onSuccess { response ->
                 _state.value = _state.value.copy(
                     uiState = UiState.Success(

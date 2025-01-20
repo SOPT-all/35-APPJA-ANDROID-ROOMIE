@@ -61,7 +61,7 @@ fun MyRoute(
     val currentCounter by rememberUpdatedState(counter)
 
     LaunchedEffect(currentCounter) {
-        viewModel.getUserInfo()
+        viewModel.getUserInformation()
     }
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
