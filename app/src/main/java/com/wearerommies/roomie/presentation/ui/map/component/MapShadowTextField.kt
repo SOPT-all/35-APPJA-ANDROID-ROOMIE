@@ -1,6 +1,7 @@
 package com.wearerommies.roomie.presentation.ui.map.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -41,6 +43,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun MapShadowTextField(
     textFieldValue: String,
     onValueChange: (String) -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isReadOnly: Boolean = true,
     content: @Composable () -> Unit = {}
@@ -68,16 +71,19 @@ fun MapShadowTextField(
             .background(
                 color = RoomieTheme.colors.grayScale1,
                 shape = RoundedCornerShape(8.dp)
-            )
-            .padding(
-                top = 5.dp,
-                bottom = 5.dp,
-                start = 14.dp,
-                end = 6.dp
             ),
         cursorBrush = SolidColor(RoomieTheme.colors.primary),
         decorationBox = { innerTextField ->
             Row(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable(onClick = onClick)
+                    .padding(
+                        top = 5.dp,
+                        bottom = 5.dp,
+                        start = 14.dp,
+                        end = 6.dp
+                    ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(modifier = Modifier.weight(1f)) {
@@ -110,6 +116,7 @@ fun ShadowTextFieldPreview() {
             MapShadowTextField(
                 textFieldValue = "",
                 onValueChange = {},
+                onClick = {},
                 content = {
                     Icon(
                         imageVector = ImageVector.vectorResource(R.drawable.ic_search_24px),
@@ -125,6 +132,7 @@ fun ShadowTextFieldPreview() {
             MapShadowTextField(
                 textFieldValue = "123456",
                 onValueChange = {},
+                onClick = {},
                 content = {
                     Icon(
                         imageVector = ImageVector.vectorResource(R.drawable.ic_search_24px),

@@ -26,6 +26,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
@@ -42,12 +43,13 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun SearchTextField(
     textFieldValue: String,
     onValueChange: (String) -> Unit,
-    onClick: () -> Unit, // TODO: 검색 연결
+    onClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
     var textFieldState by remember { mutableStateOf(TextFieldValue(textFieldValue)) }
     var isFocused by remember { mutableStateOf(false) }
-    val focusRequester = remember { FocusRequester() }
     var isTrailingIconClicked by remember { mutableStateOf(false) }
 
     BasicTextField(
@@ -77,9 +79,10 @@ fun SearchTextField(
         keyboardActions = KeyboardActions(
             onDone = {
                 if (textFieldState.text.isNotEmpty()) {
-                    onClick()
+                    onClick(textFieldState.text)
                     isTrailingIconClicked = true
                 }
+                focusManager.clearFocus()
             }
         ),
         decorationBox = { innerTextField ->
@@ -120,9 +123,9 @@ fun SearchTextField(
                         modifier = Modifier
                             .padding(8.dp)
                             .noRippleClickable {
-                                if (textFieldState.text.isNotEmpty())
-                                {
-                                    onClick()
+                                if (textFieldState.text.isNotEmpty()) {
+                                    focusManager.clearFocus()
+                                    onClick(textFieldState.text)
                                     isTrailingIconClicked = true
                                 }
                             }
