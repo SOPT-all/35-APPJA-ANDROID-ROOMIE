@@ -9,5 +9,5 @@ class MapDataSource @Inject constructor(
     private val mapService: MapService
 ) {
     suspend fun getSearchResult(q: String): BaseResponse<ResponseSearchDto> =
-        mapService.getSearchResult(q = q)
+        mapService.getSearchResult(query = q)
 }

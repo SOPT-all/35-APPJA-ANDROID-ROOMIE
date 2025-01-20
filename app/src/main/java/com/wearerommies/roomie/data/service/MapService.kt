@@ -8,6 +8,6 @@ import retrofit2.http.Query
 interface MapService {
     @GET("/v1/locations")
     suspend fun getSearchResult(
-        @Query("q") q: String
+        @Query("q") query: String
     ): BaseResponse<ResponseSearchDto>
 }
