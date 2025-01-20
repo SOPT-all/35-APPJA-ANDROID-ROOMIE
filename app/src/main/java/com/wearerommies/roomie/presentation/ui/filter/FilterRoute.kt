@@ -144,7 +144,7 @@ fun FilterScreen(
             val reservationMethods = persistentListOf(
                 stringResource(R.string.price),
                 stringResource(R.string.room_shape),
-                stringResource(R.string.contract_term)
+                stringResource(R.string.contract_period)
             )
 
             Column {

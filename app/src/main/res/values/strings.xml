@@ -99,7 +99,6 @@
     <string name="room_deposit">보증금</string>
     <string name="room_monthly_rent">월세</string>
     <string name="room_management_fee">관리비</string>
-    <string name="room_contract_period">계약기간</string>
     <string name="room_safety_living_facility">안전 및 생활시설</string>
     <string name="room_kitchen_facility">주방시설</string>
     <string name="tour_apply">투어신청하기</string>
@@ -156,4 +155,5 @@
     <string name="woman">여성</string>
     <string name="price">금액</string>
     <string name="hashtag">#</string>
+    <string name="contract_period">계약기간</string>
 </resources>
