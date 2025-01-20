@@ -61,12 +61,14 @@ fun RoomTypeScreen(
                             text = option,
                             isSelected = isSelected,
                             onClick = {
-                                val updatedList = if (isSelected) {
-                                    genderPolicy.remove(option).toPersistentList()
-                                } else {
-                                    genderPolicy.add(option).toPersistentList()
-                                }
-                                setGenderPolicy(updatedList)
+                                setGenderPolicy(
+                                    if(genderPolicy.contains(option)){
+                                        genderPolicy.remove(option).toPersistentList()
+                                    }
+                                    else {
+                                        genderPolicy.add(option).toPersistentList()
+                                    }
+                                )
                             }
                         )
                     }
@@ -102,13 +104,13 @@ fun RoomTypeScreen(
                                     text = option,
                                     isSelected = isSelected,
                                     onClick = {
-                                        // 리스트 업데이트 로직
-                                        val updatedList = if (isSelected) {
-                                            occupancyType.remove(option).toPersistentList()
-                                        } else {
-                                            occupancyType.add(option).toPersistentList()
-                                        }
-                                        setOccupancyType(updatedList)
+                                        setOccupancyType(
+                                            if (occupancyType.contains(option)){
+                                                occupancyType.remove(option).toPersistentList()
+                                            } else {
+                                                occupancyType.add(option).toPersistentList()
+                                            }
+                                        )
                                     }
                                 )
                             }

@@ -88,12 +88,13 @@ fun ContractTypeScreen(
                             text = option,
                             isSelected = isSelected,
                             onClick = {
-                                val updatedList = if (isSelected) {
-                                    contractPeriod.remove(option).toPersistentList()
-                                } else {
-                                    contractPeriod.add(option).toPersistentList()
-                                }
-                                setContractPeriod(updatedList)
+                                setContractPeriod(
+                                    if (contractPeriod.contains(option)) {
+                                        contractPeriod.remove(option).toPersistentList() // 선택된 경우 제거
+                                    } else {
+                                        contractPeriod.add(option).toPersistentList()   // 선택되지 않은 경우 추가
+                                    }
+                                )
                             }
                         )
                     }
