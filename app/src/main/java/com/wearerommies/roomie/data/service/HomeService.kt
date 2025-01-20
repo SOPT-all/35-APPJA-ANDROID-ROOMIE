@@ -6,6 +6,5 @@ import retrofit2.http.GET
 
 interface HomeService {
     @GET("/v1/users/home")
-    suspend fun getHomeData(
-    ): BaseResponse<ResponseHomeDto>
+    suspend fun getHomeData(): BaseResponse<ResponseHomeDto>
 }
