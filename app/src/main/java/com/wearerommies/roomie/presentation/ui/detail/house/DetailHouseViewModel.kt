@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui.detail.Image
+package com.wearerommies.roomie.presentation.ui.detail.house
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

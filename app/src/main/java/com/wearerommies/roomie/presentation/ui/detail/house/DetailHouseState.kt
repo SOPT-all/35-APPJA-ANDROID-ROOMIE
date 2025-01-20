@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui.detail.Image
+package com.wearerommies.roomie.presentation.ui.detail.house
 
 import com.wearerommies.roomie.domain.entity.DetailHouseEntity
 import com.wearerommies.roomie.presentation.core.util.UiState

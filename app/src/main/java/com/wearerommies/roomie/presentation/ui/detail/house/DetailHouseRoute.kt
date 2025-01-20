@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui.detail.Image
+package com.wearerommies.roomie.presentation.ui.detail.house
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -14,8 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -44,7 +42,6 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import kotlin.math.exp
 
 @Composable
 fun DetailHouseRoute(
