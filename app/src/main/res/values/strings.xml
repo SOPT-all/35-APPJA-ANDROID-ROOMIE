@@ -19,6 +19,8 @@
     <string name="user_is">님,</string>
     <string name="welcome_to_roomie">루미에 오신 걸 환영해요</string>
     <string name="roomie_find_perfect_home">루미가 %1$s님의 완벽한 집을\n찾아드릴게요</string>
+    <string name="no_bookmark_property">찜한 매물이 없어요</string>
+    <string name="press_heart_to_bookmark_property">하트를 눌러 마음에 드는 매물을 찜해보세요</string>
 
     // map
     <string name="monthly_rent">월세</string>
@@ -132,5 +134,4 @@
     <string name="gender">성별</string>
     <string name="man">남자</string>
     <string name="woman">여성</string>
-  
 </resources>
