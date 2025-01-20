@@ -138,7 +138,12 @@ fun FilterScreen(
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            val reservationMethods = persistentListOf("금액", "방 형태", "계약기간") // TODO: type으로 변경
+            val reservationMethods = persistentListOf(
+                stringResource(R.string.price),
+                stringResource(R.string.room_shape),
+                stringResource(R.string.contract_term)
+            )
+
             Column {
                 Box {
                     Spacer(

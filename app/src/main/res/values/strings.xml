@@ -152,5 +152,6 @@
     <string name="gender">성별</string>
     <string name="man">남자</string>
     <string name="woman">여성</string>
+    <string name="price">금액</string>
 
 </resources>
