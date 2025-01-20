@@ -133,7 +133,7 @@ fun FilterScreen(
                         .noRippleClickable(navigateUp)
                 )
             },
-            title = "필터"
+            title = stringResource(R.string.filter)
         )
         Box(
             modifier = Modifier.fillMaxSize()

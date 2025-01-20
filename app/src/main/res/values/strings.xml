@@ -38,6 +38,20 @@
     <string name="birth_date">생년월일</string>
     <string name="room_type">룸 타입</string>
     <string name="desired_contract_period">희망계약기간</string>
+    <string name="filter">필터</string>
+    <string name="man_only">남성전용</string>
+    <string name="woman_only">여성전용</string>
+    <string name="gender_seperate">남녀분리</string>
+    <string name="gender_free">성별무관</string>
+    <string name="one_person">1인실</string>
+    <string name="two_person">2인실</string>
+    <string name="three_person">3인실</string>
+    <string name="four_person">4인실</string>
+    <string name="five_person">5인실</string>
+    <string name="six_person">6인실</string>
+    <string name="three_month">3개월</string>
+    <string name="six_month">6개월</string>
+    <string name="one_year">1년</string>
 
     //my
     <string name="profile_image">프로필 이미지</string>
@@ -135,19 +149,6 @@
     <string name="monthly_rent">월세</string>
     <string name="deposit">보증금</string>
     <string name="ten_thousand_won">만원</string>
-    <string name="man_only">남성전용</string>
-    <string name="woman_only">여성전용</string>
-    <string name="gender_seperate">남녀분리</string>
-    <string name="gender_free">성별무관</string>
-    <string name="one_person">1인실</string>
-    <string name="two_person">2인실</string>
-    <string name="three_person">3인실</string>
-    <string name="four_person">4인실</string>
-    <string name="five_person">5인실</string>
-    <string name="six_person">6인실</string>
-    <string name="three_month">3개월</string>
-    <string name="six_month">6개월</string>
-    <string name="one_year">1년</string>
     <string name="gender">성별</string>
     <string name="man">남자</string>
     <string name="woman">여성</string>
