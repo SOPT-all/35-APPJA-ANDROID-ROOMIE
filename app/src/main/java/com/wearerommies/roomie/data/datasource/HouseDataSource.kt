@@ -1,7 +1,6 @@
 package com.wearerommies.roomie.data.datasource
 
 import com.wearerommies.roomie.data.dto.response.BaseResponse
-import com.wearerommies.roomie.data.dto.response.ResponseBookmarkDto
 import com.wearerommies.roomie.data.dto.response.ResponseBookmarkListDto
 import com.wearerommies.roomie.data.dto.response.ResponseMoodDto
 import com.wearerommies.roomie.data.service.HouseService
@@ -16,6 +15,6 @@ class HouseDataSource @Inject constructor(
     suspend fun getBookmarkLists(): BaseResponse<ResponseBookmarkListDto> =
         houseService.getBookmarkLists()
 
-    suspend fun bookmarkHouse(houseId: Long): BaseResponse<ResponseBookmarkDto> =
+    suspend fun bookmarkHouse(houseId: Long): BaseResponse<Boolean> =
         houseService.bookmarkHouse(houseId = houseId)
 }

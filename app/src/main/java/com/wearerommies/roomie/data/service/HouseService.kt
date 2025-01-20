@@ -1,7 +1,6 @@
 package com.wearerommies.roomie.data.service
 
 import com.wearerommies.roomie.data.dto.response.BaseResponse
-import com.wearerommies.roomie.data.dto.response.ResponseBookmarkDto
 import com.wearerommies.roomie.data.dto.response.ResponseBookmarkListDto
 import com.wearerommies.roomie.data.dto.response.ResponseMoodDto
 import retrofit2.http.GET
@@ -21,5 +20,5 @@ interface HouseService {
     @PATCH("/v1/houses/{houseId}/pins")
     suspend fun bookmarkHouse(
         @Path("houseId") houseId: Long
-    ): BaseResponse<ResponseBookmarkDto>
+    ): BaseResponse<Boolean>
 }

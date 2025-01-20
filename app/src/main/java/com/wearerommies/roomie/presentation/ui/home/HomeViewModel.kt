@@ -87,16 +87,18 @@ class HomeViewModel @Inject constructor(
     }
 
     fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
-        runCatching {
-            houseRepository.bookmarkHouse(houseId = houseId)
-        }.onSuccess {
-            _sideEffect.emit(
-                HomeSideEffect.SnackBar(
-                    message = R.string.add_to_bookmark_list
-                )
-            )
-        }.onFailure { error ->
-            Timber.e(error)
-        }
+        houseRepository.bookmarkHouse(houseId = houseId)
+            .onSuccess { isNotBookmarked ->
+                if (isNotBookmarked) {
+                    _sideEffect.emit(
+                        HomeSideEffect.SnackBar(
+                            message = R.string.add_to_bookmark_list
+                        )
+                    )
+                }
+            }.onFailure { error ->
+                Timber.e(error)
+            }
     }
+
 }

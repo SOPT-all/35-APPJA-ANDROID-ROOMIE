@@ -303,7 +303,7 @@ fun HomeScreen(
                             isPinned = item.isPinned,
                             moodTag = item.moodTag,
                             contractTerm = item.contractTerm,
-                            mainImgUrl = item.mainImgUrl
+                            mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
                         ),
                         onClick = {
                             //todo: 상세 매물 페이지로 이동
