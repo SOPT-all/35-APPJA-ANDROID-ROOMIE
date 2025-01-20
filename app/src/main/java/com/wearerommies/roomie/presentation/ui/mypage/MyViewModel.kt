@@ -2,6 +2,8 @@ package com.wearerommies.roomie.presentation.ui.mypage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wearerommies.roomie.data.service.UserService
+import com.wearerommies.roomie.domain.entity.MyPageEntity
 import com.wearerommies.roomie.presentation.core.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyViewModel @Inject constructor(
+    private val userService: UserService,
 ) : ViewModel() {
     // state 관리
     private val _state = MutableStateFlow(MyState())
@@ -27,13 +30,18 @@ class MyViewModel @Inject constructor(
     val sideEffect: SharedFlow<MySideEffect>
         get() = _sideEffect.asSharedFlow()
 
-    fun getUserInfo() {
+    fun getUserInformation() {
         viewModelScope.launch {
             runCatching {
-                //todo: api 연결
-            }.onSuccess {
-                _state.value = _state.value.copy(uiState = UiState.Success("성공"))
-
+                userService.getUserInformation()
+            }.onSuccess { response ->
+                _state.value = _state.value.copy(
+                    uiState = UiState.Success(
+                        MyPageEntity(
+                            name = response.data.name
+                        )
+                    )
+                )
             }.onFailure { error ->
                 _state.value = _state.value.copy(uiState = UiState.Failure)
                 Timber.e(error)

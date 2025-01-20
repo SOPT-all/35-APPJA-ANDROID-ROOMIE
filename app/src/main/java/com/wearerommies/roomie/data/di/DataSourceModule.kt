@@ -1,9 +1,9 @@
 package com.wearerommies.roomie.data.di
 
-import com.wearerommies.roomie.data.datasource.HomeDataSource
+import com.wearerommies.roomie.data.datasource.UserDataSource
 import com.wearerommies.roomie.data.datasource.HouseDataSource
 import com.wearerommies.roomie.data.datasource.ReqresDataSource
-import com.wearerommies.roomie.data.service.HomeService
+import com.wearerommies.roomie.data.service.UserService
 import com.wearerommies.roomie.data.service.HouseService
 import com.wearerommies.roomie.data.service.ReqresService
 import dagger.Module
@@ -23,9 +23,9 @@ internal object DataSourceModule {
 
     @Provides
     @Singleton
-    fun providesHomeDataSource(
-        homeService: HomeService
-    ): HomeDataSource = HomeDataSource(homeService)
+    fun providesUserDataSource(
+        userService: UserService
+    ): UserDataSource = UserDataSource(userService)
 
     @Provides
     @Singleton
