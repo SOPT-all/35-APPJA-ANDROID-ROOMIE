@@ -8,6 +8,6 @@ import javax.inject.Inject
 class MapDataSource @Inject constructor(
     private val mapService: MapService
 ) {
-    suspend fun getSearchResult(q: String): BaseResponse<ResponseSearchDto> =
-        mapService.getSearchResult(query = q)
+    suspend fun getSearchResult(query: String): BaseResponse<ResponseSearchDto> =
+        mapService.getSearchResult(query = query)
 }
