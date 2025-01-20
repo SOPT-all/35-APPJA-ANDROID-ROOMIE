@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface MoodService {
-    @GET("api/users")
+    @GET("/v1/houses")
     suspend fun getMoodLists(
         @Query("moodTag") moodTag: String
     ): BaseResponse<ResponseMoodDto>

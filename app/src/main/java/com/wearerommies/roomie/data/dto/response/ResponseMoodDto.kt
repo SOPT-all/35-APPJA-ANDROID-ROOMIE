@@ -29,7 +29,7 @@ data class ResponseMoodDto(
         val locationDescription: String,
         @SerialName("isPinned")
         val isPinned: Boolean,
-        @SerialName("contract_term")
+        @SerialName("contractTerm")
         val contractTerm: Long,
         @SerialName("mainImgUrl")
         val mainImgUrl: String,
