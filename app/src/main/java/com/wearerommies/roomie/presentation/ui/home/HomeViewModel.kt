@@ -3,9 +3,9 @@ package com.wearerommies.roomie.presentation.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.R
-import com.wearerommies.roomie.data.service.UserService
 import com.wearerommies.roomie.domain.entity.HomeDataEntity
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
+import com.wearerommies.roomie.domain.repository.UserRepository
 import com.wearerommies.roomie.presentation.core.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val userService: UserService,
+    private val userRepository: UserRepository
 ) : ViewModel() {
     // state 관리
     private val _state = MutableStateFlow(HomeState())
@@ -32,12 +32,10 @@ class HomeViewModel @Inject constructor(
     val sideEffect: SharedFlow<HomeSideEffect>
         get() = _sideEffect.asSharedFlow()
 
-    fun getHomeData() {
-        viewModelScope.launch {
-            runCatching {
-                userService.getHomeData()
-            }.onSuccess { response ->
-                val homeData = response.data.let {
+    suspend fun getHomeData() {
+        userRepository.getHomeData()
+            .onSuccess { response ->
+                val homeData = response.let {
                     HomeDataEntity(
                         name = it.name,
                         location = it.location,
@@ -46,7 +44,7 @@ class HomeViewModel @Inject constructor(
                                 houseId = item.houseId,
                                 monthlyRent = item.monthlyRent,
                                 deposit = item.deposit,
-                                occupancyType = item.occupancyTypes,
+                                occupancyType = item.occupancyType,
                                 location = item.location,
                                 genderPolicy = item.genderPolicy,
                                 locationDescription = item.locationDescription,
@@ -65,7 +63,6 @@ class HomeViewModel @Inject constructor(
                 _state.value = _state.value.copy(uiState = UiState.Failure)
                 Timber.e(error)
             }
-        }
     }
 
     fun navigateToBookmark() {
