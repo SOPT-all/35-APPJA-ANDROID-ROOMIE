@@ -3,6 +3,8 @@ package com.wearerommies.roomie.presentation.ui.mood
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.data.service.MoodService
+import com.wearerommies.roomie.domain.entity.MoodCardEntity
 import com.wearerommies.roomie.presentation.core.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,6 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MoodViewModel @Inject constructor(
+    private val moodService: MoodService,
 ) : ViewModel() {
     // state 관리
     private val _state = MutableStateFlow(MoodState())
@@ -28,11 +31,31 @@ class MoodViewModel @Inject constructor(
     val sideEffect: SharedFlow<MoodSideEffect>
         get() = _sideEffect.asSharedFlow()
 
-    fun getMoodList() = viewModelScope.launch {
+    fun getMoodList(moodTag: String) = viewModelScope.launch {
         runCatching {
-            //todo: api 연결
-        }.onSuccess {
-            _state.value = _state.value.copy(uiState = UiState.Success("성공"))
+            moodService.getMoodLists(moodTag = moodTag)
+        }.onSuccess { response ->
+            val moodLists = response.data.let {
+                MoodCardEntity(
+                    moodTag = it.moodTag,
+                    houses = it.houses.map { item ->
+                        MoodCardEntity.House(
+                            houseId = item.houseId,
+                            monthlyRent = item.monthlyRent,
+                            deposit = item.deposit,
+                            occupancyTypes = item.occupancyTypes,
+                            location = item.location,
+                            genderPolicy = item.genderPolicy,
+                            locationDescription = item.locationDescription,
+                            isPinned = item.isPinned,
+                            contractTerm = item.contractTerm,
+                            mainImgUrl = item.mainImgUrl
+                        )
+                    }
+                )
+            }
+
+            _state.value = _state.value.copy(uiState = UiState.Success(moodLists))
 
         }.onFailure { error ->
             _state.value = _state.value.copy(uiState = UiState.Failure)
