@@ -1,8 +1,10 @@
 package com.wearerommies.roomie.data.di
 
+import com.wearerommies.roomie.data.datasource.BookmarkListDataSource
 import com.wearerommies.roomie.data.datasource.HomeDataSource
 import com.wearerommies.roomie.data.datasource.MoodDataSource
 import com.wearerommies.roomie.data.datasource.ReqresDataSource
+import com.wearerommies.roomie.data.service.BookmarkListService
 import com.wearerommies.roomie.data.service.HomeService
 import com.wearerommies.roomie.data.service.MoodService
 import com.wearerommies.roomie.data.service.ReqresService
@@ -32,4 +34,10 @@ internal object DataSourceModule {
     fun providesMoodDataSource(
         moodService: MoodService
     ): MoodDataSource = MoodDataSource(moodService)
+
+    @Provides
+    @Singleton
+    fun providesBookmarkListDataSource(
+        bookmarkListService: BookmarkListService
+    ): BookmarkListDataSource = BookmarkListDataSource(bookmarkListService)
 }

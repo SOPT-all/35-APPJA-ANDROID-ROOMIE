@@ -1,6 +1,5 @@
 package com.wearerommies.roomie.data.dto.response
 
-
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -13,13 +12,13 @@ data class ResponseBookmarkListDto(
     @Serializable
     data class PinnedHouse(
         @SerialName("contractTerm")
-        val contractTerm: Int,
+        val contractTerm: Long,
         @SerialName("deposit")
         val deposit: String,
         @SerialName("genderPolicy")
         val genderPolicy: String,
         @SerialName("houseId")
-        val houseId: Int,
+        val houseId: Long,
         @SerialName("isPinned")
         val isPinned: Boolean,
         @SerialName("location")

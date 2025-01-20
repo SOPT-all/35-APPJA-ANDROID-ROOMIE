@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -50,6 +51,7 @@ import com.wearerommies.roomie.presentation.core.util.UiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun BookMarkRoute(
@@ -100,7 +102,7 @@ fun BookMarkScreen(
     paddingValues: PaddingValues,
     snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
-    state: UiState<String>,
+    state: UiState<List<RoomCardEntity>>,
     onLikeClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -183,7 +185,7 @@ fun BookMarkScreen(
                     )
                 }
 
-                items(count = 3, key = { it }) {
+                itemsIndexed(items = state.data) { index, item ->
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -192,19 +194,21 @@ fun BookMarkScreen(
                             modifier = Modifier
                                 .padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
                             roomCardEntity = RoomCardEntity(
-                                houseId = 1,
-                                monthlyRent = "30~50",
-                                deposit = "200~300",
-                                occupancyType = "2인실",
-                                location = "서대문구 연희동",
-                                genderPolicy = "여성전용",
-                                locationDescription = "자이아파트",
-                                isPinned = true,
-                                moodTag = "#차분한",
-                                contractTerm = 6,
-                                mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                                houseId = item.houseId,
+                                monthlyRent = item.monthlyRent,
+                                deposit = item.deposit,
+                                occupancyType = item.occupancyType,
+                                location = item.location,
+                                genderPolicy = item.genderPolicy,
+                                locationDescription = item.locationDescription,
+                                isPinned = item.isPinned,
+                                moodTag = item.moodTag,
+                                contractTerm = item.contractTerm,
+                                mainImgUrl = item.mainImgUrl
                             ),
-                            onClick = { },
+                            onClick = {
+                                //todo: 상세 매물 페이지로 이동
+                            },
                             onLikeClick = onLikeClick
                         )
                     }
@@ -220,9 +224,9 @@ fun BookMarkScreen(
                                 color = RoomieTheme.colors.grayScale5
                             )
                     )
-
                     RoomieFooter()
                 }
+
             }
         }
     }
@@ -237,7 +241,23 @@ fun BookMarkScreenPreview() {
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
             onLikeClick = {},
-            state = UiState.Success("")
+            state = UiState.Success(
+                listOf(
+                    RoomCardEntity(
+                        houseId = 1,
+                        monthlyRent = "30~50",
+                        deposit = "200~300",
+                        occupancyType = "2인실",
+                        location = "서대문구 연희동",
+                        genderPolicy = "여성전용",
+                        locationDescription = "자이아파트",
+                        isPinned = true,
+                        moodTag = "#차분한",
+                        contractTerm = 6,
+                        mainImgUrl = "https://i.pinimg.com/236x/12/95/67/1295676da767fa8171baf8a307b5786c.jpg"
+                    )
+                ).toPersistentList()
+            )
         )
     }
 }

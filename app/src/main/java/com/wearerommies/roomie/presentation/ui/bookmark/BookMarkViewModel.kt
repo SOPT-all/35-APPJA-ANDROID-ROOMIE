@@ -3,6 +3,8 @@ package com.wearerommies.roomie.presentation.ui.bookmark
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.data.service.BookmarkListService
+import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,6 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookMarkViewModel @Inject constructor(
+    private val bookmarkListService: BookmarkListService,
 ) : ViewModel() {
     // state 관리
     private val _state = MutableStateFlow(BookMarkState())
@@ -31,9 +34,25 @@ class BookMarkViewModel @Inject constructor(
     fun getBookMarkList() {
         viewModelScope.launch {
             runCatching {
-                //todo: api 연결
-            }.onSuccess {
-                _state.value = _state.value.copy(uiState = UiState.Success("성공"))
+                bookmarkListService.getBookmarkLists()
+            }.onSuccess { response ->
+                val bookmarkList = response.data.pinnedHouses.map { item ->
+                    RoomCardEntity(
+                        houseId = item.houseId,
+                        monthlyRent = item.monthlyRent,
+                        deposit = item.deposit,
+                        occupancyType = item.occupancyTypes,
+                        location = item.location,
+                        genderPolicy = item.genderPolicy,
+                        locationDescription = item.locationDescription,
+                        isPinned = item.isPinned,
+                        moodTag = item.moodTag,
+                        contractTerm = item.contractTerm,
+                        mainImgUrl = item.mainImgUrl
+                    )
+                }
+
+                _state.value = _state.value.copy(uiState = UiState.Success(bookmarkList))
 
             }.onFailure { error ->
                 _state.value = _state.value.copy(uiState = UiState.Failure)

@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.data.di
 
+import com.wearerommies.roomie.data.service.BookmarkListService
 import com.wearerommies.roomie.data.service.HomeService
 import com.wearerommies.roomie.data.service.MoodService
 import com.wearerommies.roomie.data.service.ReqresService
@@ -27,4 +28,9 @@ internal object ServiceModule {
     @Singleton
     fun provideMoodService(retrofit: Retrofit): MoodService =
         retrofit.create(MoodService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideBookmarkListService(retrofit: Retrofit): BookmarkListService =
+        retrofit.create(BookmarkListService::class.java)
 }

@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.data.datasource
 
+import com.wearerommies.roomie.data.dto.response.BaseResponse
 import com.wearerommies.roomie.data.dto.response.ResponseBookmarkListDto
 import com.wearerommies.roomie.data.service.BookmarkListService
 import javax.inject.Inject
