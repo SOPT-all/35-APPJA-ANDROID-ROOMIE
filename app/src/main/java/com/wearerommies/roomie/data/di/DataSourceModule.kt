@@ -2,9 +2,11 @@ package com.wearerommies.roomie.data.di
 
 import com.wearerommies.roomie.data.datasource.UserDataSource
 import com.wearerommies.roomie.data.datasource.HouseDataSource
+import com.wearerommies.roomie.data.datasource.MapDataSource
 import com.wearerommies.roomie.data.datasource.ReqresDataSource
 import com.wearerommies.roomie.data.service.UserService
 import com.wearerommies.roomie.data.service.HouseService
+import com.wearerommies.roomie.data.service.MapService
 import com.wearerommies.roomie.data.service.ReqresService
 import dagger.Module
 import dagger.Provides
@@ -32,4 +34,10 @@ internal object DataSourceModule {
     fun providesHouseDataSource(
         houseService: HouseService
     ): HouseDataSource = HouseDataSource(houseService)
+
+    @Provides
+    @Singleton
+    fun providesMapDataSource(
+        mapService: MapService
+    ): MapDataSource = MapDataSource(mapService)
 }
