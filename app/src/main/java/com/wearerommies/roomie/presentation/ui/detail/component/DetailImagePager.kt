@@ -1,6 +1,5 @@
 package com.wearerommies.roomie.presentation.ui.detail.component
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -28,7 +27,7 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun DetailImagePager(
     images: PersistentList<String>,
-    @StringRes contentDescription: Int,
+    contentDescription: String,
     modifier: Modifier = Modifier
 ) {
 
@@ -38,8 +37,7 @@ fun DetailImagePager(
 
     HorizontalPager(
         state = pagerState,
-
-        beyondViewportPageCount = 1,
+        beyondViewportPageCount = 2,
         modifier = modifier.fillMaxWidth()
     ) {
         Box(
@@ -49,10 +47,11 @@ fun DetailImagePager(
         ) {
             AsyncImage(
                 model = images[it],
-                contentDescription = stringResource(contentDescription),
+                contentDescription = contentDescription,
                 modifier = Modifier
+                    .fillMaxWidth()
                     .aspectRatio(360f / 312f),
-                contentScale = ContentScale.FillWidth
+                contentScale = ContentScale.Crop
             )
 
             Text(
@@ -89,7 +88,7 @@ fun DetailImagePagerPreview() {
                 "https://i.pravatar.cc/300",
                 "https://i.pravatar.cc/600"
             ),
-            contentDescription = R.string.house_main_image,
+            contentDescription = stringResource(R.string.house_main_image),
             modifier = Modifier
                 .padding(
                     vertical = 8.dp,

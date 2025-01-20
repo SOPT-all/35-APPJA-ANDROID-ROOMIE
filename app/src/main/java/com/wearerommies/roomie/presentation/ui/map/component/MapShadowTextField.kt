@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui.filter.component
+package com.wearerommies.roomie.presentation.ui.map.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,7 +38,7 @@ import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
-fun ShadowTextField(
+fun MapShadowTextField(
     textFieldValue: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -107,7 +107,7 @@ fun ShadowTextFieldPreview() {
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            ShadowTextField(
+            MapShadowTextField(
                 textFieldValue = "",
                 onValueChange = {},
                 content = {
@@ -122,7 +122,7 @@ fun ShadowTextFieldPreview() {
                 }
             )
 
-            ShadowTextField(
+            MapShadowTextField(
                 textFieldValue = "123456",
                 onValueChange = {},
                 content = {

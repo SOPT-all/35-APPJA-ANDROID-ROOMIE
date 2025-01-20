@@ -92,23 +92,25 @@ fun DetailInnerFacilityCard(
 
             Spacer(Modifier.height(12.dp))
 
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.SpaceEvenly,
-                content = {
-                    itemsIndexed(facility) { index, facilityName ->
-                        DetailTextWithCheckIcon(
-                            text = facilityName,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    bottom = if (index == facility.lastIndex) 0.dp else 8.dp
-                                )
-                        )
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                facility.chunked(2).forEach { rowItems ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        rowItems.forEach { facilityName ->
+                            DetailTextWithCheckIcon(
+                                text = facilityName,
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
                     }
                 }
-            )
+            }
+
         }
     }
 }

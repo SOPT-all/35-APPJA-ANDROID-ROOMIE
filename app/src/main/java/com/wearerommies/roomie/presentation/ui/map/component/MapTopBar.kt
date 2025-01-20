@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.extension.customShadow
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
-import com.wearerommies.roomie.presentation.ui.filter.component.ShadowTextField
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
@@ -35,7 +34,7 @@ fun MapTopBar(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ShadowTextField(
+        MapShadowTextField(
             textFieldValue = "", // TODO: state 값 연결
             onValueChange = {},
             content = {

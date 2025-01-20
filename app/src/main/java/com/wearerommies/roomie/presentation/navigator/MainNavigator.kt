@@ -16,9 +16,9 @@ import com.wearerommies.roomie.presentation.ui.home.navigation.navigateToHome
 import com.wearerommies.roomie.presentation.ui.map.navigation.navigateToMap
 import com.wearerommies.roomie.presentation.ui.mood.navigation.navigateToMood
 import com.wearerommies.roomie.presentation.ui.mypage.navigation.navigateToMy
-import com.wearerommies.roomie.presentation.ui.navigateToDetail
-import com.wearerommies.roomie.presentation.ui.navigateToDetailAllImage
-import com.wearerommies.roomie.presentation.ui.navigateToDetailRoomsImage
+import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetail
+import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailHouse
+import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailRoom
 import com.wearerommies.roomie.presentation.ui.search.navigation.navigateToSearch
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTour
 
@@ -82,12 +82,12 @@ class MainNavigator(
         navController.navigateToDetail()
     }
 
-    fun navigateToDetailAllImage() {
-        navController.navigateToDetailAllImage()
+    fun navigateToDetailHouse() {
+        navController.navigateToDetailHouse()
     }
 
-    fun navigateToDetailRoomsImage() {
-        navController.navigateToDetailRoomsImage()
+    fun navigateToDetailRoom() {
+        navController.navigateToDetailRoom()
     }
 
     fun navigateToTour() {

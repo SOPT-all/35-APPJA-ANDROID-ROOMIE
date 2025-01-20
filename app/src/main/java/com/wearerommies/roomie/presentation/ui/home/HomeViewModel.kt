@@ -3,7 +3,7 @@ package com.wearerommies.roomie.presentation.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.R
-import com.wearerommies.roomie.data.service.HomeService
+import com.wearerommies.roomie.data.service.UserService
 import com.wearerommies.roomie.domain.entity.HomeDataEntity
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.util.UiState
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeService: HomeService,
+    private val userService: UserService,
 ) : ViewModel() {
     // state 관리
     private val _state = MutableStateFlow(HomeState())
@@ -35,7 +35,7 @@ class HomeViewModel @Inject constructor(
     fun getHomeData() {
         viewModelScope.launch {
             runCatching {
-                homeService.getHomeData()
+                userService.getHomeData()
             }.onSuccess { response ->
                 val homeData = response.data.let {
                     HomeDataEntity(

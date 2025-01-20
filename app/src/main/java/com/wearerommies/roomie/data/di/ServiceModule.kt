@@ -1,8 +1,7 @@
 package com.wearerommies.roomie.data.di
 
-import com.wearerommies.roomie.data.service.BookmarkListService
-import com.wearerommies.roomie.data.service.HomeService
-import com.wearerommies.roomie.data.service.MoodService
+import com.wearerommies.roomie.data.service.UserService
+import com.wearerommies.roomie.data.service.HouseService
 import com.wearerommies.roomie.data.service.ReqresService
 import dagger.Module
 import dagger.Provides
@@ -21,16 +20,11 @@ internal object ServiceModule {
 
     @Provides
     @Singleton
-    fun provideHomeService(retrofit: Retrofit): HomeService =
-        retrofit.create(HomeService::class.java)
+    fun provideUserService(retrofit: Retrofit): UserService =
+        retrofit.create(UserService::class.java)
 
     @Provides
     @Singleton
-    fun provideMoodService(retrofit: Retrofit): MoodService =
-        retrofit.create(MoodService::class.java)
-
-    @Provides
-    @Singleton
-    fun provideBookmarkListService(retrofit: Retrofit): BookmarkListService =
-        retrofit.create(BookmarkListService::class.java)
+    fun provideHouseService(retrofit: Retrofit): HouseService =
+        retrofit.create(HouseService::class.java)
 }

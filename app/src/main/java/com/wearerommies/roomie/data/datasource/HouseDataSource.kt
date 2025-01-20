@@ -2,12 +2,12 @@ package com.wearerommies.roomie.data.datasource
 
 import com.wearerommies.roomie.data.dto.response.BaseResponse
 import com.wearerommies.roomie.data.dto.response.ResponseMoodDto
-import com.wearerommies.roomie.data.service.MoodService
+import com.wearerommies.roomie.data.service.HouseService
 import javax.inject.Inject
 
-class MoodDataSource @Inject constructor(
-    private val moodService: MoodService
+class HouseDataSource @Inject constructor(
+    private val houseService: HouseService
 ) {
     suspend fun getMoodLists(moodTag: String): BaseResponse<ResponseMoodDto> =
-        moodService.getMoodLists(moodTag = moodTag)
+        houseService.getMoodLists(moodTag = moodTag)
 }

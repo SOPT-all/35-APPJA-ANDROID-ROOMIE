@@ -17,13 +17,14 @@ fun NavController.navigateToMap(navOptions: NavOptions) {
 
 fun NavGraphBuilder.mapNavGraph(
     paddingValues: PaddingValues,
-    navigateToSearch: () -> Unit
+    navigateToSearch: () -> Unit,
+    navigateToFilter: () -> Unit
 ) {
     composable<MainTabRoute.Map> {
         MapRoute(
             paddingValues = paddingValues,
             navigateToSearch = navigateToSearch,
-            navigateToFilter = {}, //TODO: 네비게이션 연결
+            navigateToFilter = navigateToFilter
         )
     }
 }

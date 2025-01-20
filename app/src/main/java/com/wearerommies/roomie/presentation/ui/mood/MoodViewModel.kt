@@ -3,7 +3,7 @@ package com.wearerommies.roomie.presentation.ui.mood
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.R
-import com.wearerommies.roomie.data.service.MoodService
+import com.wearerommies.roomie.data.service.HouseService
 import com.wearerommies.roomie.domain.entity.MoodCardEntity
 import com.wearerommies.roomie.presentation.core.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MoodViewModel @Inject constructor(
-    private val moodService: MoodService,
+    private val houseService: HouseService,
 ) : ViewModel() {
     // state 관리
     private val _state = MutableStateFlow(MoodState())
@@ -33,7 +33,7 @@ class MoodViewModel @Inject constructor(
 
     fun getMoodList(moodTag: String) = viewModelScope.launch {
         runCatching {
-            moodService.getMoodLists(moodTag = moodTag)
+            houseService.getMoodLists(moodTag = moodTag)
         }.onSuccess { response ->
             val moodLists = response.data.let {
                 MoodCardEntity(
