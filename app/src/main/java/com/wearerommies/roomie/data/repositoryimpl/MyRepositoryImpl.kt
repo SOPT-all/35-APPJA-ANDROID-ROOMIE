@@ -5,11 +5,11 @@ import com.wearerommies.roomie.domain.entity.MyPageEntity
 import com.wearerommies.roomie.domain.repository.MyRepository
 import javax.inject.Inject
 
-internal class MyRepositoryImpl @Inject constructor(
-    private val myDataSource: MyDataSource
-) : MyRepository {
-    override suspend fun getMyPageData(): Result<MyPageEntity> =
-        runCatching {
-            myDataSource.getMyPageData().data.toEntity()
-        }
-}
+//internal class MyRepositoryImpl @Inject constructor(
+//    private val myDataSource: MyDataSource
+//) : MyRepository {
+//    override suspend fun getMyPageData(): Result<MyPageEntity> =
+//        runCatching {
+//            myDataSource.getMyPageData().data.toEntity()
+//        }
+//}

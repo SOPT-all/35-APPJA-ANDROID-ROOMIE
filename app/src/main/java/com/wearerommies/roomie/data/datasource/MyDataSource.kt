@@ -7,6 +7,5 @@ import javax.inject.Inject
 internal class MyDataSource @Inject constructor(
     private val myService: MyService
 ) {
-    suspend fun getMyPageData(): BaseResponse<ResponseMyPageDto> =
-        myService.getMyPageData()
+
 }
