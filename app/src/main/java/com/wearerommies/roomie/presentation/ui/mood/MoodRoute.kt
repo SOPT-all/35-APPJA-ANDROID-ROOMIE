@@ -217,15 +217,15 @@ fun MoodScreen(
                                     .padding(end = 10.dp)
                                     .align(Alignment.CenterEnd),
                                 painter = when (moodTag) {
-                                    "#" + stringResource(R.string.mood_tag_calm) -> painterResource(
+                                    stringResource(R.string.hashtag) + stringResource(R.string.mood_tag_calm) -> painterResource(
                                         R.drawable.img_moodview_calm
                                     )
 
-                                    "#" + stringResource(R.string.mood_tag_active) -> painterResource(
+                                    stringResource(R.string.hashtag) + stringResource(R.string.mood_tag_active) -> painterResource(
                                         R.drawable.img_moodview_exciting
                                     )
 
-                                    "#" + stringResource(R.string.mood_tag_clean) -> painterResource(
+                                    stringResource(R.string.hashtag) + stringResource(R.string.mood_tag_clean) -> painterResource(
                                         R.drawable.img_moodview_clean
                                     )
 
@@ -243,12 +243,15 @@ fun MoodScreen(
                                     .align(Alignment.CenterStart),
                                 moodTag = state.data.moodTag,
                                 mood = when (moodTag) {
-                                    "#" + stringResource(R.string.mood_tag_calm) -> stringResource(R.string.mood_calm)
-                                    "#" + stringResource(R.string.mood_tag_active) -> stringResource(
+                                    stringResource(R.string.hashtag) + stringResource(R.string.mood_tag_calm) -> stringResource(
+                                        R.string.mood_calm
+                                    )
+
+                                    stringResource(R.string.hashtag) + stringResource(R.string.mood_tag_active) -> stringResource(
                                         R.string.mood_active
                                     )
 
-                                    "#" + stringResource(R.string.mood_tag_clean) -> stringResource(
+                                    stringResource(R.string.hashtag) + stringResource(R.string.mood_tag_clean) -> stringResource(
                                         R.string.mood_clean
                                     )
 

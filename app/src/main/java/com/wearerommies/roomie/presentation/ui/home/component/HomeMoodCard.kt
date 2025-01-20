@@ -90,7 +90,7 @@ private fun MoodCardMainText(homeMoodCardType: HomeMoodCardType, modifier: Modif
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "#",
+            text = stringResource(R.string.hashtag),
             style = RoomieTheme.typography.body2Sb14,
             color = RoomieTheme.colors.primary,
         )
