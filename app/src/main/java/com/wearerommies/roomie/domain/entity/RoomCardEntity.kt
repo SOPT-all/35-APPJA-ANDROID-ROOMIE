@@ -1,7 +1,7 @@
 package com.wearerommies.roomie.domain.entity
 
 data class RoomCardEntity(
-    val houseId: Int,
+    val houseId: Long,
     val monthlyRent: String,
     val deposit: String,
     val occupancyType: String,
@@ -10,6 +10,6 @@ data class RoomCardEntity(
     val locationDescription: String,
     val isPinned: Boolean = true,
     val moodTag: String? = "",
-    val contractTerm: Int,
+    val contractTerm: Long,
     val mainImgUrl: String,
 )

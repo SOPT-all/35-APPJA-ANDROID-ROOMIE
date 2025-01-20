@@ -31,13 +31,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.SearchResultEntity
+import com.wearerommies.roomie.presentation.core.component.RoomieEmptyView
+import com.wearerommies.roomie.presentation.core.component.RoomieLoadingView
 import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.EmptyUiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.type.EmptyViewType
-import com.wearerommies.roomie.presentation.core.component.RoomieEmptyView
 import com.wearerommies.roomie.presentation.ui.search.component.SearchResultCard
 import com.wearerommies.roomie.presentation.ui.search.component.SearchTextField
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
@@ -133,7 +134,7 @@ fun SearchScreen(
 
             EmptyUiState.Failure -> {}
 
-            EmptyUiState.Loading -> {}
+            EmptyUiState.Loading -> { RoomieLoadingView() }
 
             is EmptyUiState.Success -> {
                 LazyColumn {
