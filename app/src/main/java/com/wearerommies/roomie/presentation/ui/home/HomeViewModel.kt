@@ -6,7 +6,6 @@ import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.HomeDataEntity
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.domain.repository.UserRepository
-import com.wearerommies.roomie.presentation.core.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,10 +56,9 @@ class HomeViewModel @Inject constructor(
                     )
                 }
 
-                _state.value = _state.value.copy(uiState = UiState.Success(homeData))
+                _state.value = _state.value.copy(uiState = homeData)
 
             }.onFailure { error ->
-                _state.value = _state.value.copy(uiState = UiState.Failure)
                 Timber.e(error)
             }
     }
@@ -97,7 +95,6 @@ class HomeViewModel @Inject constructor(
                     )
                 )
             }.onFailure { error ->
-                _state.value = _state.value.copy(uiState = UiState.Failure)
                 Timber.e(error)
             }
         }
