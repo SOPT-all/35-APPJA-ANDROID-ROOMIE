@@ -21,4 +21,22 @@ class DetailViewModel @Inject constructor(
     private val _sideEffect: MutableSharedFlow<DetailSideEffect> = MutableSharedFlow()
     val sideEffect: SharedFlow<DetailSideEffect>
         get() = _sideEffect.asSharedFlow()
+
+    fun updateBottomSheetState() {
+        _state.value = _state.value.copy(
+            isShowBottomSheet = !_state.value.isShowBottomSheet
+        )
+    }
+
+    fun updateLivingExpanded() {
+        _state.value = _state.value.copy(
+            isLivingExpanded = !_state.value.isLivingExpanded
+        )
+    }
+
+    fun updatedKitchenExpanded() {
+        _state.value = _state.value.copy(
+            isKitchenExpanded = !_state.value.isKitchenExpanded
+        )
+    }
 }
