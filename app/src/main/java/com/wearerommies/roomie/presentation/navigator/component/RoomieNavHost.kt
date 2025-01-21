@@ -30,7 +30,8 @@ fun RoomieNavHost(
             paddingValues = padding,
             navigateToBookmark = navigator::navigateToBookmark,
             navigateToMood = navigator::navigateToMood,
-            navigateToMap = { navigator.navigate(tab = MainTabType.MAP) }
+            navigateToMap = { navigator.navigate(tab = MainTabType.MAP) },
+            navigateToDetail = navigator::navigateToDetail
         )
         mapNavGraph(
             paddingValues = padding,
