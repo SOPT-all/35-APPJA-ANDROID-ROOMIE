@@ -12,7 +12,7 @@ data class ResponseBookmarkListDto(
     @Serializable
     data class PinnedHouse(
         @SerialName("contractTerm")
-        val contractTerm: Long,
+        val contractTerm: Int,
         @SerialName("deposit")
         val deposit: String,
         @SerialName("genderPolicy")
