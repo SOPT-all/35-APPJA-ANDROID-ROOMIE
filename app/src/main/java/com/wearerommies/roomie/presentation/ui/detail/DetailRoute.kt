@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -54,6 +55,7 @@ import com.wearerommies.roomie.presentation.core.util.PriceFormatter.formatPrice
 import com.wearerommies.roomie.presentation.core.util.UiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailBottomIconButton
+import com.wearerommies.roomie.presentation.ui.detail.component.DetailBottomSheet
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailContentHeader
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailInnerFacilityCard
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailMoodCard
@@ -85,6 +87,8 @@ fun DetailScreen(
     val scrollState = rememberLazyListState()
     var imageHeight by remember { mutableIntStateOf(0) }
     var titleHeight by remember { mutableIntStateOf(0) }
+
+    var isBottomSheet by remember { mutableStateOf(false) }
 
     val isScrollResponsiveDefault by remember {
         derivedStateOf {
@@ -197,9 +201,6 @@ fun DetailScreen(
 
                     item {
                         DetailContentHeader(
-                            houseName = state.data.houseInfo.name,
-                            monthlyRent = state.data.houseInfo.monthlyRent,
-                            deposit = state.data.houseInfo.deposit,
                             location = state.data.houseInfo.location,
                             occupancyStatus = state.data.houseInfo.occupancyStatus,
                             contractTerm = state.data.houseInfo.contractTerm,
@@ -209,6 +210,8 @@ fun DetailScreen(
                                 // TODO: 상세 이미지 DetailHouse로 이동
                             }
                         )
+
+                        Spacer(Modifier.height(16.dp))
 
                         Spacer(
                             modifier = Modifier
@@ -420,12 +423,28 @@ fun DetailScreen(
                         text = stringResource(R.string.tour_apply_button),
                         backgroundColor = RoomieTheme.colors.primary,
                         textColor = RoomieTheme.colors.grayScale1,
-                        onClick = {},
+                        onClick = {
+                            // TODO: 바텀시트 상태관리
+                            isBottomSheet = !isBottomSheet
+                        },
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth(),
                         pressedColor = RoomieTheme.colors.primaryLight1,
                         isPressed = true
+                    )
+                }
+                if(isBottomSheet){
+                    DetailBottomSheet(
+                        rooms = state.data.rooms.toPersistentList(),
+                        onDismissRequest = {
+
+                        },
+                        onButtonClick = {},
+                        selectedRoom = null,
+                        modifier = Modifier
+                            .zIndex(1F)
+                            .align(Alignment.BottomCenter)
                     )
                 }
             }
