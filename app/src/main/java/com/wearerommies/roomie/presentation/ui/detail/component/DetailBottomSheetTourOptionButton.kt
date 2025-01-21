@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
@@ -22,6 +23,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun DetailBottomSheetTourOptionButton(
     roomName: String,
     roomPrice: String,
+    onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     isEnabled: Boolean = true
@@ -40,6 +42,7 @@ fun DetailBottomSheetTourOptionButton(
                 borderWidth = 1.dp
             )
             .padding(8.dp)
+            .noRippleClickable(onButtonClick)
         ,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -74,7 +77,8 @@ fun DetailBottomSheetTourOptionButtonPreview() {
                     roomName = "룸A",
                     roomPrice = "500/50",
                     isSelected = true,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    onButtonClick = {}
                 )
 
                 Spacer(Modifier.width(12.dp))
@@ -83,7 +87,8 @@ fun DetailBottomSheetTourOptionButtonPreview() {
                     roomName = "룸A",
                     roomPrice = "500/50",
                     isSelected = false,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    onButtonClick = {}
                 )
             }
 
@@ -97,7 +102,8 @@ fun DetailBottomSheetTourOptionButtonPreview() {
                     roomName = "룸A",
                     roomPrice = "500/50",
                     isSelected = true,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    onButtonClick = {}
                 )
 
                 Spacer(Modifier.width(12.dp))
@@ -107,7 +113,8 @@ fun DetailBottomSheetTourOptionButtonPreview() {
                     roomPrice = "500/50",
                     isSelected = false,
                     isEnabled = false,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    onButtonClick = {}
                 )
             }
         }
