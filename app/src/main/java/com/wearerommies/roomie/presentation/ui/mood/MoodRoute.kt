@@ -108,7 +108,7 @@ fun MoodRoute(
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
         moodTag = moodTag,
-        onLikeClick = { viewModel.bookmarkHouse(houseId = it, moodTag = moodTag) },
+        onLikeClick = viewModel::bookmarkHouse,
         state = state.uiState
     )
 
@@ -121,7 +121,7 @@ fun MoodScreen(
     snackBarHost: SnackbarHostState,
     moodTag: String,
     navigateUp: () -> Unit,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, String) -> Unit,
     state: UiState<MoodCardEntity>,
     modifier: Modifier = Modifier
 ) {
@@ -289,7 +289,7 @@ fun MoodScreen(
                         onClick = {
                             //todo: 상세 페이지 이동
                         },
-                        onLikeClick = { onLikeClick(item.houseId) }
+                        onLikeClick = { onLikeClick(item.houseId, moodTag) }
                     )
                 }
 
@@ -365,7 +365,7 @@ fun MoodScreenPreview() {
             paddingValues = PaddingValues(),
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
-            onLikeClick = {},
+            onLikeClick = { _, _ -> },
             moodTag = "차분한",
             state = UiState.Success(
                 MoodCardEntity(
