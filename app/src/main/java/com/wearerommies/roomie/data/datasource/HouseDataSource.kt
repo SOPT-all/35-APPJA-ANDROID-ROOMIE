@@ -14,4 +14,7 @@ class HouseDataSource @Inject constructor(
 
     suspend fun getBookmarkLists(): BaseResponse<ResponseBookmarkListDto> =
         houseService.getBookmarkLists()
+
+    suspend fun bookmarkHouse(houseId: Long): BaseResponse<Boolean> =
+        houseService.bookmarkHouse(houseId = houseId)
 }

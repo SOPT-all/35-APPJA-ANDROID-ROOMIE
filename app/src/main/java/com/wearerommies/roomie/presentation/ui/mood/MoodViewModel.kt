@@ -63,20 +63,22 @@ class MoodViewModel @Inject constructor(
     }
 
 
-    fun patchHousePin() {
-        viewModelScope.launch {
-            runCatching {
-                //todo: api 연결
-            }.onSuccess {
-                _sideEffect.emit(
-                    MoodSideEffect.SnackBar(
-                        message = R.string.add_to_bookmark_list
+    fun bookmarkHouse(houseId: Long, moodTag: String) = viewModelScope.launch {
+        houseRepository.bookmarkHouse(houseId = houseId)
+            .onSuccess { bookmarkState ->
+                if (bookmarkState) {
+                    _sideEffect.emit(
+                        MoodSideEffect.SnackBar(
+                            message = R.string.add_to_bookmark_list
+                        )
                     )
-                )
+                }
+
+                getMoodList(moodTag = moodTag)
             }.onFailure { error ->
                 _state.value = _state.value.copy(uiState = UiState.Failure)
                 Timber.e(error)
             }
-        }
     }
+
 }

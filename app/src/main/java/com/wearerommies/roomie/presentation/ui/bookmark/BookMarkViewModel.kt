@@ -62,20 +62,20 @@ class BookMarkViewModel @Inject constructor(
             }
     }
 
-    fun patchHousePin() {
-        viewModelScope.launch {
-            runCatching {
-                //todo: api 연결
-            }.onSuccess {
-                _sideEffect.emit(
-                    BookMarkSideEffect.SnackBar(
-                        message = R.string.add_to_bookmark_list
+    fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
+        houseRepository.bookmarkHouse(houseId = houseId)
+            .onSuccess { bookmarkState ->
+                if (bookmarkState) {
+                    _sideEffect.emit(
+                        BookMarkSideEffect.SnackBar(
+                            message = R.string.add_to_bookmark_list
+                        )
                     )
-                )
+                }
+                getBookMarkList()
             }.onFailure { error ->
                 _state.value = _state.value.copy(uiState = EmptyUiState.Failure)
                 Timber.e(error)
             }
-        }
     }
 }

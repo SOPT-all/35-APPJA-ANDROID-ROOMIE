@@ -6,4 +6,5 @@ import com.wearerommies.roomie.domain.entity.RoomCardEntity
 interface HouseRepository {
     suspend fun getMoodLists(moodTag: String): Result<MoodCardEntity>
     suspend fun getBookmarkLists(): Result<List<RoomCardEntity>>
+    suspend fun bookmarkHouse(houseId: Long): Result<Boolean>
 }

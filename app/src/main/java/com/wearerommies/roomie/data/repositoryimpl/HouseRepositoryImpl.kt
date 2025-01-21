@@ -18,4 +18,9 @@ internal class HouseRepositoryImpl @Inject constructor(
         runCatching {
             houseDataSource.getBookmarkLists().data.toEntity()
         }
+
+    override suspend fun bookmarkHouse(houseId: Long): Result<Boolean> =
+        runCatching {
+            houseDataSource.bookmarkHouse(houseId = houseId).data
+        }
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.HomeDataEntity
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
+import com.wearerommies.roomie.domain.repository.HouseRepository
 import com.wearerommies.roomie.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val houseRepository: HouseRepository
 ) : ViewModel() {
     // state 관리
     private val _state = MutableStateFlow(HomeState())
@@ -84,19 +86,20 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun patchHousePin() {
-        viewModelScope.launch {
-            runCatching {
-                //todo: api 연결
-            }.onSuccess {
-                _sideEffect.emit(
-                    HomeSideEffect.SnackBar(
-                        message = R.string.add_to_bookmark_list
+    fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
+        houseRepository.bookmarkHouse(houseId = houseId)
+            .onSuccess { bookmarkState ->
+                if (bookmarkState) {
+                    _sideEffect.emit(
+                        HomeSideEffect.SnackBar(
+                            message = R.string.add_to_bookmark_list
+                        )
                     )
-                )
+                }
+                getHomeData()
             }.onFailure { error ->
                 Timber.e(error)
             }
-        }
     }
+
 }

@@ -93,7 +93,7 @@ fun BookMarkRoute(
         paddingValues = paddingValues,
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
-        onLikeClick = viewModel::patchHousePin,
+        onLikeClick = viewModel::bookmarkHouse,
         state = state.uiState
     )
 }
@@ -105,7 +105,7 @@ fun BookMarkScreen(
     snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
     state: EmptyUiState<List<RoomCardEntity>>,
-    onLikeClick: () -> Unit,
+    onLikeClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val screenWeight = LocalConfiguration.current.screenWidthDp
@@ -242,7 +242,7 @@ fun BookMarkScreen(
                             onClick = {
                                 //todo: 상세 매물 페이지로 이동
                             },
-                            onLikeClick = onLikeClick
+                            onLikeClick = { onLikeClick(item.houseId) }
                         )
                     }
                 }
