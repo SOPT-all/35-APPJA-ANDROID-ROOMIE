@@ -32,7 +32,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun DetailInnerFacilityCard(
     text: String,
     facility: PersistentList<String>,
-    onClickExpandedButton: (Boolean) -> Unit,
+    onClickExpandedButton: () -> Unit,
     modifier: Modifier = Modifier,
     isExpanded: Boolean = false,
     roomStatus: Boolean = true,
@@ -52,9 +52,7 @@ fun DetailInnerFacilityCard(
                 start = 8.dp,
                 end = 8.dp
             )
-            .noRippleClickable {
-                onClickExpandedButton(isExpanded)
-            }
+            .noRippleClickable(onClickExpandedButton)
     ) {
 
         Row(
