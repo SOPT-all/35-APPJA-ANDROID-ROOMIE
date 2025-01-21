@@ -86,6 +86,14 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun navigateToDetail(houseId: Long) = viewModelScope.launch {
+        _sideEffect.emit(
+            HomeSideEffect.NavigateToDetail(
+                houseId = houseId
+            )
+        )
+    }
+
     fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
         houseRepository.bookmarkHouse(houseId = houseId)
             .onSuccess { bookmarkState ->
