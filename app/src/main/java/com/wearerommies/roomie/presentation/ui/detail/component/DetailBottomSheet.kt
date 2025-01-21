@@ -133,7 +133,6 @@ fun DetailBottomSheet(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, backgroundColor = 0x000000)
 @Composable
 fun DetailModalBottomSheetPreview() {
