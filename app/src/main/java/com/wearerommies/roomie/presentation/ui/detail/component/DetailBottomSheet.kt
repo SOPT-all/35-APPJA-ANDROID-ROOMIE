@@ -101,7 +101,7 @@ fun DetailBottomSheet(
                     rowRooms.forEach { room ->
                         DetailBottomSheetTourOptionButton(
                             roomName = room.name,
-                            roomPrice = "${room.deposit / 10000}/${room.monthlyRent / 10000}",
+                            roomPrice = stringResource(R.string.bottom_sheet_price, (room.deposit / 10000), (room.monthlyRent / 10000)),
                             isSelected = room.roomId == selectedRoom,
                             isEnabled = room.isTourAvailable,
                             modifier = Modifier.weight(1f),
