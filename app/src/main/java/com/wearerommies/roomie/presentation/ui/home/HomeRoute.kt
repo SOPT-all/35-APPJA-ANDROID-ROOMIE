@@ -28,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,6 +65,7 @@ import com.wearerommies.roomie.presentation.type.NavigateButtonType
 import com.wearerommies.roomie.presentation.ui.home.component.HomeMoodCard
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
+import kotlinx.coroutines.launch
 
 object MoodKey {
     const val CALM = "#차분한"
@@ -87,6 +89,7 @@ fun HomeRoute(
     val counter by remember { mutableIntStateOf(0) }
 
     val currentCounter by rememberUpdatedState(counter)
+    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(currentCounter) {
         viewModel.getHomeData()
@@ -99,10 +102,12 @@ fun HomeRoute(
                     is HomeSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
                     is HomeSideEffect.SnackBar -> {
                         snackBarHost.currentSnackbarData?.dismiss()
-                        snackBarHost.showSnackbar(
-                            message = context.getString(sideEffect.message),
-                            duration = SnackbarDuration.Short
-                        )
+                        coroutineScope.launch {
+                            snackBarHost.showSnackbar(
+                                message = context.getString(sideEffect.message),
+                                duration = SnackbarDuration.Short
+                            )
+                        }
                     }
 
                     is HomeSideEffect.NavigateToBookMark -> navigateToBookmark()
