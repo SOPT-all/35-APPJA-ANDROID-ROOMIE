@@ -26,6 +26,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,6 +62,7 @@ import com.wearerommies.roomie.presentation.core.util.UiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun MoodRoute(
@@ -76,6 +78,7 @@ fun MoodRoute(
     val counter by remember { mutableIntStateOf(0) }
 
     val currentCounter by rememberUpdatedState(counter)
+    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(currentCounter) {
         viewModel.getMoodList(moodTag = moodTag)
@@ -88,10 +91,12 @@ fun MoodRoute(
                     is MoodSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
                     is MoodSideEffect.SnackBar -> {
                         snackBarHost.currentSnackbarData?.dismiss()
-                        snackBarHost.showSnackbar(
-                            message = context.getString(sideEffect.message),
-                            duration = SnackbarDuration.Short
-                        )
+                        coroutineScope.launch {
+                            snackBarHost.showSnackbar(
+                                message = context.getString(sideEffect.message),
+                                duration = SnackbarDuration.Short
+                            )
+                        }
                     }
                 }
             }
@@ -102,7 +107,7 @@ fun MoodRoute(
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
         moodTag = moodTag,
-        onLikeClick = viewModel::bookmarkHouse,
+        onLikeClick = { viewModel.bookmarkHouse(houseId = it, moodTag = moodTag) },
         state = state.uiState
     )
 
@@ -115,7 +120,7 @@ fun MoodScreen(
     snackBarHost: SnackbarHostState,
     moodTag: String,
     navigateUp: () -> Unit,
-    onLikeClick: () -> Unit,
+    onLikeClick: (Long) -> Unit,
     state: UiState<MoodCardEntity>,
     modifier: Modifier = Modifier
 ) {
@@ -286,7 +291,7 @@ fun MoodScreen(
                         onClick = {
                             //todo: 상세 페이지 이동
                         },
-                        onLikeClick = onLikeClick
+                        onLikeClick = { onLikeClick(item.houseId) }
                     )
                 }
 
