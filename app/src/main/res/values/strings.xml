@@ -93,7 +93,7 @@
     <string name="roommate_sleep_time">수면시간</string>
     <string name="roommate_activity_time">활동시간</string>
     <string name="room_status_true">입주가능</string>
-    <string name="room_status_false">입주불가</string>
+    <string name="room_status_false">입주완료</string>
     <string name="room_shape">방 형태</string>
     <string name="room_occupany_type">%dh인실</string>
     <string name="room_prepaid_utilities">선불공과금</string>
