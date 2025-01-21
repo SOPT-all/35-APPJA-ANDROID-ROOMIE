@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.ui.detail.component
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,8 +31,8 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun DetailRoomMateCard(
-    image: ImageVector,
-    roomMateAge: Int,
+    @DrawableRes image: Int,
+    roomMateAge: String,
     roomMateJob: String,
     roomMateMbti: String,
     roomMateRoomName: String,
@@ -45,6 +47,7 @@ fun DetailRoomMateCard(
                 cornerRadius = 8.dp,
                 backgroundColor = RoomieTheme.colors.grayScale1,
                 borderColor = RoomieTheme.colors.grayScale5,
+                borderWidth = 1.dp
             )
             .padding(
                 top = 12.dp,
@@ -54,7 +57,7 @@ fun DetailRoomMateCard(
             )
     ) {
         Image(
-            imageVector = image,
+            painter = painterResource(image),
             contentDescription = stringResource(R.string.roommate_image),
             modifier = Modifier
                 .clip(CircleShape)
@@ -110,10 +113,6 @@ fun RoomMateTimeText(
     modifier: Modifier = Modifier,
     isSleepTime: Boolean = true
 ) {
-    // TODO: 추후에 뷰모델에서 처리?
-    val timeParts = RegexConstants.TIME_SPLIT_REGEX.split(text).flatMapIndexed { index, part ->
-        if (index == 0) persistentListOf(part) else persistentListOf(text[text.indexOf(part) - 1].toString(), part)
-    }
 
     Row(
         modifier = modifier
@@ -126,13 +125,11 @@ fun RoomMateTimeText(
 
         Spacer(Modifier.width(4.dp))
 
-        timeParts.forEach { part ->
-            Text(
-                text = part,
-                style = RoomieTheme.typography.body4R12,
-                color = RoomieTheme.colors.grayScale10
-            )
-        }
+        Text(
+            text = text,
+            style = RoomieTheme.typography.body4R12,
+            color = RoomieTheme.colors.grayScale10
+        )
     }
 }
 
@@ -143,8 +140,8 @@ fun RoomMateTimeText(
 fun DetailRoomMateCardPreview() {
     RoomieAndroidTheme {
         DetailRoomMateCard(
-            image = ImageVector.vectorResource(id = R.drawable.ic_launcher_background),
-            roomMateAge = 25,
+            image = R.drawable.img_profile,
+            roomMateAge = "20대 중반",
             roomMateJob = "대학생",
             roomMateMbti = "ENFP",
             roomMateRoomName = "룸A",
