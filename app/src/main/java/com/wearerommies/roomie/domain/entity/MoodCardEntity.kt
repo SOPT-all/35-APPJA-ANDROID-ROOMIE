@@ -13,7 +13,7 @@ data class MoodCardEntity(
         val genderPolicy: String,
         val locationDescription: String,
         val isPinned: Boolean,
-        val contractTerm: Long,
+        val contractTerm: Int,
         val mainImgUrl: String,
     )
 }
