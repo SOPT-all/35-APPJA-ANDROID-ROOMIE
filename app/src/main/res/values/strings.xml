@@ -95,7 +95,7 @@
     <string name="room_status_true">입주가능</string>
     <string name="room_status_false">입주완료</string>
     <string name="room_shape">방 형태</string>
-    <string name="room_occupany_type">%dh인실</string>
+    <string name="room_occupany_type">%d인실</string>
     <string name="room_prepaid_utilities">선불공과금</string>
     <string name="room_deposit">보증금</string>
     <string name="room_monthly_rent">월세</string>
