@@ -83,18 +83,19 @@
     // detail
     <string name="house_main_image">쉐어하우스 메인 이미지</string>
     <string name="inner_image_button_text">"내부 이미지 둘러보기"</string>
+    <string name="detail_topbar">%s/%s</string>
     <string name="house_price_text">"월세 %s/보증금 %s"</string>
     <string name="occupancy_status">"%s인"</string>
     <string name="contract_term">"%d개월 이상 계약"</string>
     <string name="ground_rule">그라운드 룰</string>
     <string name="roommate_image">룸메이트 이미지</string>
-    <string name="roommate_age_job">%d세 %s</string>
+    <string name="roommate_age_job">%s %s</string>
     <string name="roommate_sleep_time">수면시간</string>
     <string name="roommate_activity_time">활동시간</string>
     <string name="room_status_true">입주가능</string>
-    <string name="room_status_false">입주불가</string>
+    <string name="room_status_false">입주완료</string>
     <string name="room_shape">방 형태</string>
-    <string name="room_occupany_type">%d 인실</string>
+    <string name="room_occupany_type">%d인실</string>
     <string name="room_prepaid_utilities">선불공과금</string>
     <string name="room_deposit">보증금</string>
     <string name="room_monthly_rent">월세</string>
@@ -108,6 +109,13 @@
     <string name="room_facility">각 방 시설</string>
     <string name="floor_image">평면도</string>
     <string name="room_image">방 이미지</string>
+    <string name="tour_apply_button">투어 신청하기</string>
+    <string name="room_mood">룸 분위기</string>
+    <string name="occupancy_status_text">입주현황</string>
+    <string name="inner_facilities">내부시설 및 관리</string>
+    <string name="roommate">룸메이트</string>
+    <string name="roommate_not_found">아직 입주한 룸메이트가 없어요!</string>
+    <string name="bottom_sheet_price">%d/%d</string>
 
     // tour
     <string name="room_correct_check">선택하신 방이 맞는지\n확인해주세요</string>

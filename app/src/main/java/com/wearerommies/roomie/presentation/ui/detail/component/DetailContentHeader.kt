@@ -22,9 +22,6 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun DetailContentHeader(
-    houseName: String,
-    monthlyRent: String,
-    deposit: String,
     location: String,
     occupancyStatus: String,
     contractTerm: Int,
@@ -36,20 +33,8 @@ fun DetailContentHeader(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(horizontal = 16.dp)
     ) {
-        RoomieHouseNameChip(
-            text = houseName
-        )
-
-        Spacer(Modifier.height(8.dp))
-
-        Text(
-            text = stringResource(R.string.house_price_text, monthlyRent, deposit),
-            style = RoomieTheme.typography.heading2Sb20,
-            color = RoomieTheme.colors.grayScale11
-        )
-
         Spacer(Modifier.height(28.dp))
 
         DetailInfoWithIcons(
@@ -123,9 +108,6 @@ fun DetailInfoWithIcons(
 fun DetailContentHeaderPreview() {
     RoomieAndroidTheme {
         DetailContentHeader(
-            houseName = "루미 100호점(이대역)",
-            monthlyRent = "43~50",
-            deposit = "90~100",
             location = "서대문구 연희동",
             occupancyStatus = "2/5",
             contractTerm = 3,

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -40,6 +41,7 @@ fun DetailMoodCard(
                 cornerRadius = 8.dp,
                 backgroundColor = RoomieTheme.colors.grayScale1,
                 borderColor = RoomieTheme.colors.grayScale5,
+                borderWidth = 1.dp
             )
             .padding(16.dp)
     ) {
@@ -83,16 +85,15 @@ fun DetailMoodTagChips(
     roomMoodTag: PersistentList<String>,
     modifier: Modifier = Modifier
 ) {
-    LazyRow (
+    Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        itemsIndexed(roomMoodTag) { index, item ->
-            val isMainMoodTag = index == 0
+        roomMoodTag.forEach { item ->
             RoomieTextChip(
                 text = item,
-                textColor = if(isMainMoodTag) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale9,
-                backgroundColor = if(isMainMoodTag) RoomieTheme.colors.primaryLight4 else RoomieTheme.colors.grayScale3
+                textColor = RoomieTheme.colors.primary,
+                backgroundColor = RoomieTheme.colors.primaryLight4
             )
         }
     }
@@ -103,17 +104,18 @@ fun DetailGroundRuleTexts(
     groundRule: PersistentList<String>,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
+    Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
-    ){
-        itemsIndexed(groundRule) { index, item ->
+    ) {
+        groundRule.forEach { item ->
             DetailTextWithCheckIcon(
                 text = item
             )
         }
     }
 }
+
 
 @Preview(showBackground = true, backgroundColor = 0x000000)
 @Composable
