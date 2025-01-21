@@ -52,6 +52,7 @@ import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.MoodCardEntity
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieFooter
+import com.wearerommies.roomie.presentation.core.component.RoomieLoadingView
 import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
 import com.wearerommies.roomie.presentation.core.component.RoomieSnackbar
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
@@ -152,15 +153,12 @@ fun MoodScreen(
         when (state) {
             is UiState.Loading -> {
                 item {
-                    //todo: 로딩뷰
-                    Text(
+                    Box(
                         modifier = Modifier
-                            .noRippleClickable { navigateUp() },
-                        text = "LOADING",
-                        color = RoomieTheme.colors.primaryLight1,
-                        textAlign = TextAlign.Center,
-                        fontSize = 30.sp
-                    )
+                            .height((LocalConfiguration.current.screenHeightDp).dp),
+                    ) {
+                        RoomieLoadingView()
+                    }
                 }
             }
 
