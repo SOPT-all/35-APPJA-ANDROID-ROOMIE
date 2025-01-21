@@ -8,6 +8,7 @@ import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.domain.repository.HouseRepository
 import com.wearerommies.roomie.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -88,14 +89,14 @@ class HomeViewModel @Inject constructor(
 
     fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
         houseRepository.bookmarkHouse(houseId = houseId)
-            .onSuccess { isNotBookmarked ->
-                if (isNotBookmarked) {
-                    _sideEffect.emit(
-                        HomeSideEffect.SnackBar(
-                            message = R.string.add_to_bookmark_list
-                        )
+            .onSuccess { bookmarkState ->
+                _sideEffect.emit(
+                    HomeSideEffect.SnackBar(
+                        message = R.string.add_to_bookmark_list
                     )
-                }
+                )
+
+                 getHomeData()
             }.onFailure { error ->
                 Timber.e(error)
             }
