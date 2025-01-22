@@ -186,7 +186,7 @@ fun DetailScreen(
                     modifier = Modifier
                         .background(RoomieTheme.colors.grayScale1)
                         .fillMaxWidth()
-                        .padding(bottom=(LocalConfiguration.current.screenHeightDp * 0.103).dp)
+                        .padding(bottom=80.dp)
                 ) {
                     item {
 
@@ -416,7 +416,7 @@ fun DetailScreen(
                                 )
                             }
                         } else {
-                            state.data.roommates.forEach { roommate ->
+                            state.data.roommates.forEachIndexed { index, roommate ->
                                 DetailRoomMateCard(
                                     image = R.drawable.img_profile,
                                     roomMateAge = roommate.age,
@@ -428,7 +428,12 @@ fun DetailScreen(
                                     modifier = Modifier.padding(horizontal = 16.dp)
                                 )
 
-                                Spacer(Modifier.height(12.dp))
+                                if(index != state.data.roommates.lastIndex){
+                                    Spacer(Modifier.height(12.dp))
+                                } else {
+                                    Spacer(Modifier.height(20.dp))
+                                }
+
                             }
                         }
                     }
