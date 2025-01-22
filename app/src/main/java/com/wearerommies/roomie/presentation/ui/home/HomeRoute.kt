@@ -181,15 +181,7 @@ fun HomeScreen(
         state = scrollState,
         modifier = modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        RoomieTheme.colors.grayScale1,
-                        RoomieTheme.colors.primary
-                    )
-                ),
-                shape = RectangleShape
-            )
+            .background(color = RoomieTheme.colors.primaryLight4)
             .padding(paddingValues),
     ) {
         stickyHeader {
@@ -238,56 +230,77 @@ fun HomeScreen(
                     .height(14.dp)
             )
 
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Image(
+            Box {
+                Spacer(
                     modifier = Modifier
-                        .width((LocalConfiguration.current.screenWidthDp * 0.556).dp)
-                        .align(Alignment.CenterEnd),
-                    painter = painterResource(R.drawable.img_home_character),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop
-                )
-
-                HomeGreetingMessage(
-                    modifier = Modifier
-                        .padding(
-                            start = 20.dp
+                        .padding(top = 62.dp)
+                        .fillMaxWidth()
+                        .height((LocalConfiguration.current.screenHeightDp * 0.341).dp)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    RoomieTheme.colors.primary.copy(alpha = 0.5F)
+                                )
+                            ),
+                            shape = RectangleShape
                         )
-                        .align(Alignment.CenterStart),
-                    nickname = state.name
                 )
+
+                Column {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+
+                        Image(
+                            modifier = Modifier
+                                .width((LocalConfiguration.current.screenWidthDp * 0.556).dp)
+                                .align(Alignment.CenterEnd),
+                            painter = painterResource(R.drawable.img_home_character),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
+                        )
+
+                        HomeGreetingMessage(
+                            modifier = Modifier
+                                .padding(
+                                    start = 20.dp
+                                )
+                                .align(Alignment.CenterStart),
+                            nickname = state.name
+                        )
+                    }
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(12.dp)
+                    )
+
+                    RoomieNavigateButton(
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp),
+                        type = NavigateButtonType.UPDATE,
+                        text = stringResource(R.string.home_banner_message),
+                        textStyle = RoomieTheme.typography.body3M14,
+                        textColor = RoomieTheme.colors.grayScale10,
+                        onClick = { navigateToWebView(WebViewUrl.LANDING) }
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(20.dp)
+                    )
+
+                    MoodCardGroup(
+                        onCalmClick = { navigateToMood(MoodKey.CALM) },
+                        onActiveClick = { navigateToMood(MoodKey.ACTIVE) },
+                        onCleanClick = { navigateToMood(MoodKey.CLEAN) },
+                    )
+
+                    RecentCardTitle()
+                }
             }
-
-            Spacer(
-                modifier = Modifier
-                    .height(12.dp)
-            )
-
-            RoomieNavigateButton(
-                modifier = Modifier
-                    .padding(horizontal = 20.dp),
-                type = NavigateButtonType.UPDATE,
-                text = stringResource(R.string.home_banner_message),
-                textStyle = RoomieTheme.typography.body3M14,
-                textColor = RoomieTheme.colors.grayScale10,
-                onClick = { navigateToWebView(WebViewUrl.LANDING) }
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .height(20.dp)
-            )
-
-            MoodCardGroup(
-                onCalmClick = { navigateToMood(MoodKey.CALM) },
-                onActiveClick = { navigateToMood(MoodKey.ACTIVE) },
-                onCleanClick = { navigateToMood(MoodKey.CLEAN) },
-            )
-
-            RecentCardTitle()
         }
 
         if (state.recentlyViewedHouses.isEmpty()) {
