@@ -84,9 +84,37 @@ class TourViewModel @Inject constructor(
         _sideEffect.emit(TourSideEffect.NavigateToThirdStep)
     }
 
-    fun updateDateModalState() = viewModelScope.launch {
+    fun updateBirthDateModalState() = viewModelScope.launch {
         _state.value = _state.value.copy(
-            isShowDateModal = !_state.value.isShowDateModal
+            isShowBirthDateModal = !_state.value.isShowBirthDateModal
+        )
+    }
+
+    fun updatePreferredDateModalState() = viewModelScope.launch {
+        _state.value = _state.value.copy(
+            isShowPreferredDateModal = !_state.value.isShowPreferredDateModal
+        )
+    }
+
+    fun navigateCompletedStep() = viewModelScope.launch {
+        _sideEffect.emit(TourSideEffect.NavigateToCompletedStep)
+    }
+
+    fun updateMessage(message: String?) = viewModelScope.launch {
+        _state.value = _state.value.copy(
+            uiState = TourEntity(
+                message = message
+            )
+        )
+    }
+
+    fun updatePreferredDate(preferredDate: Long?) = viewModelScope.launch {
+        _state.value = _state.value.copy(
+            uiState = _state.value.uiState.copy(
+                preferredDate = preferredDate?.let {
+                    Date(preferredDate).toFormattedString()
+                }?:""
+            )
         )
     }
 
