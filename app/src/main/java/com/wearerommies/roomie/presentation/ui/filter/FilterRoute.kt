@@ -48,6 +48,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun FilterRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
+    navigateToMap : () -> Unit,
     viewModel: FilterViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -58,7 +59,7 @@ fun FilterRoute(
         viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle)
             .collect { sideEffect ->
                 when (sideEffect) {
-                    is FilterSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
+                    is FilterSideEffect.navigateToMap -> navigateToMap()
                 }
             }
     }
