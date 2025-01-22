@@ -68,7 +68,7 @@ fun DetailHouseRoute(
        viewModel.getDetailHouse(houseId)
     }
 
-    val state = viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
@@ -83,8 +83,8 @@ fun DetailHouseRoute(
         paddingValues = paddingValues,
         navigateUp = viewModel::navigateUp,
         title = title,
-        state = state.value.uiState,
-        expandedRoomList = state.value.expandedRoomList,
+        state = state.uiState,
+        expandedRoomList = state.expandedRoomList,
         openDetailRoom = viewModel::addRoom,
         closeDetailRoom = viewModel::removeRoom
     )
