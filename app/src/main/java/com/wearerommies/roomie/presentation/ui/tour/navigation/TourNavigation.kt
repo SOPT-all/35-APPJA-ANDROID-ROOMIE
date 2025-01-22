@@ -81,7 +81,8 @@ fun NavGraphBuilder.tourNavGraph(
         TourThirdStepRoute(
             paddingValues = paddingValues,
             navigateUp = navigateUp,
-            viewModel = getBackStackViewModel(backStackEntry)
+            viewModel = getBackStackViewModel(backStackEntry),
+            navigateCompletedStep = navigateUp // TODO: 마지막 페이지로 이동 네트워크 통신
         )
 
     }
