@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -20,8 +22,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.component.RoomieButton
+import com.wearerommies.roomie.presentation.core.component.RoomieDatePicker
 import com.wearerommies.roomie.presentation.core.component.RoomieDatePickerFieldWithTitle
 import com.wearerommies.roomie.presentation.core.component.RoomieTextFieldWithTitle
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
@@ -35,23 +40,61 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun TourSecondStepRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
+    navigateThirdStep: () -> Unit,
     viewModel: TourViewModel = hiltViewModel()
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
 
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                TourSideEffect.NavigateUp -> navigateUp()
+                TourSideEffect.NavigateToThirdStep -> navigateThirdStep()
+                else -> return@collect
+            }
+        }
+    }
+
+    TourSecondStepScreen(
+        paddingValues = paddingValues,
+        state = state,
+        navigateUp = viewModel::navigateUp,
+        navigateThirdStep = viewModel::navigateThirdStep,
+        onNameChanged = viewModel::updatedName,
+        onBirthdateChanged = viewModel::updatedBirthdate,
+        onClickGenderButton = viewModel::updatedGender,
+        onPhoneNumberChanged = viewModel::updatedPhoneNumber,
+        updateDateModalState = viewModel::updateDateModalState
+    )
 }
 
 @Composable
 fun TourSecondStepScreen(
     paddingValues: PaddingValues,
+    state: TourState,
     navigateUp: () -> Unit,
     navigateThirdStep: () -> Unit,
     onNameChanged: (String) -> Unit,
-    onBirthdateChanged: (String) -> Unit,
+    onBirthdateChanged: (Long?) -> Unit,
     onClickGenderButton: (String) -> Unit,
     onPhoneNumberChanged: (String) -> Unit,
-    state: TourState,
+    updateDateModalState: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    if (state.isShowDateModal)
+        RoomieDatePicker(
+            onConfirm = { date ->
+                onBirthdateChanged(date)
+                updateDateModalState()
+            },
+            onDismiss = {
+                updateDateModalState()
+            },
+            modifier = Modifier.padding(horizontal = 36.dp)
+        )
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -99,7 +142,7 @@ fun TourSecondStepScreen(
         RoomieTextFieldWithTitle(
             title = stringResource(R.string.name),
             paddingValues = PaddingValues(16.dp),
-            textFieldValue = "", // state.name
+            textFieldValue = state.uiState.name,
             onValueChange = onNameChanged,
             color = RoomieTheme.colors.grayScale12,
             modifier = Modifier
@@ -110,10 +153,9 @@ fun TourSecondStepScreen(
 
         RoomieDatePickerFieldWithTitle(
             viewType = DatePickerFieldType.BIRTHDATE,
-            dateValue = "", // state.birthdate
+            dateValue = state.uiState.birthDate,
             onClick = {
-                // ToDo: date picker 열기
-                onBirthdateChanged("")
+                updateDateModalState()
             },
             modifier = Modifier
                 .padding(horizontal = 16.dp)
@@ -129,28 +171,28 @@ fun TourSecondStepScreen(
         ) {
             RoomieButton(
                 text = stringResource(R.string.man),
-                backgroundColor = RoomieTheme.colors.grayScale1,// if(state.gender == GenderType.MAN) RoomieTheme.colors.primaryLight5 else RoomieTheme.colors.grayScale1,
-                textColor = RoomieTheme.colors.primary, // if(state.gender == GenderType.MAN) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale12,
+                backgroundColor = if(state.uiState.gender == GenderType.MAN.value) RoomieTheme.colors.primaryLight5 else RoomieTheme.colors.grayScale1,
+                textColor = if(state.uiState.gender == GenderType.MAN.value) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale12,
                 onClick = {
                     onClickGenderButton(GenderType.MAN.value)
                 },
                 modifier = Modifier
                     .weight(1f),
-                borderColor = RoomieTheme.colors.primary, // if(state.gender == GenderType.MAN) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale5,
+                borderColor = if(state.uiState.gender == GenderType.MAN.value) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale5,
                 borderWidth = 1.dp,
                 verticalPadding = 12.dp
             )
 
             RoomieButton(
                 text = stringResource(R.string.woman),
-                backgroundColor = RoomieTheme.colors.grayScale1,// if(state.gender == GenderType.WOMAN) RoomieTheme.colors.primaryLight5 else RoomieTheme.colors.grayScale1,
-                textColor = RoomieTheme.colors.grayScale12, // if(state.gender == GenderType.WOMAN) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale12,
+                backgroundColor = if(state.uiState.gender == GenderType.WOMAN.value) RoomieTheme.colors.primaryLight5 else RoomieTheme.colors.grayScale1,
+                textColor = if(state.uiState.gender == GenderType.WOMAN.value) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale12,
                 onClick = {
                     onClickGenderButton(GenderType.WOMAN.value)
                 },
                 modifier = Modifier
                     .weight(1f),
-                borderColor = RoomieTheme.colors.grayScale5, // if(state.gender == GenderType.MAN) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale5,
+                borderColor = if(state.uiState.gender == GenderType.WOMAN.value) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale5,
                 borderWidth = 1.dp,
                 verticalPadding = 12.dp
             )
@@ -158,11 +200,10 @@ fun TourSecondStepScreen(
 
         Spacer(Modifier.height(28.dp))
 
-        // TODO: 유효성 검사 디바운스
         RoomieTextFieldWithTitle(
             title = stringResource(R.string.phone_number),
             paddingValues = PaddingValues(16.dp),
-            textFieldValue = "", // state.phonenumber
+            textFieldValue = state.uiState.phoneNumber,
             onValueChange = onPhoneNumberChanged,
             color = RoomieTheme.colors.grayScale12,
             modifier = Modifier
@@ -184,7 +225,7 @@ fun TourSecondStepScreen(
                 horizontal = 16.dp,
                 vertical = 12.dp
             ),
-            isEnabled = true, // TODO: 버튼 활성화 상태 관리
+            isEnabled = state.isSecondEnabledButton,
             isPressed = true,
             pressedColor = RoomieTheme.colors.primaryLight1,
             enabledColor = RoomieTheme.colors.grayScale6
@@ -207,7 +248,8 @@ fun TourSecondStepScreenPreview() {
             state = TourState(
                 houseName = "해피쉐어 루미 건대점",
                 roomName = "1A(싱글배드)"
-            )
+            ),
+            updateDateModalState = {}
         )
     }
 }
