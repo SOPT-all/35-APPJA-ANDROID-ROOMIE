@@ -1,14 +1,12 @@
 package com.wearerommies.roomie.domain.entity
 
-import java.util.Date
-
 data class TourEntity(
-    val name: String,
-    val birth: Date,
-    val gender: String,
-    val phoneNumber: String,
-    val preferredDate: Date,
-    val message: String,
-    val roomId: Long,
-    val houseId: Long
+    val name: String = "",
+    val birth: String = "",
+    val gender: String = "",
+    val phoneNumber: String = "",
+    val preferredDate: String = "",
+    val message: String = "",
+    val roomId: Long = -1L,
+    val houseId: Long = -1L
 )
