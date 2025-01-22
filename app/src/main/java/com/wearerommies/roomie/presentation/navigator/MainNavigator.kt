@@ -21,6 +21,7 @@ import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetai
 import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailRoom
 import com.wearerommies.roomie.presentation.ui.search.navigation.navigateToSearch
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTour
+import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTourFirstStep
 
 class MainNavigator(
     val navController: NavHostController,
