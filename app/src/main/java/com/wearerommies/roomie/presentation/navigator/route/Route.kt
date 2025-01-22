@@ -21,7 +21,9 @@ sealed interface Route {
     data object Filter : Route
 
     @Serializable
-    data object Detail : Route
+    data class Detail(
+        val houseId: Long
+    ) : Route
 
     @Serializable
     data object DetailHouse : Route

@@ -78,8 +78,8 @@ class MainNavigator(
         navController.navigateToFilter()
     }
 
-    fun navigateToDetail() {
-        navController.navigateToDetail()
+    fun navigateToDetail(houseId: Long) {
+        navController.navigateToDetail(houseId = houseId)
     }
 
     fun navigateToDetailHouse() {
