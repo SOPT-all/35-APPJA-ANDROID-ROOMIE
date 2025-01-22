@@ -6,5 +6,8 @@ import com.wearerommies.roomie.presentation.core.util.UiState
 data class TourState(
     val uiState: TourEntity = TourEntity(),
     val houseName: String = "",
-    val roomName: String = ""
-)
+    val roomName: String = "",
+    val isShowDateModal: Boolean = false,
+) {
+    val isSecondEnabledButton = uiState.name.isNotEmpty() && uiState.birthDate.isNotEmpty() && uiState.gender.isNotEmpty() && uiState.phoneNumber.isNotEmpty()
+}
