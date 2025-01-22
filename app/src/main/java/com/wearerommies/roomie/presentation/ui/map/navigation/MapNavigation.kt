@@ -5,12 +5,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.presentation.navigator.route.FilterType
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.ui.map.MapRoute
+import kotlin.reflect.typeOf
 
-fun NavController.navigateToMap(navOptions: NavOptions? = null) {
+fun NavController.navigateToMap(filter: FilterEntity, navOptions: NavOptions? = null) {
     navigate(
-        route = MainTabRoute.Map,
+        route = MainTabRoute.Map(filter),
         navOptions = navOptions
     )
 }
@@ -20,7 +23,9 @@ fun NavGraphBuilder.mapNavGraph(
     navigateToSearch: () -> Unit,
     navigateToFilter: () -> Unit
 ) {
-    composable<MainTabRoute.Map> {
+    composable<MainTabRoute.Map>(
+        typeMap = mapOf(typeOf<FilterEntity>() to FilterType)
+    ) {
         MapRoute(
             paddingValues = paddingValues,
             navigateToSearch = navigateToSearch,
