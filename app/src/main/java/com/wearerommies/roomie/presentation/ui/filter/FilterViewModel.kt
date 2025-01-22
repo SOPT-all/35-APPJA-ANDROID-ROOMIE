@@ -2,6 +2,7 @@ package com.wearerommies.roomie.presentation.ui.filter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wearerommies.roomie.domain.entity.FilterEntity
 import com.wearerommies.roomie.presentation.core.util.toFormattedString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.PersistentList
@@ -83,7 +84,7 @@ class FilterViewModel @Inject constructor(
         )
     }
 
-    fun setContractPeriod(value: PersistentList<String>) {
+    fun setContractPeriod(value: PersistentList<Int>) {
         _state.value = _state.value.copy(
             contractType = value
         )
@@ -105,19 +106,25 @@ class FilterViewModel @Inject constructor(
     }
 
     fun applyCondition() = viewModelScope.launch {
-        _sideEffect.emit(FilterSideEffect.navigateToMap)
-//        houseRepository.bookmarkHouse(houseId = houseId)
-//            .onSuccess { bookmarkState ->
-//                if (bookmarkState) {
-//                    _sideEffect.emit(
-//                        HomeSideEffect.SnackBar(
-//                            message = R.string.add_to_bookmark_list
-//                        )
-//                    )
-//                }
-//                getHomeData()
-//            }.onFailure { error ->
-//                Timber.e(error)
-//            }
+        _sideEffect.emit(
+            FilterSideEffect.navigateToMap(
+                filter = FilterEntity(
+                    location = _state.value.location,
+                    moodTag = _state.value.moodTag,
+                    depositRange = FilterEntity.DepositRange(
+                        min = _state.value.depositStart,
+                        max = _state.value.depositEnd
+                    ),
+                    monthlyRentRange = FilterEntity.MonthlyRentRange(
+                        min = _state.value.monthlyRentStart,
+                        max = _state.value.monthlyRentEnd
+                    ),
+                    genderPolicy = _state.value.genderPolicy,
+                    preferredDate = _state.value.preferredDate,
+                    occupancyTypes = _state.value.occupancyType,
+                    contractPeriod = _state.value.contractType
+                )
+            )
+        )
     }
 }
