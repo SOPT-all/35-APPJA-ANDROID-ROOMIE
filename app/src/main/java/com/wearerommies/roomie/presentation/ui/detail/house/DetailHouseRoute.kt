@@ -14,6 +14,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -24,17 +29,21 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.DetailHouseEntity
+import com.wearerommies.roomie.domain.entity.DetailHouseImageEntity
 import com.wearerommies.roomie.domain.entity.DetailRoomEntity
+import com.wearerommies.roomie.presentation.core.component.RoomieLoadingView
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
 import com.wearerommies.roomie.presentation.core.util.UiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
+import com.wearerommies.roomie.presentation.ui.detail.DetailSideEffect
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailImagePager
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailInnerFacilityCard
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
@@ -47,53 +56,84 @@ import kotlinx.collections.immutable.toPersistentList
 fun DetailHouseRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    viewModel: DetailHouseViewModel = hiltViewModel()
-) {
-    val state = viewModel.state.collectAsStateWithLifecycle()
+    houseId: Long,
+    title: String,
+    viewModel: DetailHouseViewModel = hiltViewModel(),
 
-    // TODO: 하우스 이름 navigation으로 전달
+) {
+    val counter by remember { mutableIntStateOf(0) }
+    val currentCounter by rememberUpdatedState(counter)
+
+    LaunchedEffect(currentCounter) {
+       viewModel.getDetailHouse(houseId)
+    }
+
+    val state = viewModel.state.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                DetailHouseSideEffect.NavigateUp -> navigateUp()
+            }
+        }
+    }
+
+    DetailHouseScreen(
+        paddingValues = paddingValues,
+        navigateUp = viewModel::navigateUp,
+        title = title,
+        state = state.value.uiState,
+        expandedRoomList = state.value.expandedRoomList,
+        openDetailRoom = viewModel::addRoom,
+        closeDetailRoom = viewModel::removeRoom
+    )
 }
 
 @Composable
 fun DetailHouseScreen(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
+    title: String,
     state: UiState<DetailHouseEntity>,
-    // TODO: 뷰모델 state 상태관리
     expandedRoomList: PersistentList<Long>,
+    openDetailRoom: (Long) -> Unit,
+    closeDetailRoom: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
     val screenHeight = LocalConfiguration.current.screenHeightDp
 
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(RoomieTheme.colors.grayScale1)
-            .padding(paddingValues),
-    ) {
-        RoomieTopBar(
-            leadingIcon = {
-                Icon(
+    when(state) {
+        UiState.Failure -> TODO()
+        UiState.Loading -> {
+            RoomieLoadingView()
+        }
+        is UiState.Success -> {
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .background(RoomieTheme.colors.grayScale1)
+                    .padding(paddingValues),
+            ) {
+                RoomieTopBar(
+                    leadingIcon = {
+                        Icon(
+                            modifier = Modifier
+                                .padding(all = 10.dp)
+                                .noRippleClickable(navigateUp),
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_line_black_24px),
+                            contentDescription = stringResource(R.string.move_back)
+                        )
+                    },
+                    title = title,
                     modifier = Modifier
-                        .padding(all = 10.dp)
-                        .noRippleClickable(navigateUp),
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_line_black_24px),
-                    contentDescription = stringResource(R.string.move_back)
+                        .bottomBorder(
+                            color = RoomieTheme.colors.grayScale4,
+                            height = convertDpToFloat(1.dp)
+                        )
                 )
-            },
-            title = "루미 1호점", // TODO: 하우스 이름 navigation으로 전달
-            modifier = Modifier
-                .bottomBorder(
-                    color = RoomieTheme.colors.grayScale4,
-                    height = convertDpToFloat(1.dp)
-                )
-        )
 
-        when(state) {
-            UiState.Failure -> TODO()
-            UiState.Loading -> TODO()
-            is UiState.Success -> {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
@@ -122,7 +162,7 @@ fun DetailHouseScreen(
                                 )
                         ) {
                             AsyncImage(
-                                model = state.data.mainImageUrl,
+                                model = state.data.detailHouseImageEntity.mainImageUrl,
                                 contentDescription = stringResource(R.string.main_image),
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -135,7 +175,7 @@ fun DetailHouseScreen(
                             )
 
                             Text(
-                                text = state.data.mainImageDescription,
+                                text = state.data.detailHouseImageEntity.mainImageDescription,
                                 style = RoomieTheme.typography.body4R12,
                                 color = RoomieTheme.colors.grayScale12,
                                 modifier = Modifier.padding(horizontal = 8.dp)
@@ -167,7 +207,7 @@ fun DetailHouseScreen(
                                 )
                         ) {
                             DetailImagePager(
-                                images = state.data.facilityImageUrls,
+                                images = state.data.detailHouseImageEntity.facilityImageUrls.toPersistentList(),
                                 modifier = Modifier
                                     .padding(8.dp)
                                     .height((screenHeight * 0.235).dp),
@@ -175,7 +215,7 @@ fun DetailHouseScreen(
                             )
 
                             Text(
-                                text = state.data.mainImageDescription,
+                                text = state.data.detailHouseImageEntity.facilityImageDescription,
                                 style = RoomieTheme.typography.body4R12,
                                 color = RoomieTheme.colors.grayScale12,
                                 modifier = Modifier.padding(horizontal = 8.dp)
@@ -206,9 +246,9 @@ fun DetailHouseScreen(
                             facility = room.facility.toPersistentList(),
                             onClickExpandedButton = {
                                 if(isExpanded) {
-                                    expandedRoomList.remove(room.roomId)
+                                    closeDetailRoom(room.roomId)
                                 } else {
-                                    expandedRoomList.add(room.roomId)
+                                    openDetailRoom(room.roomId)
                                 }
                             },
                             imageContent = {
@@ -216,7 +256,7 @@ fun DetailHouseScreen(
                                 Spacer(Modifier.height(12.dp))
 
                                 DetailImagePager(
-                                    images = room.imagesUrl,
+                                    images = room.imagesUrl.toPersistentList(),
                                     modifier = Modifier
                                         .height((screenHeight * 0.235).dp),
                                     contentDescription = stringResource(R.string.room_image)
@@ -253,7 +293,7 @@ fun DetailHouseScreen(
                                 )
                         ) {
                             AsyncImage(
-                                model = state.data.mainImageUrl,
+                                model = state.data.detailHouseImageEntity.mainImageUrl,
                                 contentDescription = stringResource(R.string.main_image),
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -263,13 +303,6 @@ fun DetailHouseScreen(
                                         shape = RoundedCornerShape(8.dp)
                                     ),
                                 contentScale = ContentScale.Crop
-                            )
-
-                            Text(
-                                text = state.data.mainImageDescription,
-                                style = RoomieTheme.typography.body4R12,
-                                color = RoomieTheme.colors.grayScale12,
-                                modifier = Modifier.padding(horizontal = 8.dp)
                             )
 
                             Spacer(Modifier.height(12.dp))
@@ -294,13 +327,18 @@ fun DetailHouseScreenPreview() {
             paddingValues = PaddingValues(),
             navigateUp = {},
             expandedRoomList = expandedRoomList,
+            title = "월세~",
+            openDetailRoom = {},
+            closeDetailRoom = {},
             state = UiState.Success(
                 DetailHouseEntity(
-                    mainImageUrl = "https://i.pravatar.cc/300",
-                    mainImageDescription = "테스트",
-                    facilityImageUrls = persistentListOf("https://i.pravatar.cc/300", "https://i.pravatar.cc/300"),
-                    facilityImageDescription = "테스트",
-                    floorImageUrl = "https://i.pravatar.cc/300",
+                   detailHouseImageEntity = DetailHouseImageEntity(
+                       mainImageUrl = "https://i.pravatar.cc/300",
+                       mainImageDescription = "테스트",
+                       facilityImageUrls = persistentListOf("https://i.pravatar.cc/300", "https://i.pravatar.cc/300"),
+                       facilityImageDescription = "테스트",
+                       floorImageUrl = "https://i.pravatar.cc/300"
+                   ),
                     rooms = persistentListOf(
                         DetailRoomEntity(
                             roomId = 1L,
