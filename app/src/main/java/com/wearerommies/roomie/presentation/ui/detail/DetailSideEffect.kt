@@ -11,4 +11,10 @@ sealed class DetailSideEffect {
         val houseId: Long,
         val title: String
     ): DetailSideEffect()
+    data class NavigateTourApply(
+        val houseId: Long,
+        val roomId: Long,
+        val houseName: String,
+        val roomName: String
+    ): DetailSideEffect()
 }
