@@ -8,5 +8,8 @@ data class DetailState(
     val isShowBottomSheet: Boolean = false,
     val isLivingExpanded: Boolean = false,
     val isKitchenExpanded: Boolean = false,
-    val selectedRoom: Long = -1L
-)
+    val selectedTourRoom: Long = -1L,
+    val selectedTourRoomName: String = "",
+) {
+    val isSelectedTourRoom: Boolean = (selectedTourRoom != -1L)
+}
