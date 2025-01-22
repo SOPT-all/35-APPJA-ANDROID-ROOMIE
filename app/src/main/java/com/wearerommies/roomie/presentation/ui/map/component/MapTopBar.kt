@@ -26,6 +26,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun MapTopBar(
+    textfield: String,
     onClickSearchTextField: () -> Unit,
     onClickFilterButton: () -> Unit,
     modifier: Modifier = Modifier
@@ -35,7 +36,7 @@ fun MapTopBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         MapShadowTextField(
-            textFieldValue = "", // TODO: state 값 연결
+            textFieldValue = textfield,
             onValueChange = {},
             onClick = onClickSearchTextField,
             content = {
@@ -80,6 +81,7 @@ fun FilterButton(
 fun MapTopBarPreview() {
     RoomieAndroidTheme {
         MapTopBar(
+            textfield = "",
             onClickSearchTextField = {},
             onClickFilterButton = {}
         )
