@@ -44,7 +44,8 @@ fun RoomieNavHost(
         )
         searchNavGraph(
             paddingValues = padding,
-            navigateUp = navigator::popBackStackIfNotHome
+            navigateUp = navigator::popBackStackIfNotHome,
+            navigateToMap = navigator::navigateToMap
         )
         moodNavGraph(
             paddingValues = padding,
