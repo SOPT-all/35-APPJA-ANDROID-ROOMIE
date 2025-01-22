@@ -65,7 +65,7 @@ fun TourSecondStepRoute(
         onBirthdateChanged = viewModel::updatedBirthdate,
         onClickGenderButton = viewModel::updatedGender,
         onPhoneNumberChanged = viewModel::updatedPhoneNumber,
-        updateDateModalState = viewModel::updateDateModalState
+        updateDateModalState = viewModel::updateBirthDateModalState
     )
 }
 
@@ -83,7 +83,7 @@ fun TourSecondStepScreen(
     modifier: Modifier = Modifier
 ) {
 
-    if (state.isShowDateModal)
+    if (state.isShowBirthDateModal)
         RoomieDatePicker(
             onConfirm = { date ->
                 onBirthdateChanged(date)
