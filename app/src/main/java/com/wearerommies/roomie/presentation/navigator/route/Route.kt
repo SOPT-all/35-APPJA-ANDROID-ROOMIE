@@ -44,7 +44,9 @@ sealed interface MainTabRoute : Route {
     data object Home : MainTabRoute
 
     @Serializable
-    data class Map(val filter: FilterEntity) : MainTabRoute
+    data class Map(
+        val filter: FilterEntity
+    ) : MainTabRoute
 
     @Serializable
     data object My : MainTabRoute
