@@ -10,4 +10,5 @@ sealed class HomeSideEffect {
         val moodTag: String
     ) : HomeSideEffect()
     data object NavigateToMap : HomeSideEffect()
+    data class NavigateToDetail(val houseId: Long) : HomeSideEffect()
 }

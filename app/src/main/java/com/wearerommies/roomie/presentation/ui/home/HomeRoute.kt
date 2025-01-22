@@ -80,6 +80,7 @@ fun HomeRoute(
     navigateToBookmark: () -> Unit,
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
+    navigateToDetail: (Long) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -113,6 +114,7 @@ fun HomeRoute(
                     is HomeSideEffect.NavigateToBookMark -> navigateToBookmark()
                     is HomeSideEffect.NavigateToMood -> navigateToMood(sideEffect.moodTag)
                     is HomeSideEffect.NavigateToMap -> navigateToMap()
+                    is HomeSideEffect.NavigateToDetail -> navigateToDetail(sideEffect.houseId)
                 }
             }
     }
@@ -124,6 +126,7 @@ fun HomeRoute(
         navigateToBookmark = viewModel::navigateToBookmark,
         navigateToMood = viewModel::navigateToMood,
         navigateToMap = viewModel::navigateToMap,
+        navigateToDetail = viewModel::navigateToDetail,
         onLikeClick = viewModel::bookmarkHouse,
         state = state.uiState
     )
@@ -138,6 +141,7 @@ fun HomeScreen(
     navigateToBookmark: () -> Unit,
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
+    navigateToDetail: (Long) -> Unit,
     onLikeClick: (Long) -> Unit,
     state: HomeDataEntity,
     modifier: Modifier = Modifier
@@ -311,7 +315,7 @@ fun HomeScreen(
                             mainImgUrl = item.mainImgUrl
                         ),
                         onClick = {
-                            //todo: 상세 매물 페이지로 이동
+                            navigateToDetail(item.houseId)
                         },
                         onLikeClick = { onLikeClick(item.houseId) }
                     )
@@ -530,6 +534,7 @@ fun HomeScreenPreview() {
             navigateToBookmark = {},
             navigateToMood = {},
             navigateToMap = {},
+            navigateToDetail = {},
             onLikeClick = {},
             state = HomeDataEntity(
                 name = "닉넴",

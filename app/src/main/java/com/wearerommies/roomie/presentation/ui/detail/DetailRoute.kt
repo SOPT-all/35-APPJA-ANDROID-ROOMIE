@@ -18,11 +18,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.wearerommies.roomie.R
@@ -68,27 +70,55 @@ import kotlinx.collections.immutable.toPersistentList
 @Composable
 fun DetailRoute(
     paddingValues: PaddingValues,
+    houseId: Long,
     navigateUp: () -> Unit,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.collectAsStateWithLifecycle()
+    val counter by remember { mutableIntStateOf(0) }
+    val currentCounter by rememberUpdatedState(counter)
 
+    LaunchedEffect(currentCounter) {
+        viewModel.getHouseDetail(houseId)
+    }
+
+    val state = viewModel.state.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                DetailSideEffect.NavigateUp -> navigateUp()
+            }
+        }
+    }
+
+    DetailScreen(
+        paddingValues = paddingValues,
+        navigateUp = navigateUp,
+        state = state.value.uiState,
+        isShowBottomSheet = state.value.isShowBottomSheet,
+        isLivingExpanded = state.value.isLivingExpanded,
+        isKitchenExpanded = state.value.isKitchenExpanded,
+        updateBottomSheetState = viewModel::updateBottomSheetState,
+        updateLivingExpanded = viewModel::updateLivingExpanded,
+        updateKitchenExpanded = viewModel::updatedKitchenExpanded
+    )
 }
 
 @Composable
 fun DetailScreen(
     paddingValues: PaddingValues,
-    navigateUp: () -> Unit,
     state: UiState<DetailEntity>,
     isShowBottomSheet: Boolean,
     isLivingExpanded: Boolean,
     isKitchenExpanded: Boolean,
+    updateBottomSheetState: () -> Unit,
+    updateLivingExpanded: () -> Unit,
+    updateKitchenExpanded: () -> Unit,
+    navigateUp: () -> Unit,
 ) {
     val scrollState = rememberLazyListState()
     var imageHeight by remember { mutableIntStateOf(0) }
     var titleHeight by remember { mutableIntStateOf(0) }
-
-    var isBottomSheet by remember { mutableStateOf(false) }
 
     val isScrollResponsiveDefault by remember {
         derivedStateOf {
@@ -115,6 +145,7 @@ fun DetailScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(paddingValues)
             ) {
                 RoomieTopBar(
                     backgroundColor = topBarBackgroundColor,
@@ -303,9 +334,7 @@ fun DetailScreen(
                         DetailInnerFacilityCard(
                             text = stringResource(R.string.room_safety_living_facility),
                             facility = state.data.houseInfo.safetyLivingFacility.toPersistentList(),
-                            onClickExpandedButton = {
-                                // TODO: isExpanded 상태 관리
-                            },
+                            onClickExpandedButton = updateLivingExpanded,
                             isExpanded = isLivingExpanded,
                             modifier = Modifier.padding(horizontal = 16.dp)
                         )
@@ -315,9 +344,7 @@ fun DetailScreen(
                         DetailInnerFacilityCard(
                             text = stringResource(R.string.room_kitchen_facility),
                             facility = state.data.houseInfo.safetyLivingFacility.toPersistentList(),
-                            onClickExpandedButton = {
-                                // TODO: isExpanded 상태 관리
-                            },
+                            onClickExpandedButton = updateKitchenExpanded,
                             isExpanded = isKitchenExpanded,
                             modifier = Modifier.padding(horizontal = 16.dp)
                         )
@@ -423,10 +450,7 @@ fun DetailScreen(
                         text = stringResource(R.string.tour_apply_button),
                         backgroundColor = RoomieTheme.colors.primary,
                         textColor = RoomieTheme.colors.grayScale1,
-                        onClick = {
-                            // TODO: 바텀시트 상태관리
-                            isBottomSheet = !isBottomSheet
-                        },
+                        onClick = updateBottomSheetState,
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth(),
@@ -434,12 +458,10 @@ fun DetailScreen(
                         isPressed = true
                     )
                 }
-                if(isBottomSheet){
+                if(isShowBottomSheet){
                     DetailBottomSheet(
                         rooms = state.data.rooms.toPersistentList(),
-                        onDismissRequest = {
-
-                        },
+                        onDismissRequest = updateBottomSheetState,
                         onButtonClick = {},
                         selectedRoom = null,
                         modifier = Modifier
@@ -528,7 +550,10 @@ fun DetailScreenPreview() {
             )),
             isShowBottomSheet = false,
             isLivingExpanded = true,
-            isKitchenExpanded = false
+            isKitchenExpanded = false,
+            updateBottomSheetState = {},
+            updateLivingExpanded = {},
+            updateKitchenExpanded = {}
         )
     }
 }
