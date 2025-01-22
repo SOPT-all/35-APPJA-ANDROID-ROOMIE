@@ -29,7 +29,7 @@ import kotlinx.collections.immutable.toPersistentList
 fun ContractTypeScreen(
     isDateModalOpened: Boolean,
     setDateModalVisible: () -> Unit,
-    preferredDate: String?,
+    preferredDate: String,
     contractPeriod: PersistentList<Int>,
     setPreferredDate: (Long?) -> Unit,
     setContractPeriod: (PersistentList<Int>) -> Unit,
@@ -56,13 +56,11 @@ fun ContractTypeScreen(
             title = R.string.desired_move_in_date,
             spacerValue = 12.dp,
             content = {
-                if (preferredDate != null) {
-                    RoomieDatePickerField(
-                        dateValue = preferredDate,
-                        backgroundColor = RoomieTheme.colors.grayScale1,
-                        onClick = setDateModalVisible
-                    )
-                }
+                RoomieDatePickerField(
+                    dateValue = preferredDate,
+                    backgroundColor = RoomieTheme.colors.grayScale1,
+                    onClick = setDateModalVisible
+                )
             }
         )
 
