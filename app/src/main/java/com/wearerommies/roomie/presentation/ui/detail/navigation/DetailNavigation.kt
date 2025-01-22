@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.ui.detail.DetailRoute
+import com.wearerommies.roomie.presentation.ui.detail.house.DetailHouseRoute
 import com.wearerommies.roomie.presentation.ui.detail.room.DetailRoomRoute
 
 fun NavController.navigateToDetail(houseId: Long, navOptions: NavOptions? = null) {
@@ -40,7 +41,8 @@ fun NavController.navigateToDetailRoom(houseId: Long, roomId: Long, title: Strin
 fun NavGraphBuilder.detailNavGraph(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateDetailRoom: (Long, Long, String) -> Unit
+    navigateDetailRoom: (Long, Long, String) -> Unit,
+    navigateDetailHouse: (Long, String) -> Unit
 ) {
     composable<Route.Detail> { backStackEntry ->
         val houseId = backStackEntry.toRoute<Route.Detail>().houseId
@@ -48,17 +50,20 @@ fun NavGraphBuilder.detailNavGraph(
             paddingValues = paddingValues,
             houseId = houseId,
             navigateUp = navigateUp,
-            navigateDetailRoom = navigateDetailRoom
+            navigateDetailRoom = navigateDetailRoom,
+            navigateDetailHouse = navigateDetailHouse
         )
     }
-    /*composable<Route.DetailHouse> { backStackEntry ->
-        val houseId = backStackEntry.toRoute<Route.DetailRoom>().houseId
+    composable<Route.DetailHouse> { backStackEntry ->
+        val houseId = backStackEntry.toRoute<Route.DetailHouse>().houseId
+        val title = backStackEntry.toRoute<Route.DetailHouse>().title
         DetailHouseRoute(
             paddingValues = paddingValues,
             houseId = houseId,
+            title = title,
             navigateUp = navigateUp
         )
-    }*/
+    }
 
     composable<Route.DetailRoom> { backStackEntry ->
         val houseId = backStackEntry.toRoute<Route.DetailRoom>().houseId

@@ -63,4 +63,8 @@ class DetailViewModel @Inject constructor(
         _sideEffect.emit(DetailSideEffect.NavigateUp)
     }
 
+    fun navigateToHouse(houseId: Long, title: String) = viewModelScope.launch {
+        _sideEffect.emit(DetailSideEffect.NavigateDetailHouse(houseId = houseId, title = title))
+    }
+
 }

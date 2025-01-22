@@ -7,4 +7,8 @@ sealed class DetailSideEffect {
         val roomId: Long,
         val title: String
     ): DetailSideEffect()
+    data class NavigateDetailHouse(
+        val houseId: Long,
+        val title: String
+    ): DetailSideEffect()
 }

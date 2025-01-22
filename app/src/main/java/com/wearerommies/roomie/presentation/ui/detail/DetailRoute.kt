@@ -73,6 +73,7 @@ fun DetailRoute(
     houseId: Long,
     navigateUp: () -> Unit,
     navigateDetailRoom: (Long, Long, String) -> Unit,
+    navigateDetailHouse: (Long, String) -> Unit,
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
     val counter by remember { mutableIntStateOf(0) }
@@ -89,6 +90,7 @@ fun DetailRoute(
             when (sideEffect) {
                 DetailSideEffect.NavigateUp -> navigateUp()
                 is DetailSideEffect.NavigateDetailRoom -> navigateDetailRoom(sideEffect.houseId, sideEffect.roomId, sideEffect.title)
+                is DetailSideEffect.NavigateDetailHouse -> navigateDetailHouse(sideEffect.houseId, sideEffect.title)
             }
         }
     }
@@ -97,6 +99,7 @@ fun DetailRoute(
         paddingValues = paddingValues,
         navigateUp = viewModel::navigateUp,
         navigateDetailRoom = viewModel::navigateToDetail,
+        navigateDetailHouse = viewModel::navigateToHouse,
         state = state.value.uiState,
         isShowBottomSheet = state.value.isShowBottomSheet,
         isLivingExpanded = state.value.isLivingExpanded,
@@ -118,7 +121,8 @@ fun DetailScreen(
     updateLivingExpanded: () -> Unit,
     updateKitchenExpanded: () -> Unit,
     navigateUp: () -> Unit,
-    navigateDetailRoom: (Long, Long, String) -> Unit
+    navigateDetailRoom: (Long, Long, String) -> Unit,
+    navigateDetailHouse: (Long, String) -> Unit
 ) {
     val scrollState = rememberLazyListState()
     var imageHeight by remember { mutableIntStateOf(0) }
@@ -235,6 +239,13 @@ fun DetailScreen(
                     }
 
                     item {
+
+                        val title = stringResource(
+                            R.string.detail_topbar,
+                            state.data.houseInfo.monthlyRent,
+                            state.data.houseInfo.deposit
+                        )
+
                         DetailContentHeader(
                             location = state.data.houseInfo.location,
                             occupancyStatus = state.data.houseInfo.occupancyStatus,
@@ -242,7 +253,7 @@ fun DetailScreen(
                             occupancyTypes = state.data.houseInfo.occupancyTypes,
                             genderPolicy = state.data.houseInfo.genderPolicy,
                             onClickDetailInnerButton = {
-                                // TODO: 상세 이미지 DetailHouse로 이동
+                                navigateDetailHouse(state.data.houseInfo.houseId, title)
                             }
                         )
 
@@ -567,7 +578,8 @@ fun DetailScreenPreview() {
             updateBottomSheetState = {},
             updateLivingExpanded = {},
             updateKitchenExpanded = {},
-            navigateDetailRoom = { l: Long, l1: Long, s: String -> }
+            navigateDetailRoom = { l: Long, l1: Long, s: String -> },
+            navigateDetailHouse = { l: Long, s: String -> }
         )
     }
 }
