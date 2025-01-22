@@ -52,7 +52,8 @@ fun RoomieNavHost(
         )
         bookmarkNavGraph(
             paddingValues = padding,
-            navigateUp = navigator::popBackStackIfNotHome
+            navigateUp = navigator::popBackStackIfNotHome,
+            navigateToDetail = navigator::navigateToDetail
         )
         filterNavGraph(
             paddingValues = padding,
