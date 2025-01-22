@@ -48,7 +48,7 @@ class MainNavigator(
 
         when (tab) {
             MainTabType.HOME -> navController.navigateToHome(navOptions)
-            MainTabType.MAP -> navController.navigateToMap(FilterEntity(), navOptions)
+            MainTabType.MAP -> navController.navigateToMap(FilterEntity(),navOptions)
             MainTabType.MY -> navController.navigateToMy(navOptions)
         }
     }
@@ -64,7 +64,7 @@ class MainNavigator(
     }
 
     fun navigateToMap(filter: FilterEntity) {
-        navController.navigateToMap(filter = filter)
+        navController.navigateToMap(filter)
     }
 
     fun navigateToSearch() {
