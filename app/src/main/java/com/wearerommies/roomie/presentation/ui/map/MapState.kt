@@ -5,8 +5,8 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
 data class MapState(
-    val latitude: Double = 37.563974138508,
-    val longitude: Double = 126.93836946793,
+    val x: Float = 126.9377f,
+    val y: Float = 37.55438f,
     val isBottomSheetOpened: Boolean = true,
     val houseList: PersistentList<FilterResultEntity> = persistentListOf(),
     val markerDetail: FilterResultEntity = FilterResultEntity(

@@ -27,13 +27,10 @@ class MapViewModel @Inject constructor(
     val sideEffect: SharedFlow<MapSideEffect>
         get() = _sideEffect.asSharedFlow()
 
-    val initialLatitude = 37.563974138508
-    val initialLongitude = 126.93836946793
-
-    fun fetchInitialLocation() {
+    fun fetchInitialLocation(x: Float, y: Float) {
         _state.value = _state.value.copy(
-            latitude = initialLatitude,
-            longitude = initialLongitude
+            x = x,
+            y = y
         )
     }
 
