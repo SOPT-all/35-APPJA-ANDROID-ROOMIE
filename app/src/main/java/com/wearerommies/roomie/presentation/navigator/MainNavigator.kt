@@ -48,7 +48,7 @@ class MainNavigator(
 
         when (tab) {
             MainTabType.HOME -> navController.navigateToHome(navOptions)
-            MainTabType.MAP -> navController.navigateToMap(FilterEntity(),navOptions)
+            MainTabType.MAP -> navController.navigateToMap(FilterEntity(), navOptions)
             MainTabType.MY -> navController.navigateToMy(navOptions)
         }
     }
@@ -64,7 +64,11 @@ class MainNavigator(
     }
 
     fun navigateToMap(filter: FilterEntity) {
-        navController.navigateToMap(filter)
+        navController.navigateToMap(filter,navOptions = navOptions {
+            popUpTo<MainTabRoute.Map> {
+                inclusive = true
+            }
+        })
     }
 
     fun navigateToSearch() {
