@@ -50,6 +50,7 @@ fun MapRoute(
     paddingValues: PaddingValues,
     navigateToSearch: () -> Unit,
     navigateToFilter: () -> Unit,
+    filterEntity: FilterEntity,
     viewModel: MapViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -61,22 +62,7 @@ fun MapRoute(
     LaunchedEffect(initialKey) {
         viewModel.fetchInitialLocation()
         viewModel.fetchHouseList(
-            filter = FilterEntity(
-                location = "서울특별시 마포구 노고산동 11-1",
-                moodTag = null,
-                depositRange = FilterEntity.DepositRange(
-                    min = 0,
-                    max = 500
-                ),
-                monthlyRentRange = FilterEntity.MonthlyRentRange(
-                    min = 0,
-                    max = 150
-                ),
-                genderPolicy = listOf(),
-                preferredDate = null,
-                occupancyTypes = listOf(),
-                contractPeriod = listOf()
-            )
+            filter = filterEntity
         )
     }
 
