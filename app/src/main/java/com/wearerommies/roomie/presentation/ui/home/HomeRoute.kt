@@ -63,6 +63,7 @@ import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.type.HomeMoodCardType
 import com.wearerommies.roomie.presentation.type.NavigateButtonType
 import com.wearerommies.roomie.presentation.ui.home.component.HomeMoodCard
+import com.wearerommies.roomie.presentation.ui.webview.WebViewUrl
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.coroutines.launch
@@ -81,6 +82,7 @@ fun HomeRoute(
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
     navigateToDetail: (Long) -> Unit,
+    navigateToWebView: (String) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -115,6 +117,7 @@ fun HomeRoute(
                     is HomeSideEffect.NavigateToMood -> navigateToMood(sideEffect.moodTag)
                     is HomeSideEffect.NavigateToMap -> navigateToMap()
                     is HomeSideEffect.NavigateToDetail -> navigateToDetail(sideEffect.houseId)
+                    is HomeSideEffect.NavigateToWebView -> navigateToWebView(sideEffect.webViewUrl)
                 }
             }
     }
@@ -127,6 +130,7 @@ fun HomeRoute(
         navigateToMood = viewModel::navigateToMood,
         navigateToMap = viewModel::navigateToMap,
         navigateToDetail = viewModel::navigateToDetail,
+        navigateToWebView = viewModel::navigateToWebView,
         onLikeClick = viewModel::bookmarkHouse,
         state = state.uiState
     )
@@ -142,6 +146,7 @@ fun HomeScreen(
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
     navigateToDetail: (Long) -> Unit,
+    navigateToWebView: (String) -> Unit,
     onLikeClick: (Long) -> Unit,
     state: HomeDataEntity,
     modifier: Modifier = Modifier
@@ -176,15 +181,7 @@ fun HomeScreen(
         state = scrollState,
         modifier = modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        RoomieTheme.colors.grayScale1,
-                        RoomieTheme.colors.primary
-                    )
-                ),
-                shape = RectangleShape
-            )
+            .background(color = RoomieTheme.colors.primaryLight4)
             .padding(paddingValues),
     ) {
         stickyHeader {
@@ -233,58 +230,77 @@ fun HomeScreen(
                     .height(14.dp)
             )
 
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Image(
+            Box {
+                Spacer(
                     modifier = Modifier
-                        .width((LocalConfiguration.current.screenWidthDp * 0.556).dp)
-                        .align(Alignment.CenterEnd),
-                    painter = painterResource(R.drawable.img_home_character),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop
-                )
-
-                HomeGreetingMessage(
-                    modifier = Modifier
-                        .padding(
-                            start = 20.dp
+                        .padding(top = 62.dp)
+                        .fillMaxWidth()
+                        .height((LocalConfiguration.current.screenHeightDp * 0.341).dp)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    RoomieTheme.colors.primary.copy(alpha = 0.5F)
+                                )
+                            ),
+                            shape = RectangleShape
                         )
-                        .align(Alignment.CenterStart),
-                    nickname = state.name
                 )
-            }
 
-            Spacer(
-                modifier = Modifier
-                    .height(12.dp)
-            )
+                Column {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
 
-            RoomieNavigateButton(
-                modifier = Modifier
-                    .padding(horizontal = 20.dp),
-                type = NavigateButtonType.UPDATE,
-                text = stringResource(R.string.home_banner_message),
-                textStyle = RoomieTheme.typography.body3M14,
-                textColor = RoomieTheme.colors.grayScale10,
-                onClick = {
-                    //todo: 웹뷰 띄우기
+                        Image(
+                            modifier = Modifier
+                                .width((LocalConfiguration.current.screenWidthDp * 0.556).dp)
+                                .align(Alignment.CenterEnd),
+                            painter = painterResource(R.drawable.img_home_character),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
+                        )
+
+                        HomeGreetingMessage(
+                            modifier = Modifier
+                                .padding(
+                                    start = 20.dp
+                                )
+                                .align(Alignment.CenterStart),
+                            nickname = state.name
+                        )
+                    }
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(12.dp)
+                    )
+
+                    RoomieNavigateButton(
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp),
+                        type = NavigateButtonType.UPDATE,
+                        text = stringResource(R.string.home_banner_message),
+                        textStyle = RoomieTheme.typography.body3M14,
+                        textColor = RoomieTheme.colors.grayScale10,
+                        onClick = { navigateToWebView(WebViewUrl.LANDING) }
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(20.dp)
+                    )
+
+                    MoodCardGroup(
+                        onCalmClick = { navigateToMood(MoodKey.CALM) },
+                        onActiveClick = { navigateToMood(MoodKey.ACTIVE) },
+                        onCleanClick = { navigateToMood(MoodKey.CLEAN) },
+                    )
+
+                    RecentCardTitle()
                 }
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .height(20.dp)
-            )
-
-            MoodCardGroup(
-                onCalmClick = { navigateToMood(MoodKey.CALM) },
-                onActiveClick = { navigateToMood(MoodKey.ACTIVE) },
-                onCleanClick = { navigateToMood(MoodKey.CLEAN) },
-            )
-
-            RecentCardTitle()
+            }
         }
 
         if (state.recentlyViewedHouses.isEmpty()) {
@@ -535,6 +551,7 @@ fun HomeScreenPreview() {
             navigateToMood = {},
             navigateToMap = {},
             navigateToDetail = {},
+            navigateToWebView = {},
             onLikeClick = {},
             state = HomeDataEntity(
                 name = "닉넴",

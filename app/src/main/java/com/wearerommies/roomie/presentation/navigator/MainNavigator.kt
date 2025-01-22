@@ -11,16 +11,17 @@ import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.type.MainTabType
 import com.wearerommies.roomie.presentation.ui.bookmark.navigation.navigateToBookmark
+import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetail
+import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailHouse
+import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailRoom
 import com.wearerommies.roomie.presentation.ui.filter.navigation.navigateToFilter
 import com.wearerommies.roomie.presentation.ui.home.navigation.navigateToHome
 import com.wearerommies.roomie.presentation.ui.map.navigation.navigateToMap
 import com.wearerommies.roomie.presentation.ui.mood.navigation.navigateToMood
 import com.wearerommies.roomie.presentation.ui.mypage.navigation.navigateToMy
-import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetail
-import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailHouse
-import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailRoom
 import com.wearerommies.roomie.presentation.ui.search.navigation.navigateToSearch
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTour
+import com.wearerommies.roomie.presentation.ui.webview.navigation.navigateToWebView
 
 class MainNavigator(
     val navController: NavHostController,
@@ -99,6 +100,10 @@ class MainNavigator(
 
     fun navigateToTour() {
         navController.navigateToTour()
+    }
+
+    fun navigateToWebView(webViewUrl: String) {
+        navController.navigateToWebView(webViewUrl = webViewUrl)
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =

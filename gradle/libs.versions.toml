@@ -59,6 +59,9 @@ toolsCore = "1.0.0-alpha10"
 accompanist = "0.24.2-alpha"
 monitorVersion = "1.7.2"
 
+# Web View
+accompanistWebview = "0.24.13-rc"
+
 [libraries]
 # Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -118,6 +121,9 @@ lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", versio
 androidx-tools-core = { group = "androidx.privacysandbox.tools", name = "tools-core", version.ref = "toolsCore" }
 accompanist-navigation-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist"}
 monitor = { group = "androidx.test", name = "monitor", version.ref = "monitorVersion" }
+
+# Web View
+accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "accompanistWebview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -40,6 +40,11 @@ sealed interface Route {
 
     @Serializable
     data object Tour : Route
+
+    @Serializable
+    data class WebView(
+        val webViewUrl: String
+    ) : Route
 }
 
 sealed interface MainTabRoute : Route {
