@@ -36,6 +36,7 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.FilterEntity
 import com.wearerommies.roomie.domain.entity.FilterResultEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.ui.map.component.MapBotomSheet
 import com.wearerommies.roomie.presentation.ui.map.component.MapTopBar
@@ -51,6 +52,7 @@ fun MapRoute(
     navigateToSearch: () -> Unit,
     navigateToFilter: () -> Unit,
     filterEntity: FilterEntity,
+    searchResultEntity: SearchResultEntity,
     viewModel: MapViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -60,7 +62,7 @@ fun MapRoute(
     val initialKey by rememberUpdatedState(initial)
 
     LaunchedEffect(initialKey) {
-        viewModel.fetchInitialLocation()
+        viewModel.fetchInitialLocation(searchResultEntity.x, searchResultEntity.y)
         viewModel.fetchHouseList(
             filter = filterEntity
         )
@@ -80,8 +82,9 @@ fun MapRoute(
         navigateToSearch = navigateToSearch,
         navigateToFilter = navigateToFilter,
         isBottomSheetOpened = state.isBottomSheetOpened,
-        latitude = state.latitude,
-        longitude = state.longitude,
+        latitude = searchResultEntity.y,
+        longitude = searchResultEntity.x,
+        textfield = searchResultEntity.address,
         houseList = state.houseList,
         onMarkerClicked = viewModel::showMarkerDetail,
         markerDetail = state.markerDetail,
@@ -98,8 +101,9 @@ fun MapScreen(
     navigateToSearch: () -> Unit,
     navigateToFilter: () -> Unit,
     isBottomSheetOpened: Boolean,
-    latitude: Double,
-    longitude: Double,
+    latitude: Float,
+    longitude: Float,
+    textfield: String,
     houseList: PersistentList<FilterResultEntity>,
     onMarkerClicked: (Long) -> Unit,
     markerDetail: FilterResultEntity,
@@ -108,7 +112,7 @@ fun MapScreen(
     setBottomSheetState: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val initialCameraPosition = LatLng(latitude, longitude) // 초기 위치 임시 고정
+    val initialCameraPosition = LatLng(latitude.toDouble(), longitude.toDouble()) // 초기 위치 임시 고정
     val initialZoomLevel = 12.0
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition(initialCameraPosition, initialZoomLevel)
@@ -171,6 +175,7 @@ fun MapScreen(
         }
 
         MapTopBar(
+            textfield = textfield,
             onClickSearchTextField = navigateToSearch,
             onClickFilterButton = navigateToFilter,
             modifier = Modifier
@@ -212,8 +217,9 @@ fun MapScreenPreview() {
             navigateToSearch = {},
             navigateToFilter = {},
             isBottomSheetOpened = false,
-            latitude = 0.0,
-            longitude = 0.0,
+            latitude = 0f,
+            longitude = 0f,
+            textfield = "",
             houseList = persistentListOf(),
             onMarkerClicked = {},
             markerDetail = FilterResultEntity(
