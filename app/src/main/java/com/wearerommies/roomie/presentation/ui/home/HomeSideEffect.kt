@@ -12,5 +12,7 @@ sealed class HomeSideEffect {
 
     data object NavigateToMap : HomeSideEffect()
     data class NavigateToDetail(val houseId: Long) : HomeSideEffect()
-    data object NavigateToLanding : HomeSideEffect()
+    data class NavigateToWebView(
+        val webViewUrl: String
+    ) : HomeSideEffect()
 }

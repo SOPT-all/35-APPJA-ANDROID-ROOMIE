@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui.landing
+package com.wearerommies.roomie.presentation.ui.webview
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -11,32 +11,36 @@ object WebViewUrl {
 }
 
 @Composable
-fun LandingRoute(
+fun WebViewRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
+    webViewUrl: String
 ) {
 
-    LandingScreen(
+    WebViewScreen(
         paddingValues = paddingValues,
         navigateUp = navigateUp,
+        webViewUrl = webViewUrl
     )
 }
 
 @Composable
-fun LandingScreen(
+fun WebViewScreen(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
+    webViewUrl: String
 ) {
-    RoomieWebView(url = WebViewUrl.LANDING, onClose = navigateUp)
+    RoomieWebView(url = webViewUrl, onClose = navigateUp)
 }
 
 @Preview
 @Composable
-fun LandingScreenPreview() {
+fun WebViewScreenPreview() {
     RoomieAndroidTheme {
-        LandingScreen(
+        WebViewScreen(
             paddingValues = PaddingValues(),
             navigateUp = {},
+            webViewUrl = ""
         )
     }
 }

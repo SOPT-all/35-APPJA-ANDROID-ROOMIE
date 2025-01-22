@@ -63,6 +63,7 @@ import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.type.HomeMoodCardType
 import com.wearerommies.roomie.presentation.type.NavigateButtonType
 import com.wearerommies.roomie.presentation.ui.home.component.HomeMoodCard
+import com.wearerommies.roomie.presentation.ui.webview.WebViewUrl
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.coroutines.launch
@@ -81,7 +82,7 @@ fun HomeRoute(
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
     navigateToDetail: (Long) -> Unit,
-    navigateToLanding: () -> Unit,
+    navigateToWebView: (String) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -116,7 +117,7 @@ fun HomeRoute(
                     is HomeSideEffect.NavigateToMood -> navigateToMood(sideEffect.moodTag)
                     is HomeSideEffect.NavigateToMap -> navigateToMap()
                     is HomeSideEffect.NavigateToDetail -> navigateToDetail(sideEffect.houseId)
-                    is HomeSideEffect.NavigateToLanding -> navigateToLanding()
+                    is HomeSideEffect.NavigateToWebView -> navigateToWebView(sideEffect.webViewUrl)
                 }
             }
     }
@@ -129,7 +130,7 @@ fun HomeRoute(
         navigateToMood = viewModel::navigateToMood,
         navigateToMap = viewModel::navigateToMap,
         navigateToDetail = viewModel::navigateToDetail,
-        navigateToLanding = viewModel::navigateToLanding,
+        navigateToWebView = viewModel::navigateToWebView,
         onLikeClick = viewModel::bookmarkHouse,
         state = state.uiState
     )
@@ -145,7 +146,7 @@ fun HomeScreen(
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
     navigateToDetail: (Long) -> Unit,
-    navigateToLanding: () -> Unit,
+    navigateToWebView: (String) -> Unit,
     onLikeClick: (Long) -> Unit,
     state: HomeDataEntity,
     modifier: Modifier = Modifier
@@ -272,7 +273,7 @@ fun HomeScreen(
                 text = stringResource(R.string.home_banner_message),
                 textStyle = RoomieTheme.typography.body3M14,
                 textColor = RoomieTheme.colors.grayScale10,
-                onClick = { navigateToLanding() }
+                onClick = { navigateToWebView(WebViewUrl.LANDING) }
             )
 
             Spacer(
@@ -537,7 +538,7 @@ fun HomeScreenPreview() {
             navigateToMood = {},
             navigateToMap = {},
             navigateToDetail = {},
-            navigateToLanding = {},
+            navigateToWebView = {},
             onLikeClick = {},
             state = HomeDataEntity(
                 name = "닉넴",

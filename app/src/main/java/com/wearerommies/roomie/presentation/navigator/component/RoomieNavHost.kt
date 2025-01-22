@@ -9,13 +9,13 @@ import com.wearerommies.roomie.presentation.ui.bookmark.navigation.bookmarkNavGr
 import com.wearerommies.roomie.presentation.ui.detail.navigation.detailNavGraph
 import com.wearerommies.roomie.presentation.ui.filter.navigation.filterNavGraph
 import com.wearerommies.roomie.presentation.ui.home.navigation.homeNavGraph
-import com.wearerommies.roomie.presentation.ui.landing.navigation.landingNavGraph
 import com.wearerommies.roomie.presentation.ui.map.navigation.mapNavGraph
 import com.wearerommies.roomie.presentation.ui.mood.navigation.moodNavGraph
 import com.wearerommies.roomie.presentation.ui.mypage.navigation.myNavGraph
 import com.wearerommies.roomie.presentation.ui.search.navigation.searchNavGraph
 import com.wearerommies.roomie.presentation.ui.splash.navigation.splashNavGraph
 import com.wearerommies.roomie.presentation.ui.tour.navigation.tourNavGraph
+import com.wearerommies.roomie.presentation.ui.webview.navigation.webViewNavGraph
 
 @Composable
 fun RoomieNavHost(
@@ -33,7 +33,7 @@ fun RoomieNavHost(
             navigateToMood = navigator::navigateToMood,
             navigateToMap = { navigator.navigate(tab = MainTabType.MAP) },
             navigateToDetail = navigator::navigateToDetail,
-            navigateToLanding = navigator::navigateToLanding
+            navigateToWebView = navigator::navigateToWebView
         )
         mapNavGraph(
             paddingValues = padding,
@@ -70,7 +70,7 @@ fun RoomieNavHost(
             paddingValues = padding,
             navigateUp = navigator::popBackStackIfNotHome
         )
-        landingNavGraph(
+        webViewNavGraph(
             paddingValues = padding,
             navigateUp = navigator::popBackStackIfNotHome
         )

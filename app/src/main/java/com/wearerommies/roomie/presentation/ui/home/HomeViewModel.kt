@@ -94,8 +94,8 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    fun navigateToLanding() = viewModelScope.launch {
-        _sideEffect.emit(HomeSideEffect.NavigateToLanding)
+    fun navigateToWebView(webViewUrl: String) = viewModelScope.launch {
+        _sideEffect.emit(HomeSideEffect.NavigateToWebView(webViewUrl = webViewUrl))
     }
 
     fun bookmarkHouse(houseId: Long) = viewModelScope.launch {

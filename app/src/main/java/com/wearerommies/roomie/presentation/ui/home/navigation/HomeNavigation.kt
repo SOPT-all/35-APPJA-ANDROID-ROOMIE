@@ -21,7 +21,7 @@ fun NavGraphBuilder.homeNavGraph(
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
     navigateToDetail: (Long) -> Unit,
-    navigateToLanding: () -> Unit,
+    navigateToWebView: (String) -> Unit,
 ) {
     composable<MainTabRoute.Home> {
         HomeRoute(
@@ -31,7 +31,7 @@ fun NavGraphBuilder.homeNavGraph(
             navigateToMood = navigateToMood,
             navigateToMap = navigateToMap,
             navigateToDetail = navigateToDetail,
-            navigateToLanding = navigateToLanding
+            navigateToWebView = navigateToWebView
         )
     }
 }
