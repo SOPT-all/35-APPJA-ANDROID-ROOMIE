@@ -6,7 +6,7 @@ data class TourEntity(
     val gender: String = "",
     val phoneNumber: String = "",
     val preferredDate: String = "",
-    val message: String = "",
+    val message: String? = "",
     val roomId: Long = -1L,
     val houseId: Long = -1L
 )
