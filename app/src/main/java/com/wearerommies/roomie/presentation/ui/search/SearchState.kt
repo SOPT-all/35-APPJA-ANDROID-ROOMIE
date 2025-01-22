@@ -10,7 +10,5 @@ data class SearchState(
         persistentListOf()
     ),
     val searchKeyword: String = "",
-    val selectedX: Float = 0F,
-    val selectedY: Float = 0F,
-    val selectedAddress: String = ""
+    val searchResult: SearchResultEntity = SearchResultEntity()
 )

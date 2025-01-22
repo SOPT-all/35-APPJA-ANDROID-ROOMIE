@@ -50,7 +50,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun SearchRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateToMap: (FilterEntity) -> Unit,
+    navigateToMap: (FilterEntity, SearchResultEntity) -> Unit,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -61,9 +61,12 @@ fun SearchRoute(
         viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle)
             .collect { sideEffect ->
                 when (sideEffect) {
-                    is SearchSideEffect.navigateToMap -> navigateToMap(
-                        sideEffect.filter
-                    )
+                    is SearchSideEffect.navigateToMap -> {
+                        navigateToMap(
+                            sideEffect.filter,
+                            sideEffect.result
+                        )
+                    }
                 }
             }
     }
@@ -88,7 +91,7 @@ fun SearchScreen(
     searchKeyword: String,
     setSearchKeyword: (String) -> Unit,
     fetchResult: (String) -> Unit,
-    applySearchResult: (String, Float, Float) -> Unit,
+    applySearchResult: (String, String, String, Float, Float) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -153,7 +156,15 @@ fun SearchScreen(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
                                 .padding(top = 12.dp),
-                            onClick = { applySearchResult(result.address, result.x, result.y) }
+                            onClick = {
+                                applySearchResult(
+                                    result.location,
+                                    result.address,
+                                    result.roadAddress,
+                                    result.x,
+                                    result.y,
+                                )
+                            }
                         )
                     }
                 }
@@ -173,7 +184,7 @@ fun SearchScreenEmptyPreview() {
             searchKeyword = "",
             setSearchKeyword = {},
             fetchResult = {},
-            applySearchResult = { _, _, _ -> }
+            applySearchResult = { _, _, _, _, _ -> }
         )
     }
 }
@@ -213,7 +224,7 @@ fun SearchScreenSuccessPreview() {
             searchKeyword = "",
             setSearchKeyword = {},
             fetchResult = {},
-            applySearchResult = { _, _, _ -> }
+            applySearchResult = { _, _, _, _, _ -> }
         )
     }
 }
