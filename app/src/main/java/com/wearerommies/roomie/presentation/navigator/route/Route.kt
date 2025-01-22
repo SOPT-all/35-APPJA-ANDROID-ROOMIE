@@ -39,7 +39,12 @@ sealed interface Route {
     ) : Route
 
     @Serializable
-    data object Tour : Route
+    data class TourFirstStep(
+        val houseId: Long,
+        val roomId: Long,
+        val houseName: String,
+        val roomName: String
+    ) : Route
 }
 
 sealed interface MainTabRoute : Route {
