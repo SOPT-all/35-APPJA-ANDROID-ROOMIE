@@ -34,12 +34,12 @@ import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.overlay.OverlayImage
 import com.wearerommies.roomie.R
-import com.wearerommies.roomie.domain.entity.HouseEntity
+import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.domain.entity.FilterResultEntity
 import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.ui.map.component.MapBotomSheet
 import com.wearerommies.roomie.presentation.ui.map.component.MapTopBar
 import com.wearerommies.roomie.presentation.ui.map.component.MarkerDetailCard
-import com.wearerommies.roomie.presentation.ui.map.model.MarkerDetailModel
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.collections.immutable.PersistentList
@@ -60,7 +60,24 @@ fun MapRoute(
 
     LaunchedEffect(initialKey) {
         viewModel.fetchInitialLocation()
-        viewModel.fetchHouseList()
+        viewModel.fetchHouseList(
+            filter = FilterEntity(
+                location = "서울특별시 마포구 노고산동 11-1",
+                moodTag = null,
+                depositRange = FilterEntity.DepositRange(
+                    min = 0,
+                    max = 500
+                ),
+                monthlyRentRange = FilterEntity.MonthlyRentRange(
+                    min = 0,
+                    max = 150
+                ),
+                genderPolicy = listOf(),
+                preferredDate = null,
+                occupancyTypes = listOf(),
+                contractPeriod = listOf()
+            )
+        )
     }
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
@@ -97,10 +114,10 @@ fun MapScreen(
     isBottomSheetOpened: Boolean,
     latitude: Double,
     longitude: Double,
-    houseList: PersistentList<HouseEntity>,
-    onMarkerClicked: (Int) -> Unit,
-    markerDetail: MarkerDetailModel,
-    clickedMarkerId: Int?,
+    houseList: PersistentList<FilterResultEntity>,
+    onMarkerClicked: (Long) -> Unit,
+    markerDetail: FilterResultEntity,
+    clickedMarkerId: Long?,
     resetClickedMarker: () -> Unit,
     setBottomSheetState: (Boolean) -> Unit,
     modifier: Modifier = Modifier
@@ -122,7 +139,7 @@ fun MapScreen(
             if (houseList.isNotEmpty()) {
                 val bounds = LatLngBounds.Builder()
                 houseList.forEach { marker ->
-                    bounds.include(LatLng(marker.x, marker.y))
+                    bounds.include(LatLng(marker.x.toDouble(), marker.y.toDouble()))
                 }
 
                 cameraPositionState.move(
@@ -145,7 +162,7 @@ fun MapScreen(
         ) {
             houseList.forEach { marker ->
                 Marker(
-                    state = MarkerState(LatLng(marker.x, marker.y)),
+                    state = MarkerState(LatLng(marker.x.toDouble(), marker.y.toDouble())),
                     icon = if (marker.houseId == clickedMarkerId)
                         OverlayImage.fromResource(R.drawable.ic_map_pin_active)
                     else OverlayImage.fromResource(R.drawable.ic_map_pin_normal),
@@ -154,7 +171,7 @@ fun MapScreen(
                         setBottomSheetState(false)
                         cameraPositionState.move(
                             CameraUpdate.scrollAndZoomTo(
-                                LatLng(marker.x, marker.y),
+                                LatLng(marker.x.toDouble(), marker.y.toDouble()),
                                 15.0
                             )
                                 .animate(CameraAnimation.Fly) // TODO: 기획-디자인과 카메라 이동 애니메이션 상의
@@ -182,8 +199,8 @@ fun MapScreen(
                 monthlyRent = markerDetail.monthlyRent,
                 deposit = markerDetail.deposit,
                 contractTerm = markerDetail.contractTerm,
-                gender = markerDetail.gender,
-                occupancy = markerDetail.occupancy,
+                gender = markerDetail.genderPolicy,
+                occupancy = markerDetail.occupancyTypes,
                 location = markerDetail.location,
                 locationDescription = markerDetail.locationDescription,
                 moodTag = markerDetail.moodTag,
@@ -194,7 +211,9 @@ fun MapScreen(
                     .padding(bottom = 16.dp),
             )
 
-        if (isBottomSheetOpened) MapBotomSheet()
+        if (isBottomSheetOpened) MapBotomSheet(
+            houseList = houseList
+        )
     }
 }
 
@@ -211,16 +230,20 @@ fun MapScreenPreview() {
             longitude = 0.0,
             houseList = persistentListOf(),
             onMarkerClicked = {},
-            markerDetail = MarkerDetailModel(
+            markerDetail = FilterResultEntity(
                 houseId = 1,
                 monthlyRent = "30~50",
                 deposit = "200~300",
                 contractTerm = 6,
-                gender = "여성전용",
-                occupancy = "1,2인실",
+                genderPolicy = "여성전용",
+                occupancyTypes = "1,2인실",
                 location = "서대문구 연희동",
                 locationDescription = "자이아파트",
-                moodTag = "#차분한"
+                moodTag = "#차분한",
+                x = 1.2F,
+                y = 1.2F,
+                isPinned = false,
+                mainImgUrl = ""
             ),
             clickedMarkerId = null,
             resetClickedMarker = {},

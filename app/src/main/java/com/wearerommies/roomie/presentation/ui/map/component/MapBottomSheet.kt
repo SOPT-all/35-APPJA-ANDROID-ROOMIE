@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,16 +23,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.domain.entity.FilterResultEntity
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
 import com.wearerommies.roomie.presentation.core.extension.topBorder
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MapBotomSheet(modifier: Modifier = Modifier) {
+fun MapBotomSheet(
+    houseList: PersistentList<FilterResultEntity>,
+    modifier: Modifier = Modifier
+) {
     BottomSheetScaffold(
         modifier = modifier.padding(top = (LocalConfiguration.current.screenHeightDp * 0.151).dp),
         sheetPeekHeight = (LocalConfiguration.current.screenHeightDp * 0.077).dp,
@@ -69,21 +76,19 @@ fun MapBotomSheet(modifier: Modifier = Modifier) {
                     Spacer(modifier = Modifier.height(24.dp))
                 }
 
-                items(
-                    count = 20
-                ) {
+                itemsIndexed(houseList) { index, item ->
                     RoomieRoomCard(
                         roomCardEntity = RoomCardEntity(
-                            houseId = 1,
-                            monthlyRent = "30~50",
-                            deposit = "200~300",
-                            occupancyType = "2,3인실",
-                            location = "서대문구 연희동",
-                            genderPolicy = "여성전용",
-                            locationDescription = "자이아파트",
-                            moodTag = "#아늑한",
-                            contractTerm = 6,
-                            mainImgUrl = "https://i.pinimg.com/236x/44/f9/83/44f9831be884e4c65f167b96e16fa94e.jpg"
+                            houseId = item.houseId,
+                            monthlyRent = item.monthlyRent,
+                            deposit = item.deposit,
+                            occupancyType = item.occupancyTypes,
+                            location = item.locationDescription,
+                            genderPolicy = item.genderPolicy,
+                            locationDescription = item.locationDescription,
+                            moodTag = item.moodTag,
+                            contractTerm = item.contractTerm,
+                            mainImgUrl = item.mainImgUrl
                         ),
                         onClick = {}, // TODO: 해당뷰에서는 리플효과 사용하지 않음
                         onLikeClick = {},
@@ -104,6 +109,24 @@ fun MapBotomSheet(modifier: Modifier = Modifier) {
 @Composable
 fun MapBottomSheetPreview() {
     RoomieAndroidTheme {
-        MapBotomSheet()
+        MapBotomSheet(
+            houseList = persistentListOf(
+                FilterResultEntity(
+                    houseId = 1,
+                    monthlyRent = "30~50",
+                    deposit = "200~300",
+                    contractTerm = 6,
+                    genderPolicy = "여성전용",
+                    occupancyTypes = "1,2인실",
+                    location = "서대문구 연희동",
+                    locationDescription = "자이아파트",
+                    moodTag = "#차분한",
+                    x = 1.2F,
+                    y = 1.2F,
+                    isPinned = false,
+                    mainImgUrl = ""
+                )
+            )
+        )
     }
 }
