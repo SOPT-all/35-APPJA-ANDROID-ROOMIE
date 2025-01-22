@@ -31,6 +31,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.ui.filter.component.FilterBottomBar
@@ -48,7 +49,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun FilterRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateToMap: (FilterEntity) -> Unit,
+    navigateToMap: (FilterEntity, SearchResultEntity) -> Unit,
     viewModel: FilterViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -60,7 +61,8 @@ fun FilterRoute(
             .collect { sideEffect ->
                 when (sideEffect) {
                     is FilterSideEffect.navigateToMap -> navigateToMap(
-                        sideEffect.filter
+                        sideEffect.filter,
+                        sideEffect.result
                     )
                 }
             }

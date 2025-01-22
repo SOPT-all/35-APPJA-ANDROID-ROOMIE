@@ -3,6 +3,7 @@ package com.wearerommies.roomie.presentation.ui.filter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.core.util.toFormattedString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.PersistentList
@@ -123,7 +124,8 @@ class FilterViewModel @Inject constructor(
                     preferredDate = _state.value.preferredDate,
                     occupancyTypes = _state.value.occupancyType,
                     contractPeriod = _state.value.contractType
-                )
+                ),
+                result = SearchResultEntity()
             )
         )
     }
