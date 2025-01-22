@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.wearerommies.roomie.domain.entity.FilterEntity
 import com.wearerommies.roomie.presentation.navigator.route.FilterType
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
@@ -25,11 +26,12 @@ fun NavGraphBuilder.mapNavGraph(
 ) {
     composable<MainTabRoute.Map>(
         typeMap = mapOf(typeOf<FilterEntity>() to FilterType)
-    ) {
+    ) {backStackEntry ->
         MapRoute(
             paddingValues = paddingValues,
             navigateToSearch = navigateToSearch,
-            navigateToFilter = navigateToFilter
+            navigateToFilter = navigateToFilter,
+            filterEntity = backStackEntry.toRoute<MainTabRoute.Map>().filter
         )
     }
 }
