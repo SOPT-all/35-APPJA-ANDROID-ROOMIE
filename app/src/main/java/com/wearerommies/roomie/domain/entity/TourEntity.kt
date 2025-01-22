@@ -2,7 +2,7 @@ package com.wearerommies.roomie.domain.entity
 
 data class TourEntity(
     val name: String = "",
-    val birth: String = "",
+    val birthDate: String = "",
     val gender: String = "",
     val phoneNumber: String = "",
     val preferredDate: String = "",
