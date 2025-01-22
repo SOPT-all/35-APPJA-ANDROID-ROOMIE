@@ -48,6 +48,9 @@ sealed interface Route {
 
     @Serializable
     data object TourSecondStep : Route
+
+    @Serializable
+    data object TourThirdStep : Route
 }
 
 sealed interface MainTabRoute : Route {

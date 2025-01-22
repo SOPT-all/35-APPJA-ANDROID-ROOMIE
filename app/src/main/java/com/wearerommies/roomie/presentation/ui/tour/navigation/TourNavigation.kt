@@ -11,6 +11,7 @@ import androidx.navigation.toRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.ui.tour.TourFirstStepRoute
 import com.wearerommies.roomie.presentation.ui.tour.TourSecondStepRoute
+import com.wearerommies.roomie.presentation.ui.tour.TourThirdStepRoute
 import com.wearerommies.roomie.presentation.ui.tour.TourViewModel
 
 fun NavController.navigateToTourFirstStep(houseId: Long, roomId: Long, houseName: String, roomName: String, navOptions: NavOptions? = null) {
@@ -31,12 +32,19 @@ fun NavController.navigateToTourSecondStep(navOptions: NavOptions? = null) {
         navOptions = navOptions
     )
 }
+
+fun NavController.navigateToTourThirdStep(navOptions: NavOptions? = null) {
+    navigate(
+        route = Route.TourThirdStep,
+        navOptions = navOptions
+    )
+}
+
 fun NavGraphBuilder.tourNavGraph(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    // navigateSecondStep: () -> Unit
-) {
     navigateSecondStep: () -> Unit,
+    navigateThirdStep: () -> Unit,
     getBackStackViewModel: @Composable (backStackEntry: NavBackStackEntry) -> TourViewModel
     ) {
     composable<Route.TourFirstStep> { backStackEntry ->
@@ -59,13 +67,21 @@ fun NavGraphBuilder.tourNavGraph(
 
     composable<Route.TourSecondStep> { backStackEntry ->
 
-        val viewModel = getBackStackViewModel(backStackEntry)
-
         TourSecondStepRoute(
             paddingValues = paddingValues,
             navigateUp = navigateUp,
             navigateThirdStep = navigateThirdStep,
-            viewModel = viewModel
+            viewModel = getBackStackViewModel(backStackEntry)
+        )
+
+    }
+
+    composable<Route.TourThirdStep> { backStackEntry ->
+
+        TourThirdStepRoute(
+            paddingValues = paddingValues,
+            navigateUp = navigateUp,
+            viewModel = getBackStackViewModel(backStackEntry)
         )
 
     }

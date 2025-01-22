@@ -68,9 +68,9 @@ fun RoomieNavHost(
         )
         tourNavGraph(
             paddingValues = padding,
-            navigateUp = navigator::popBackStackIfNotHome
             navigateUp = navigator::popBackStackIfNotHome,
             navigateSecondStep = navigator::navigateToTourSecondStep,
+            navigateThirdStep = navigator::navigateToTourThirdStep,
             getBackStackViewModel = {
                 navigator.navController.previousBackStackEntry?.let { backStackEntry ->
                     hiltViewModel(backStackEntry)

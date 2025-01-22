@@ -20,9 +20,9 @@ import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetai
 import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailHouse
 import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailRoom
 import com.wearerommies.roomie.presentation.ui.search.navigation.navigateToSearch
-import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTour
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTourFirstStep
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTourSecondStep
+import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTourThirdStep
 
 class MainNavigator(
     val navController: NavHostController,
@@ -99,8 +99,6 @@ class MainNavigator(
         )
     }
 
-    fun navigateToTourApply(houseId: Long, roomId: Long, houseName: String, roomName: String) {
-        navController.navigateToTour(houseId, roomId, houseName, roomName)
     fun navigateToTourFirstStep(houseId: Long, roomId: Long, houseName: String, roomName: String) {
         navController.navigateToTourFirstStep(houseId, roomId, houseName, roomName)
     }
@@ -108,6 +106,9 @@ class MainNavigator(
     fun navigateToTourSecondStep() {
         navController.navigateToTourSecondStep()
     }
+
+    fun navigateToTourThirdStep() {
+        navController.navigateToTourThirdStep()
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =

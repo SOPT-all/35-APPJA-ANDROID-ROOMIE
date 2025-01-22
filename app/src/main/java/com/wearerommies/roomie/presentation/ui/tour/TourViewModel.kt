@@ -81,7 +81,7 @@ class TourViewModel @Inject constructor(
     }
 
     fun navigateThirdStep() = viewModelScope.launch {
-        _sideEffect.emit(TourSideEffect.NavigateToSecondStep)
+        _sideEffect.emit(TourSideEffect.NavigateToThirdStep)
     }
 
     fun updateDateModalState() = viewModelScope.launch {
