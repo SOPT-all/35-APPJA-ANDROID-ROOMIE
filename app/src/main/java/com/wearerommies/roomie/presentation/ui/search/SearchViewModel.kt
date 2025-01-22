@@ -2,6 +2,7 @@ package com.wearerommies.roomie.presentation.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wearerommies.roomie.domain.entity.FilterEntity
 import com.wearerommies.roomie.domain.repository.MapRepository
 import com.wearerommies.roomie.presentation.core.util.EmptyUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,4 +53,21 @@ class SearchViewModel @Inject constructor(
                 }
         }
     }
+
+    fun applySearchResult(location: String, resultX: Float, resultY: Float) =
+        viewModelScope.launch {
+            _state.value = _state.value.copy(
+                selectedAddress = location,
+                selectedX = resultX,
+                selectedY = resultY
+            )
+
+            _sideEffect.emit(
+                SearchSideEffect.navigateToMap(
+                    FilterEntity(
+                        location = _state.value.selectedAddress
+                    )
+                )
+            )
+        }
 }
