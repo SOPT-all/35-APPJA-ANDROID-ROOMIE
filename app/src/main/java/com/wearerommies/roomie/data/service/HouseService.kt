@@ -3,6 +3,7 @@ package com.wearerommies.roomie.data.service
 import com.wearerommies.roomie.data.dto.response.BaseResponse
 import com.wearerommies.roomie.data.dto.response.ResponseBookmarkListDto
 import com.wearerommies.roomie.data.dto.response.ResponseDetailDto
+import com.wearerommies.roomie.data.dto.response.ResponseDetailHouseImageDto
 import com.wearerommies.roomie.data.dto.response.ResponseDetailRoomDto
 import com.wearerommies.roomie.data.dto.response.ResponseMoodDto
 import retrofit2.http.GET
@@ -33,4 +34,10 @@ interface HouseService {
     suspend fun getRoomDetail(
         @Path("houseId") houseId: Long
     ): BaseResponse<ResponseDetailRoomDto>
+
+    @GET("/v1/houses/{houseId}/details/images")
+    suspend fun getHouseDetailImage(
+        @Path("houseId") houseId: Long
+    ): BaseResponse<ResponseDetailHouseImageDto>
+
 }
