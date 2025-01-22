@@ -45,6 +45,9 @@ sealed interface Route {
         val houseName: String,
         val roomName: String
     ) : Route
+
+    @Serializable
+    data object TourSecondStep : Route
 }
 
 sealed interface MainTabRoute : Route {
