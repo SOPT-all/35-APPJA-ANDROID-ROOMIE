@@ -24,7 +24,7 @@ interface HouseService {
     suspend fun bookmarkHouse(
         @Path("houseId") houseId: Long
     ): BaseResponse<Boolean>
-
+  
     @GET("/v1/houses/{houseId}/details")
     suspend fun getHouseDetail(
         @Path("houseId") houseId: Long
@@ -39,5 +39,4 @@ interface HouseService {
     suspend fun getHouseDetailImage(
         @Path("houseId") houseId: Long
     ): BaseResponse<ResponseDetailHouseImageDto>
-
 }

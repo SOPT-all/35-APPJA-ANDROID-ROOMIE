@@ -1,9 +1,9 @@
 package com.wearerommies.roomie.domain.entity
 
-data class HouseEntity(
-    val houseId: Int,
-    val x: Double,
-    val y: Double,
+data class FilterResultEntity(
+    val houseId: Long,
+    val x: Float,
+    val y: Float,
     val monthlyRent: String,
     val deposit: String,
     val occupancyTypes: String,

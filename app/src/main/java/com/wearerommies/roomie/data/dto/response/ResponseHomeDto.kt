@@ -36,7 +36,7 @@ data class ResponseHomeDto(
         @SerialName("moodTag")
         val moodTag: String,
         @SerialName("contractTerm")
-        val contractTerm: Long,
+        val contractTerm: Int,
         @SerialName("mainImgUrl")
         val mainImgUrl: String
     )

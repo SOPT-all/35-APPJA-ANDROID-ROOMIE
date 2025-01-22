@@ -1,9 +1,9 @@
 package com.wearerommies.roomie.presentation.ui.map.model
 
-import com.wearerommies.roomie.domain.entity.HouseEntity
+import com.wearerommies.roomie.domain.entity.FilterResultEntity
 
 data class MarkerDetailModel(
-    val houseId: Int,
+    val houseId: Long,
     val monthlyRent: String,
     val deposit: String,
     val contractTerm: Int,
@@ -14,7 +14,7 @@ data class MarkerDetailModel(
     val moodTag: String,
 )
 
-fun HouseEntity.toMarkerDetailModel() = MarkerDetailModel(
+fun FilterResultEntity.toMarkerDetailModel() = MarkerDetailModel(
     houseId = houseId,
     monthlyRent = monthlyRent,
     deposit = deposit,
