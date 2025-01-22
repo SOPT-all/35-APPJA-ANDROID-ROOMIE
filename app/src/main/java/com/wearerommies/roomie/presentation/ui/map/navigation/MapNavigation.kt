@@ -7,14 +7,20 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.navigator.route.FilterType
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
+import com.wearerommies.roomie.presentation.navigator.route.ResultType
 import com.wearerommies.roomie.presentation.ui.map.MapRoute
 import kotlin.reflect.typeOf
 
-fun NavController.navigateToMap(filter: FilterEntity, navOptions: NavOptions? = null) {
+fun NavController.navigateToMap(
+    filter: FilterEntity,
+    result: SearchResultEntity,
+    navOptions: NavOptions? = null
+) {
     navigate(
-        route = MainTabRoute.Map(filter),
+        route = MainTabRoute.Map(filter, result),
         navOptions = navOptions
     )
 }
@@ -25,13 +31,17 @@ fun NavGraphBuilder.mapNavGraph(
     navigateToFilter: () -> Unit
 ) {
     composable<MainTabRoute.Map>(
-        typeMap = mapOf(typeOf<FilterEntity>() to FilterType)
-    ) {backStackEntry ->
+        typeMap = mapOf(
+            typeOf<FilterEntity>() to FilterType,
+            typeOf<SearchResultEntity>() to ResultType
+        )
+    ) { backStackEntry ->
         MapRoute(
             paddingValues = paddingValues,
             navigateToSearch = navigateToSearch,
             navigateToFilter = navigateToFilter,
-            filterEntity = backStackEntry.toRoute<MainTabRoute.Map>().filter
+            filterEntity = backStackEntry.toRoute<MainTabRoute.Map>().filter,
+            searchResultEntity = backStackEntry.toRoute<MainTabRoute.Map>().result
         )
     }
 }

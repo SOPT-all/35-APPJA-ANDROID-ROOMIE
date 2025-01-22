@@ -3,6 +3,7 @@ package com.wearerommies.roomie.presentation.navigator.route
 import android.os.Bundle
 import androidx.navigation.NavType
 import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -45,7 +46,8 @@ sealed interface MainTabRoute : Route {
 
     @Serializable
     data class Map(
-        val filter: FilterEntity
+        val filter: FilterEntity,
+        val result: SearchResultEntity
     ) : MainTabRoute
 
     @Serializable
@@ -69,3 +71,23 @@ val FilterType = object : NavType<FilterEntity>(isNullableAllowed = false) {
         return Json.encodeToString(FilterEntity.serializer(), value)
     }
 }
+
+
+val ResultType = object : NavType<SearchResultEntity>(isNullableAllowed = false) {
+    override fun get(bundle: Bundle, key: String): SearchResultEntity? {
+        return bundle.getString(key)?.let { Json.decodeFromString(it) }
+    }
+
+    override fun parseValue(value: String): SearchResultEntity {
+        return Json.decodeFromString(value)
+    }
+
+    override fun put(bundle: Bundle, key: String, value: SearchResultEntity) {
+        bundle.putString(key, Json.encodeToString(SearchResultEntity.serializer(), value))
+    }
+
+    override fun serializeAsValue(value: SearchResultEntity): String {
+        return Json.encodeToString(SearchResultEntity.serializer(), value)
+    }
+}
+

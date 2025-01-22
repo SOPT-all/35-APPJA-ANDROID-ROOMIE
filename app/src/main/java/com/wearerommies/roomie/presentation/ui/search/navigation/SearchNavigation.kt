@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.ui.search.SearchRoute
 
@@ -19,7 +20,7 @@ fun NavController.navigateToSearch(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.searchNavGraph(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateToMap: (FilterEntity) -> Unit
+    navigateToMap: (FilterEntity,SearchResultEntity) -> Unit
 ) {
     composable<Route.Search> {
         SearchRoute(

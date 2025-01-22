@@ -5,6 +5,7 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 
@@ -21,7 +22,7 @@ enum class MainTabType(
     MAP(
         tabIcon = R.drawable.ic_map_line_black_24px,
         tabTitle = R.string.map,
-        route = MainTabRoute.Map(FilterEntity())
+        route = MainTabRoute.Map(FilterEntity(), SearchResultEntity())
     ),
     MY(
         tabIcon = R.drawable.ic_user_line_black_24px,

@@ -8,6 +8,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.type.MainTabType
@@ -48,7 +49,12 @@ class MainNavigator(
 
         when (tab) {
             MainTabType.HOME -> navController.navigateToHome(navOptions)
-            MainTabType.MAP -> navController.navigateToMap(FilterEntity(), navOptions)
+            MainTabType.MAP -> navController.navigateToMap(
+                FilterEntity(),
+                SearchResultEntity(),
+                navOptions
+            )
+
             MainTabType.MY -> navController.navigateToMy(navOptions)
         }
     }
@@ -63,8 +69,8 @@ class MainNavigator(
         }
     }
 
-    fun navigateToMap(filter: FilterEntity) {
-        navController.navigateToMap(filter,navOptions = navOptions {
+    fun navigateToMap(filter: FilterEntity, result: SearchResultEntity) {
+        navController.navigateToMap(filter = filter, result = result, navOptions = navOptions {
             popUpTo<MainTabRoute.Map> {
                 inclusive = true
             }
