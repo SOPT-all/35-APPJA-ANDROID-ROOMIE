@@ -9,5 +9,8 @@ data class SearchState(
     val uiState: EmptyUiState<PersistentList<SearchResultEntity>> = EmptyUiState.Success(
         persistentListOf()
     ),
-    val searchKeyword: String = ""
+    val searchKeyword: String = "",
+    val selectedX: Float = 0F,
+    val selectedY: Float = 0F,
+    val selectedAddress: String = ""
 )
