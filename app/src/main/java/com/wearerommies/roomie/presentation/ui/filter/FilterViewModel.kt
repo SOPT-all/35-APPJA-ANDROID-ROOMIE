@@ -1,6 +1,7 @@
 package com.wearerommies.roomie.presentation.ui.filter
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.presentation.core.util.toFormattedString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.PersistentList
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
@@ -102,7 +104,20 @@ class FilterViewModel @Inject constructor(
         )
     }
 
-    fun applyCondition() {
-        // TODO: sideeffect로 방출하기
+    fun applyCondition() = viewModelScope.launch {
+        _sideEffect.emit(FilterSideEffect.navigateToMap)
+//        houseRepository.bookmarkHouse(houseId = houseId)
+//            .onSuccess { bookmarkState ->
+//                if (bookmarkState) {
+//                    _sideEffect.emit(
+//                        HomeSideEffect.SnackBar(
+//                            message = R.string.add_to_bookmark_list
+//                        )
+//                    )
+//                }
+//                getHomeData()
+//            }.onFailure { error ->
+//                Timber.e(error)
+//            }
     }
 }
