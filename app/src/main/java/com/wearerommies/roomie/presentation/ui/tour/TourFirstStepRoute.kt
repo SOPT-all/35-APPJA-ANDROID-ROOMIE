@@ -31,7 +31,6 @@ import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.component.RoomieButton
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
-import com.wearerommies.roomie.presentation.ui.detail.DetailSideEffect
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailTextWithCheckIcon
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
@@ -44,7 +43,7 @@ fun TourFirstStepRoute(
     houseName: String,
     roomName: String,
     navigateUp: () -> Unit,
-    // navigateTwoStep: () -> Unit,
+    navigateTwoStep: () -> Unit,
     viewModel: TourViewModel = hiltViewModel()
 ) {
 
@@ -58,17 +57,19 @@ fun TourFirstStepRoute(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    /*LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                TourSideEffect.NavigateToTwoStep -> navigateTwoStep()
+                TourSideEffect.NavigateUp -> navigateUp()
+                TourSideEffect.NavigateToSecondStep -> navigateTwoStep()
+                else -> return@collect
             }
         }
-    }*/
+    }
 
     TourFirstStepScreen(
         paddingValues = paddingValues,
-        navigateUp = navigateUp,
+        navigateUp = viewModel::navigateUp,
         navigateSecondStep = viewModel::navigateSecondStep,
         state = state
     )
