@@ -5,5 +5,8 @@ import com.wearerommies.roomie.presentation.core.util.UiState
 
 data class DetailState(
     val uiState: UiState<DetailEntity> = UiState.Loading,
-    val isShowBottomSheet: Boolean = false
+    val isShowBottomSheet: Boolean = false,
+    val isLivingExpanded: Boolean = false,
+    val isKitchenExpanded: Boolean = false,
+    val selectedRoom: Long = -1L
 )

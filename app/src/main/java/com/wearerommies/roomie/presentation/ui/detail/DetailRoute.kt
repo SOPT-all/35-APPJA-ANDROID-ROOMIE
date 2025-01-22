@@ -18,11 +18,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.wearerommies.roomie.R
@@ -68,27 +70,63 @@ import kotlinx.collections.immutable.toPersistentList
 @Composable
 fun DetailRoute(
     paddingValues: PaddingValues,
+    houseId: Long,
     navigateUp: () -> Unit,
-    viewModel: DetailViewModel = hiltViewModel()
+    navigateDetailRoom: (Long, Long, String) -> Unit,
+    navigateDetailHouse: (Long, String) -> Unit,
+    viewModel: DetailViewModel = hiltViewModel(),
 ) {
-    val state = viewModel.state.collectAsStateWithLifecycle()
+    val counter by remember { mutableIntStateOf(0) }
+    val currentCounter by rememberUpdatedState(counter)
 
+    LaunchedEffect(currentCounter) {
+        viewModel.getHouseDetail(houseId)
+    }
+
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                DetailSideEffect.NavigateUp -> navigateUp()
+                is DetailSideEffect.NavigateDetailRoom -> navigateDetailRoom(sideEffect.houseId, sideEffect.roomId, sideEffect.title)
+                is DetailSideEffect.NavigateDetailHouse -> navigateDetailHouse(sideEffect.houseId, sideEffect.title)
+            }
+        }
+    }
+
+    DetailScreen(
+        paddingValues = paddingValues,
+        navigateUp = viewModel::navigateUp,
+        navigateDetailRoom = viewModel::navigateToDetail,
+        navigateDetailHouse = viewModel::navigateToHouse,
+        state = state.uiState,
+        isShowBottomSheet = state.isShowBottomSheet,
+        isLivingExpanded = state.isLivingExpanded,
+        isKitchenExpanded = state.isKitchenExpanded,
+        updateBottomSheetState = viewModel::updateBottomSheetState,
+        updateLivingExpanded = viewModel::updateLivingExpanded,
+        updateKitchenExpanded = viewModel::updatedKitchenExpanded
+    )
 }
 
 @Composable
 fun DetailScreen(
     paddingValues: PaddingValues,
-    navigateUp: () -> Unit,
     state: UiState<DetailEntity>,
     isShowBottomSheet: Boolean,
     isLivingExpanded: Boolean,
     isKitchenExpanded: Boolean,
+    updateBottomSheetState: () -> Unit,
+    updateLivingExpanded: () -> Unit,
+    updateKitchenExpanded: () -> Unit,
+    navigateUp: () -> Unit,
+    navigateDetailRoom: (Long, Long, String) -> Unit,
+    navigateDetailHouse: (Long, String) -> Unit
 ) {
     val scrollState = rememberLazyListState()
     var imageHeight by remember { mutableIntStateOf(0) }
     var titleHeight by remember { mutableIntStateOf(0) }
-
-    var isBottomSheet by remember { mutableStateOf(false) }
 
     val isScrollResponsiveDefault by remember {
         derivedStateOf {
@@ -115,6 +153,7 @@ fun DetailScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(paddingValues)
             ) {
                 RoomieTopBar(
                     backgroundColor = topBarBackgroundColor,
@@ -147,7 +186,7 @@ fun DetailScreen(
                     modifier = Modifier
                         .background(RoomieTheme.colors.grayScale1)
                         .fillMaxWidth()
-                        .padding(bottom=(LocalConfiguration.current.screenHeightDp * 0.103).dp)
+                        .padding(bottom=80.dp)
                 ) {
                     item {
 
@@ -200,6 +239,13 @@ fun DetailScreen(
                     }
 
                     item {
+
+                        val title = stringResource(
+                            R.string.detail_topbar,
+                            state.data.houseInfo.monthlyRent,
+                            state.data.houseInfo.deposit
+                        )
+
                         DetailContentHeader(
                             location = state.data.houseInfo.location,
                             occupancyStatus = state.data.houseInfo.occupancyStatus,
@@ -207,7 +253,7 @@ fun DetailScreen(
                             occupancyTypes = state.data.houseInfo.occupancyTypes,
                             genderPolicy = state.data.houseInfo.genderPolicy,
                             onClickDetailInnerButton = {
-                                // TODO: 상세 이미지 DetailHouse로 이동
+                                navigateDetailHouse(state.data.houseInfo.houseId, title)
                             }
                         )
 
@@ -265,6 +311,11 @@ fun DetailScreen(
                             modifier = Modifier,
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
+                            val title = stringResource(
+                                R.string.detail_topbar,
+                                state.data.houseInfo.monthlyRent,
+                                state.data.houseInfo.deposit
+                            )
                             state.data.rooms.forEach { room ->
                                 DetailRoomInfoCard(
                                     roomStatus = room.status,
@@ -277,7 +328,11 @@ fun DetailScreen(
                                     contractPeriod = room.contractPeriod,
                                     managementFee = room.managementFee,
                                     onClickDetailRoomInfoCard = {
-                                        // TODO: 상세 이미지 DetailRoom으로 이동
+                                        navigateDetailRoom(
+                                            state.data.houseInfo.houseId,
+                                            room.roomId,
+                                            title
+                                        )
                                     },
                                     modifier = Modifier.padding(horizontal = 16.dp)
                                 )
@@ -303,9 +358,7 @@ fun DetailScreen(
                         DetailInnerFacilityCard(
                             text = stringResource(R.string.room_safety_living_facility),
                             facility = state.data.houseInfo.safetyLivingFacility.toPersistentList(),
-                            onClickExpandedButton = {
-                                // TODO: isExpanded 상태 관리
-                            },
+                            onClickExpandedButton = updateLivingExpanded,
                             isExpanded = isLivingExpanded,
                             modifier = Modifier.padding(horizontal = 16.dp)
                         )
@@ -315,9 +368,7 @@ fun DetailScreen(
                         DetailInnerFacilityCard(
                             text = stringResource(R.string.room_kitchen_facility),
                             facility = state.data.houseInfo.safetyLivingFacility.toPersistentList(),
-                            onClickExpandedButton = {
-                                // TODO: isExpanded 상태 관리
-                            },
+                            onClickExpandedButton = updateKitchenExpanded,
                             isExpanded = isKitchenExpanded,
                             modifier = Modifier.padding(horizontal = 16.dp)
                         )
@@ -363,9 +414,11 @@ fun DetailScreen(
                                     ),
                                     textAlign = TextAlign.Center,
                                 )
+
+                                Spacer(Modifier.height(20.dp))
                             }
                         } else {
-                            state.data.roommates.forEach { roommate ->
+                            state.data.roommates.forEachIndexed { index, roommate ->
                                 DetailRoomMateCard(
                                     image = R.drawable.img_profile,
                                     roomMateAge = roommate.age,
@@ -377,7 +430,12 @@ fun DetailScreen(
                                     modifier = Modifier.padding(horizontal = 16.dp)
                                 )
 
-                                Spacer(Modifier.height(12.dp))
+                                if(index != state.data.roommates.lastIndex){
+                                    Spacer(Modifier.height(12.dp))
+                                } else {
+                                    Spacer(Modifier.height(20.dp))
+                                }
+
                             }
                         }
                     }
@@ -423,10 +481,7 @@ fun DetailScreen(
                         text = stringResource(R.string.tour_apply_button),
                         backgroundColor = RoomieTheme.colors.primary,
                         textColor = RoomieTheme.colors.grayScale1,
-                        onClick = {
-                            // TODO: 바텀시트 상태관리
-                            isBottomSheet = !isBottomSheet
-                        },
+                        onClick = updateBottomSheetState,
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth(),
@@ -434,12 +489,10 @@ fun DetailScreen(
                         isPressed = true
                     )
                 }
-                if(isBottomSheet){
+                if(isShowBottomSheet){
                     DetailBottomSheet(
                         rooms = state.data.rooms.toPersistentList(),
-                        onDismissRequest = {
-
-                        },
+                        onDismissRequest = updateBottomSheetState,
                         onButtonClick = {},
                         selectedRoom = null,
                         modifier = Modifier
@@ -528,7 +581,12 @@ fun DetailScreenPreview() {
             )),
             isShowBottomSheet = false,
             isLivingExpanded = true,
-            isKitchenExpanded = false
+            isKitchenExpanded = false,
+            updateBottomSheetState = {},
+            updateLivingExpanded = {},
+            updateKitchenExpanded = {},
+            navigateDetailRoom = { l: Long, l1: Long, s: String -> },
+            navigateDetailHouse = { l: Long, s: String -> }
         )
     }
 }

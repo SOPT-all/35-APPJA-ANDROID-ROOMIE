@@ -78,16 +78,23 @@ class MainNavigator(
         navController.navigateToFilter()
     }
 
-    fun navigateToDetail() {
-        navController.navigateToDetail()
+    fun navigateToDetail(houseId: Long) {
+        navController.navigateToDetail(houseId = houseId)
     }
 
-    fun navigateToDetailHouse() {
-        navController.navigateToDetailHouse()
+    fun navigateToDetailHouse(houseId: Long, title: String) {
+        navController.navigateToDetailHouse(
+            houseId = houseId,
+            title = title
+        )
     }
 
-    fun navigateToDetailRoom() {
-        navController.navigateToDetailRoom()
+    fun navigateToDetailRoom(houseId: Long, roomId: Long, title: String) {
+        navController.navigateToDetailRoom(
+            houseId = houseId,
+            roomId = roomId,
+            title = title
+        )
     }
 
     fun navigateToTour() {
