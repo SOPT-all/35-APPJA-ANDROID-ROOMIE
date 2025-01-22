@@ -82,8 +82,11 @@ class MainNavigator(
         navController.navigateToDetail(houseId = houseId)
     }
 
-    fun navigateToDetailHouse() {
-        navController.navigateToDetailHouse()
+    fun navigateToDetailHouse(houseId: Long, title: String) {
+        navController.navigateToDetailHouse(
+            houseId = houseId,
+            title = title
+        )
     }
 
     fun navigateToDetailRoom(houseId: Long, roomId: Long, title: String) {

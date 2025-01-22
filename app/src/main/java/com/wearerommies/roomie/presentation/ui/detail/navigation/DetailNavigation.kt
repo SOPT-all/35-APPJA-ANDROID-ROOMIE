@@ -20,9 +20,12 @@ fun NavController.navigateToDetail(houseId: Long, navOptions: NavOptions? = null
     )
 }
 
-fun NavController.navigateToDetailHouse(navOptions: NavOptions? = null) {
+fun NavController.navigateToDetailHouse(houseId: Long, title: String, navOptions: NavOptions? = null) {
     navigate(
-        route = Route.DetailHouse,
+        route = Route.DetailHouse(
+            houseId = houseId,
+            title = title
+        ),
         navOptions = navOptions
     )
 }
