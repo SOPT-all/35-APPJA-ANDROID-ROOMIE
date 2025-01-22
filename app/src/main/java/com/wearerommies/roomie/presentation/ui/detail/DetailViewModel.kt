@@ -67,4 +67,23 @@ class DetailViewModel @Inject constructor(
         _sideEffect.emit(DetailSideEffect.NavigateDetailHouse(houseId = houseId, title = title))
     }
 
+    fun navigateToTourApply(houseId: Long, roomId: Long, houseName: String, roomName: String) = viewModelScope.launch {
+        _state.value = _state.value.copy(
+            isShowBottomSheet = !_state.value.isShowBottomSheet
+        )
+        _sideEffect.emit(DetailSideEffect.NavigateTourApply(houseId = houseId, roomId = roomId, houseName = houseName, roomName = roomName))
+    }
+
+    fun updateSelectedTourRoomId(roomId: Long) {
+        _state.value = _state.value.copy(
+            selectedTourRoom = roomId
+        )
+    }
+
+    fun updateSelectedTourRoomName(name: String) {
+        _state.value = _state.value.copy(
+            selectedTourRoomName = name
+        )
+    }
+
 }
