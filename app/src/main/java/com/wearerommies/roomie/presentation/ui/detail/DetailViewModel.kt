@@ -1,6 +1,7 @@
 package com.wearerommies.roomie.presentation.ui.detail
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.domain.repository.HouseRepository
 import com.wearerommies.roomie.presentation.core.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -52,4 +54,13 @@ class DetailViewModel @Inject constructor(
             isKitchenExpanded = !_state.value.isKitchenExpanded
         )
     }
+
+    fun navigateToDetail(houseId: Long, roomId: Long, title: String) = viewModelScope.launch {
+        _sideEffect.emit(DetailSideEffect.NavigateDetailRoom(houseId = houseId, roomId = roomId, title = title))
+    }
+
+    fun navigateUp() = viewModelScope.launch {
+        _sideEffect.emit(DetailSideEffect.NavigateUp)
+    }
+
 }
