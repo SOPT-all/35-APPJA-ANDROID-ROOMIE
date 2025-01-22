@@ -42,7 +42,11 @@ fun DetailBottomSheetTourOptionButton(
                 borderWidth = 1.dp
             )
             .padding(8.dp)
-            .noRippleClickable(onButtonClick)
+            .noRippleClickable(
+                onClick = {
+                    if(isEnabled) onButtonClick()
+                }
+            )
         ,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
