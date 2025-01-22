@@ -26,10 +26,17 @@ sealed interface Route {
     ) : Route
 
     @Serializable
-    data object DetailHouse : Route
+    data class DetailHouse(
+        val houseId: Long,
+        val title: String
+    ) : Route
 
     @Serializable
-    data object DetailRoom : Route
+    data class DetailRoom(
+        val houseId: Long,
+        val roomId: Long,
+        val title: String
+    ) : Route
 
     @Serializable
     data object Tour : Route

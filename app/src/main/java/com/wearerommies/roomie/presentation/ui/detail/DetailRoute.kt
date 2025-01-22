@@ -72,7 +72,9 @@ fun DetailRoute(
     paddingValues: PaddingValues,
     houseId: Long,
     navigateUp: () -> Unit,
-    viewModel: DetailViewModel = hiltViewModel()
+    navigateDetailRoom: (Long, Long, String) -> Unit,
+    navigateDetailHouse: (Long, String) -> Unit,
+    viewModel: DetailViewModel = hiltViewModel(),
 ) {
     val counter by remember { mutableIntStateOf(0) }
     val currentCounter by rememberUpdatedState(counter)
@@ -81,23 +83,27 @@ fun DetailRoute(
         viewModel.getHouseDetail(houseId)
     }
 
-    val state = viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
                 DetailSideEffect.NavigateUp -> navigateUp()
+                is DetailSideEffect.NavigateDetailRoom -> navigateDetailRoom(sideEffect.houseId, sideEffect.roomId, sideEffect.title)
+                is DetailSideEffect.NavigateDetailHouse -> navigateDetailHouse(sideEffect.houseId, sideEffect.title)
             }
         }
     }
 
     DetailScreen(
         paddingValues = paddingValues,
-        navigateUp = navigateUp,
-        state = state.value.uiState,
-        isShowBottomSheet = state.value.isShowBottomSheet,
-        isLivingExpanded = state.value.isLivingExpanded,
-        isKitchenExpanded = state.value.isKitchenExpanded,
+        navigateUp = viewModel::navigateUp,
+        navigateDetailRoom = viewModel::navigateToDetail,
+        navigateDetailHouse = viewModel::navigateToHouse,
+        state = state.uiState,
+        isShowBottomSheet = state.isShowBottomSheet,
+        isLivingExpanded = state.isLivingExpanded,
+        isKitchenExpanded = state.isKitchenExpanded,
         updateBottomSheetState = viewModel::updateBottomSheetState,
         updateLivingExpanded = viewModel::updateLivingExpanded,
         updateKitchenExpanded = viewModel::updatedKitchenExpanded
@@ -115,6 +121,8 @@ fun DetailScreen(
     updateLivingExpanded: () -> Unit,
     updateKitchenExpanded: () -> Unit,
     navigateUp: () -> Unit,
+    navigateDetailRoom: (Long, Long, String) -> Unit,
+    navigateDetailHouse: (Long, String) -> Unit
 ) {
     val scrollState = rememberLazyListState()
     var imageHeight by remember { mutableIntStateOf(0) }
@@ -178,7 +186,7 @@ fun DetailScreen(
                     modifier = Modifier
                         .background(RoomieTheme.colors.grayScale1)
                         .fillMaxWidth()
-                        .padding(bottom=(LocalConfiguration.current.screenHeightDp * 0.103).dp)
+                        .padding(bottom=80.dp)
                 ) {
                     item {
 
@@ -231,6 +239,13 @@ fun DetailScreen(
                     }
 
                     item {
+
+                        val title = stringResource(
+                            R.string.detail_topbar,
+                            state.data.houseInfo.monthlyRent,
+                            state.data.houseInfo.deposit
+                        )
+
                         DetailContentHeader(
                             location = state.data.houseInfo.location,
                             occupancyStatus = state.data.houseInfo.occupancyStatus,
@@ -238,7 +253,7 @@ fun DetailScreen(
                             occupancyTypes = state.data.houseInfo.occupancyTypes,
                             genderPolicy = state.data.houseInfo.genderPolicy,
                             onClickDetailInnerButton = {
-                                // TODO: 상세 이미지 DetailHouse로 이동
+                                navigateDetailHouse(state.data.houseInfo.houseId, title)
                             }
                         )
 
@@ -296,6 +311,11 @@ fun DetailScreen(
                             modifier = Modifier,
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
+                            val title = stringResource(
+                                R.string.detail_topbar,
+                                state.data.houseInfo.monthlyRent,
+                                state.data.houseInfo.deposit
+                            )
                             state.data.rooms.forEach { room ->
                                 DetailRoomInfoCard(
                                     roomStatus = room.status,
@@ -308,7 +328,11 @@ fun DetailScreen(
                                     contractPeriod = room.contractPeriod,
                                     managementFee = room.managementFee,
                                     onClickDetailRoomInfoCard = {
-                                        // TODO: 상세 이미지 DetailRoom으로 이동
+                                        navigateDetailRoom(
+                                            state.data.houseInfo.houseId,
+                                            room.roomId,
+                                            title
+                                        )
                                     },
                                     modifier = Modifier.padding(horizontal = 16.dp)
                                 )
@@ -390,9 +414,11 @@ fun DetailScreen(
                                     ),
                                     textAlign = TextAlign.Center,
                                 )
+
+                                Spacer(Modifier.height(20.dp))
                             }
                         } else {
-                            state.data.roommates.forEach { roommate ->
+                            state.data.roommates.forEachIndexed { index, roommate ->
                                 DetailRoomMateCard(
                                     image = R.drawable.img_profile,
                                     roomMateAge = roommate.age,
@@ -404,7 +430,12 @@ fun DetailScreen(
                                     modifier = Modifier.padding(horizontal = 16.dp)
                                 )
 
-                                Spacer(Modifier.height(12.dp))
+                                if(index != state.data.roommates.lastIndex){
+                                    Spacer(Modifier.height(12.dp))
+                                } else {
+                                    Spacer(Modifier.height(20.dp))
+                                }
+
                             }
                         }
                     }
@@ -553,7 +584,9 @@ fun DetailScreenPreview() {
             isKitchenExpanded = false,
             updateBottomSheetState = {},
             updateLivingExpanded = {},
-            updateKitchenExpanded = {}
+            updateKitchenExpanded = {},
+            navigateDetailRoom = { l: Long, l1: Long, s: String -> },
+            navigateDetailHouse = { l: Long, s: String -> }
         )
     }
 }

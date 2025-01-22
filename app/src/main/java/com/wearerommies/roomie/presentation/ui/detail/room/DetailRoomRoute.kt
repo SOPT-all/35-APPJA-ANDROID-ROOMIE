@@ -13,6 +13,11 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
@@ -21,9 +26,11 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.DetailRoomEntity
+import com.wearerommies.roomie.presentation.core.component.RoomieLoadingView
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
@@ -40,12 +47,39 @@ import kotlinx.collections.immutable.toPersistentList
 @Composable
 fun DetailRoomRoute(
     paddingValues: PaddingValues,
+    houseId: Long,
+    roomId: Long,
+    title: String,
     navigateUp: () -> Unit,
     viewModel: DetailRoomViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.collectAsStateWithLifecycle()
+    val counter by remember { mutableIntStateOf(0) }
+    val currentCounter by rememberUpdatedState(counter)
 
-    // TODO: 하우스 이름 navigation으로 전달
+    LaunchedEffect(currentCounter) {
+        viewModel.getRoomDetail(houseId)
+        viewModel.addRoom(roomId)
+    }
+
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                DetailRoomSideEffect.NavigateUp -> navigateUp()
+            }
+        }
+    }
+
+    DetailRoomScreen(
+        paddingValues = paddingValues,
+        navigateUp = viewModel::navigateUp,
+        state = state.uiState,
+        expandedRoomList = state.expandedRoomList,
+        title = title,
+        openDetailRoom = viewModel::addRoom,
+        closeDetailRoom = viewModel::removeRoom
+    )
 }
 
 @Composable
@@ -53,93 +87,105 @@ fun DetailRoomScreen(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
     state: UiState<List<DetailRoomEntity>>,
-    // TODO: 뷰모델 state 상태관리
     expandedRoomList: PersistentList<Long>,
-    modifier: Modifier = Modifier
+    title: String,
+    modifier: Modifier = Modifier,
+    openDetailRoom: (Long) -> Unit,
+    closeDetailRoom: (Long) -> Unit
 ) {
 
-    val screenHeight = LocalConfiguration.current.screenHeightDp
+    when(state) {
+        UiState.Failure -> TODO()
+        UiState.Loading -> {
+            RoomieLoadingView()
+        }
+        is UiState.Success -> {
+            val screenHeight = LocalConfiguration.current.screenHeightDp
 
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(RoomieTheme.colors.grayScale1)
-            .padding(paddingValues),
-    ) {
-        RoomieTopBar(
-            leadingIcon = {
-                Icon(
-                    modifier = Modifier
-                        .padding(all = 10.dp)
-                        .noRippleClickable(navigateUp),
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_line_black_24px),
-                    contentDescription = stringResource(R.string.move_back)
-                )
-            },
-            title = "루미 1호점", // TODO: 하우스 이름 navigation으로 전달
-            modifier = Modifier
-                .bottomBorder(
-                    color = RoomieTheme.colors.grayScale4,
-                    height = convertDpToFloat(1.dp)
-                )
-        )
-
-        when(state) {
-            UiState.Failure -> TODO()
-            UiState.Loading -> TODO()
-            is UiState.Success -> {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp)
-                ) {
-
-                    item {
-                        Spacer(Modifier.height(32.dp))
-
-                        Text(
-                            text = stringResource(R.string.room_facility),
-                            style = RoomieTheme.typography.heading5Sb18,
-                            color = RoomieTheme.colors.grayScale12
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .background(RoomieTheme.colors.grayScale1)
+                    .padding(paddingValues),
+            ) {
+                RoomieTopBar(
+                    leadingIcon = {
+                        Icon(
+                            modifier = Modifier
+                                .padding(all = 10.dp)
+                                .noRippleClickable(navigateUp),
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_line_black_24px),
+                            contentDescription = stringResource(R.string.move_back)
                         )
+                    },
+                    title = title,
+                    modifier = Modifier
+                        .bottomBorder(
+                            color = RoomieTheme.colors.grayScale4,
+                            height = convertDpToFloat(1.dp)
+                        )
+                )
 
-                        Spacer(Modifier.height(16.dp))
+                when(state) {
+                    UiState.Failure -> TODO()
+                    UiState.Loading -> {
+                        RoomieLoadingView()
                     }
+                    is UiState.Success -> {
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(horizontal = 16.dp)
+                        ) {
 
-                    itemsIndexed(state.data) { index, room ->
-                        val isExpanded = expandedRoomList.contains(room.roomId)
+                            item {
+                                Spacer(Modifier.height(32.dp))
 
-                        DetailInnerFacilityCard(
-                            text = room.name,
-                            facility = room.facility.toPersistentList(),
-                            onClickExpandedButton = {
-                                if(isExpanded) {
-                                    expandedRoomList.remove(room.roomId)
-                                } else {
-                                    expandedRoomList.add(room.roomId)
-                                }
-                            },
-                            imageContent = {
-
-                                Spacer(Modifier.height(12.dp))
-
-                                DetailImagePager(
-                                    images = room.imagesUrl,
-                                    modifier = Modifier
-                                        .height((screenHeight * 0.235).dp),
-                                    contentDescription = stringResource(R.string.room_image)
+                                Text(
+                                    text = stringResource(R.string.room_facility),
+                                    style = RoomieTheme.typography.heading5Sb18,
+                                    color = RoomieTheme.colors.grayScale12
                                 )
-                            },
-                            roomStatus = room.status,
-                            isExpanded = isExpanded
-                        )
 
-                        if(index != state.data.lastIndex){
-                            Spacer(Modifier.height(10.dp))
-                        } else {
-                            Spacer(Modifier.height(28.dp))
+                                Spacer(Modifier.height(16.dp))
+                            }
+
+                            itemsIndexed(state.data) { index, room ->
+                                val isExpanded = expandedRoomList.contains(room.roomId)
+
+                                DetailInnerFacilityCard(
+                                    text = room.name,
+                                    facility = room.facility.toPersistentList(),
+                                    onClickExpandedButton = {
+                                        if(isExpanded) {
+                                            closeDetailRoom(room.roomId)
+                                        } else {
+                                            openDetailRoom(room.roomId)
+                                        }
+                                    },
+                                    imageContent = {
+
+                                        Spacer(Modifier.height(12.dp))
+
+                                        DetailImagePager(
+                                            images = room.imagesUrl.toPersistentList(),
+                                            modifier = Modifier
+                                                .height((screenHeight * 0.235).dp),
+                                            contentDescription = stringResource(R.string.room_image)
+                                        )
+                                    },
+                                    roomStatus = room.status,
+                                    isExpanded = isExpanded
+                                )
+
+                                if(index != state.data.lastIndex){
+                                    Spacer(Modifier.height(10.dp))
+                                } else {
+                                    Spacer(Modifier.height(28.dp))
+                                }
+
+                            }
                         }
-
                     }
                 }
             }
@@ -222,7 +268,10 @@ fun DetailRoomScreenPreview() {
                         )
                     )
                 )
-            )
+            ),
+            openDetailRoom = {},
+            closeDetailRoom = {},
+            title = "100/53"
         )
     }
 }
