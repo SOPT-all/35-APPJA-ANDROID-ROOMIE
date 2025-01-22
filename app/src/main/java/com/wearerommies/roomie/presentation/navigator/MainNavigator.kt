@@ -86,8 +86,12 @@ class MainNavigator(
         navController.navigateToDetailHouse()
     }
 
-    fun navigateToDetailRoom() {
-        navController.navigateToDetailRoom()
+    fun navigateToDetailRoom(houseId: Long, roomId: Long, title: String) {
+        navController.navigateToDetailRoom(
+            houseId = houseId,
+            roomId = roomId,
+            title = title
+        )
     }
 
     fun navigateToTour() {
