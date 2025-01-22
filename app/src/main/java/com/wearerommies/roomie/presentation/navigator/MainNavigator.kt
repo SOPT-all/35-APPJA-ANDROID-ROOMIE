@@ -99,6 +99,9 @@ class MainNavigator(
 
     fun navigateToTourApply(houseId: Long, roomId: Long, houseName: String, roomName: String) {
         navController.navigateToTour(houseId, roomId, houseName, roomName)
+    fun navigateToTourFirstStep(houseId: Long, roomId: Long, houseName: String, roomName: String) {
+        navController.navigateToTourFirstStep(houseId, roomId, houseName, roomName)
+    }
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =

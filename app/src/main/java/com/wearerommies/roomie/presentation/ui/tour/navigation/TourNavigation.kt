@@ -8,8 +8,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.ui.tour.TourFirstStepRoute
+import com.wearerommies.roomie.presentation.ui.tour.TourSecondStepRoute
+import com.wearerommies.roomie.presentation.ui.tour.TourViewModel
 
-fun NavController.navigateToTour(houseId: Long, roomId: Long, houseName: String, roomName: String, navOptions: NavOptions? = null) {
+fun NavController.navigateToTourFirstStep(houseId: Long, roomId: Long, houseName: String, roomName: String, navOptions: NavOptions? = null) {
     navigate(
         route = Route.TourFirstStep(
             houseId = houseId,
