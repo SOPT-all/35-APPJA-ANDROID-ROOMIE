@@ -81,6 +81,7 @@ fun HomeRoute(
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
     navigateToDetail: (Long) -> Unit,
+    navigateToLanding: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -115,6 +116,7 @@ fun HomeRoute(
                     is HomeSideEffect.NavigateToMood -> navigateToMood(sideEffect.moodTag)
                     is HomeSideEffect.NavigateToMap -> navigateToMap()
                     is HomeSideEffect.NavigateToDetail -> navigateToDetail(sideEffect.houseId)
+                    is HomeSideEffect.NavigateToLanding -> navigateToLanding()
                 }
             }
     }
@@ -127,6 +129,7 @@ fun HomeRoute(
         navigateToMood = viewModel::navigateToMood,
         navigateToMap = viewModel::navigateToMap,
         navigateToDetail = viewModel::navigateToDetail,
+        navigateToLanding = viewModel::navigateToLanding,
         onLikeClick = viewModel::bookmarkHouse,
         state = state.uiState
     )
@@ -142,6 +145,7 @@ fun HomeScreen(
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
     navigateToDetail: (Long) -> Unit,
+    navigateToLanding: () -> Unit,
     onLikeClick: (Long) -> Unit,
     state: HomeDataEntity,
     modifier: Modifier = Modifier
@@ -268,9 +272,7 @@ fun HomeScreen(
                 text = stringResource(R.string.home_banner_message),
                 textStyle = RoomieTheme.typography.body3M14,
                 textColor = RoomieTheme.colors.grayScale10,
-                onClick = {
-                    //todo: 웹뷰 띄우기
-                }
+                onClick = { navigateToLanding() }
             )
 
             Spacer(
@@ -535,6 +537,7 @@ fun HomeScreenPreview() {
             navigateToMood = {},
             navigateToMap = {},
             navigateToDetail = {},
+            navigateToLanding = {},
             onLikeClick = {},
             state = HomeDataEntity(
                 name = "닉넴",

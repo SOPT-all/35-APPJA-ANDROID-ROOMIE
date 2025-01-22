@@ -11,14 +11,15 @@ import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.type.MainTabType
 import com.wearerommies.roomie.presentation.ui.bookmark.navigation.navigateToBookmark
-import com.wearerommies.roomie.presentation.ui.filter.navigation.navigateToFilter
-import com.wearerommies.roomie.presentation.ui.home.navigation.navigateToHome
-import com.wearerommies.roomie.presentation.ui.map.navigation.navigateToMap
-import com.wearerommies.roomie.presentation.ui.mood.navigation.navigateToMood
-import com.wearerommies.roomie.presentation.ui.mypage.navigation.navigateToMy
 import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetail
 import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailHouse
 import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailRoom
+import com.wearerommies.roomie.presentation.ui.filter.navigation.navigateToFilter
+import com.wearerommies.roomie.presentation.ui.home.navigation.navigateToHome
+import com.wearerommies.roomie.presentation.ui.landing.navigation.navigateToLanding
+import com.wearerommies.roomie.presentation.ui.map.navigation.navigateToMap
+import com.wearerommies.roomie.presentation.ui.mood.navigation.navigateToMood
+import com.wearerommies.roomie.presentation.ui.mypage.navigation.navigateToMy
 import com.wearerommies.roomie.presentation.ui.search.navigation.navigateToSearch
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTour
 
@@ -99,6 +100,10 @@ class MainNavigator(
 
     fun navigateToTour() {
         navController.navigateToTour()
+    }
+
+    fun navigateToLanding() {
+        navController.navigateToLanding()
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =

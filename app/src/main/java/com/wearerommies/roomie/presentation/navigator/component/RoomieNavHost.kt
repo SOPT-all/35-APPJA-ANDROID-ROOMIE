@@ -9,6 +9,7 @@ import com.wearerommies.roomie.presentation.ui.bookmark.navigation.bookmarkNavGr
 import com.wearerommies.roomie.presentation.ui.detail.navigation.detailNavGraph
 import com.wearerommies.roomie.presentation.ui.filter.navigation.filterNavGraph
 import com.wearerommies.roomie.presentation.ui.home.navigation.homeNavGraph
+import com.wearerommies.roomie.presentation.ui.landing.navigation.landingNavGraph
 import com.wearerommies.roomie.presentation.ui.map.navigation.mapNavGraph
 import com.wearerommies.roomie.presentation.ui.mood.navigation.moodNavGraph
 import com.wearerommies.roomie.presentation.ui.mypage.navigation.myNavGraph
@@ -31,7 +32,8 @@ fun RoomieNavHost(
             navigateToBookmark = navigator::navigateToBookmark,
             navigateToMood = navigator::navigateToMood,
             navigateToMap = { navigator.navigate(tab = MainTabType.MAP) },
-            navigateToDetail = navigator::navigateToDetail
+            navigateToDetail = navigator::navigateToDetail,
+            navigateToLanding = navigator::navigateToLanding
         )
         mapNavGraph(
             paddingValues = padding,
@@ -65,6 +67,10 @@ fun RoomieNavHost(
             navigateDetailHouse = navigator::navigateToDetailHouse
         )
         tourNavGraph(
+            paddingValues = padding,
+            navigateUp = navigator::popBackStackIfNotHome
+        )
+        landingNavGraph(
             paddingValues = padding,
             navigateUp = navigator::popBackStackIfNotHome
         )

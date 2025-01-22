@@ -20,8 +20,9 @@ fun NavGraphBuilder.homeNavGraph(
     navigateToBookmark: () -> Unit,
     navigateToMood: (String) -> Unit,
     navigateToMap: () -> Unit,
-    navigateToDetail: (Long) -> Unit
-    ) {
+    navigateToDetail: (Long) -> Unit,
+    navigateToLanding: () -> Unit,
+) {
     composable<MainTabRoute.Home> {
         HomeRoute(
             paddingValues = paddingValues,
@@ -29,7 +30,8 @@ fun NavGraphBuilder.homeNavGraph(
             navigateToBookmark = navigateToBookmark,
             navigateToMood = navigateToMood,
             navigateToMap = navigateToMap,
-            navigateToDetail = navigateToDetail
+            navigateToDetail = navigateToDetail,
+            navigateToLanding = navigateToLanding
         )
     }
 }

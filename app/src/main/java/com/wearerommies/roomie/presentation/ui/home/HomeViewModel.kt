@@ -94,6 +94,10 @@ class HomeViewModel @Inject constructor(
         )
     }
 
+    fun navigateToLanding() = viewModelScope.launch {
+        _sideEffect.emit(HomeSideEffect.NavigateToLanding)
+    }
+
     fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
         houseRepository.bookmarkHouse(houseId = houseId)
             .onSuccess { bookmarkState ->
