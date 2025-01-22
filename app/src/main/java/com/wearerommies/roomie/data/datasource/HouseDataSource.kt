@@ -3,6 +3,7 @@ package com.wearerommies.roomie.data.datasource
 import com.wearerommies.roomie.data.dto.response.BaseResponse
 import com.wearerommies.roomie.data.dto.response.ResponseBookmarkListDto
 import com.wearerommies.roomie.data.dto.response.ResponseDetailDto
+import com.wearerommies.roomie.data.dto.response.ResponseDetailRoomDto
 import com.wearerommies.roomie.data.dto.response.ResponseMoodDto
 import com.wearerommies.roomie.data.service.HouseService
 import javax.inject.Inject
@@ -21,4 +22,7 @@ class HouseDataSource @Inject constructor(
 
     suspend fun getHouseDetail(houseId: Long): BaseResponse<ResponseDetailDto> =
         houseService.getHouseDetail(houseId = houseId)
+
+    suspend fun getRoomDetail(houseId: Long): BaseResponse<ResponseDetailRoomDto> =
+        houseService.getRoomDetail(houseId = houseId)
 }
