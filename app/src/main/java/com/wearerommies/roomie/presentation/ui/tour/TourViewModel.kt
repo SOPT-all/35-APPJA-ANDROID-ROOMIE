@@ -26,15 +26,10 @@ class TourViewModel @Inject constructor(
     val sideEffect: SharedFlow<TourSideEffect>
         get() = _sideEffect.asSharedFlow()
 
-    fun navigateSecondStep()  = viewModelScope.launch {
-        _sideEffect.emit(TourSideEffect.NavigateToTwoStep)
-    }
-
-    suspend fun initState(houseId: Long, roomId: Long, houseName: String, roomName: String) {
+    fun initState(houseId: Long, roomId: Long, houseName: String, roomName: String) {
         _state.value = _state.value.copy(
-            TourEntity(
-                houseId = houseId,
-                roomId = roomId
+            uiState = TourEntity(
+                houseId = houseId, roomId = roomId
             ),
             houseName = houseName,
             roomName = roomName
