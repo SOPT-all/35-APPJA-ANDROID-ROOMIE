@@ -36,10 +36,11 @@ import kotlinx.collections.immutable.persistentListOf
 fun DetailBottomSheet(
     rooms: PersistentList<DetailEntity.Room>,
     onDismissRequest: () -> Unit,
-    onButtonClick: (Long) -> Unit,
+    onOptionButtonClick: (Long, String) -> Unit,
+    onApplyButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     isEnabled: Boolean = false,
-    selectedRoom: Long? = null
+    selectedTourRoom: Long? = null
 ) {
     ModalBottomSheet(
         onDismissRequest = {
@@ -102,11 +103,11 @@ fun DetailBottomSheet(
                         DetailBottomSheetTourOptionButton(
                             roomName = room.name,
                             roomPrice = stringResource(R.string.bottom_sheet_price, (room.deposit / 10000), (room.monthlyRent / 10000)),
-                            isSelected = room.roomId == selectedRoom,
+                            isSelected = room.roomId == selectedTourRoom,
                             isEnabled = room.isTourAvailable,
                             modifier = Modifier.weight(1f),
                             onButtonClick = {
-                                onButtonClick(room.roomId)
+                                onOptionButtonClick(room.roomId, room.name)
                             }
                         )
                     }
@@ -121,8 +122,12 @@ fun DetailBottomSheet(
             RoomieButton(
                 text = stringResource(R.string.tour_apply_button),
                 backgroundColor = RoomieTheme.colors.primary,
+                enabledColor = RoomieTheme.colors.grayScale6,
                 textColor = RoomieTheme.colors.grayScale1,
-                onClick = {},
+                onClick = {
+                    onApplyButtonClick()
+                },
+                isEnabled = isEnabled,
                 isPressed = true,
                 pressedColor = RoomieTheme.colors.primaryLight1,
                 modifier = Modifier
@@ -181,7 +186,8 @@ fun DetailModalBottomSheetPreview() {
                 ),
 
             ),
-            onButtonClick = {}
+            onOptionButtonClick = { id: Long, name: String -> },
+            onApplyButtonClick = {}
         )
     }
 }
