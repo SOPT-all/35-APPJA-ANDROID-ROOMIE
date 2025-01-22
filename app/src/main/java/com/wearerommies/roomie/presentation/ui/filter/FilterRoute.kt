@@ -104,7 +104,7 @@ fun FilterScreen(
     depositStart: Int,
     depositEnd: Int,
     genderPolicy: PersistentList<String>,
-    preferredDate: String?,
+    preferredDate: String,
     occupancyType: PersistentList<String>,
     contractPeriod: PersistentList<Int>,
     setDepositRangeStart: (String) -> Unit,
