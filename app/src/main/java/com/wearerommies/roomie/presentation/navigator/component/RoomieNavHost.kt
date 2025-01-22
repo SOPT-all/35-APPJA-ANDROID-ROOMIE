@@ -56,7 +56,8 @@ fun RoomieNavHost(
         )
         filterNavGraph(
             paddingValues = padding,
-            navigateUp = navigator::popBackStackIfNotHome
+            navigateUp = navigator::popBackStackIfNotHome,
+            navigateToMap = navigator::navigateToMap
         )
         detailNavGraph(
             paddingValues = padding,
