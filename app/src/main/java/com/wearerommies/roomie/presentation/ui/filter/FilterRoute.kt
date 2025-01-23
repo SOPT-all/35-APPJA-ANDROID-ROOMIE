@@ -62,7 +62,7 @@ fun FilterRoute(
                 when (sideEffect) {
                     is FilterSideEffect.navigateToMap -> navigateToMap(
                         sideEffect.filter,
-                        sideEffect.result
+                        sideEffect.searchResult
                     )
                 }
             }

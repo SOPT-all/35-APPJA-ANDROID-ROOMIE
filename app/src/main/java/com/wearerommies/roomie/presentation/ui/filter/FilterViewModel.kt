@@ -1,6 +1,5 @@
 package com.wearerommies.roomie.presentation.ui.filter
 
-import android.text.TextUtils.replace
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.domain.entity.FilterEntity
@@ -126,7 +125,7 @@ class FilterViewModel @Inject constructor(
                     occupancyTypes = _state.value.occupancyType,
                     contractPeriod = _state.value.contractType
                 ),
-                result = SearchResultEntity()
+                searchResult = SearchResultEntity()
             )
         )
     }

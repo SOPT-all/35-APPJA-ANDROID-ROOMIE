@@ -6,6 +6,6 @@ import com.wearerommies.roomie.domain.entity.SearchResultEntity
 sealed class FilterSideEffect {
     data class navigateToMap(
         val filter: FilterEntity,
-        val result: SearchResultEntity
+        val searchResult: SearchResultEntity
     ) : FilterSideEffect()
 }
