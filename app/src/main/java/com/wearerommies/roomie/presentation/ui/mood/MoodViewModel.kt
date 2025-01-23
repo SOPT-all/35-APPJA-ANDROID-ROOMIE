@@ -65,8 +65,8 @@ class MoodViewModel @Inject constructor(
 
     fun bookmarkHouse(houseId: Long, moodTag: String) = viewModelScope.launch {
         houseRepository.bookmarkHouse(houseId = houseId)
-            .onSuccess { bookmarkState ->
-                if (bookmarkState) {
+            .onSuccess { response ->
+                if (response.isPinned) {
                     _sideEffect.emit(
                         MoodSideEffect.SnackBar(
                             message = R.string.add_to_bookmark_list
