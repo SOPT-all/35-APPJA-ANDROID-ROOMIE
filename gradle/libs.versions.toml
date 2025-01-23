@@ -6,7 +6,6 @@ versionCode = "1"
 versionName = "1.0.0"
 jvmTarget = "17"
 kotlinCompilerExtensionVersion = "1.5.13"
-accompanistSystemuicontroller = "0.17.0"
 
 # Kotlin
 agp = "8.7.3"
@@ -125,9 +124,6 @@ monitor = { group = "androidx.test", name = "monitor", version.ref = "monitorVer
 
 # Web View
 accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "accompanistWebview" }
-
-# Status Bar
-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
