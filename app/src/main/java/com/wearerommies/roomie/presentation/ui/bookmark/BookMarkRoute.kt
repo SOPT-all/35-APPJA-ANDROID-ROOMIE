@@ -59,6 +59,7 @@ import kotlinx.collections.immutable.toPersistentList
 fun BookMarkRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
+    navigateToDetail: (Long) -> Unit,
     viewModel: BookMarkViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -85,6 +86,8 @@ fun BookMarkRoute(
                             duration = SnackbarDuration.Short
                         )
                     }
+
+                    is BookMarkSideEffect.NavigateToDetail -> navigateToDetail(sideEffect.houseId)
                 }
             }
     }
@@ -93,6 +96,7 @@ fun BookMarkRoute(
         paddingValues = paddingValues,
         snackBarHost = snackBarHost,
         navigateUp = navigateUp,
+        navigateToDetail = viewModel::navigateToDetail,
         onLikeClick = viewModel::bookmarkHouse,
         state = state.uiState
     )
@@ -104,6 +108,7 @@ fun BookMarkScreen(
     paddingValues: PaddingValues,
     snackBarHost: SnackbarHostState,
     navigateUp: () -> Unit,
+    navigateToDetail: (Long) -> Unit,
     state: EmptyUiState<List<RoomCardEntity>>,
     onLikeClick: (Long) -> Unit,
     modifier: Modifier = Modifier
@@ -239,9 +244,7 @@ fun BookMarkScreen(
                                 contractTerm = item.contractTerm,
                                 mainImgUrl = item.mainImgUrl
                             ),
-                            onClick = {
-                                //todo: 상세 매물 페이지로 이동
-                            },
+                            onClick = { navigateToDetail(item.houseId) },
                             onLikeClick = { onLikeClick(item.houseId) }
                         )
                     }
@@ -273,6 +276,7 @@ fun BookMarkScreenPreview() {
             paddingValues = PaddingValues(),
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
+            navigateToDetail = {},
             onLikeClick = {},
             state = EmptyUiState.Success(
                 listOf(

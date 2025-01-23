@@ -20,14 +20,16 @@ fun NavController.navigateToMood(moodTag: String, navOptions: NavOptions? = null
 
 fun NavGraphBuilder.moodNavGraph(
     paddingValues: PaddingValues,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
+    navigateToDetail: (Long) -> Unit
 ) {
     composable<Route.Mood> { backStackEntry ->
         val moodTag = backStackEntry.toRoute<Route.Mood>().moodTag
         MoodRoute(
             paddingValues = paddingValues,
             moodTag = moodTag,
-            navigateUp = navigateUp
+            navigateUp = navigateUp,
+            navigateToDetail = navigateToDetail
         )
     }
 }

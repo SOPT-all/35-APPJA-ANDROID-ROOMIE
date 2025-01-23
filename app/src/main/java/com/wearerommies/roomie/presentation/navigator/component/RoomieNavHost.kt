@@ -50,11 +50,13 @@ fun RoomieNavHost(
         )
         moodNavGraph(
             paddingValues = padding,
-            navigateUp = navigator::popBackStackIfNotHome
+            navigateUp = navigator::popBackStackIfNotHome,
+            navigateToDetail = navigator::navigateToDetail
         )
         bookmarkNavGraph(
             paddingValues = padding,
-            navigateUp = navigator::popBackStackIfNotHome
+            navigateUp = navigator::popBackStackIfNotHome,
+            navigateToDetail = navigator::navigateToDetail
         )
         filterNavGraph(
             paddingValues = padding,

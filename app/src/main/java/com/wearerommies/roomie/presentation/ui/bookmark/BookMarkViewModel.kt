@@ -78,4 +78,12 @@ class BookMarkViewModel @Inject constructor(
                 Timber.e(error)
             }
     }
+
+    fun navigateToDetail(houseId: Long) = viewModelScope.launch {
+        _sideEffect.emit(
+            BookMarkSideEffect.NavigateToDetail(
+                houseId = houseId
+            )
+        )
+    }
 }

@@ -81,4 +81,12 @@ class MoodViewModel @Inject constructor(
             }
     }
 
+    fun navigateToDetail(houseId: Long) = viewModelScope.launch {
+        _sideEffect.emit(
+            MoodSideEffect.NavigateToDetail(
+                houseId = houseId
+            )
+        )
+    }
+
 }
