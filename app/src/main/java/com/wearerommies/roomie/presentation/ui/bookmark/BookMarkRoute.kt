@@ -23,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,6 +57,7 @@ import com.wearerommies.roomie.presentation.ui.bookmark.component.BookmarkEmptyV
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.launch
 
 @Composable
 fun BookMarkRoute(
@@ -71,6 +73,7 @@ fun BookMarkRoute(
     val counter by remember { mutableIntStateOf(0) }
 
     val currentCounter by rememberUpdatedState(counter)
+    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(currentCounter) {
         viewModel.getBookMarkList()
@@ -83,10 +86,12 @@ fun BookMarkRoute(
                     is BookMarkSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
                     is BookMarkSideEffect.SnackBar -> {
                         snackBarHost.currentSnackbarData?.dismiss()
-                        snackBarHost.showSnackbar(
-                            message = context.getString(sideEffect.message),
-                            duration = SnackbarDuration.Short
-                        )
+                        coroutineScope.launch {
+                            snackBarHost.showSnackbar(
+                                message = context.getString(sideEffect.message),
+                                duration = SnackbarDuration.Short
+                            )
+                        }
                     }
 
                     is BookMarkSideEffect.NavigateToDetail -> navigateToDetail(sideEffect.houseId)
