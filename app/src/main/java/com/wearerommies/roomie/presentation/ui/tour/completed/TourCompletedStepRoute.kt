@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui.tour
+package com.wearerommies.roomie.presentation.ui.tour.completed
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -21,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.component.RoomieButton
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
@@ -30,9 +32,25 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun TourCompletedStepRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    viewModel: TourViewModel = hiltViewModel()
+    navigateToHome: () -> Unit,
+    viewModel: TourCompletedStepViewModel = hiltViewModel()
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
 
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                is TourCompletedSideEffect.NavigateUp -> navigateUp()
+                is TourCompletedSideEffect.NavigateToHome -> navigateToHome()
+            }
+        }
+    }
+
+    TourCompletedStepScreen(
+        paddingValues = paddingValues,
+        navigateUp = viewModel::navigateUp,
+        navigateToHome = viewModel::navigateHome,
+    )
 }
 
 @Composable
@@ -40,7 +58,6 @@ fun TourCompletedStepScreen(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
     navigateToHome: () -> Unit,
-    state: TourState,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -90,7 +107,7 @@ fun TourCompletedStepScreen(
                 text = stringResource(R.string.tour_other_room),
                 backgroundColor = RoomieTheme.colors.grayScale1,
                 textColor = RoomieTheme.colors.grayScale8,
-                onClick = {},
+                onClick = navigateUp,
                 modifier = Modifier
                     .weight(0.4613F),
                 borderColor = RoomieTheme.colors.grayScale6,
@@ -100,7 +117,7 @@ fun TourCompletedStepScreen(
                 text = stringResource(R.string.tour_completed),
                 backgroundColor = RoomieTheme.colors.primary,
                 textColor = RoomieTheme.colors.grayScale1,
-                onClick = {},
+                onClick = navigateToHome,
                 modifier = Modifier
                     .weight(0.4F),
                 isPressed = true,
@@ -117,11 +134,7 @@ fun TourCompletedStepScreenPreview() {
         TourCompletedStepScreen(
             paddingValues = PaddingValues(0.dp),
             navigateUp = {},
-            navigateToHome = {},
-            state = TourState(
-                houseName = "해피쉐어 루미 건대점",
-                roomName = "1A(싱글배드)"
-            )
+            navigateToHome = {}
         )
     }
 }

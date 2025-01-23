@@ -2,6 +2,7 @@ package com.wearerommies.roomie.presentation.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wearerommies.roomie.domain.entity.TourEntity
 import com.wearerommies.roomie.domain.repository.HouseRepository
 import com.wearerommies.roomie.presentation.core.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -65,6 +66,35 @@ class DetailViewModel @Inject constructor(
 
     fun navigateToHouse(houseId: Long, title: String) = viewModelScope.launch {
         _sideEffect.emit(DetailSideEffect.NavigateDetailHouse(houseId = houseId, title = title))
+    }
+
+    fun navigateToTourApply(houseId: Long, roomId: Long, houseName: String, roomName: String) =
+        viewModelScope.launch {
+            _state.value = _state.value.copy(
+                isShowBottomSheet = !_state.value.isShowBottomSheet
+            )
+            _sideEffect.emit(
+                DetailSideEffect.NavigateTourApply(
+                    tourEntity = TourEntity(
+                        houseId = houseId,
+                        roomId = roomId
+                    ),
+                    houseName = houseName,
+                    roomName = roomName
+                )
+            )
+        }
+
+    fun updateSelectedTourRoomId(roomId: Long) {
+        _state.value = _state.value.copy(
+            selectedTourRoom = roomId
+        )
+    }
+
+    fun updateSelectedTourRoomName(name: String) {
+        _state.value = _state.value.copy(
+            selectedTourRoomName = name
+        )
     }
 
 }

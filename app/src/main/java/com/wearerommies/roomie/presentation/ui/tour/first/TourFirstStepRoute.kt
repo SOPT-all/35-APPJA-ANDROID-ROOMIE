@@ -1,4 +1,4 @@
-package com.wearerommies.roomie.presentation.ui.tour
+package com.wearerommies.roomie.presentation.ui.tour.first
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -20,7 +25,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.domain.entity.TourEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieButton
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
@@ -31,10 +39,45 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 @Composable
 fun TourFirstStepRoute(
     paddingValues: PaddingValues,
+    tourApply: TourEntity,
+    houseName: String,
+    roomName: String,
     navigateUp: () -> Unit,
-    viewModel: TourViewModel = hiltViewModel()
+    navigateToTwoStep: (TourEntity) -> Unit,
+    viewModel: TourFirstViewModel = hiltViewModel()
 ) {
-    // TODO: navigate로 넘어온 roomid entitiy 초기 설정하기
+
+    val counter by remember { mutableIntStateOf(0) }
+    val currentCounter by rememberUpdatedState(counter)
+
+    LaunchedEffect(currentCounter) {
+        viewModel.initState(
+            tourApply = tourApply,
+            houseName = houseName,
+            roomName = roomName
+        )
+    }
+
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                TourFirstSideEffect.NavigateUp -> navigateUp()
+                is TourFirstSideEffect.NavigateToSecondStep -> {
+                    navigateToTwoStep(sideEffect.tourApply)
+                }
+            }
+        }
+    }
+
+    TourFirstStepScreen(
+        paddingValues = paddingValues,
+        navigateUp = viewModel::navigateUp,
+        navigateSecondStep = viewModel::navigateSecondStep,
+        state = state
+    )
 }
 
 @Composable
@@ -42,7 +85,7 @@ fun TourFirstStepScreen(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
     navigateSecondStep: () -> Unit,
-    state: TourState,
+    state: TourFirstState,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -149,7 +192,7 @@ fun TourFirstStepScreen(){
             paddingValues = PaddingValues(),
             navigateUp = {},
             navigateSecondStep = {},
-            state = TourState(
+            state = TourFirstState(
                 houseName = "해피쉐어 루미 건대점",
                 roomName = "1A(싱글배드)"
             )

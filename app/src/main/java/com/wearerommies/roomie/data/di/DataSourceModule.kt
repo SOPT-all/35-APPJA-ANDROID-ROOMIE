@@ -4,10 +4,12 @@ import com.wearerommies.roomie.data.datasource.UserDataSource
 import com.wearerommies.roomie.data.datasource.HouseDataSource
 import com.wearerommies.roomie.data.datasource.MapDataSource
 import com.wearerommies.roomie.data.datasource.ReqresDataSource
+import com.wearerommies.roomie.data.datasource.RoomDataSource
 import com.wearerommies.roomie.data.service.UserService
 import com.wearerommies.roomie.data.service.HouseService
 import com.wearerommies.roomie.data.service.MapService
 import com.wearerommies.roomie.data.service.ReqresService
+import com.wearerommies.roomie.data.service.RoomService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,4 +42,10 @@ internal object DataSourceModule {
     fun providesMapDataSource(
         mapService: MapService
     ): MapDataSource = MapDataSource(mapService)
+
+    @Provides
+    @Singleton
+    fun providesRoomDataSource(
+        roomService: RoomService
+    ): RoomDataSource = RoomDataSource(roomService)
 }

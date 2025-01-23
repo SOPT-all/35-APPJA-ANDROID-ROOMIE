@@ -4,6 +4,7 @@ import com.wearerommies.roomie.data.service.UserService
 import com.wearerommies.roomie.data.service.HouseService
 import com.wearerommies.roomie.data.service.MapService
 import com.wearerommies.roomie.data.service.ReqresService
+import com.wearerommies.roomie.data.service.RoomService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,4 +34,9 @@ internal object ServiceModule {
     @Singleton
     fun provideMapService(retrofit: Retrofit): MapService =
         retrofit.create(MapService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideRoomService(retrofit: Retrofit): RoomService =
+        retrofit.create(RoomService::class.java)
 }

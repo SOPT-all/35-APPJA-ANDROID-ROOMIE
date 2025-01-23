@@ -13,3 +13,7 @@ fun todayFormatted(pattern: String = "yyyy/MM/dd"): String {
     return Date().toFormattedString(pattern)
 }
 
+fun String.toFormattedDto(): String {
+    return this.replace("/", "-")
+}
+

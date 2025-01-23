@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.wearerommies.roomie.domain.entity.TourEntity
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.ui.detail.DetailRoute
 import com.wearerommies.roomie.presentation.ui.detail.house.DetailHouseRoute
@@ -45,7 +46,8 @@ fun NavGraphBuilder.detailNavGraph(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
     navigateDetailRoom: (Long, Long, String) -> Unit,
-    navigateDetailHouse: (Long, String) -> Unit
+    navigateDetailHouse: (Long, String) -> Unit,
+    navigateTourApply: (TourEntity, String, String) -> Unit
 ) {
     composable<Route.Detail> { backStackEntry ->
         val houseId = backStackEntry.toRoute<Route.Detail>().houseId
@@ -54,7 +56,8 @@ fun NavGraphBuilder.detailNavGraph(
             houseId = houseId,
             navigateUp = navigateUp,
             navigateDetailRoom = navigateDetailRoom,
-            navigateDetailHouse = navigateDetailHouse
+            navigateDetailHouse = navigateDetailHouse,
+            navigateTourApply = navigateTourApply
         )
     }
     composable<Route.DetailHouse> { backStackEntry ->

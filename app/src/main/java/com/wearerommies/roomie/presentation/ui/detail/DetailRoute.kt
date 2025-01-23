@@ -32,7 +32,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -45,6 +44,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.DetailEntity
+import com.wearerommies.roomie.domain.entity.TourEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieButton
 import com.wearerommies.roomie.presentation.core.component.RoomieHouseNameChip
 import com.wearerommies.roomie.presentation.core.component.RoomieLoadingView
@@ -74,6 +74,7 @@ fun DetailRoute(
     navigateUp: () -> Unit,
     navigateDetailRoom: (Long, Long, String) -> Unit,
     navigateDetailHouse: (Long, String) -> Unit,
+    navigateTourApply: (TourEntity, String, String) -> Unit,
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
     val counter by remember { mutableIntStateOf(0) }
@@ -91,6 +92,7 @@ fun DetailRoute(
                 DetailSideEffect.NavigateUp -> navigateUp()
                 is DetailSideEffect.NavigateDetailRoom -> navigateDetailRoom(sideEffect.houseId, sideEffect.roomId, sideEffect.title)
                 is DetailSideEffect.NavigateDetailHouse -> navigateDetailHouse(sideEffect.houseId, sideEffect.title)
+                is DetailSideEffect.NavigateTourApply -> navigateTourApply(sideEffect.tourEntity, sideEffect.houseName, sideEffect.roomName)
             }
         }
     }
@@ -100,13 +102,19 @@ fun DetailRoute(
         navigateUp = viewModel::navigateUp,
         navigateDetailRoom = viewModel::navigateToDetail,
         navigateDetailHouse = viewModel::navigateToHouse,
+        navigateTourApply = viewModel::navigateToTourApply,
         state = state.uiState,
         isShowBottomSheet = state.isShowBottomSheet,
         isLivingExpanded = state.isLivingExpanded,
         isKitchenExpanded = state.isKitchenExpanded,
+        isSelectededTourRoom = state.isSelectedTourRoom,
+        selectedTourRoom = state.selectedTourRoom,
+        selectedTourName = state.selectedTourRoomName,
+        updateSelecetedTourRoomId = viewModel::updateSelectedTourRoomId,
         updateBottomSheetState = viewModel::updateBottomSheetState,
         updateLivingExpanded = viewModel::updateLivingExpanded,
-        updateKitchenExpanded = viewModel::updatedKitchenExpanded
+        updateKitchenExpanded = viewModel::updatedKitchenExpanded,
+        updateSelectedTourRoomName = viewModel::updateSelectedTourRoomName
     )
 }
 
@@ -117,12 +125,18 @@ fun DetailScreen(
     isShowBottomSheet: Boolean,
     isLivingExpanded: Boolean,
     isKitchenExpanded: Boolean,
+    isSelectededTourRoom: Boolean,
+    selectedTourRoom: Long,
+    selectedTourName: String,
+    updateSelecetedTourRoomId: (Long) -> Unit,
     updateBottomSheetState: () -> Unit,
     updateLivingExpanded: () -> Unit,
     updateKitchenExpanded: () -> Unit,
+    updateSelectedTourRoomName: (String) -> Unit,
     navigateUp: () -> Unit,
     navigateDetailRoom: (Long, Long, String) -> Unit,
-    navigateDetailHouse: (Long, String) -> Unit
+    navigateDetailHouse: (Long, String) -> Unit,
+    navigateTourApply: (Long, Long, String, String) -> Unit
 ) {
     val scrollState = rememberLazyListState()
     var imageHeight by remember { mutableIntStateOf(0) }
@@ -493,8 +507,20 @@ fun DetailScreen(
                     DetailBottomSheet(
                         rooms = state.data.rooms.toPersistentList(),
                         onDismissRequest = updateBottomSheetState,
-                        onButtonClick = {},
-                        selectedRoom = null,
+                        onOptionButtonClick = { roomId, roomName ->
+                            updateSelecetedTourRoomId(roomId)
+                            updateSelectedTourRoomName(roomName)
+                        },
+                        onApplyButtonClick = {
+                            navigateTourApply(
+                                state.data.houseInfo.houseId,
+                                selectedTourRoom,
+                                state.data.houseInfo.name,
+                                selectedTourName
+                            )
+                        },
+                        selectedTourRoom = selectedTourRoom,
+                        isEnabled = isSelectededTourRoom,
                         modifier = Modifier
                             .zIndex(1F)
                             .align(Alignment.BottomCenter)
@@ -585,8 +611,14 @@ fun DetailScreenPreview() {
             updateBottomSheetState = {},
             updateLivingExpanded = {},
             updateKitchenExpanded = {},
-            navigateDetailRoom = { l: Long, l1: Long, s: String -> },
-            navigateDetailHouse = { l: Long, s: String -> }
+            navigateDetailRoom = { houseId: Long, roomId: Long, title: String -> },
+            navigateDetailHouse = { houseId: Long, title: String -> },
+            navigateTourApply = { houseId: Long, roomId: Long, houseName: String, roomName: String -> },
+            isSelectededTourRoom = false,
+            selectedTourRoom = -1L,
+            updateSelecetedTourRoomId = {},
+            selectedTourName = "",
+            updateSelectedTourRoomName = {}
         )
     }
 }
