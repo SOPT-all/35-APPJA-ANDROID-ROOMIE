@@ -8,7 +8,4 @@ data class TourFirstState(
     val roomName: String = "",
     val isShowBirthDateModal: Boolean = false,
     val isShowPreferredDateModal: Boolean = false
-) {
-    val isSecondEnabledButton = uiState.name.isNotEmpty() && uiState.birthDate.isNotEmpty() && uiState.gender.isNotEmpty() && uiState.phoneNumber.isNotEmpty() && uiState.phoneNumber.length > 10
-    val isThirdEnabledButton = uiState.preferredDate.isNotEmpty()
-}
+)
