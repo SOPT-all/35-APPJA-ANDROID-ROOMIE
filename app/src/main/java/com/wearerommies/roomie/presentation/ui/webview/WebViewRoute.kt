@@ -8,6 +8,7 @@ import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 
 object WebViewUrl {
     const val GAME = "https://1401kms-70595.waveon.me/"
+    const val KAKAO = "https://pf.kakao.com/_WviTn"
 }
 
 @Composable

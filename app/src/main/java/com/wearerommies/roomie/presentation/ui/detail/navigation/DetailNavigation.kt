@@ -47,8 +47,9 @@ fun NavGraphBuilder.detailNavGraph(
     navigateUp: () -> Unit,
     navigateDetailRoom: (Long, Long, String) -> Unit,
     navigateDetailHouse: (Long, String) -> Unit,
-    navigateTourApply: (TourEntity, String, String) -> Unit
-) {
+    navigateTourApply: (TourEntity, String, String) -> Unit,
+    navigateToWebView: (String) -> Unit,
+    ) {
     composable<Route.Detail> { backStackEntry ->
         val houseId = backStackEntry.toRoute<Route.Detail>().houseId
         DetailRoute(
@@ -57,7 +58,8 @@ fun NavGraphBuilder.detailNavGraph(
             navigateUp = navigateUp,
             navigateDetailRoom = navigateDetailRoom,
             navigateDetailHouse = navigateDetailHouse,
-            navigateTourApply = navigateTourApply
+            navigateTourApply = navigateTourApply,
+            navigateToWebView = navigateToWebView
         )
     }
     composable<Route.DetailHouse> { backStackEntry ->
