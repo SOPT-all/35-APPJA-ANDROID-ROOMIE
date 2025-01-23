@@ -126,7 +126,7 @@ data class ResponseDetailDto(
                 deposit = it.deposit,
                 prepaidUtilities = it.prepaidUtilities,
                 monthlyRent = it.monthlyRent,
-                contractPeriod = it.contractPeriod ?: "테스트 데이터",
+                contractPeriod = it.contractPeriod,
                 managementFee = it.managementFee
             )
         },

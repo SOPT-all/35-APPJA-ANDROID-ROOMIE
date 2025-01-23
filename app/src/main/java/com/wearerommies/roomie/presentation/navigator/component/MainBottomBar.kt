@@ -3,6 +3,10 @@ package com.wearerommies.roomie.presentation.navigator.component
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -39,7 +43,11 @@ fun MainBottomBar(
     onTabSelected: (MainTabType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    AnimatedVisibility(visible = isVisible) {
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = EnterTransition.None + fadeIn(),
+        exit = ExitTransition.None + fadeOut()
+    ) {
         Row(
             modifier = modifier
                 .fillMaxWidth()

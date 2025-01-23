@@ -2,8 +2,10 @@ package com.wearerommies.roomie.presentation.core.component
 
 import android.webkit.WebViewClient
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
+import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun RoomieWebView(url: String, onClose: () -> Unit) {
@@ -29,7 +32,10 @@ fun RoomieWebView(url: String, onClose: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
         WebView(
             state = webViewState,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .background(color = RoomieTheme.colors.grayScale1)
+                .statusBarsPadding()
+                .weight(1f),
             onCreated = { webViewInstance ->
                 with(webViewInstance) {
                     settings.run {

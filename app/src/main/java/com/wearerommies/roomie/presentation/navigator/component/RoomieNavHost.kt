@@ -1,5 +1,7 @@
 package com.wearerommies.roomie.presentation.navigator.component
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -24,7 +26,11 @@ fun RoomieNavHost(
 ) {
     NavHost(
         navController = navigator.navController,
-        startDestination = navigator.startDestination
+        startDestination = navigator.startDestination,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None },
     ) {
         splashNavGraph()
         homeNavGraph(
@@ -70,7 +76,8 @@ fun RoomieNavHost(
             navigateUp = navigator::popBackStackIfNotHome,
             navigateDetailRoom = navigator::navigateToDetailRoom,
             navigateDetailHouse = navigator::navigateToDetailHouse,
-            navigateTourApply = navigator::navigateToTourFirstStep
+            navigateTourApply = navigator::navigateToTourFirstStep,
+            navigateToWebView = navigator::navigateToWebView
         )
         tourNavGraph(
             paddingValues = padding,

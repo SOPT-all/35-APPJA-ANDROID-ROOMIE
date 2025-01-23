@@ -2,6 +2,7 @@ package com.wearerommies.roomie.presentation.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.TourEntity
 import com.wearerommies.roomie.domain.repository.HouseRepository
 import com.wearerommies.roomie.presentation.core.util.UiState
@@ -19,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val houseRepository: HouseRepository
-): ViewModel() {
+) : ViewModel() {
     private val _state = MutableStateFlow(DetailState())
     val state: StateFlow<DetailState>
         get() = _state.asStateFlow()
@@ -30,12 +31,17 @@ class DetailViewModel @Inject constructor(
 
     suspend fun getHouseDetail(houseId: Long) {
         houseRepository.getHouseDetail(houseId = houseId).onSuccess { response ->
-                _state.value = _state.value.copy(
-                    uiState = UiState.Success(response)
-                )
-            }.onFailure { error ->
-                Timber.e(error)
-            }
+            val updatedResponse = response.copy(
+                rooms = response.rooms.map { room ->
+                    room.copy(contractPeriod = room.contractPeriod ?: "-")
+                }
+            )
+            _state.value = _state.value.copy(
+                uiState = UiState.Success(updatedResponse)
+            )
+        }.onFailure { error ->
+            Timber.e(error)
+        }
     }
 
     fun updateBottomSheetState() {
@@ -57,7 +63,13 @@ class DetailViewModel @Inject constructor(
     }
 
     fun navigateToDetail(houseId: Long, roomId: Long, title: String) = viewModelScope.launch {
-        _sideEffect.emit(DetailSideEffect.NavigateDetailRoom(houseId = houseId, roomId = roomId, title = title))
+        _sideEffect.emit(
+            DetailSideEffect.NavigateDetailRoom(
+                houseId = houseId,
+                roomId = roomId,
+                title = title
+            )
+        )
     }
 
     fun navigateUp() = viewModelScope.launch {
@@ -97,4 +109,24 @@ class DetailViewModel @Inject constructor(
         )
     }
 
+    fun navigateToWebView(webViewUrl: String) = viewModelScope.launch {
+        _sideEffect.emit(DetailSideEffect.NavigateToWebView(webViewUrl = webViewUrl))
+    }
+
+    fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
+        houseRepository.bookmarkHouse(houseId = houseId)
+            .onSuccess { response ->
+                if (response.isPinned) {
+                    _sideEffect.emit(
+                        DetailSideEffect.SnackBar(
+                            message = R.string.add_to_bookmark_list
+                        )
+                    )
+                }
+                getHouseDetail(houseId = houseId)
+            }
+            .onFailure { error ->
+                Timber.e(error)
+            }
+    }
 }

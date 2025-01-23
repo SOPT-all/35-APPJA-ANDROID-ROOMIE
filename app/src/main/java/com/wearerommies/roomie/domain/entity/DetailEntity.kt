@@ -35,7 +35,7 @@ data class DetailEntity(
         val deposit: Int,
         val prepaidUtilities: Int,
         val monthlyRent: Int,
-        val contractPeriod: String,
+        val contractPeriod: String?,
         val managementFee: String
     )
 
