@@ -1,0 +1,129 @@
+package com.wearerommies.roomie.presentation.ui.tour.completed
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.wearerommies.roomie.R
+import com.wearerommies.roomie.presentation.core.component.RoomieButton
+import com.wearerommies.roomie.presentation.ui.tour.first.TourFirstState
+import com.wearerommies.roomie.presentation.ui.tour.first.TourFirstViewModel
+import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
+import com.wearerommies.roomie.ui.theme.RoomieTheme
+
+@Composable
+fun TourCompletedStepRoute(
+    paddingValues: PaddingValues,
+    navigateUp: () -> Unit,
+    // viewModel: TourFirstViewModel = hiltViewModel()
+) {
+
+}
+
+@Composable
+fun TourCompletedStepScreen(
+    paddingValues: PaddingValues,
+    navigateUp: () -> Unit,
+    navigateToHome: () -> Unit,
+    state: TourFirstState,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(RoomieTheme.colors.grayScale1)
+            .padding(paddingValues),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Spacer(modifier=Modifier.height((LocalConfiguration.current.screenHeightDp * 0.235).dp))
+
+        Text(
+            text = stringResource(R.string.tour_apply_complete),
+            style = RoomieTheme.typography.heading2Sb20,
+            color = RoomieTheme.colors.grayScale12
+        )
+
+        Spacer(Modifier.height(2.dp))
+
+        Text(
+            text = stringResource(R.string.tour_apply_complete_kakaotalk),
+            style = RoomieTheme.typography.body4R12,
+            color = RoomieTheme.colors.grayScale8
+        )
+
+        Spacer(Modifier.height(8.dp))
+
+        Image(
+            painter = painterResource(R.drawable.img_tour_apply_complete),
+            contentDescription = null,
+            modifier = Modifier
+                .size((LocalConfiguration.current.screenWidthDp * 0.6).dp)
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        Row(
+            modifier = Modifier
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 12.dp
+                ),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            RoomieButton(
+                text = stringResource(R.string.tour_other_room),
+                backgroundColor = RoomieTheme.colors.grayScale1,
+                textColor = RoomieTheme.colors.grayScale8,
+                onClick = {},
+                modifier = Modifier
+                    .weight(0.4613F),
+                borderColor = RoomieTheme.colors.grayScale6,
+                borderWidth = 1.dp
+            )
+            RoomieButton(
+                text = stringResource(R.string.tour_completed),
+                backgroundColor = RoomieTheme.colors.primary,
+                textColor = RoomieTheme.colors.grayScale1,
+                onClick = {},
+                modifier = Modifier
+                    .weight(0.4F),
+                isPressed = true,
+                pressedColor = RoomieTheme.colors.primaryLight1
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun TourCompletedStepScreenPreview() {
+    RoomieAndroidTheme {
+        TourCompletedStepScreen(
+            paddingValues = PaddingValues(0.dp),
+            navigateUp = {},
+            navigateToHome = {},
+            state = TourFirstState(
+                houseName = "해피쉐어 루미 건대점",
+                roomName = "1A(싱글배드)"
+            )
+        )
+    }
+}
