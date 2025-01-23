@@ -3,6 +3,7 @@ package com.wearerommies.roomie.presentation.ui.map
 import androidx.lifecycle.ViewModel
 import com.wearerommies.roomie.domain.entity.FilterEntity
 import com.wearerommies.roomie.domain.entity.FilterResultEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.domain.repository.MapRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
@@ -30,12 +31,27 @@ class MapViewModel @Inject constructor(
     fun fetchInitialLocation(x: Float, y: Float) {
         _state.value = _state.value.copy(
             x = x,
-            y = y
+            y = y,
         )
     }
 
-    suspend fun fetchHouseList(filter: FilterEntity) {
-        mapRepository.getFilterResult(filter)
+    fun fetchFilterAndSearch(filter: FilterEntity, search: SearchResultEntity) {
+        _state.value = _state.value.copy(
+            filter = _state.value.filter.copy(
+                moodTag = filter.moodTag,
+                depositRange = filter.depositRange,
+                monthlyRentRange = filter.monthlyRentRange,
+                genderPolicy = filter.genderPolicy,
+                preferredDate = filter.preferredDate,
+                occupancyTypes = filter.occupancyTypes,
+                contractPeriod = filter.contractPeriod,
+                location = search.address.ifEmpty { filter.location }
+            )
+        )
+    }
+
+    suspend fun fetchHouseList() {
+        mapRepository.getFilterResult(_state.value.filter)
             .onSuccess { resultList ->
                 _state.value = _state.value.copy(
                     houseList =

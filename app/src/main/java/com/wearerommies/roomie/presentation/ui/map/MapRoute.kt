@@ -63,9 +63,8 @@ fun MapRoute(
 
     LaunchedEffect(initialKey) {
         viewModel.fetchInitialLocation(searchResultEntity.x, searchResultEntity.y)
-        viewModel.fetchHouseList(
-            filter = filterEntity
-        )
+        viewModel.fetchFilterAndSearch(filterEntity,searchResultEntity)
+        viewModel.fetchHouseList()
     }
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
@@ -176,7 +175,7 @@ fun MapScreen(
 
         MapTopBar(
             textfield = textfield,
-            onClickSearchTextField = navigateToSearch,
+            onClickSearchTextField = navigateToSearch, // TODO: 이때 결과값을 전달해야함.
             onClickFilterButton = navigateToFilter,
             modifier = Modifier
                 .statusBarsPadding()
