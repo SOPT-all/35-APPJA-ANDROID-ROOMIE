@@ -104,7 +104,7 @@ fun MapRoute(
         isBottomSheetOpened = state.isBottomSheetOpened,
         latitude = searchResultEntity.y,
         longitude = searchResultEntity.x,
-        textfield = searchResultEntity.location,
+        searchKeyword = searchResultEntity.location,
         houseList = state.houseList,
         onMarkerClicked = viewModel::showMarkerDetail,
         markerDetail = state.markerDetail,
@@ -126,7 +126,7 @@ fun MapScreen(
     isBottomSheetOpened: Boolean,
     latitude: Float,
     longitude: Float,
-    textfield: String,
+    searchKeyword: String,
     houseList: PersistentList<FilterResultEntity>,
     onMarkerClicked: (Long) -> Unit,
     markerDetail: FilterResultEntity,
@@ -215,7 +215,7 @@ fun MapScreen(
         }
 
         MapTopBar(
-            textfield = textfield,
+            textfield = searchKeyword,
             onClickSearchTextField = navigateToSearch, // TODO: 이때 결과값을 전달해야함.
             onClickFilterButton = navigateToFilter,
             modifier = Modifier
@@ -263,7 +263,7 @@ fun MapScreenPreview() {
             snackBarHost = SnackbarHostState(),
             latitude = 0f,
             longitude = 0f,
-            textfield = "",
+            searchKeyword = "",
             houseList = persistentListOf(),
             onMarkerClicked = {},
             markerDetail = FilterResultEntity(
