@@ -180,6 +180,18 @@ fun TourSecondStepScreen(
 
         Spacer(Modifier.height(28.dp))
 
+        Text(
+            text = stringResource(R.string.gender),
+            style = RoomieTheme.typography.body2Sb14,
+            color = RoomieTheme.colors.grayScale12,
+            modifier = Modifier
+                .padding(
+                    horizontal = 16.dp
+                )
+        )
+
+        Spacer(Modifier.height(8.dp))
+
         Row(
             modifier = Modifier.padding(
                 horizontal = 16.dp
@@ -197,7 +209,8 @@ fun TourSecondStepScreen(
                     .weight(1f),
                 borderColor = if(state.uiState.gender == GenderType.MAN.value) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale5,
                 borderWidth = 1.dp,
-                verticalPadding = 12.dp
+                verticalPadding = 12.dp,
+                textStyle = RoomieTheme.typography.body1R14
             )
 
             RoomieButton(
@@ -211,7 +224,8 @@ fun TourSecondStepScreen(
                     .weight(1f),
                 borderColor = if(state.uiState.gender == GenderType.WOMAN.value) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale5,
                 borderWidth = 1.dp,
-                verticalPadding = 12.dp
+                verticalPadding = 12.dp,
+                textStyle = RoomieTheme.typography.body1R14
             )
         }
 
