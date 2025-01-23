@@ -28,7 +28,8 @@ fun NavController.navigateToMap(
 fun NavGraphBuilder.mapNavGraph(
     paddingValues: PaddingValues,
     navigateToSearch: () -> Unit,
-    navigateToFilter: () -> Unit
+    navigateToFilter: () -> Unit,
+    navigateToDetail: (Long) -> Unit
 ) {
     composable<MainTabRoute.Map>(
         typeMap = mapOf(
@@ -40,6 +41,7 @@ fun NavGraphBuilder.mapNavGraph(
             paddingValues = paddingValues,
             navigateToSearch = navigateToSearch,
             navigateToFilter = navigateToFilter,
+            navigateToDetail = navigateToDetail,
             filterEntity = backStackEntry.toRoute<MainTabRoute.Map>().filter,
             searchResultEntity = backStackEntry.toRoute<MainTabRoute.Map>().result
         )

@@ -51,6 +51,7 @@ fun MapRoute(
     paddingValues: PaddingValues,
     navigateToSearch: () -> Unit,
     navigateToFilter: () -> Unit,
+    navigateToDetail: (Long) -> Unit,
     filterEntity: FilterEntity,
     searchResultEntity: SearchResultEntity,
     viewModel: MapViewModel = hiltViewModel()
@@ -63,7 +64,7 @@ fun MapRoute(
 
     LaunchedEffect(initialKey) {
         viewModel.fetchInitialLocation(searchResultEntity.x, searchResultEntity.y)
-        viewModel.fetchFilterAndSearch(filterEntity,searchResultEntity)
+        viewModel.fetchFilterAndSearch(filterEntity, searchResultEntity)
         viewModel.fetchHouseList()
     }
 
@@ -72,6 +73,7 @@ fun MapRoute(
             .collect { sideEffect ->
                 when (sideEffect) {
                     is MapSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
+                    is MapSideEffect.NavigateToDetail -> navigateToDetail(sideEffect.houseId)
                 }
             }
     }
@@ -80,6 +82,7 @@ fun MapRoute(
         paddingValues = paddingValues,
         navigateToSearch = navigateToSearch,
         navigateToFilter = navigateToFilter,
+        navigateToDetail = viewModel::navigateToDetail,
         isBottomSheetOpened = state.isBottomSheetOpened,
         latitude = searchResultEntity.y,
         longitude = searchResultEntity.x,
@@ -99,6 +102,7 @@ fun MapScreen(
     paddingValues: PaddingValues,
     navigateToSearch: () -> Unit,
     navigateToFilter: () -> Unit,
+    navigateToDetail: (Long) -> Unit,
     isBottomSheetOpened: Boolean,
     latitude: Float,
     longitude: Float,
@@ -194,7 +198,7 @@ fun MapScreen(
                 location = markerDetail.location,
                 locationDescription = markerDetail.locationDescription,
                 moodTag = markerDetail.moodTag,
-                onClick = {}, // TODO: 상세 매물 페이지로 이동
+                onClick = { navigateToDetail(markerDetail.houseId) },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(horizontal = 16.dp)
@@ -215,6 +219,7 @@ fun MapScreenPreview() {
             paddingValues = PaddingValues(),
             navigateToSearch = {},
             navigateToFilter = {},
+            navigateToDetail = {},
             isBottomSheetOpened = false,
             latitude = 0f,
             longitude = 0f,

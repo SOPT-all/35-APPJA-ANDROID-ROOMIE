@@ -36,7 +36,8 @@ fun RoomieNavHost(
         mapNavGraph(
             paddingValues = padding,
             navigateToSearch = navigator::navigateToSearch,
-            navigateToFilter = navigator::navigateToFilter
+            navigateToFilter = navigator::navigateToFilter,
+            navigateToDetail = navigator::navigateToDetail
         )
         myNavGraph(
             paddingValues = padding,

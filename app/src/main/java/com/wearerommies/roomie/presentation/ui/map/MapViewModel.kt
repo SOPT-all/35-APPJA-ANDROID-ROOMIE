@@ -1,10 +1,12 @@
 package com.wearerommies.roomie.presentation.ui.map
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.domain.entity.FilterEntity
 import com.wearerommies.roomie.domain.entity.FilterResultEntity
 import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.domain.repository.MapRepository
+import com.wearerommies.roomie.presentation.ui.bookmark.BookMarkSideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,6 +15,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -87,6 +90,14 @@ class MapViewModel @Inject constructor(
                 clickedMarkerId = id
             )
         }
+    }
+
+    fun navigateToDetail(houseId: Long) = viewModelScope.launch {
+        _sideEffect.emit(
+            MapSideEffect.NavigateToDetail(
+                houseId = houseId
+            )
+        )
     }
 
     fun resetClickedMarker() {
