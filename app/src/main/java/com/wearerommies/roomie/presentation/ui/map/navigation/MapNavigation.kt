@@ -10,7 +10,7 @@ import com.wearerommies.roomie.domain.entity.FilterEntity
 import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.navigator.route.FilterType
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
-import com.wearerommies.roomie.presentation.navigator.route.ResultType
+import com.wearerommies.roomie.presentation.navigator.route.SearchResultType
 import com.wearerommies.roomie.presentation.ui.map.MapRoute
 import kotlin.reflect.typeOf
 
@@ -34,7 +34,7 @@ fun NavGraphBuilder.mapNavGraph(
     composable<MainTabRoute.Map>(
         typeMap = mapOf(
             typeOf<FilterEntity>() to FilterType,
-            typeOf<SearchResultEntity>() to ResultType
+            typeOf<SearchResultEntity>() to SearchResultType
         )
     ) { backStackEntry ->
         MapRoute(
