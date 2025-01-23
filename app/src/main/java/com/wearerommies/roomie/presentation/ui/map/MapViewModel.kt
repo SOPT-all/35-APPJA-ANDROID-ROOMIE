@@ -2,11 +2,12 @@ package com.wearerommies.roomie.presentation.ui.map
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.FilterEntity
 import com.wearerommies.roomie.domain.entity.FilterResultEntity
 import com.wearerommies.roomie.domain.entity.SearchResultEntity
+import com.wearerommies.roomie.domain.repository.HouseRepository
 import com.wearerommies.roomie.domain.repository.MapRepository
-import com.wearerommies.roomie.presentation.ui.bookmark.BookMarkSideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,7 +22,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
-    private val mapRepository: MapRepository
+    private val mapRepository: MapRepository,
+    private val houseRepository: HouseRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(MapState())
     val state: StateFlow<MapState>
@@ -110,5 +112,22 @@ class MapViewModel @Inject constructor(
         _state.value = _state.value.copy(
             isBottomSheetOpened = state
         )
+    }
+
+    fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
+        houseRepository.bookmarkHouse(houseId = houseId)
+            .onSuccess { response ->
+                if (response.isPinned) {
+                    _sideEffect.emit(
+                        MapSideEffect.SnackBar(
+                            message = R.string.add_to_bookmark_list
+                        )
+                    )
+                }
+
+                fetchHouseList()
+            }.onFailure { error ->
+                Timber.e(error)
+            }
     }
 }

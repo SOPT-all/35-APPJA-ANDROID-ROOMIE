@@ -6,17 +6,22 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Popup
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -37,7 +42,7 @@ import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.FilterEntity
 import com.wearerommies.roomie.domain.entity.FilterResultEntity
 import com.wearerommies.roomie.domain.entity.SearchResultEntity
-import com.wearerommies.roomie.presentation.core.extension.showToast
+import com.wearerommies.roomie.presentation.core.component.RoomieSnackbar
 import com.wearerommies.roomie.presentation.ui.map.component.MapBotomSheet
 import com.wearerommies.roomie.presentation.ui.map.component.MapTopBar
 import com.wearerommies.roomie.presentation.ui.map.component.MarkerDetailCard
@@ -45,6 +50,7 @@ import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.launch
 
 @Composable
 fun MapRoute(
@@ -57,8 +63,10 @@ fun MapRoute(
     viewModel: MapViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val snackBarHost = remember { SnackbarHostState() }
     val initial by remember { mutableIntStateOf(0) }
     val initialKey by rememberUpdatedState(initial)
 
@@ -72,7 +80,16 @@ fun MapRoute(
         viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle)
             .collect { sideEffect ->
                 when (sideEffect) {
-                    is MapSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
+                    is MapSideEffect.SnackBar -> {
+                        snackBarHost.currentSnackbarData?.dismiss()
+                        coroutineScope.launch {
+                            snackBarHost.showSnackbar(
+                                message = context.getString(sideEffect.message),
+                                duration = SnackbarDuration.Short
+                            )
+                        }
+                    }
+
                     is MapSideEffect.NavigateToDetail -> navigateToDetail(sideEffect.houseId)
                 }
             }
@@ -83,6 +100,7 @@ fun MapRoute(
         navigateToSearch = navigateToSearch,
         navigateToFilter = navigateToFilter,
         navigateToDetail = viewModel::navigateToDetail,
+        snackBarHost = snackBarHost,
         isBottomSheetOpened = state.isBottomSheetOpened,
         latitude = searchResultEntity.y,
         longitude = searchResultEntity.x,
@@ -91,6 +109,7 @@ fun MapRoute(
         onMarkerClicked = viewModel::showMarkerDetail,
         markerDetail = state.markerDetail,
         clickedMarkerId = state.clickedMarkerId,
+        bookMarkHouse = viewModel::bookmarkHouse,
         resetClickedMarker = viewModel::resetClickedMarker,
         setBottomSheetState = viewModel::setBottomSheetState
     )
@@ -103,6 +122,7 @@ fun MapScreen(
     navigateToSearch: () -> Unit,
     navigateToFilter: () -> Unit,
     navigateToDetail: (Long) -> Unit,
+    snackBarHost: SnackbarHostState,
     isBottomSheetOpened: Boolean,
     latitude: Float,
     longitude: Float,
@@ -111,6 +131,7 @@ fun MapScreen(
     onMarkerClicked: (Long) -> Unit,
     markerDetail: FilterResultEntity,
     clickedMarkerId: Long?,
+    bookMarkHouse: (Long) -> Unit,
     resetClickedMarker: () -> Unit,
     setBottomSheetState: (Boolean) -> Unit,
     modifier: Modifier = Modifier
@@ -119,6 +140,22 @@ fun MapScreen(
     val initialZoomLevel = 12.0
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition(initialCameraPosition, initialZoomLevel)
+    }
+
+    Popup(
+        alignment = Alignment.BottomCenter
+    ) {
+        SnackbarHost(hostState = snackBarHost) { snackbarData ->
+            RoomieSnackbar(
+                modifier = Modifier
+                    .padding(
+                        bottom = paddingValues.calculateBottomPadding() - 35.dp,
+                        start = 12.dp,
+                        end = 12.dp
+                    ),
+                message = snackbarData.visuals.message
+            )
+        }
     }
 
     Box(
@@ -206,6 +243,7 @@ fun MapScreen(
             )
 
         if (isBottomSheetOpened) MapBotomSheet(
+            onLikeClick = bookMarkHouse,
             navigateToDetail = navigateToDetail,
             houseList = houseList
         )
@@ -222,6 +260,7 @@ fun MapScreenPreview() {
             navigateToFilter = {},
             navigateToDetail = {},
             isBottomSheetOpened = false,
+            snackBarHost = SnackbarHostState(),
             latitude = 0f,
             longitude = 0f,
             textfield = "",
@@ -244,6 +283,7 @@ fun MapScreenPreview() {
             ),
             clickedMarkerId = null,
             resetClickedMarker = {},
+            bookMarkHouse = {},
             setBottomSheetState = {}
         )
     }

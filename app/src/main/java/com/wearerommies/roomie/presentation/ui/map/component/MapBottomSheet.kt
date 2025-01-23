@@ -36,6 +36,7 @@ import kotlinx.collections.immutable.persistentListOf
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MapBotomSheet(
+    onLikeClick: (Long) -> Unit,
     navigateToDetail: (Long) -> Unit,
     houseList: PersistentList<FilterResultEntity>,
     modifier: Modifier = Modifier
@@ -89,10 +90,11 @@ fun MapBotomSheet(
                             locationDescription = item.locationDescription,
                             moodTag = item.moodTag,
                             contractTerm = item.contractTerm,
-                            mainImgUrl = item.mainImgUrl
+                            mainImgUrl = item.mainImgUrl,
+                            isPinned = item.isPinned
                         ),
                         onClick = { navigateToDetail(item.houseId) },
-                        onLikeClick = {},
+                        onLikeClick = { onLikeClick(item.houseId) },
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
                 }
@@ -111,6 +113,7 @@ fun MapBotomSheet(
 fun MapBottomSheetPreview() {
     RoomieAndroidTheme {
         MapBotomSheet(
+            onLikeClick = {},
             navigateToDetail = {},
             houseList = persistentListOf(
                 FilterResultEntity(
