@@ -183,6 +183,7 @@ fun HomeScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = RoomieTheme.colors.primaryLight4)
+            .padding(bottom = paddingValues.calculateBottomPadding()),
     ) {
         stickyHeader {
             RoomieTopBar(
