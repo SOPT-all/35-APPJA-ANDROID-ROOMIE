@@ -3,7 +3,7 @@ package com.wearerommies.roomie.presentation.ui.tour.second
 import com.wearerommies.roomie.domain.entity.TourEntity
 
 data class TourSecondState(
-    val uiState: TourEntity = TourEntity(preferredDate = "123", message = "1232"),
+    val uiState: TourEntity = TourEntity(),
     val houseName: String = "",
     val roomName: String = "",
     val isShowBirthDateModal: Boolean = false,
