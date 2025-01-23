@@ -229,7 +229,6 @@ fun DetailScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .statusBarsPadding()
                     .navigationBarsPadding()
             ) {
                 RoomieTopBar(
@@ -246,6 +245,15 @@ fun DetailScreen(
                         .bottomBorder(
                             color = topBarBorderColor,
                             height = topBarBorderHeight
+                        )
+                        .then(
+                            if (!isScrollResponsiveDefault) {
+                                Modifier
+                                    .background(RoomieTheme.colors.grayScale1)
+                                    .statusBarsPadding()
+                            } else {
+                                Modifier.statusBarsPadding()
+                            }
                         ),
                     leadingIcon = {
                         Icon(
