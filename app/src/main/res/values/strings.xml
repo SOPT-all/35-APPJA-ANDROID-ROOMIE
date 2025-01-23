@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Roomie Android</string>
+    <string name="app_name">Roomie</string>
 
     // main tab
     <string name="home">홈</string>
