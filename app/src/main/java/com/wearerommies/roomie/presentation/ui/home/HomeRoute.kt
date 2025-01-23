@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -58,7 +59,6 @@ import com.wearerommies.roomie.presentation.core.component.RoomieSnackbar
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
-import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.type.HomeMoodCardType
 import com.wearerommies.roomie.presentation.type.NavigateButtonType
@@ -102,7 +102,6 @@ fun HomeRoute(
         viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle)
             .collect { sideEffect ->
                 when (sideEffect) {
-                    is HomeSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
                     is HomeSideEffect.SnackBar -> {
                         snackBarHost.currentSnackbarData?.dismiss()
                         coroutineScope.launch {
@@ -151,9 +150,6 @@ fun HomeScreen(
     state: HomeDataEntity,
     modifier: Modifier = Modifier
 ) {
-    val screenWeight = LocalConfiguration.current.screenWidthDp
-    val height = (screenWeight * 0.5).dp
-
     val scrollState = rememberLazyListState()
     val scrollOffset = scrollState.firstVisibleItemScrollOffset
     val topBarBackgroundColor =
@@ -182,7 +178,7 @@ fun HomeScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = RoomieTheme.colors.primaryLight4)
-            .padding(paddingValues),
+            .padding(bottom = paddingValues.calculateBottomPadding()),
     ) {
         stickyHeader {
             RoomieTopBar(
@@ -192,6 +188,7 @@ fun HomeScreen(
                         color = topBarBorderColor,
                         height = convertDpToFloat(1.dp)
                     )
+                    .statusBarsPadding()
                     .padding(horizontal = 20.dp, vertical = 4.dp),
                 backgroundColor = topBarBackgroundColor,
                 leadingIcon = {
@@ -284,7 +281,7 @@ fun HomeScreen(
                         text = stringResource(R.string.home_banner_message),
                         textStyle = RoomieTheme.typography.body3M14,
                         textColor = RoomieTheme.colors.grayScale10,
-                        onClick = { navigateToWebView(WebViewUrl.LANDING) }
+                        onClick = { navigateToWebView(WebViewUrl.GAME) }
                     )
 
                     Spacer(
@@ -572,7 +569,6 @@ fun HomeScreenPreview() {
                     ),
                 )
             )
-
         )
     }
 }

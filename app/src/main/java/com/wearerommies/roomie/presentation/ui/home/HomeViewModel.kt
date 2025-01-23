@@ -23,12 +23,10 @@ class HomeViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val houseRepository: HouseRepository
 ) : ViewModel() {
-    // state 관리
     private val _state = MutableStateFlow(HomeState())
     val state: StateFlow<HomeState>
         get() = _state.asStateFlow()
 
-    // side effect 관리
     private val _sideEffect: MutableSharedFlow<HomeSideEffect> = MutableSharedFlow()
     val sideEffect: SharedFlow<HomeSideEffect>
         get() = _sideEffect.asSharedFlow()

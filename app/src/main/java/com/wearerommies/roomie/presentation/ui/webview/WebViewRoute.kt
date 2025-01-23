@@ -7,7 +7,7 @@ import com.wearerommies.roomie.presentation.core.component.RoomieWebView
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 
 object WebViewUrl {
-    const val LANDING = "https://roomieofficial.framer.website/"
+    const val GAME = "https://1401kms-70595.waveon.me/"
 }
 
 @Composable
