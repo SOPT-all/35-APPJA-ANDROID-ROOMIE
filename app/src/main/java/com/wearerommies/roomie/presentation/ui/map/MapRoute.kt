@@ -206,6 +206,7 @@ fun MapScreen(
             )
 
         if (isBottomSheetOpened) MapBotomSheet(
+            navigateToDetail = navigateToDetail,
             houseList = houseList
         )
     }
