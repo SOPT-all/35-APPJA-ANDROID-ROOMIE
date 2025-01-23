@@ -98,4 +98,7 @@ dependencies {
 
     // Web View
     implementation(libs.accompanist.webview)
+
+    // Status Bar
+    implementation(libs.accompanist.systemuicontroller)
 }
