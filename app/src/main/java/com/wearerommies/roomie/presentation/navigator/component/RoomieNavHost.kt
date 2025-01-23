@@ -15,6 +15,7 @@ import com.wearerommies.roomie.presentation.ui.mypage.navigation.myNavGraph
 import com.wearerommies.roomie.presentation.ui.search.navigation.searchNavGraph
 import com.wearerommies.roomie.presentation.ui.splash.navigation.splashNavGraph
 import com.wearerommies.roomie.presentation.ui.tour.navigation.tourNavGraph
+import com.wearerommies.roomie.presentation.ui.webview.navigation.webViewNavGraph
 
 @Composable
 fun RoomieNavHost(
@@ -31,7 +32,8 @@ fun RoomieNavHost(
             navigateToBookmark = navigator::navigateToBookmark,
             navigateToMood = navigator::navigateToMood,
             navigateToMap = { navigator.navigate(tab = MainTabType.MAP) },
-            navigateToDetail = navigator::navigateToDetail
+            navigateToDetail = navigator::navigateToDetail,
+            navigateToWebView = navigator::navigateToWebView
         )
         mapNavGraph(
             paddingValues = padding,
@@ -50,11 +52,13 @@ fun RoomieNavHost(
         )
         moodNavGraph(
             paddingValues = padding,
-            navigateUp = navigator::popBackStackIfNotHome
+            navigateUp = navigator::popBackStackIfNotHome,
+            navigateToDetail = navigator::navigateToDetail
         )
         bookmarkNavGraph(
             paddingValues = padding,
-            navigateUp = navigator::popBackStackIfNotHome
+            navigateUp = navigator::popBackStackIfNotHome,
+            navigateToDetail = navigator::navigateToDetail
         )
         filterNavGraph(
             paddingValues = padding,
@@ -63,9 +67,15 @@ fun RoomieNavHost(
         )
         detailNavGraph(
             paddingValues = padding,
-            navigateUp = navigator::popBackStackIfNotHome
+            navigateUp = navigator::popBackStackIfNotHome,
+            navigateDetailRoom = navigator::navigateToDetailRoom,
+            navigateDetailHouse = navigator::navigateToDetailHouse
         )
         tourNavGraph(
+            paddingValues = padding,
+            navigateUp = navigator::popBackStackIfNotHome
+        )
+        webViewNavGraph(
             paddingValues = padding,
             navigateUp = navigator::popBackStackIfNotHome
         )

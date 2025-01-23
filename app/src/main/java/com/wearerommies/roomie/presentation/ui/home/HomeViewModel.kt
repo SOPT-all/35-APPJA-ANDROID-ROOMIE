@@ -94,10 +94,14 @@ class HomeViewModel @Inject constructor(
         )
     }
 
+    fun navigateToWebView(webViewUrl: String) = viewModelScope.launch {
+        _sideEffect.emit(HomeSideEffect.NavigateToWebView(webViewUrl = webViewUrl))
+    }
+
     fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
         houseRepository.bookmarkHouse(houseId = houseId)
-            .onSuccess { bookmarkState ->
-                if (bookmarkState) {
+            .onSuccess { response ->
+                if (response.isPinned) {
                     _sideEffect.emit(
                         HomeSideEffect.SnackBar(
                             message = R.string.add_to_bookmark_list

@@ -23,6 +23,7 @@ import com.wearerommies.roomie.presentation.ui.mood.navigation.navigateToMood
 import com.wearerommies.roomie.presentation.ui.mypage.navigation.navigateToMy
 import com.wearerommies.roomie.presentation.ui.search.navigation.navigateToSearch
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTour
+import com.wearerommies.roomie.presentation.ui.webview.navigation.navigateToWebView
 
 class MainNavigator(
     val navController: NavHostController,
@@ -97,16 +98,27 @@ class MainNavigator(
         navController.navigateToDetail(houseId = houseId)
     }
 
-    fun navigateToDetailHouse() {
-        navController.navigateToDetailHouse()
+    fun navigateToDetailHouse(houseId: Long, title: String) {
+        navController.navigateToDetailHouse(
+            houseId = houseId,
+            title = title
+        )
     }
 
-    fun navigateToDetailRoom() {
-        navController.navigateToDetailRoom()
+    fun navigateToDetailRoom(houseId: Long, roomId: Long, title: String) {
+        navController.navigateToDetailRoom(
+            houseId = houseId,
+            roomId = roomId,
+            title = title
+        )
     }
 
     fun navigateToTour() {
         navController.navigateToTour()
+    }
+
+    fun navigateToWebView(webViewUrl: String) {
+        navController.navigateToWebView(webViewUrl = webViewUrl)
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =
