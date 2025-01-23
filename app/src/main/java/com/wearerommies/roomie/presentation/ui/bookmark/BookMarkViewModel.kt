@@ -64,8 +64,8 @@ class BookMarkViewModel @Inject constructor(
 
     fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
         houseRepository.bookmarkHouse(houseId = houseId)
-            .onSuccess { bookmarkState ->
-                if (bookmarkState) {
+            .onSuccess { response ->
+                if (response.isPinned) {
                     _sideEffect.emit(
                         BookMarkSideEffect.SnackBar(
                             message = R.string.add_to_bookmark_list
