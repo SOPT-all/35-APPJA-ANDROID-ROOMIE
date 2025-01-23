@@ -109,7 +109,8 @@ fun TourSecondStepScreen(
             onDismiss = {
                 updateDateModalState()
             },
-            modifier = Modifier.padding(horizontal = 36.dp)
+            modifier = Modifier.padding(horizontal = 36.dp),
+            inLimited = false
         )
 
     Column(
