@@ -70,7 +70,6 @@ class TourThirdViewModel @Inject constructor(
     fun applyRoomTour() = viewModelScope.launch {
         _state.value = _state.value.copy(
             uiState = _state.value.uiState.copy(
-                birthDate = _state.value.uiState.birthDate.toFormattedDto(),
                 preferredDate = _state.value.uiState.preferredDate.toFormattedDto()
             )
         )

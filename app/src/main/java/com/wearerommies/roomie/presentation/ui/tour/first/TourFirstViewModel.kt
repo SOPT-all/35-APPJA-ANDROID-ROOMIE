@@ -43,7 +43,4 @@ class TourFirstViewModel @Inject constructor(
             tourApply = _state.value.uiState
         ))
     }
-
-
-
 }

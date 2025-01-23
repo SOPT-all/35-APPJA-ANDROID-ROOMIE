@@ -47,7 +47,6 @@ fun TourThirdStepRoute(
     navigateCompletedStep: () -> Unit,
     viewModel: TourThirdViewModel = hiltViewModel()
 ) {
-
     val counter by remember { mutableIntStateOf(0) }
     val currentCounter by rememberUpdatedState(counter)
 
@@ -55,7 +54,6 @@ fun TourThirdStepRoute(
         viewModel.initState(
             tourApply = tourApply
         )
-        Log.e("error","세번재 화면 ${tourApply}")
     }
 
     val state by viewModel.state.collectAsStateWithLifecycle()

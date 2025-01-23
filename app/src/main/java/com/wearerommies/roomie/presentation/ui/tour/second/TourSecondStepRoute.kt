@@ -62,7 +62,6 @@ fun TourSecondStepRoute(
         viewModel.initState(
             tourApply = tourApply
         )
-        Log.e("error","두번재 화면 ${tourApply}")
     }
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {

@@ -71,7 +71,6 @@ class TourSecondViewModel @Inject constructor(
                 phoneNumber = phoneNumber
             )
         )
-        Log.e("error",_state.value.uiState.toString())
     }
 
     fun navigateUp() = viewModelScope.launch {
