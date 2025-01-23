@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.wearerommies.roomie.domain.entity.TourEntity
 import com.wearerommies.roomie.presentation.navigator.route.Route
+import com.wearerommies.roomie.presentation.ui.tour.completed.TourCompletedStepRoute
 import com.wearerommies.roomie.presentation.ui.tour.first.TourFirstStepRoute
 import com.wearerommies.roomie.presentation.ui.tour.second.TourSecondStepRoute
 import com.wearerommies.roomie.presentation.ui.tour.third.TourThirdStepRoute
@@ -24,6 +25,7 @@ fun NavController.navigateToTourFirstStep(tourApply: TourEntity, houseName: Stri
 }
 
 fun NavController.navigateToTourSecondStep(tourApply: TourEntity, navOptions: NavOptions? = null) {
+
     navigate(
         route = Route.TourSecondStep(
             tourApply = tourApply
@@ -41,11 +43,20 @@ fun NavController.navigateToTourThirdStep(tourApply: TourEntity, navOptions: Nav
     )
 }
 
+fun NavController.navigateTourCompleteStep(navOptions: NavOptions? = null) {
+    navigate(
+        route = Route.TourCompleteStep,
+        navOptions = navOptions
+    )
+}
+
 fun NavGraphBuilder.tourNavGraph(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
     navigateSecondStep: (TourEntity) -> Unit,
-    navigateThirdStep: (TourEntity) -> Unit
+    navigateThirdStep: (TourEntity) -> Unit,
+    navigateCompleteStep: () -> Unit,
+    navigateHome: () -> Unit
 ) {
 
     composable<Route.TourFirstStep> (
@@ -82,9 +93,17 @@ fun NavGraphBuilder.tourNavGraph(
             paddingValues = paddingValues,
             navigateUp = navigateUp,
             tourApply = backStackEntry.toRoute<Route.TourThirdStep>().tourApply,
-            navigateCompletedStep = navigateUp,
+            navigateCompletedStep = navigateCompleteStep,
         )
 
+    }
+
+    composable<Route.TourCompleteStep> {
+        TourCompletedStepRoute(
+            paddingValues = paddingValues,
+            navigateUp = navigateUp,
+            navigateHome = navigateHome
+        )
     }
 }
 

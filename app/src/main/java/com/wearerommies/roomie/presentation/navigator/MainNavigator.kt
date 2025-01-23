@@ -24,6 +24,7 @@ import com.wearerommies.roomie.presentation.ui.search.navigation.navigateToSearc
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTourFirstStep
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTourSecondStep
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTourThirdStep
+import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateTourCompleteStep
 
 class MainNavigator(
     val navController: NavHostController,
@@ -63,6 +64,10 @@ class MainNavigator(
         if (!isSameCurrentDestination<MainTabRoute.Home>()) {
             navigateUp()
         }
+    }
+
+    fun navigateToHome(){
+        navController.navigate(MainTabRoute.Home)
     }
 
     fun navigateToSearch() {
@@ -105,11 +110,22 @@ class MainNavigator(
     }
 
     fun navigateToTourSecondStep(tourApply: TourEntity) {
-        navController.navigateToTourSecondStep(tourApply)
+        navController.navigateToTourSecondStep(tourApply, navOptions = navOptions {
+            popUpTo<Route.TourFirstStep>{
+                saveState = true
+            }
+            restoreState = true
+        })
     }
 
     fun navigateToTourThirdStep(tourApply: TourEntity) {
         navController.navigateToTourThirdStep(tourApply)
+    }
+
+    fun navigateToCompleteStep() {
+        navController.navigateTourCompleteStep(navOptions = navOptions{
+            popUpTo<Route.Detail>()
+        })
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =

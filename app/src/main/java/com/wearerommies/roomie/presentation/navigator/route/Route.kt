@@ -65,6 +65,9 @@ sealed interface Route {
     data class TourThirdStep(
         val tourApply: TourEntity
     ) : Route
+
+    @Serializable
+    data object TourCompleteStep : Route
 }
 
 val tourApplyType = object: NavType<TourEntity>(isNullableAllowed = false){
