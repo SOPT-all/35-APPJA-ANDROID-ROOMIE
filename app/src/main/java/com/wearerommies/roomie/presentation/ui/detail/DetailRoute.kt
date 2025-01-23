@@ -16,6 +16,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,6 +26,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -32,11 +36,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Popup
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -48,6 +54,7 @@ import com.wearerommies.roomie.domain.entity.TourEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieButton
 import com.wearerommies.roomie.presentation.core.component.RoomieHouseNameChip
 import com.wearerommies.roomie.presentation.core.component.RoomieLoadingView
+import com.wearerommies.roomie.presentation.core.component.RoomieSnackbar
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
@@ -67,6 +74,7 @@ import com.wearerommies.roomie.presentation.ui.webview.WebViewUrl
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.launch
 
 @Composable
 fun DetailRoute(
@@ -88,20 +96,48 @@ fun DetailRoute(
 
     val state by viewModel.state.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
+    val snackBarHost = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
                 DetailSideEffect.NavigateUp -> navigateUp()
-                is DetailSideEffect.NavigateDetailRoom -> navigateDetailRoom(sideEffect.houseId, sideEffect.roomId, sideEffect.title)
-                is DetailSideEffect.NavigateDetailHouse -> navigateDetailHouse(sideEffect.houseId, sideEffect.title)
-                is DetailSideEffect.NavigateTourApply -> navigateTourApply(sideEffect.tourEntity, sideEffect.houseName, sideEffect.roomName)
+                is DetailSideEffect.NavigateDetailRoom -> navigateDetailRoom(
+                    sideEffect.houseId,
+                    sideEffect.roomId,
+                    sideEffect.title
+                )
+
+                is DetailSideEffect.NavigateDetailHouse -> navigateDetailHouse(
+                    sideEffect.houseId,
+                    sideEffect.title
+                )
+
+                is DetailSideEffect.NavigateTourApply -> navigateTourApply(
+                    sideEffect.tourEntity,
+                    sideEffect.houseName,
+                    sideEffect.roomName
+                )
+
                 is DetailSideEffect.NavigateToWebView -> navigateToWebView(sideEffect.webViewUrl)
+                is DetailSideEffect.SnackBar -> {
+                    snackBarHost.currentSnackbarData?.dismiss()
+                    coroutineScope.launch {
+                        snackBarHost.showSnackbar(
+                            message = context.getString(sideEffect.message),
+                            duration = SnackbarDuration.Short
+                        )
+                    }
+                }
             }
         }
     }
 
     DetailScreen(
         paddingValues = paddingValues,
+        snackBarHost = snackBarHost,
         navigateUp = viewModel::navigateUp,
         navigateDetailRoom = viewModel::navigateToDetail,
         navigateDetailHouse = viewModel::navigateToHouse,
@@ -118,13 +154,15 @@ fun DetailRoute(
         updateBottomSheetState = viewModel::updateBottomSheetState,
         updateLivingExpanded = viewModel::updateLivingExpanded,
         updateKitchenExpanded = viewModel::updatedKitchenExpanded,
-        updateSelectedTourRoomName = viewModel::updateSelectedTourRoomName
+        updateSelectedTourRoomName = viewModel::updateSelectedTourRoomName,
+        onLikeClick = viewModel::bookmarkHouse
     )
 }
 
 @Composable
 fun DetailScreen(
     paddingValues: PaddingValues,
+    snackBarHost: SnackbarHostState,
     state: UiState<DetailEntity>,
     isShowBottomSheet: Boolean,
     isLivingExpanded: Boolean,
@@ -141,7 +179,8 @@ fun DetailScreen(
     navigateDetailRoom: (Long, Long, String) -> Unit,
     navigateDetailHouse: (Long, String) -> Unit,
     navigateTourApply: (Long, Long, String, String) -> Unit,
-    navigateToWebView: (String) -> Unit
+    navigateToWebView: (String) -> Unit,
+    onLikeClick: (Long) -> Unit
 ) {
     val scrollState = rememberLazyListState()
     var imageHeight by remember { mutableIntStateOf(0) }
@@ -160,6 +199,22 @@ fun DetailScreen(
         if (!isScrollResponsiveDefault) convertDpToFloat(1.dp) else convertDpToFloat(0.dp)
     val topBarTextcolor =
         if (!isScrollResponsiveDefault) RoomieTheme.colors.grayScale12 else Color.Transparent
+
+    Popup(
+        alignment = Alignment.BottomCenter
+    ) {
+        SnackbarHost(hostState = snackBarHost) { snackbarData ->
+            RoomieSnackbar(
+                modifier = Modifier
+                    .padding(
+                        bottom = 92.dp,
+                        start = 12.dp,
+                        end = 12.dp
+                    ),
+                message = snackbarData.visuals.message
+            )
+        }
+    }
 
     when (state) {
         UiState.Failure -> TODO()
@@ -205,11 +260,11 @@ fun DetailScreen(
                     modifier = Modifier
                         .background(RoomieTheme.colors.grayScale1)
                         .fillMaxWidth()
-                        .padding(bottom=80.dp)
+                        .padding(bottom = 80.dp)
                 ) {
                     item {
 
-                        Box{
+                        Box {
                             AsyncImage(
                                 model = state.data.houseInfo.mainImageUrl,
                                 contentDescription = stringResource(R.string.house_main_image),
@@ -218,16 +273,21 @@ fun DetailScreen(
                                     .fillMaxWidth()
                                     .onGloballyPositioned { coordinates ->
                                         imageHeight = coordinates.size.height
-                                    }
-                                ,
+                                    },
                                 contentScale = ContentScale.Crop
                             )
-                            Spacer(Modifier
-                                .fillMaxSize()
-                                .height(16.dp)
-                                .clip(shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
-                                .background(RoomieTheme.colors.grayScale1)
-                                .align(Alignment.BottomCenter)
+                            Spacer(
+                                Modifier
+                                    .fillMaxSize()
+                                    .height(16.dp)
+                                    .clip(
+                                        shape = RoundedCornerShape(
+                                            topStart = 12.dp,
+                                            topEnd = 12.dp
+                                        )
+                                    )
+                                    .background(RoomieTheme.colors.grayScale1)
+                                    .align(Alignment.BottomCenter)
                             )
                         }
                     }
@@ -250,7 +310,11 @@ fun DetailScreen(
                             Spacer(Modifier.height(8.dp))
 
                             Text(
-                                text = stringResource(R.string.house_price_text, state.data.houseInfo.monthlyRent, state.data.houseInfo.deposit),
+                                text = stringResource(
+                                    R.string.house_price_text,
+                                    state.data.houseInfo.monthlyRent,
+                                    state.data.houseInfo.deposit
+                                ),
                                 style = RoomieTheme.typography.heading2Sb20,
                                 color = RoomieTheme.colors.grayScale11
                             )
@@ -408,7 +472,7 @@ fun DetailScreen(
 
                         Spacer(Modifier.height(16.dp))
 
-                        if(state.data.roommates.isNullOrEmpty()){
+                        if (state.data.roommates.isNullOrEmpty()) {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -428,9 +492,9 @@ fun DetailScreen(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(
-                                        horizontal = 79.dp,
-                                        vertical = 35.dp
-                                    ),
+                                            horizontal = 79.dp,
+                                            vertical = 35.dp
+                                        ),
                                     textAlign = TextAlign.Center,
                                 )
 
@@ -449,7 +513,7 @@ fun DetailScreen(
                                     modifier = Modifier.padding(horizontal = 16.dp)
                                 )
 
-                                if(index != state.data.roommates.lastIndex){
+                                if (index != state.data.roommates.lastIndex) {
                                     Spacer(Modifier.height(12.dp))
                                 } else {
                                     Spacer(Modifier.height(20.dp))
@@ -478,12 +542,14 @@ fun DetailScreen(
                     DetailBottomIconButton(
                         icon = { isPinned ->
                             Icon(
-                                imageVector = if (isPinned) ImageVector.vectorResource(R.drawable.ic_heart_24px_active) else ImageVector.vectorResource(R.drawable.ic_heart_line_gray_24px),
+                                imageVector = if (isPinned) ImageVector.vectorResource(R.drawable.ic_heart_24px_active) else ImageVector.vectorResource(
+                                    R.drawable.ic_heart_line_gray_24px
+                                ),
                                 contentDescription = stringResource(R.string.heart_button),
                                 tint = if (isPinned) RoomieTheme.colors.actionError else RoomieTheme.colors.grayScale6,
                             )
                         },
-                        onClickButton = {},
+                        onClickButton = { onLikeClick(state.data.houseInfo.houseId) },
                         isPinned = state.data.houseInfo.isPinned
                     )
                     DetailBottomIconButton(
@@ -508,7 +574,7 @@ fun DetailScreen(
                         isPressed = true
                     )
                 }
-                if(isShowBottomSheet){
+                if (isShowBottomSheet) {
                     DetailBottomSheet(
                         rooms = state.data.rooms.toPersistentList(),
                         onDismissRequest = updateBottomSheetState,
@@ -542,56 +608,58 @@ fun DetailScreenPreview() {
     RoomieAndroidTheme {
         DetailScreen(
             paddingValues = PaddingValues(),
+            snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
-            state = UiState.Success(DetailEntity(
-                houseInfo = DetailEntity.HouseInfo(
-                    houseId = 123L,
-                    name = "루미 100호점(이대역)",
-                    mainImageUrl = "https://picsum.photos/200",
-                    monthlyRent = "43~50",
-                    deposit = "90~100",
-                    location = "서대문구 연희동",
-                    occupancyTypes = "1,2,3인실",
-                    occupancyStatus = "2/5",
-                    genderPolicy = "여성전용",
-                    contractTerm = 3,
-                    moodTags = listOf("#차분한", "#유쾌한", "#경쾌한"),
-                    groundRule = listOf("요리 후 바로 설거지해요", "청소는 주3회 돌아가면서 해요"),
-                    maintenanceCost = 300000,
-                    isPinned = true,
-                    safetyLivingFacility = listOf("소화기", "소화기"),
-                    kitchenFacility = listOf("주걱", "밥솥"),
-                    roomMood = "전반적으로 조용하고 깔끔한 환경을 선호하는 아침형 룸메이트들이에요."
-                ),
-                rooms = listOf(
-                    DetailEntity.Room(
-                        roomId = 1L,
-                        name = "1A 싱글침대",
-                        status = true,
-                        isTourAvailable = true,
-                        occupancyType = 2,
-                        gender = "여성",
-                        deposit = 5000000,
-                        prepaidUtilities = 100000,
-                        monthlyRent = 500000,
-                        contractPeriod = "24-12-20",
-                        managementFee = "1/n"
+            state = UiState.Success(
+                DetailEntity(
+                    houseInfo = DetailEntity.HouseInfo(
+                        houseId = 123L,
+                        name = "루미 100호점(이대역)",
+                        mainImageUrl = "https://picsum.photos/200",
+                        monthlyRent = "43~50",
+                        deposit = "90~100",
+                        location = "서대문구 연희동",
+                        occupancyTypes = "1,2,3인실",
+                        occupancyStatus = "2/5",
+                        genderPolicy = "여성전용",
+                        contractTerm = 3,
+                        moodTags = listOf("#차분한", "#유쾌한", "#경쾌한"),
+                        groundRule = listOf("요리 후 바로 설거지해요", "청소는 주3회 돌아가면서 해요"),
+                        maintenanceCost = 300000,
+                        isPinned = true,
+                        safetyLivingFacility = listOf("소화기", "소화기"),
+                        kitchenFacility = listOf("주걱", "밥솥"),
+                        roomMood = "전반적으로 조용하고 깔끔한 환경을 선호하는 아침형 룸메이트들이에요."
                     ),
-                    DetailEntity.Room(
-                        roomId = 2L,
-                        name = "1B 싱글침대",
-                        status = false,
-                        isTourAvailable = false,
-                        occupancyType = 1,
-                        gender = "여성",
-                        deposit = 5000000,
-                        prepaidUtilities = 100000,
-                        monthlyRent = 500000,
-                        contractPeriod = "24-12-20",
-                        managementFee = "1/n"
-                    )
-                ),
-                roommates = null /*listOf(
+                    rooms = listOf(
+                        DetailEntity.Room(
+                            roomId = 1L,
+                            name = "1A 싱글침대",
+                            status = true,
+                            isTourAvailable = true,
+                            occupancyType = 2,
+                            gender = "여성",
+                            deposit = 5000000,
+                            prepaidUtilities = 100000,
+                            monthlyRent = 500000,
+                            contractPeriod = "24-12-20",
+                            managementFee = "1/n"
+                        ),
+                        DetailEntity.Room(
+                            roomId = 2L,
+                            name = "1B 싱글침대",
+                            status = false,
+                            isTourAvailable = false,
+                            occupancyType = 1,
+                            gender = "여성",
+                            deposit = 5000000,
+                            prepaidUtilities = 100000,
+                            monthlyRent = 500000,
+                            contractPeriod = "24-12-20",
+                            managementFee = "1/n"
+                        )
+                    ),
+                    roommates = null /*listOf(
                     DetailEntity.RoomMate(
                         name = "1A 싱글침대",
                         age = "20대",
@@ -609,7 +677,8 @@ fun DetailScreenPreview() {
                         activityTime = "21:00 - 21:00"
                     )
                 )*/
-            )),
+                )
+            ),
             isShowBottomSheet = false,
             isLivingExpanded = true,
             isKitchenExpanded = false,
@@ -624,7 +693,8 @@ fun DetailScreenPreview() {
             updateSelecetedTourRoomId = {},
             selectedTourName = "",
             updateSelectedTourRoomName = {},
-            navigateToWebView = {}
+            navigateToWebView = {},
+            onLikeClick = {}
         )
     }
 }
