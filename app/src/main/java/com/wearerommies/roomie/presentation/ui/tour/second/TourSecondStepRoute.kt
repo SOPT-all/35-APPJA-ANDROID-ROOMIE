@@ -240,7 +240,8 @@ fun TourSecondStepScreen(
             modifier = Modifier
                 .padding(horizontal = 16.dp),
             keyboardType = KeyboardType.Number,
-            isValidated = true
+            isValidated = state.isValidated,
+            errorMessage = stringResource(R.string.tour_phone_error)
         )
 
         Spacer(Modifier.weight(1f))
