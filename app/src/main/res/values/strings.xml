@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Roomie Android</string>
+    <string name="app_name">Roomie</string>
 
     // main tab
     <string name="home">홈</string>
@@ -12,7 +12,7 @@
     <string name="mood_tag_clean">깔끔한</string>
     <string name="mood_card_sub_text">분위기의\n방이 궁금하신가요?</string>
     <string name="home_location">연남동</string>
-    <string name="home_banner_message">루미가 궁금하다면?</string>
+    <string name="home_banner_message">1분만에 나만의 분위기 알아보기</string>
     <string name="find_mood">분위기 별로 보기</string>
     <string name="find_recent_room">최근 본 방</string>
     <string name="find_more_sharehouses_in_map">지도에서 더 많은 쉐어하우스 찾기</string>
@@ -51,9 +51,8 @@
     <string name="four_person">4인실</string>
     <string name="five_person">5인실</string>
     <string name="six_person">6인실</string>
-    <string name="three_month">3개월</string>
-    <string name="six_month">6개월</string>
-    <string name="one_year">1년</string>
+    <string name="year">%1$s년</string>
+    <string name="month">%1$s개월</string>
 
     //my
     <string name="profile_image">프로필 이미지</string>

@@ -17,12 +17,14 @@ fun NavController.navigateToBookmark(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.bookmarkNavGraph(
     paddingValues: PaddingValues,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
+    navigateToDetail: (Long) -> Unit
 ) {
     composable<Route.Bookmark> {
         BookMarkRoute(
             paddingValues = paddingValues,
-            navigateUp = navigateUp
+            navigateUp = navigateUp,
+            navigateToDetail = navigateToDetail
         )
     }
 }

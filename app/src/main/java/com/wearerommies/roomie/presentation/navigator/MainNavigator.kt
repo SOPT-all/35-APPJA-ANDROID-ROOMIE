@@ -8,23 +8,26 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.wearerommies.roomie.domain.entity.TourEntity
+import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.type.MainTabType
 import com.wearerommies.roomie.presentation.ui.bookmark.navigation.navigateToBookmark
+import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetail
+import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailHouse
+import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailRoom
 import com.wearerommies.roomie.presentation.ui.filter.navigation.navigateToFilter
 import com.wearerommies.roomie.presentation.ui.home.navigation.navigateToHome
 import com.wearerommies.roomie.presentation.ui.map.navigation.navigateToMap
 import com.wearerommies.roomie.presentation.ui.mood.navigation.navigateToMood
 import com.wearerommies.roomie.presentation.ui.mypage.navigation.navigateToMy
-import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetail
-import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailHouse
-import com.wearerommies.roomie.presentation.ui.detail.navigation.navigateToDetailRoom
 import com.wearerommies.roomie.presentation.ui.search.navigation.navigateToSearch
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTourFirstStep
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTourSecondStep
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateToTourThirdStep
 import com.wearerommies.roomie.presentation.ui.tour.navigation.navigateTourCompleteStep
+import com.wearerommies.roomie.presentation.ui.webview.navigation.navigateToWebView
 
 class MainNavigator(
     val navController: NavHostController,
@@ -51,7 +54,12 @@ class MainNavigator(
 
         when (tab) {
             MainTabType.HOME -> navController.navigateToHome(navOptions)
-            MainTabType.MAP -> navController.navigateToMap(navOptions)
+            MainTabType.MAP -> navController.navigateToMap(
+                FilterEntity(),
+                SearchResultEntity(),
+                navOptions
+            )
+
             MainTabType.MY -> navController.navigateToMy(navOptions)
         }
     }
@@ -68,6 +76,14 @@ class MainNavigator(
 
     fun navigateToHome(){
         navController.navigate(MainTabRoute.Home)
+    }
+
+    fun navigateToMap(filter: FilterEntity, result: SearchResultEntity) {
+        navController.navigateToMap(filter = filter, searchResult = result, navOptions = navOptions {
+            popUpTo<MainTabRoute.Map> {
+                inclusive = true
+            }
+        })
     }
 
     fun navigateToSearch() {
@@ -126,6 +142,10 @@ class MainNavigator(
         navController.navigateTourCompleteStep(navOptions = navOptions{
             popUpTo<Route.Detail>()
         })
+    }
+
+    fun navigateToWebView(webViewUrl: String) {
+        navController.navigateToWebView(webViewUrl = webViewUrl)
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =

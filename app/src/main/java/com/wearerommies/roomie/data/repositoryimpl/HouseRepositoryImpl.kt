@@ -1,6 +1,7 @@
 package com.wearerommies.roomie.data.repositoryimpl
 
 import com.wearerommies.roomie.data.datasource.HouseDataSource
+import com.wearerommies.roomie.domain.entity.BookmarkEntity
 import com.wearerommies.roomie.domain.entity.DetailEntity
 import com.wearerommies.roomie.domain.entity.DetailHouseImageEntity
 import com.wearerommies.roomie.domain.entity.DetailRoomEntity
@@ -22,9 +23,9 @@ internal class HouseRepositoryImpl @Inject constructor(
             houseDataSource.getBookmarkLists().data.toEntity()
         }
 
-    override suspend fun bookmarkHouse(houseId: Long): Result<Boolean> =
+    override suspend fun bookmarkHouse(houseId: Long): Result<BookmarkEntity> =
         runCatching {
-            houseDataSource.bookmarkHouse(houseId = houseId).data
+            houseDataSource.bookmarkHouse(houseId = houseId).data.toEntity()
         }
 
     override suspend fun getHouseDetail(houseId: Long): Result<DetailEntity> =

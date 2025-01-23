@@ -1,6 +1,7 @@
 package com.wearerommies.roomie.data.service
 
 import com.wearerommies.roomie.data.dto.response.BaseResponse
+import com.wearerommies.roomie.data.dto.response.ResponseBookmarkDto
 import com.wearerommies.roomie.data.dto.response.ResponseBookmarkListDto
 import com.wearerommies.roomie.data.dto.response.ResponseDetailDto
 import com.wearerommies.roomie.data.dto.response.ResponseDetailHouseImageDto
@@ -23,7 +24,7 @@ interface HouseService {
     @PATCH("/v1/houses/{houseId}/pins")
     suspend fun bookmarkHouse(
         @Path("houseId") houseId: Long
-    ): BaseResponse<Boolean>
+    ): BaseResponse<ResponseBookmarkDto>
   
     @GET("/v1/houses/{houseId}/details")
     suspend fun getHouseDetail(

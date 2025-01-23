@@ -95,4 +95,7 @@ dependencies {
 
     // Lottie
     implementation(libs.bundles.lottie)
+
+    // Web View
+    implementation(libs.accompanist.webview)
 }

@@ -23,12 +23,10 @@ class HomeViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val houseRepository: HouseRepository
 ) : ViewModel() {
-    // state 관리
     private val _state = MutableStateFlow(HomeState())
     val state: StateFlow<HomeState>
         get() = _state.asStateFlow()
 
-    // side effect 관리
     private val _sideEffect: MutableSharedFlow<HomeSideEffect> = MutableSharedFlow()
     val sideEffect: SharedFlow<HomeSideEffect>
         get() = _sideEffect.asSharedFlow()
@@ -94,10 +92,14 @@ class HomeViewModel @Inject constructor(
         )
     }
 
+    fun navigateToWebView(webViewUrl: String) = viewModelScope.launch {
+        _sideEffect.emit(HomeSideEffect.NavigateToWebView(webViewUrl = webViewUrl))
+    }
+
     fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
         houseRepository.bookmarkHouse(houseId = houseId)
-            .onSuccess { bookmarkState ->
-                if (bookmarkState) {
+            .onSuccess { response ->
+                if (response.isPinned) {
                     _sideEffect.emit(
                         HomeSideEffect.SnackBar(
                             message = R.string.add_to_bookmark_list
