@@ -14,9 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TourFirstViewModel @Inject constructor(
-
-): ViewModel() {
+class TourFirstViewModel @Inject constructor(): ViewModel() {
 
     private val _state = MutableStateFlow(TourFirstState())
     val state: StateFlow<TourFirstState>
