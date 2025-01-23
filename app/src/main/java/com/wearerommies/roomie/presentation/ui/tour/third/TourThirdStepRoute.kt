@@ -63,7 +63,7 @@ fun TourThirdStepRoute(
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
                 TourThirdSideEffect.NavigateUp -> navigateUp()
-                TourThirdSideEffect.NavigateToCompletedStep -> return@collect // navigateCompletedStep()
+                TourThirdSideEffect.NavigateToCompletedStep -> navigateCompletedStep()
             }
         }
     }
