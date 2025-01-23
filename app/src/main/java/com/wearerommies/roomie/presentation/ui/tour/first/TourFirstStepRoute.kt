@@ -43,7 +43,7 @@ fun TourFirstStepRoute(
     houseName: String,
     roomName: String,
     navigateUp: () -> Unit,
-    navigateTwoStep: (TourEntity) -> Unit,
+    navigateToTwoStep: (TourEntity) -> Unit,
     viewModel: TourFirstViewModel = hiltViewModel()
 ) {
 
@@ -66,7 +66,7 @@ fun TourFirstStepRoute(
             when (sideEffect) {
                 TourFirstSideEffect.NavigateUp -> navigateUp()
                 is TourFirstSideEffect.NavigateToSecondStep -> {
-                    navigateTwoStep(sideEffect.tourApply)
+                    navigateToTwoStep(sideEffect.tourApply)
                 }
             }
         }

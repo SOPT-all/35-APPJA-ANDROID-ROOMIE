@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -24,13 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.presentation.core.component.RoomieButton
-import com.wearerommies.roomie.presentation.type.MainTabType
-import com.wearerommies.roomie.presentation.ui.tour.first.TourFirstState
-import com.wearerommies.roomie.presentation.ui.tour.first.TourFirstViewModel
-import com.wearerommies.roomie.presentation.ui.tour.third.TourThirdSideEffect
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 
@@ -38,7 +32,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun TourCompletedStepRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateHome: () -> Unit,
+    navigateToHome: () -> Unit,
     viewModel: TourCompletedStepViewModel = hiltViewModel()
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -47,7 +41,7 @@ fun TourCompletedStepRoute(
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
                 is TourCompletedSideEffect.NavigateUp -> navigateUp()
-                is TourCompletedSideEffect.NavigateHome -> navigateHome()
+                is TourCompletedSideEffect.NavigateToHome -> navigateToHome()
             }
         }
     }

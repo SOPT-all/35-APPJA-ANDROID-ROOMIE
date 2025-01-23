@@ -53,10 +53,10 @@ fun NavController.navigateTourCompleteStep(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.tourNavGraph(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateSecondStep: (TourEntity) -> Unit,
-    navigateThirdStep: (TourEntity) -> Unit,
-    navigateCompleteStep: () -> Unit,
-    navigateHome: () -> Unit
+    navigateToSecondStep: (TourEntity) -> Unit,
+    navigateToThirdStep: (TourEntity) -> Unit,
+    navigateToCompleteStep: () -> Unit,
+    navigateToHome: () -> Unit
 ) {
 
     composable<Route.TourFirstStep> (
@@ -68,7 +68,7 @@ fun NavGraphBuilder.tourNavGraph(
             tourApply = backStackEntry.toRoute<Route.TourFirstStep>().tourApply,
             houseName = backStackEntry.toRoute<Route.TourFirstStep>().houseName,
             roomName = backStackEntry.toRoute<Route.TourFirstStep>().roomName,
-            navigateTwoStep = navigateSecondStep
+            navigateToTwoStep = navigateToSecondStep
         )
     }
 
@@ -80,9 +80,8 @@ fun NavGraphBuilder.tourNavGraph(
             paddingValues = paddingValues,
             tourApply = backStackEntry.toRoute<Route.TourSecondStep>().tourApply,
             navigateUp = navigateUp,
-            navigateThirdStep = navigateThirdStep,
+            navigateThirdStep = navigateToThirdStep,
         )
-
     }
 
     composable<Route.TourThirdStep>(
@@ -93,7 +92,7 @@ fun NavGraphBuilder.tourNavGraph(
             paddingValues = paddingValues,
             navigateUp = navigateUp,
             tourApply = backStackEntry.toRoute<Route.TourThirdStep>().tourApply,
-            navigateCompletedStep = navigateCompleteStep,
+            navigateCompletedStep = navigateToCompleteStep,
         )
 
     }
@@ -102,7 +101,7 @@ fun NavGraphBuilder.tourNavGraph(
         TourCompletedStepRoute(
             paddingValues = paddingValues,
             navigateUp = navigateUp,
-            navigateHome = navigateHome
+            navigateToHome = navigateToHome
         )
     }
 }

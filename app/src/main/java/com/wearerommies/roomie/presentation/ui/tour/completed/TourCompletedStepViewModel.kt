@@ -20,6 +20,6 @@ class TourCompletedStepViewModel@Inject constructor(
     }
 
     fun navigateHome() = viewModelScope.launch {
-        _sideEffect.emit(TourCompletedSideEffect.NavigateHome)
+        _sideEffect.emit(TourCompletedSideEffect.NavigateToHome)
     }
 }

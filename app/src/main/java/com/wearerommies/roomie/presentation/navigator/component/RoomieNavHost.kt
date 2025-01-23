@@ -68,10 +68,10 @@ fun RoomieNavHost(
         tourNavGraph(
             paddingValues = padding,
             navigateUp = navigator::popBackStackIfNotHome,
-            navigateSecondStep = navigator::navigateToTourSecondStep,
-            navigateThirdStep = navigator::navigateToTourThirdStep,
-            navigateCompleteStep = navigator::navigateToCompleteStep,
-            navigateHome = navigator::navigateToHome
+            navigateToSecondStep = navigator::navigateToTourSecondStep,
+            navigateToThirdStep = navigator::navigateToTourThirdStep,
+            navigateToCompleteStep = navigator::navigateToCompleteStep,
+            navigateToHome = navigator::navigateToHome
         )
     }
 }
