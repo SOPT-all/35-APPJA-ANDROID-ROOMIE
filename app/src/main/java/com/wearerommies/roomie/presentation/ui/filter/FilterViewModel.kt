@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.ui.filter
 
+import android.text.TextUtils.replace
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.domain.entity.FilterEntity
@@ -93,8 +94,8 @@ class FilterViewModel @Inject constructor(
 
     fun resetAll() {
         _state.value = _state.value.copy(
-            location = "",
-            moodTag = "",
+            location = "서울특별시 마포구 노고산동",
+            moodTag = null,
             depositStart = 0,
             depositEnd = 500,
             monthlyRentStart = 0,
@@ -121,7 +122,7 @@ class FilterViewModel @Inject constructor(
                         max = _state.value.monthlyRentEnd
                     ),
                     genderPolicy = _state.value.genderPolicy,
-                    preferredDate = _state.value.preferredDate,
+                    preferredDate = _state.value.preferredDate.replace("/", "-"),
                     occupancyTypes = _state.value.occupancyType,
                     contractPeriod = _state.value.contractType
                 ),
