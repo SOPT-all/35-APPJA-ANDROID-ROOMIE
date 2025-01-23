@@ -20,11 +20,20 @@ import com.wearerommies.roomie.presentation.core.component.RoomieDatePicker
 import com.wearerommies.roomie.presentation.core.component.RoomieDatePickerField
 import com.wearerommies.roomie.presentation.ui.filter.component.ColumnWithTitle
 import com.wearerommies.roomie.presentation.ui.filter.component.FilterChip
+import com.wearerommies.roomie.presentation.ui.filter.screen.Date.ONEYEAR
+import com.wearerommies.roomie.presentation.ui.filter.screen.Date.SIXMONTH
+import com.wearerommies.roomie.presentation.ui.filter.screen.Date.THREEMONTH
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
+
+object Date {
+    const val ONEYEAR: Int = 1
+    const val THREEMONTH: Int = 3
+    const val SIXMONTH: Int = 6
+}
 
 @Composable
 fun ContractTypeScreen(
@@ -77,9 +86,9 @@ fun ContractTypeScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     val contractPeriodOptions = listOf(
-                        3,
-                        6,
-                        1
+                        THREEMONTH,
+                        SIXMONTH,
+                        ONEYEAR
                     )
 
                     contractPeriodOptions.forEach { option ->
