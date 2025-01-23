@@ -1,5 +1,8 @@
 package com.wearerommies.roomie.domain.entity
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class TourEntity(
     val name: String = "",
     val birthDate: String = "",
