@@ -40,7 +40,7 @@ class MapViewModel @Inject constructor(
         )
     }
 
-    fun fetchFilterAndSearch(filter: FilterEntity, search: SearchResultEntity) {
+    fun fetchFilterAndSearch(filter: FilterEntity, searchResult: SearchResultEntity) {
         _state.value = _state.value.copy(
             filter = _state.value.filter.copy(
                 moodTag = filter.moodTag,
@@ -50,7 +50,7 @@ class MapViewModel @Inject constructor(
                 preferredDate = filter.preferredDate,
                 occupancyTypes = filter.occupancyTypes,
                 contractPeriod = filter.contractPeriod,
-                location = search.address.ifEmpty { filter.location }
+                location = searchResult.address.ifEmpty { filter.location }
             )
         )
     }
