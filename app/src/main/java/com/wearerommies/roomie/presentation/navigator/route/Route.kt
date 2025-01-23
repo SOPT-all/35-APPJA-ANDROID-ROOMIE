@@ -84,7 +84,6 @@ val FilterType = object : NavType<FilterEntity>(isNullableAllowed = false) {
     }
 }
 
-
 val ResultType = object : NavType<SearchResultEntity>(isNullableAllowed = false) {
     override fun get(bundle: Bundle, key: String): SearchResultEntity? {
         return bundle.getString(key)?.let { Json.decodeFromString(it) }
