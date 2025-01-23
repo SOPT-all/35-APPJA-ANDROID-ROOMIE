@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class FilterEntity(
-    val location: String = "서울특별시 마포구 노고산동 11-1",
+    val location: String = "서울특별시 마포구 노고산동",
     val moodTag: String? = null,
     val depositRange: DepositRange = DepositRange(),
     val monthlyRentRange: MonthlyRentRange = MonthlyRentRange(),
