@@ -169,7 +169,7 @@ fun HomeScreen(
             RoomieSnackbar(
                 modifier = Modifier
                     .padding(
-                        bottom = paddingValues.calculateBottomPadding(),
+                        bottom = paddingValues.calculateBottomPadding() - 8.dp,
                         start = 12.dp,
                         end = 12.dp
                     ),
