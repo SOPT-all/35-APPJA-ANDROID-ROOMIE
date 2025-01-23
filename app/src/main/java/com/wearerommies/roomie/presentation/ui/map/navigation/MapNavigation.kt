@@ -16,11 +16,11 @@ import kotlin.reflect.typeOf
 
 fun NavController.navigateToMap(
     filter: FilterEntity,
-    result: SearchResultEntity,
+    searchResult: SearchResultEntity,
     navOptions: NavOptions? = null
 ) {
     navigate(
-        route = MainTabRoute.Map(filter, result),
+        route = MainTabRoute.Map(filter, searchResult),
         navOptions = navOptions
     )
 }

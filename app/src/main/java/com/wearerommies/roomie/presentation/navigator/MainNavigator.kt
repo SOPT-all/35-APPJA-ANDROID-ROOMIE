@@ -71,7 +71,7 @@ class MainNavigator(
     }
 
     fun navigateToMap(filter: FilterEntity, result: SearchResultEntity) {
-        navController.navigateToMap(filter = filter, result = result, navOptions = navOptions {
+        navController.navigateToMap(filter = filter, searchResult = result, navOptions = navOptions {
             popUpTo<MainTabRoute.Map> {
                 inclusive = true
             }
