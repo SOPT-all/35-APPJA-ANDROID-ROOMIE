@@ -86,7 +86,7 @@ fun MapRoute(
         isBottomSheetOpened = state.isBottomSheetOpened,
         latitude = searchResultEntity.y,
         longitude = searchResultEntity.x,
-        textfield = searchResultEntity.address,
+        textfield = searchResultEntity.location,
         houseList = state.houseList,
         onMarkerClicked = viewModel::showMarkerDetail,
         markerDetail = state.markerDetail,
