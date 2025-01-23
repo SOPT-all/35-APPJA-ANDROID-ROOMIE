@@ -36,7 +36,7 @@ class MainNavigator(
 
     val currentTab: MainTabType?
         @Composable get() = MainTabType.find { tab ->
-            currentDestination?.route == tab::class.qualifiedName
+            currentDestination?.route?.startsWith(tab::class.qualifiedName ?: "") == true
         }
 
     fun navigate(tab: MainTabType) {
@@ -71,11 +71,14 @@ class MainNavigator(
     }
 
     fun navigateToMap(filter: FilterEntity, result: SearchResultEntity) {
-        navController.navigateToMap(filter = filter, searchResult = result, navOptions = navOptions {
-            popUpTo<MainTabRoute.Map> {
-                inclusive = true
-            }
-        })
+        navController.navigateToMap(
+            filter = filter,
+            searchResult = result,
+            navOptions = navOptions {
+                popUpTo<MainTabRoute.Map> {
+                    inclusive = true
+                }
+            })
     }
 
     fun navigateToSearch() {
@@ -126,7 +129,9 @@ class MainNavigator(
 
     @Composable
     fun showBottomBar() = MainTabType.contains {
-        currentDestination?.route == it::class.qualifiedName
+        currentDestination?.route == it::class.qualifiedName || (currentDestination?.route?.startsWith(
+            MainTabRoute.Map::class.qualifiedName ?: ""
+        ) == true)
     }
 }
 
