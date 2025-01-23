@@ -46,12 +46,7 @@ fun DatePickerModal(
     inLimited: Boolean,
     modifier: Modifier = Modifier
 ) {
-    val todayMillisUtc = Calendar.getInstance(TimeZone.getTimeZone(UTC)).apply {
-        set(Calendar.HOUR_OF_DAY, 0)
-        set(Calendar.MINUTE, 0)
-        set(Calendar.SECOND, 0)
-        set(Calendar.MILLISECOND, 0)
-    }.timeInMillis
+    val todayMillisUtc = LocalDate.now().atStartOfDay(ZoneOffset.UTC)?.toInstant()?.toEpochMilli() ?: System.currentTimeMillis()
 
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = todayMillisUtc,
