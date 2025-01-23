@@ -1,6 +1,11 @@
 package com.wearerommies.roomie.presentation.navigator.route
 
+import android.os.Bundle
+import androidx.navigation.NavType
+import com.wearerommies.roomie.domain.entity.TourEntity
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlin.reflect.typeOf
 
 sealed interface Route {
     @Serializable
@@ -40,17 +45,46 @@ sealed interface Route {
 
     @Serializable
     data class TourFirstStep(
-        val houseId: Long,
-        val roomId: Long,
+        val tourApply: TourEntity,
         val houseName: String,
         val roomName: String
+    ) : Route {
+        companion object {
+            val typeMap = mapOf(
+                typeOf<TourEntity>() to tourApplyType
+            )
+        }
+    }
+
+    @Serializable
+    data class TourSecondStep(
+        val tourApply: TourEntity
     ) : Route
 
     @Serializable
-    data object TourSecondStep : Route
+    data class TourThirdStep(
+        val tourApply: TourEntity
+    ) : Route
+}
 
-    @Serializable
-    data object TourThirdStep : Route
+val tourApplyType = object: NavType<TourEntity>(isNullableAllowed = false){
+    override fun get(bundle: Bundle, key: String): TourEntity? {
+        return bundle.getString(key)?.let {
+            Json.decodeFromString(it)
+        }
+    }
+
+    override fun parseValue(value: String): TourEntity {
+        return Json.decodeFromString(value)
+    }
+
+    override fun put(bundle: Bundle, key: String, value: TourEntity) {
+        bundle.putString(key, Json.encodeToString(TourEntity.serializer(), value))
+    }
+
+    override fun serializeAsValue(value: TourEntity): String {
+        return Json.encodeToString(TourEntity.serializer(), value)
+    }
 }
 
 sealed interface MainTabRoute : Route {

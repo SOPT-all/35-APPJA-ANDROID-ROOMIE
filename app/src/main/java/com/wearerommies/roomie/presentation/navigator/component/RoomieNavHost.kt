@@ -2,7 +2,6 @@ package com.wearerommies.roomie.presentation.navigator.component
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import com.wearerommies.roomie.presentation.navigator.MainNavigator
 import com.wearerommies.roomie.presentation.type.MainTabType
@@ -70,12 +69,7 @@ fun RoomieNavHost(
             paddingValues = padding,
             navigateUp = navigator::popBackStackIfNotHome,
             navigateSecondStep = navigator::navigateToTourSecondStep,
-            navigateThirdStep = navigator::navigateToTourThirdStep,
-            getBackStackViewModel = {
-                navigator.navController.previousBackStackEntry?.let { backStackEntry ->
-                    hiltViewModel(backStackEntry)
-                } ?: hiltViewModel()
-            }
+            navigateThirdStep = navigator::navigateToTourThirdStep
         )
     }
 }

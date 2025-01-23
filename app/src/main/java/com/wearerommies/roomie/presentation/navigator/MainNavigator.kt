@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.wearerommies.roomie.domain.entity.TourEntity
 import com.wearerommies.roomie.presentation.navigator.route.MainTabRoute
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.type.MainTabType
@@ -103,12 +104,12 @@ class MainNavigator(
         navController.navigateToTourFirstStep(tourApply, houseName, roomName)
     }
 
-    fun navigateToTourSecondStep() {
-        navController.navigateToTourSecondStep()
+    fun navigateToTourSecondStep(tourApply: TourEntity) {
+        navController.navigateToTourSecondStep(tourApply)
     }
 
-    fun navigateToTourThirdStep() {
-        navController.navigateToTourThirdStep()
+    fun navigateToTourThirdStep(tourApply: TourEntity) {
+        navController.navigateToTourThirdStep(tourApply)
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =
