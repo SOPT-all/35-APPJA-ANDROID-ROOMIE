@@ -400,25 +400,27 @@ fun DetailScreen(
                                 state.data.houseInfo.deposit
                             )
                             state.data.rooms.forEach { room ->
-                                DetailRoomInfoCard(
-                                    roomStatus = room.status,
-                                    roomName = room.name,
-                                    occupancyType = room.occupancyType,
-                                    gender = room.gender,
-                                    deposit = formatPriceWon(room.deposit),
-                                    prepaidUtilities = formatPriceWon(room.prepaidUtilities),
-                                    monthlyRent = formatPriceWon(room.monthlyRent),
-                                    contractPeriod = room.contractPeriod,
-                                    managementFee = room.managementFee,
-                                    onClickDetailRoomInfoCard = {
-                                        navigateDetailRoom(
-                                            state.data.houseInfo.houseId,
-                                            room.roomId,
-                                            title
-                                        )
-                                    },
-                                    modifier = Modifier.padding(horizontal = 16.dp)
-                                )
+                                room.contractPeriod?.let {
+                                    DetailRoomInfoCard(
+                                        roomStatus = room.status,
+                                        roomName = room.name,
+                                        occupancyType = room.occupancyType,
+                                        gender = room.gender,
+                                        deposit = formatPriceWon(room.deposit),
+                                        prepaidUtilities = formatPriceWon(room.prepaidUtilities),
+                                        monthlyRent = formatPriceWon(room.monthlyRent),
+                                        contractPeriod = it,
+                                        managementFee = room.managementFee,
+                                        onClickDetailRoomInfoCard = {
+                                            navigateDetailRoom(
+                                                state.data.houseInfo.houseId,
+                                                room.roomId,
+                                                title
+                                            )
+                                        },
+                                        modifier = Modifier.padding(horizontal = 16.dp)
+                                    )
+                                }
                             }
                         }
                     }

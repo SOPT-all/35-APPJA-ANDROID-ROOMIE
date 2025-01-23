@@ -31,8 +31,13 @@ class DetailViewModel @Inject constructor(
 
     suspend fun getHouseDetail(houseId: Long) {
         houseRepository.getHouseDetail(houseId = houseId).onSuccess { response ->
+            val updatedResponse = response.copy(
+                rooms = response.rooms.map { room ->
+                    room.copy(contractPeriod = room.contractPeriod ?: "-")
+                }
+            )
             _state.value = _state.value.copy(
-                uiState = UiState.Success(response)
+                uiState = UiState.Success(updatedResponse)
             )
         }.onFailure { error ->
             Timber.e(error)
