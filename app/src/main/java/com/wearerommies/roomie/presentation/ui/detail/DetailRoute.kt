@@ -63,6 +63,7 @@ import com.wearerommies.roomie.presentation.ui.detail.component.DetailInnerFacil
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailMoodCard
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailRoomInfoCard
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailRoomMateCard
+import com.wearerommies.roomie.presentation.ui.webview.WebViewUrl
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.collections.immutable.toPersistentList
@@ -75,6 +76,7 @@ fun DetailRoute(
     navigateDetailRoom: (Long, Long, String) -> Unit,
     navigateDetailHouse: (Long, String) -> Unit,
     navigateTourApply: (TourEntity, String, String) -> Unit,
+    navigateToWebView: (String) -> Unit,
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
     val counter by remember { mutableIntStateOf(0) }
@@ -93,6 +95,7 @@ fun DetailRoute(
                 is DetailSideEffect.NavigateDetailRoom -> navigateDetailRoom(sideEffect.houseId, sideEffect.roomId, sideEffect.title)
                 is DetailSideEffect.NavigateDetailHouse -> navigateDetailHouse(sideEffect.houseId, sideEffect.title)
                 is DetailSideEffect.NavigateTourApply -> navigateTourApply(sideEffect.tourEntity, sideEffect.houseName, sideEffect.roomName)
+                is DetailSideEffect.NavigateToWebView -> navigateToWebView(sideEffect.webViewUrl)
             }
         }
     }
@@ -103,6 +106,7 @@ fun DetailRoute(
         navigateDetailRoom = viewModel::navigateToDetail,
         navigateDetailHouse = viewModel::navigateToHouse,
         navigateTourApply = viewModel::navigateToTourApply,
+        navigateToWebView = viewModel::navigateToWebView,
         state = state.uiState,
         isShowBottomSheet = state.isShowBottomSheet,
         isLivingExpanded = state.isLivingExpanded,
@@ -136,7 +140,8 @@ fun DetailScreen(
     navigateUp: () -> Unit,
     navigateDetailRoom: (Long, Long, String) -> Unit,
     navigateDetailHouse: (Long, String) -> Unit,
-    navigateTourApply: (Long, Long, String, String) -> Unit
+    navigateTourApply: (Long, Long, String, String) -> Unit,
+    navigateToWebView: (String) -> Unit
 ) {
     val scrollState = rememberLazyListState()
     var imageHeight by remember { mutableIntStateOf(0) }
@@ -489,7 +494,7 @@ fun DetailScreen(
                                 tint = RoomieTheme.colors.grayScale6
                             )
                         },
-                        onClickButton = {}
+                        onClickButton = { navigateToWebView(WebViewUrl.KAKAO) }
                     )
                     RoomieButton(
                         text = stringResource(R.string.tour_apply_button),
@@ -618,7 +623,8 @@ fun DetailScreenPreview() {
             selectedTourRoom = -1L,
             updateSelecetedTourRoomId = {},
             selectedTourName = "",
-            updateSelectedTourRoomName = {}
+            updateSelectedTourRoomName = {},
+            navigateToWebView = {}
         )
     }
 }

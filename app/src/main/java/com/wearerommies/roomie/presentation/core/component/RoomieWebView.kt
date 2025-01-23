@@ -4,6 +4,7 @@ import android.webkit.WebViewClient
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,7 +30,9 @@ fun RoomieWebView(url: String, onClose: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
         WebView(
             state = webViewState,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .statusBarsPadding()
+                .weight(1f),
             onCreated = { webViewInstance ->
                 with(webViewInstance) {
                     settings.run {

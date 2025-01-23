@@ -18,4 +18,7 @@ sealed class DetailSideEffect {
         val houseName: String,
         val roomName: String
     ): DetailSideEffect()
+    data class NavigateToWebView(
+        val webViewUrl: String
+    ) : DetailSideEffect()
 }

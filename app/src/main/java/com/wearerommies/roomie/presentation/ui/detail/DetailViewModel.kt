@@ -97,4 +97,7 @@ class DetailViewModel @Inject constructor(
         )
     }
 
+    fun navigateToWebView(webViewUrl: String) = viewModelScope.launch {
+        _sideEffect.emit(DetailSideEffect.NavigateToWebView(webViewUrl = webViewUrl))
+    }
 }

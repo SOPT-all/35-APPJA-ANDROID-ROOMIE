@@ -70,7 +70,8 @@ fun RoomieNavHost(
             navigateUp = navigator::popBackStackIfNotHome,
             navigateDetailRoom = navigator::navigateToDetailRoom,
             navigateDetailHouse = navigator::navigateToDetailHouse,
-            navigateTourApply = navigator::navigateToTourFirstStep
+            navigateTourApply = navigator::navigateToTourFirstStep,
+            navigateToWebView = navigator::navigateToWebView
         )
         tourNavGraph(
             paddingValues = padding,
