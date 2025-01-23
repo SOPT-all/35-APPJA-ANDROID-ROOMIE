@@ -1,5 +1,7 @@
 package com.wearerommies.roomie.presentation.ui.detail
 
+import com.wearerommies.roomie.domain.entity.TourEntity
+
 sealed class DetailSideEffect {
     data object NavigateUp: DetailSideEffect()
     data class NavigateDetailRoom(
@@ -12,8 +14,7 @@ sealed class DetailSideEffect {
         val title: String
     ): DetailSideEffect()
     data class NavigateTourApply(
-        val houseId: Long,
-        val roomId: Long,
+        val tourEntity: TourEntity,
         val houseName: String,
         val roomName: String
     ): DetailSideEffect()

@@ -44,6 +44,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.DetailEntity
+import com.wearerommies.roomie.domain.entity.TourEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieButton
 import com.wearerommies.roomie.presentation.core.component.RoomieHouseNameChip
 import com.wearerommies.roomie.presentation.core.component.RoomieLoadingView
@@ -73,7 +74,7 @@ fun DetailRoute(
     navigateUp: () -> Unit,
     navigateDetailRoom: (Long, Long, String) -> Unit,
     navigateDetailHouse: (Long, String) -> Unit,
-    navigateTourApply: (Long, Long, String, String) -> Unit,
+    navigateTourApply: (TourEntity, String, String) -> Unit,
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
     val counter by remember { mutableIntStateOf(0) }
@@ -91,7 +92,7 @@ fun DetailRoute(
                 DetailSideEffect.NavigateUp -> navigateUp()
                 is DetailSideEffect.NavigateDetailRoom -> navigateDetailRoom(sideEffect.houseId, sideEffect.roomId, sideEffect.title)
                 is DetailSideEffect.NavigateDetailHouse -> navigateDetailHouse(sideEffect.houseId, sideEffect.title)
-                is DetailSideEffect.NavigateTourApply -> navigateTourApply(sideEffect.houseId, sideEffect.roomId, sideEffect.houseName, sideEffect.roomName)
+                is DetailSideEffect.NavigateTourApply -> navigateTourApply(sideEffect.tourEntity, sideEffect.houseName, sideEffect.roomName)
             }
         }
     }
