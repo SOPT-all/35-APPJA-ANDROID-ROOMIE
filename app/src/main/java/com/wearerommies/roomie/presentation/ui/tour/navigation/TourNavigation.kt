@@ -1,24 +1,21 @@
 package com.wearerommies.roomie.presentation.ui.tour.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.wearerommies.roomie.domain.entity.TourEntity
 import com.wearerommies.roomie.presentation.navigator.route.Route
-import com.wearerommies.roomie.presentation.ui.tour.TourFirstStepRoute
-import com.wearerommies.roomie.presentation.ui.tour.TourSecondStepRoute
-import com.wearerommies.roomie.presentation.ui.tour.TourThirdStepRoute
-import com.wearerommies.roomie.presentation.ui.tour.TourViewModel
+import com.wearerommies.roomie.presentation.ui.tour.first.TourFirstStepRoute
+import com.wearerommies.roomie.presentation.ui.tour.second.TourSecondStepRoute
+import com.wearerommies.roomie.presentation.ui.tour.third.TourThirdStepRoute
 
-fun NavController.navigateToTourFirstStep(houseId: Long, roomId: Long, houseName: String, roomName: String, navOptions: NavOptions? = null) {
+fun NavController.navigateToTourFirstStep(tourApply: TourEntity, houseName: String, roomName: String, navOptions: NavOptions? = null) {
     navigate(
         route = Route.TourFirstStep(
-            houseId = houseId,
-            roomId = roomId,
+            tourApply = tourApply,
             houseName = houseName,
             roomName = roomName
         ),
@@ -26,16 +23,20 @@ fun NavController.navigateToTourFirstStep(houseId: Long, roomId: Long, houseName
     )
 }
 
-fun NavController.navigateToTourSecondStep(navOptions: NavOptions? = null) {
+fun NavController.navigateToTourSecondStep(tourApply: TourEntity, navOptions: NavOptions? = null) {
     navigate(
-        route = Route.TourSecondStep,
+        route = Route.TourSecondStep(
+            tourApply = tourApply
+        ),
         navOptions = navOptions
     )
 }
 
-fun NavController.navigateToTourThirdStep(navOptions: NavOptions? = null) {
+fun NavController.navigateToTourThirdStep(tourApply: TourEntity, navOptions: NavOptions? = null) {
     navigate(
-        route = Route.TourThirdStep,
+        route = Route.TourThirdStep(
+            tourApply = tourApply
+        ),
         navOptions = navOptions
     )
 }
@@ -43,47 +44,47 @@ fun NavController.navigateToTourThirdStep(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.tourNavGraph(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateSecondStep: () -> Unit,
-    navigateThirdStep: () -> Unit,
-    getBackStackViewModel: @Composable (backStackEntry: NavBackStackEntry) -> TourViewModel
-    ) {
-    composable<Route.TourFirstStep> { backStackEntry ->
+    navigateSecondStep: (TourEntity) -> Unit,
+    navigateThirdStep: (TourEntity) -> Unit
+) {
 
-        val houseId = backStackEntry.toRoute<Route.TourFirstStep>().houseId
-        val roomId = backStackEntry.toRoute<Route.TourFirstStep>().roomId
-        val houseName = backStackEntry.toRoute<Route.TourFirstStep>().houseName
-        val roomName = backStackEntry.toRoute<Route.TourFirstStep>().roomName
-
+    composable<Route.TourFirstStep> (
+        typeMap = Route.TourFirstStep.typeMap
+    ){ backStackEntry ->
         TourFirstStepRoute(
             paddingValues = paddingValues,
             navigateUp = navigateUp,
-            houseId = houseId,
-            roomId = roomId,
-            houseName = houseName,
-            roomName = roomName,
+            tourApply = backStackEntry.toRoute<Route.TourFirstStep>().tourApply,
+            houseName = backStackEntry.toRoute<Route.TourFirstStep>().houseName,
+            roomName = backStackEntry.toRoute<Route.TourFirstStep>().roomName,
             navigateTwoStep = navigateSecondStep
         )
     }
 
-    composable<Route.TourSecondStep> { backStackEntry ->
+    composable<Route.TourSecondStep>(
+        typeMap = Route.TourFirstStep.typeMap
+    ) { backStackEntry ->
 
         TourSecondStepRoute(
             paddingValues = paddingValues,
+            tourApply = backStackEntry.toRoute<Route.TourSecondStep>().tourApply,
             navigateUp = navigateUp,
             navigateThirdStep = navigateThirdStep,
-            viewModel = getBackStackViewModel(backStackEntry)
         )
 
     }
 
-    composable<Route.TourThirdStep> { backStackEntry ->
+    composable<Route.TourThirdStep>(
+        typeMap = Route.TourFirstStep.typeMap
+    ) { backStackEntry ->
 
         TourThirdStepRoute(
             paddingValues = paddingValues,
             navigateUp = navigateUp,
-            viewModel = getBackStackViewModel(backStackEntry),
-            navigateCompletedStep = navigateUp // TODO: 마지막 페이지로 이동 네트워크 통신
+            tourApply = backStackEntry.toRoute<Route.TourThirdStep>().tourApply,
+            navigateCompletedStep = navigateUp,
         )
 
     }
 }
+
