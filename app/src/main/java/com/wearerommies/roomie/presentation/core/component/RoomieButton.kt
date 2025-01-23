@@ -42,7 +42,7 @@ fun RoomieButton(
         text = text,
         textAlign = TextAlign.Center,
         style = textStyle,
-        color = textColor                          ,
+        color = textColor,
         modifier = modifier
             .let {
                 if (isEnabled) {
