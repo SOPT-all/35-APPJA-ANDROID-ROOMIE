@@ -59,7 +59,6 @@ import com.wearerommies.roomie.presentation.core.component.RoomieSnackbar
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
-import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.type.HomeMoodCardType
 import com.wearerommies.roomie.presentation.type.NavigateButtonType
@@ -103,7 +102,6 @@ fun HomeRoute(
         viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle)
             .collect { sideEffect ->
                 when (sideEffect) {
-                    is HomeSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
                     is HomeSideEffect.SnackBar -> {
                         snackBarHost.currentSnackbarData?.dismiss()
                         coroutineScope.launch {
@@ -152,9 +150,6 @@ fun HomeScreen(
     state: HomeDataEntity,
     modifier: Modifier = Modifier
 ) {
-    val screenWeight = LocalConfiguration.current.screenWidthDp
-    val height = (screenWeight * 0.5).dp
-
     val scrollState = rememberLazyListState()
     val scrollOffset = scrollState.firstVisibleItemScrollOffset
     val topBarBackgroundColor =
@@ -574,7 +569,6 @@ fun HomeScreenPreview() {
                     ),
                 )
             )
-
         )
     }
 }
