@@ -51,9 +51,8 @@
     <string name="four_person">4인실</string>
     <string name="five_person">5인실</string>
     <string name="six_person">6인실</string>
-    <string name="three_month">3개월</string>
-    <string name="six_month">6개월</string>
-    <string name="one_year">1년</string>
+    <string name="year">%1$s년</string>
+    <string name="month">%1$s개월</string>
 
     //my
     <string name="profile_image">프로필 이미지</string>

@@ -1,8 +1,12 @@
 package com.wearerommies.roomie.presentation.ui.map
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.FilterEntity
 import com.wearerommies.roomie.domain.entity.FilterResultEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
+import com.wearerommies.roomie.domain.repository.HouseRepository
 import com.wearerommies.roomie.domain.repository.MapRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
@@ -12,12 +16,14 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
-    private val mapRepository: MapRepository
+    private val mapRepository: MapRepository,
+    private val houseRepository: HouseRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(MapState())
     val state: StateFlow<MapState>
@@ -27,18 +33,30 @@ class MapViewModel @Inject constructor(
     val sideEffect: SharedFlow<MapSideEffect>
         get() = _sideEffect.asSharedFlow()
 
-    val initialLatitude = 37.563974138508
-    val initialLongitude = 126.93836946793
-
-    fun fetchInitialLocation() {
+    fun fetchInitialLocation(x: Float, y: Float) {
         _state.value = _state.value.copy(
-            latitude = initialLatitude,
-            longitude = initialLongitude
+            x = x,
+            y = y,
         )
     }
 
-    suspend fun fetchHouseList(filter: FilterEntity) {
-        mapRepository.getFilterResult(filter)
+    fun fetchFilterAndSearch(filter: FilterEntity, searchResult: SearchResultEntity) {
+        _state.value = _state.value.copy(
+            filter = _state.value.filter.copy(
+                moodTag = filter.moodTag,
+                depositRange = filter.depositRange,
+                monthlyRentRange = filter.monthlyRentRange,
+                genderPolicy = filter.genderPolicy,
+                preferredDate = filter.preferredDate,
+                occupancyTypes = filter.occupancyTypes,
+                contractPeriod = filter.contractPeriod,
+                location = searchResult.address.ifEmpty { filter.location }
+            )
+        )
+    }
+
+    suspend fun fetchHouseList() {
+        mapRepository.getFilterResult(_state.value.filter)
             .onSuccess { resultList ->
                 _state.value = _state.value.copy(
                     houseList =
@@ -76,6 +94,14 @@ class MapViewModel @Inject constructor(
         }
     }
 
+    fun navigateToDetail(houseId: Long) = viewModelScope.launch {
+        _sideEffect.emit(
+            MapSideEffect.NavigateToDetail(
+                houseId = houseId
+            )
+        )
+    }
+
     fun resetClickedMarker() {
         _state.value = _state.value.copy(
             clickedMarkerId = null
@@ -86,5 +112,22 @@ class MapViewModel @Inject constructor(
         _state.value = _state.value.copy(
             isBottomSheetOpened = state
         )
+    }
+
+    fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
+        houseRepository.bookmarkHouse(houseId = houseId)
+            .onSuccess { response ->
+                if (response.isPinned) {
+                    _sideEffect.emit(
+                        MapSideEffect.SnackBar(
+                            message = R.string.add_to_bookmark_list
+                        )
+                    )
+                }
+
+                fetchHouseList()
+            }.onFailure { error ->
+                Timber.e(error)
+            }
     }
 }

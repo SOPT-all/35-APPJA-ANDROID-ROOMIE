@@ -1,6 +1,9 @@
 package com.wearerommies.roomie.presentation.ui.filter
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.core.util.toFormattedString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.PersistentList
@@ -11,6 +14,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
@@ -81,7 +85,7 @@ class FilterViewModel @Inject constructor(
         )
     }
 
-    fun setContractPeriod(value: PersistentList<String>) {
+    fun setContractPeriod(value: PersistentList<Int>) {
         _state.value = _state.value.copy(
             contractType = value
         )
@@ -89,8 +93,8 @@ class FilterViewModel @Inject constructor(
 
     fun resetAll() {
         _state.value = _state.value.copy(
-            location = "",
-            moodTag = "",
+            location = "서울특별시 마포구 노고산동",
+            moodTag = null,
             depositStart = 0,
             depositEnd = 500,
             monthlyRentStart = 0,
@@ -102,7 +106,27 @@ class FilterViewModel @Inject constructor(
         )
     }
 
-    fun applyCondition() {
-        // TODO: sideeffect로 방출하기
+    fun applyCondition() = viewModelScope.launch {
+        _sideEffect.emit(
+            FilterSideEffect.navigateToMap(
+                filter = FilterEntity(
+                    location = _state.value.location,
+                    moodTag = _state.value.moodTag,
+                    depositRange = FilterEntity.DepositRange(
+                        min = _state.value.depositStart,
+                        max = _state.value.depositEnd
+                    ),
+                    monthlyRentRange = FilterEntity.MonthlyRentRange(
+                        min = _state.value.monthlyRentStart,
+                        max = _state.value.monthlyRentEnd
+                    ),
+                    genderPolicy = _state.value.genderPolicy,
+                    preferredDate = _state.value.preferredDate.replace("/", "-"),
+                    occupancyTypes = _state.value.occupancyType,
+                    contractPeriod = _state.value.contractType
+                ),
+                searchResult = SearchResultEntity()
+            )
+        )
     }
 }

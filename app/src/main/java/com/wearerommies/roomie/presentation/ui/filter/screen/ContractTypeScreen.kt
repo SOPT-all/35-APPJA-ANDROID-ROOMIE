@@ -20,20 +20,29 @@ import com.wearerommies.roomie.presentation.core.component.RoomieDatePicker
 import com.wearerommies.roomie.presentation.core.component.RoomieDatePickerField
 import com.wearerommies.roomie.presentation.ui.filter.component.ColumnWithTitle
 import com.wearerommies.roomie.presentation.ui.filter.component.FilterChip
+import com.wearerommies.roomie.presentation.ui.filter.screen.Date.ONEYEAR
+import com.wearerommies.roomie.presentation.ui.filter.screen.Date.SIXMONTH
+import com.wearerommies.roomie.presentation.ui.filter.screen.Date.THREEMONTH
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 
+object Date {
+    const val ONEYEAR: Int = 1
+    const val THREEMONTH: Int = 3
+    const val SIXMONTH: Int = 6
+}
+
 @Composable
 fun ContractTypeScreen(
     isDateModalOpened: Boolean,
     setDateModalVisible: () -> Unit,
     preferredDate: String,
-    contractPeriod: PersistentList<String>,
+    contractPeriod: PersistentList<Int>,
     setPreferredDate: (Long?) -> Unit,
-    setContractPeriod: (PersistentList<String>) -> Unit,
+    setContractPeriod: (PersistentList<Int>) -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (isDateModalOpened)
@@ -77,22 +86,25 @@ fun ContractTypeScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     val contractPeriodOptions = listOf(
-                        stringResource(R.string.three_month),
-                        stringResource(R.string.six_month),
-                        stringResource(R.string.one_year)
+                        THREEMONTH,
+                        SIXMONTH,
+                        ONEYEAR
                     )
 
                     contractPeriodOptions.forEach { option ->
                         val isSelected = contractPeriod.contains(option)
                         FilterChip(
-                            text = option,
+                            text = if (option == 1) stringResource(
+                                R.string.year,
+                                option
+                            ) else stringResource(R.string.month, option),
                             isSelected = isSelected,
                             onClick = {
                                 setContractPeriod(
                                     if (contractPeriod.contains(option)) {
-                                        contractPeriod.remove(option).toPersistentList() // 선택된 경우 제거
+                                        contractPeriod.remove(option).toPersistentList()
                                     } else {
-                                        contractPeriod.add(option).toPersistentList()   // 선택되지 않은 경우 추가
+                                        contractPeriod.add(option).toPersistentList()
                                     }
                                 )
                             }

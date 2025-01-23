@@ -30,12 +30,12 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.domain.entity.FilterEntity
 import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieEmptyView
 import com.wearerommies.roomie.presentation.core.component.RoomieLoadingView
 import com.wearerommies.roomie.presentation.core.extension.bottomBorder
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
-import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.core.util.EmptyUiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
 import com.wearerommies.roomie.presentation.type.EmptyViewType
@@ -50,6 +50,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun SearchRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
+    navigateToMap: (FilterEntity, SearchResultEntity) -> Unit,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -60,7 +61,12 @@ fun SearchRoute(
         viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle)
             .collect { sideEffect ->
                 when (sideEffect) {
-                    is SearchSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
+                    is SearchSideEffect.navigateToMap -> {
+                        navigateToMap(
+                            sideEffect.filter,
+                            sideEffect.result
+                        )
+                    }
                 }
             }
     }
@@ -71,7 +77,8 @@ fun SearchRoute(
         state = state.uiState,
         searchKeyword = state.searchKeyword,
         setSearchKeyword = viewModel::setSearchKeyword,
-        fetchResult = viewModel::fetchSearchResult
+        fetchResult = viewModel::fetchSearchResult,
+        applySearchResult = viewModel::applySearchResult
     )
 
 }
@@ -84,6 +91,7 @@ fun SearchScreen(
     searchKeyword: String,
     setSearchKeyword: (String) -> Unit,
     fetchResult: (String) -> Unit,
+    applySearchResult: (String, String, String, Float, Float) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -148,7 +156,15 @@ fun SearchScreen(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
                                 .padding(top = 12.dp),
-                            onClick = {} // TODO: 다음 뷰로 연결
+                            onClick = {
+                                applySearchResult(
+                                    result.location,
+                                    result.address,
+                                    result.roadAddress,
+                                    result.x,
+                                    result.y,
+                                )
+                            }
                         )
                     }
                 }
@@ -167,7 +183,8 @@ fun SearchScreenEmptyPreview() {
             state = EmptyUiState.Empty,
             searchKeyword = "",
             setSearchKeyword = {},
-            fetchResult = {}
+            fetchResult = {},
+            applySearchResult = { _, _, _, _, _ -> }
         )
     }
 }
@@ -206,7 +223,8 @@ fun SearchScreenSuccessPreview() {
             ),
             searchKeyword = "",
             setSearchKeyword = {},
-            fetchResult = {}
+            fetchResult = {},
+            applySearchResult = { _, _, _, _, _ -> }
         )
     }
 }

@@ -30,9 +30,10 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.wearerommies.roomie.R
+import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.core.component.RoomieTopBar
 import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
-import com.wearerommies.roomie.presentation.core.extension.showToast
 import com.wearerommies.roomie.presentation.ui.filter.component.FilterBottomBar
 import com.wearerommies.roomie.presentation.ui.filter.component.FilterTab
 import com.wearerommies.roomie.presentation.ui.filter.component.FilterTabRow
@@ -48,6 +49,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun FilterRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
+    navigateToMap: (FilterEntity, SearchResultEntity) -> Unit,
     viewModel: FilterViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -58,7 +60,10 @@ fun FilterRoute(
         viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle)
             .collect { sideEffect ->
                 when (sideEffect) {
-                    is FilterSideEffect.ShowToast -> context.showToast(message = sideEffect.message)
+                    is FilterSideEffect.navigateToMap -> navigateToMap(
+                        sideEffect.filter,
+                        sideEffect.searchResult
+                    )
                 }
             }
     }
@@ -103,7 +108,7 @@ fun FilterScreen(
     genderPolicy: PersistentList<String>,
     preferredDate: String,
     occupancyType: PersistentList<String>,
-    contractPeriod: PersistentList<String>,
+    contractPeriod: PersistentList<Int>,
     setDepositRangeStart: (String) -> Unit,
     setDepositRangeEnd: (String) -> Unit,
     setMonthlyRangeStart: (String) -> Unit,
@@ -111,7 +116,7 @@ fun FilterScreen(
     setGenderPolicy: (PersistentList<String>) -> Unit,
     setPreferredDate: (Long?) -> Unit,
     setOccupancyType: (PersistentList<String>) -> Unit,
-    setContractPeriod: (PersistentList<String>) -> Unit,
+    setContractPeriod: (PersistentList<Int>) -> Unit,
     resetAll: () -> Unit,
     applyCondition: () -> Unit,
     modifier: Modifier = Modifier

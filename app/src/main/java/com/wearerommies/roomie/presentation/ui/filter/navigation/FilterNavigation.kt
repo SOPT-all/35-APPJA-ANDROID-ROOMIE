@@ -5,6 +5,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.wearerommies.roomie.domain.entity.FilterEntity
+import com.wearerommies.roomie.domain.entity.SearchResultEntity
 import com.wearerommies.roomie.presentation.navigator.route.Route
 import com.wearerommies.roomie.presentation.ui.filter.FilterRoute
 
@@ -18,11 +20,13 @@ fun NavController.navigateToFilter(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.filterNavGraph(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
+    navigateToMap: (FilterEntity,SearchResultEntity) -> Unit
 ) {
     composable<Route.Filter> {
         FilterRoute(
             paddingValues = paddingValues,
-            navigateUp = navigateUp
+            navigateUp = navigateUp,
+            navigateToMap = navigateToMap
         )
     }
 }

@@ -38,7 +38,8 @@ fun RoomieNavHost(
         mapNavGraph(
             paddingValues = padding,
             navigateToSearch = navigator::navigateToSearch,
-            navigateToFilter = navigator::navigateToFilter
+            navigateToFilter = navigator::navigateToFilter,
+            navigateToDetail = navigator::navigateToDetail
         )
         myNavGraph(
             paddingValues = padding,
@@ -46,7 +47,8 @@ fun RoomieNavHost(
         )
         searchNavGraph(
             paddingValues = padding,
-            navigateUp = navigator::popBackStackIfNotHome
+            navigateUp = navigator::popBackStackIfNotHome,
+            navigateToMap = navigator::navigateToMap
         )
         moodNavGraph(
             paddingValues = padding,
@@ -60,7 +62,8 @@ fun RoomieNavHost(
         )
         filterNavGraph(
             paddingValues = padding,
-            navigateUp = navigator::popBackStackIfNotHome
+            navigateUp = navigator::popBackStackIfNotHome,
+            navigateToMap = navigator::navigateToMap
         )
         detailNavGraph(
             paddingValues = padding,
