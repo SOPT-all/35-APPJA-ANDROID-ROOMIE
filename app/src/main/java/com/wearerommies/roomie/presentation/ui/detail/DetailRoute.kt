@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -227,7 +229,8 @@ fun DetailScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
+                    .statusBarsPadding()
+                    .navigationBarsPadding()
             ) {
                 RoomieTopBar(
                     backgroundColor = topBarBackgroundColor,
@@ -400,25 +403,27 @@ fun DetailScreen(
                                 state.data.houseInfo.deposit
                             )
                             state.data.rooms.forEach { room ->
-                                DetailRoomInfoCard(
-                                    roomStatus = room.status,
-                                    roomName = room.name,
-                                    occupancyType = room.occupancyType,
-                                    gender = room.gender,
-                                    deposit = formatPriceWon(room.deposit),
-                                    prepaidUtilities = formatPriceWon(room.prepaidUtilities),
-                                    monthlyRent = formatPriceWon(room.monthlyRent),
-                                    contractPeriod = room.contractPeriod,
-                                    managementFee = room.managementFee,
-                                    onClickDetailRoomInfoCard = {
-                                        navigateDetailRoom(
-                                            state.data.houseInfo.houseId,
-                                            room.roomId,
-                                            title
-                                        )
-                                    },
-                                    modifier = Modifier.padding(horizontal = 16.dp)
-                                )
+                                room.contractPeriod?.let {
+                                    DetailRoomInfoCard(
+                                        roomStatus = room.status,
+                                        roomName = room.name,
+                                        occupancyType = room.occupancyType,
+                                        gender = room.gender,
+                                        deposit = formatPriceWon(room.deposit),
+                                        prepaidUtilities = formatPriceWon(room.prepaidUtilities),
+                                        monthlyRent = formatPriceWon(room.monthlyRent),
+                                        contractPeriod = it,
+                                        managementFee = room.managementFee,
+                                        onClickDetailRoomInfoCard = {
+                                            navigateDetailRoom(
+                                                state.data.houseInfo.houseId,
+                                                room.roomId,
+                                                title
+                                            )
+                                        },
+                                        modifier = Modifier.padding(horizontal = 16.dp)
+                                    )
+                                }
                             }
                         }
                     }
