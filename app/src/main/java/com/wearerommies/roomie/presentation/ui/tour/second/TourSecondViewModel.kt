@@ -78,6 +78,11 @@ class TourSecondViewModel @Inject constructor(
     }
 
     fun navigateThirdStep() = viewModelScope.launch {
+        _state.value = _state.value.copy(
+            uiState = _state.value.uiState.copy(
+                birthDate = _state.value.uiState.birthDate.toFormattedDto()
+            )
+        )
         _sideEffect.emit(
             TourSecondSideEffect.NavigateToThirdStep(
                 tourApply = _state.value.uiState
