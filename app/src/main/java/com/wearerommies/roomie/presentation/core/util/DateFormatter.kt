@@ -13,3 +13,8 @@ fun todayFormatted(pattern: String = "yyyy/MM/dd"): String {
     return Date().toFormattedString(pattern)
 }
 
+fun String.toFormattedDto(): String {
+    val parts = this.split("/")
+    return "${parts[0]}-${parts[1]}-${parts[2]}"
+}
+
