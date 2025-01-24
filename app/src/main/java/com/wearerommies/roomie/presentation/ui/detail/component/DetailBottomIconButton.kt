@@ -34,7 +34,7 @@ fun DetailBottomIconButton(
                 borderColor = RoomieTheme.colors.grayScale5,
                 borderWidth = 1.dp
             )
-            .clickable { onClickButton() }
+            .clickable (onClick = onClickButton)
             .padding(16.dp)
     ) {
         icon(isPinned)

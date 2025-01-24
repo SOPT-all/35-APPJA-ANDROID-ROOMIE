@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.ui.detail.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,7 +16,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
-import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
@@ -42,12 +42,11 @@ fun DetailRoomInfoCard(
                 borderColor = RoomieTheme.colors.grayScale5,
                 borderWidth = 1.dp
             )
+            .clickable(onClick = onClickDetailRoomInfoCard)
             .padding(16.dp)
-            .noRippleClickable(onClickDetailRoomInfoCard)
-
     ) {
 
-        Row{
+        Row {
             DetailRoomInfoStatusChip(
                 isAvailable = roomStatus
             )
