@@ -163,7 +163,6 @@ fun DetailRoute(
 
 @Composable
 fun DetailScreen(
-    paddingValues: PaddingValues,
     snackBarHost: SnackbarHostState,
     state: UiState<DetailEntity>,
     isShowBottomSheet: Boolean,
@@ -280,7 +279,7 @@ fun DetailScreen(
                                 model = state.data.houseInfo.mainImageUrl,
                                 contentDescription = stringResource(R.string.house_main_image),
                                 modifier = Modifier
-                                    .aspectRatio(312f / 184f)
+                                    .aspectRatio(360f / 304f)
                                     .fillMaxWidth()
                                     .onGloballyPositioned { coordinates ->
                                         imageHeight = coordinates.size.height
@@ -299,7 +298,7 @@ fun DetailScreen(
                                     )
                                     .background(RoomieTheme.colors.grayScale1)
                                     .align(Alignment.BottomCenter)
-                            )                                
+                            )
                         }
                     }
 
