@@ -465,7 +465,7 @@ fun DetailScreen(
 
                         DetailInnerFacilityCard(
                             text = stringResource(R.string.room_kitchen_facility),
-                            facility = state.data.houseInfo.safetyLivingFacility.toPersistentList(),
+                            facility = state.data.houseInfo.kitchenFacility.toPersistentList(),
                             onClickExpandedButton = updateKitchenExpanded,
                             isExpanded = isKitchenExpanded,
                             modifier = Modifier.padding(horizontal = 16.dp)

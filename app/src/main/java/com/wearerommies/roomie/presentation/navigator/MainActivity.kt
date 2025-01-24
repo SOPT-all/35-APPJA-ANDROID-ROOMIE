@@ -23,10 +23,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        installSplashScreen().setOnExitAnimationListener { splashScreenView ->
-            splashScreenView.remove()
-        }
-
         setContent {
             val navigator: MainNavigator = rememberMainNavigator()
             var showSplash by remember { mutableStateOf(true) }
