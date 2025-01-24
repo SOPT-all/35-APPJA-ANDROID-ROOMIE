@@ -1,7 +1,6 @@
 package com.wearerommies.roomie.presentation.ui.detail
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -141,6 +140,7 @@ fun DetailRoute(
     }
 
     DetailScreen(
+        paddingValues = paddingValues,
         snackBarHost = snackBarHost,
         navigateUp = viewModel::navigateUp,
         navigateDetailRoom = viewModel::navigateToDetail,
@@ -165,6 +165,7 @@ fun DetailRoute(
 
 @Composable
 fun DetailScreen(
+    paddingValues: PaddingValues,
     snackBarHost: SnackbarHostState,
     state: UiState<DetailEntity>,
     isShowBottomSheet: Boolean,
@@ -625,6 +626,7 @@ fun DetailScreen(
 fun DetailScreenPreview() {
     RoomieAndroidTheme {
         DetailScreen(
+            paddingValues = PaddingValues(),
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
             state = UiState.Success(
