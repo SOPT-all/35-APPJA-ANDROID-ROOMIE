@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -166,6 +167,7 @@ fun DetailHouseScreen(
                                 contentDescription = stringResource(R.string.main_image),
                                 modifier = Modifier
                                     .fillMaxWidth()
+                                    .aspectRatio(312f / 184f)
                                     .height((screenHeight * 0.235).dp)
                                     .padding(8.dp)
                                     .clip(
@@ -214,15 +216,14 @@ fun DetailHouseScreen(
                                 contentDescription = stringResource(R.string.house_facility)
                             )
 
-                            Text(
-                                text = state.data.detailHouseImageEntity.facilityImageDescription,
-                                style = RoomieTheme.typography.body4R12,
-                                color = RoomieTheme.colors.grayScale12,
-                                modifier = Modifier.padding(horizontal = 8.dp)
-                            )
-
-                            Spacer(Modifier.height(12.dp))
-
+                            if(state.data.detailHouseImageEntity.facilityImageDescription.isNotEmpty()){
+                                Text(
+                                    text = state.data.detailHouseImageEntity.facilityImageDescription,
+                                    style = RoomieTheme.typography.body4R12,
+                                    color = RoomieTheme.colors.grayScale12,
+                                    modifier = Modifier.padding(8.dp)
+                                )
+                            }
                         }
                     }
 
@@ -293,19 +294,18 @@ fun DetailHouseScreen(
                                 )
                         ) {
                             AsyncImage(
-                                model = state.data.detailHouseImageEntity.mainImageUrl,
-                                contentDescription = stringResource(R.string.main_image),
+                                model = state.data.detailHouseImageEntity.floorImageUrl,
+                                contentDescription = stringResource(R.string.floor_image),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height((screenHeight * 0.235).dp)
+                                    .aspectRatio(312f / 184f)
                                     .padding(8.dp)
                                     .clip(
                                         shape = RoundedCornerShape(8.dp)
                                     ),
-                                contentScale = ContentScale.Crop
+                                contentScale = ContentScale.Fit
                             )
-
-                            Spacer(Modifier.height(12.dp))
                         }
 
                         Spacer(Modifier.height(24.dp))
