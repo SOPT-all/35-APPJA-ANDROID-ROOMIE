@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.core.component
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,10 +9,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -29,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -57,92 +59,99 @@ fun RommieTextField(
     var textFieldState by remember { mutableStateOf(TextFieldValue(textFieldValue)) }
     var isFocused by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
 
-    Column {
-        BasicTextField(
-            value = textFieldState,
-            onValueChange = { newValue ->
-                textFieldState = newValue
-                onValueChange(newValue.text)
-            },
-            textStyle = RoomieTheme.typography.title1R16.copy(
-                color = RoomieTheme.colors.grayScale12,
-                textAlign = textAlign,
-            ),
-            singleLine = singleLine,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = keyboardType
-            ),
-            modifier = modifier
-                .fillMaxWidth()
-                .focusRequester(focusRequester)
-                .onFocusChanged { focusState ->
-                    isFocused = focusState.isFocused
-                }
-                .roundedBackgroundWithBorder(
-                    cornerRadius = 8.dp,
-                    backgroundColor = RoomieTheme.colors.grayScale2,
-                    borderColor = when {
-                        !isValidate -> RoomieTheme.colors.actionError
-                        isFocused -> RoomieTheme.colors.primary
-                        else -> RoomieTheme.colors.grayScale5         // 기본값
-                    },
-                    borderWidth = 1.dp
-                )
-                .padding(paddingValues),
-            cursorBrush = SolidColor(RoomieTheme.colors.primary),
-            decorationBox = { innerTextField ->
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.Top
-                ) {
-                    Box(
-                        modifier = Modifier.weight(1f),
-                        contentAlignment = if (textAlign == TextAlign.End) Alignment.CenterEnd else Alignment.TopStart
-                    ) {
-                        innerTextField()
-
-                        if (textFieldState.text.isEmpty()) {
-                            Text(
-                                text = placeHolder,
-                                color = RoomieTheme.colors.grayScale7,
-                                style = RoomieTheme.typography.title1R16,
-                                textAlign = textAlign,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-
-                    if (content != {}) {
-                        Spacer(modifier = Modifier.width(2.dp))
-
-                        content()
-                    }
-                }
-            }
-        )
-        if (!isValidate)
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Icon(
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_warning_14px),
-                    contentDescription = "error",
-                    tint = Color.Unspecified
-                )
-
-                if (errorMessage != null) {
-                    Text(
-                        text = errorMessage,
-                        style = RoomieTheme.typography.body4R12,
-                        color = RoomieTheme.colors.actionError
-                    )
-                }
-            }
+    BackHandler {
+        focusManager.clearFocus()
     }
+
+    BasicTextField(
+        value = textFieldState,
+        onValueChange = { newValue ->
+            textFieldState = newValue
+            onValueChange(newValue.text)
+        },
+        textStyle = RoomieTheme.typography.title1R16.copy(
+            color = RoomieTheme.colors.grayScale12,
+            textAlign = textAlign,
+        ),
+        singleLine = singleLine,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = { focusManager.clearFocus() }
+        ),
+        modifier = modifier
+            .fillMaxWidth()
+            .focusRequester(focusRequester)
+            .onFocusChanged { focusState ->
+                isFocused = focusState.isFocused
+            }
+            .roundedBackgroundWithBorder(
+                cornerRadius = 8.dp,
+                backgroundColor = RoomieTheme.colors.grayScale2,
+                borderColor = when {
+                    !isValidate -> RoomieTheme.colors.actionError
+                    isFocused -> RoomieTheme.colors.primary
+                    else -> RoomieTheme.colors.grayScale5
+                },
+                borderWidth = 1.dp
+            )
+            .padding(paddingValues),
+        cursorBrush = SolidColor(RoomieTheme.colors.primary),
+        decorationBox = { innerTextField ->
+            Row(
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.Top
+            ) {
+                Box(
+                    modifier = Modifier.weight(1f),
+                    contentAlignment = if (textAlign == TextAlign.End) Alignment.CenterEnd else Alignment.TopStart
+                ) {
+                    innerTextField()
+
+                    if (textFieldState.text.isEmpty()) {
+                        Text(
+                            text = placeHolder,
+                            color = RoomieTheme.colors.grayScale7,
+                            style = RoomieTheme.typography.title1R16,
+                            textAlign = textAlign,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                }
+
+                if (content != {}) {
+                    Spacer(modifier = Modifier.width(2.dp))
+
+                    content()
+                }
+            }
+        }
+    )
+    if (!isValidate)
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_warning_14px),
+                contentDescription = "error",
+                tint = Color.Unspecified
+            )
+
+            if (errorMessage != null) {
+                Text(
+                    text = errorMessage,
+                    style = RoomieTheme.typography.body4R12,
+                    color = RoomieTheme.colors.actionError
+                )
+            }
+        }
 }
+
 
 @Preview
 @Composable
