@@ -7,7 +7,7 @@ data class TourSecondState(
     val houseName: String = "",
     val roomName: String = "",
     val isShowBirthDateModal: Boolean = false,
+    val isValidated: Boolean = true
 ) {
-    // TODO: 휴대전화번호 유효검사
-    val isSecondEnabledButton = uiState.name.isNotEmpty() && uiState.birthDate.isNotEmpty() && uiState.gender.isNotEmpty() && uiState.phoneNumber.isNotEmpty() && uiState.phoneNumber.length > 10
+    val isSecondEnabledButton = uiState.name.isNotEmpty() && uiState.birthDate.isNotEmpty() && uiState.gender.isNotEmpty() && isValidated && uiState.phoneNumber.isNotEmpty()
 }

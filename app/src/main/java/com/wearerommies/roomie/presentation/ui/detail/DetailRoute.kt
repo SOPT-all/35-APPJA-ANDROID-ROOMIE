@@ -141,7 +141,6 @@ fun DetailRoute(
     }
 
     DetailScreen(
-        paddingValues = paddingValues,
         snackBarHost = snackBarHost,
         navigateUp = viewModel::navigateUp,
         navigateDetailRoom = viewModel::navigateToDetail,
@@ -166,7 +165,6 @@ fun DetailRoute(
 
 @Composable
 fun DetailScreen(
-    paddingValues: PaddingValues,
     snackBarHost: SnackbarHostState,
     state: UiState<DetailEntity>,
     isShowBottomSheet: Boolean,
@@ -627,7 +625,6 @@ fun DetailScreen(
 fun DetailScreenPreview() {
     RoomieAndroidTheme {
         DetailScreen(
-            paddingValues = PaddingValues(),
             snackBarHost = remember { SnackbarHostState() },
             navigateUp = {},
             state = UiState.Success(

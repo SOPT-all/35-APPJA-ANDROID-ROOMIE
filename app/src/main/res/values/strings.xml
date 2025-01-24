@@ -136,6 +136,7 @@
     <string name="tour_apply_complete_kakaotalk">신청내용은 카카오톡으로 전달드렸어요</string>
     <string name="tour_other_room">다른 방 보러가기</string>
     <string name="tour_completed">완료하기</string>
+    <string name="tour_phone_error">휴대폰 번호 형식이 잘못되었어요</string>
 
     // common
     <string name="dismiss">취소</string>
@@ -159,7 +160,7 @@
     <string name="reset">초기화</string>
     <string name="heart_button">찜하기 버튼</string>
     <string name="chat_button">채팅 버튼</string>
-    <string name="add_to_bookmark_list">찜 목록에 추가되었습니다!</string>
+    <string name="delete_at_bookmark_list">찜 목록에서 삭제되었어요</string>
     <string name="monthly_rent">월세</string>
     <string name="deposit">보증금</string>
     <string name="ten_thousand_won">만원</string>

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -60,12 +61,12 @@ fun DetailHouseRoute(
     title: String,
     viewModel: DetailHouseViewModel = hiltViewModel(),
 
-) {
+    ) {
     val counter by remember { mutableIntStateOf(0) }
     val currentCounter by rememberUpdatedState(counter)
 
     LaunchedEffect(currentCounter) {
-       viewModel.getDetailHouse(houseId)
+        viewModel.getDetailHouse(houseId)
     }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -104,11 +105,12 @@ fun DetailHouseScreen(
 
     val screenHeight = LocalConfiguration.current.screenHeightDp
 
-    when(state) {
+    when (state) {
         UiState.Failure -> TODO()
         UiState.Loading -> {
             RoomieLoadingView()
         }
+
         is UiState.Success -> {
             Column(
                 modifier = modifier
@@ -166,6 +168,7 @@ fun DetailHouseScreen(
                                 contentDescription = stringResource(R.string.main_image),
                                 modifier = Modifier
                                     .fillMaxWidth()
+                                    .aspectRatio(312f / 184f)
                                     .height((screenHeight * 0.235).dp)
                                     .padding(8.dp)
                                     .clip(
@@ -214,15 +217,14 @@ fun DetailHouseScreen(
                                 contentDescription = stringResource(R.string.house_facility)
                             )
 
-                            Text(
-                                text = state.data.detailHouseImageEntity.facilityImageDescription,
-                                style = RoomieTheme.typography.body4R12,
-                                color = RoomieTheme.colors.grayScale12,
-                                modifier = Modifier.padding(horizontal = 14.dp)
-                            )
-
-                            Spacer(Modifier.height(12.dp))
-
+                            if (state.data.detailHouseImageEntity.facilityImageDescription.isNotEmpty()) {
+                                Text(
+                                    text = state.data.detailHouseImageEntity.facilityImageDescription,
+                                    style = RoomieTheme.typography.body4R12,
+                                    color = RoomieTheme.colors.grayScale12,
+                                    modifier = Modifier.padding(8.dp)
+                                )
+                            }
                         }
                     }
 
@@ -245,7 +247,7 @@ fun DetailHouseScreen(
                             text = room.name,
                             facility = room.facility.toPersistentList(),
                             onClickExpandedButton = {
-                                if(isExpanded) {
+                                if (isExpanded) {
                                     closeDetailRoom(room.roomId)
                                 } else {
                                     openDetailRoom(room.roomId)
@@ -293,16 +295,17 @@ fun DetailHouseScreen(
                                 )
                         ) {
                             AsyncImage(
-                                model = state.data.detailHouseImageEntity.mainImageUrl,
-                                contentDescription = stringResource(R.string.main_image),
+                                model = state.data.detailHouseImageEntity.floorImageUrl,
+                                contentDescription = stringResource(R.string.floor_image),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height((screenHeight * 0.235).dp)
+                                    .aspectRatio(312f / 184f)
                                     .padding(8.dp)
                                     .clip(
                                         shape = RoundedCornerShape(8.dp)
                                     ),
-                                contentScale = ContentScale.Crop
+                                contentScale = ContentScale.Fit
                             )
                         }
 
@@ -330,13 +333,16 @@ fun DetailHouseScreenPreview() {
             closeDetailRoom = {},
             state = UiState.Success(
                 DetailHouseEntity(
-                   detailHouseImageEntity = DetailHouseImageEntity(
-                       mainImageUrl = "https://i.pravatar.cc/300",
-                       mainImageDescription = "테스트",
-                       facilityImageUrls = persistentListOf("https://i.pravatar.cc/300", "https://i.pravatar.cc/300"),
-                       facilityImageDescription = "테스트",
-                       floorImageUrl = "https://i.pravatar.cc/300"
-                   ),
+                    detailHouseImageEntity = DetailHouseImageEntity(
+                        mainImageUrl = "https://i.pravatar.cc/300",
+                        mainImageDescription = "테스트",
+                        facilityImageUrls = persistentListOf(
+                            "https://i.pravatar.cc/300",
+                            "https://i.pravatar.cc/300"
+                        ),
+                        facilityImageDescription = "테스트",
+                        floorImageUrl = "https://i.pravatar.cc/300"
+                    ),
                     rooms = persistentListOf(
                         DetailRoomEntity(
                             roomId = 1L,

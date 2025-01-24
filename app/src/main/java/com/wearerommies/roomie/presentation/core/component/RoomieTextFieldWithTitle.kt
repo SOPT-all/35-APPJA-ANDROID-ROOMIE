@@ -25,7 +25,8 @@ fun RoomieTextFieldWithTitle(
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
     isValidated: Boolean = true,
-    placeHolder: String = ""
+    placeHolder: String = "",
+    errorMessage: String = ""
 ) {
     Column(
         modifier = modifier.fillMaxWidth()
@@ -44,7 +45,8 @@ fun RoomieTextFieldWithTitle(
             onValueChange = onValueChange,
             keyboardType = keyboardType,
             isValidate = isValidated,
-            placeHolder = placeHolder
+            placeHolder = placeHolder,
+            errorMessage = errorMessage
         )
     }
 }

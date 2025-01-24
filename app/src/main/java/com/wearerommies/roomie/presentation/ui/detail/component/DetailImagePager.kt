@@ -50,7 +50,7 @@ fun DetailImagePager(
                 contentDescription = contentDescription,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(360f / 312f),
+                    .aspectRatio(312f / 184f),
                 contentScale = ContentScale.Crop
             )
 
