@@ -112,4 +112,11 @@ class HomeViewModel @Inject constructor(
             }
     }
 
+    fun emitFinishSnackBar() = viewModelScope.launch {
+        _sideEffect.emit(
+            HomeSideEffect.SnackBar(
+                message = R.string.exit_application
+            )
+        )
+    }
 }

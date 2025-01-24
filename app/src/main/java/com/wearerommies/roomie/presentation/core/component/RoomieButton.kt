@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.core.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,7 +18,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.wearerommies.roomie.presentation.core.extension.roomieButtonClickable
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
@@ -44,24 +44,17 @@ fun RoomieButton(
         style = textStyle,
         color = textColor,
         modifier = modifier
-            .let {
-                if (isEnabled) {
-                    it.roomieButtonClickable(
-                        onClick = onClick,
-                        pressedColor = pressedColor,
-                        isPressed = isPressed
-                    )
-                } else {
-                    it
-                }
-            }
             .roundedBackgroundWithBorder(
                 cornerRadius = 8.dp,
                 backgroundColor = if (isEnabled) backgroundColor else enabledColor,
                 borderColor = borderColor,
                 borderWidth = borderWidth
             )
+            .run {
+                if (isEnabled) clickable(onClick = onClick) else this
+            }
             .padding(vertical = verticalPadding)
+
     )
 }
 

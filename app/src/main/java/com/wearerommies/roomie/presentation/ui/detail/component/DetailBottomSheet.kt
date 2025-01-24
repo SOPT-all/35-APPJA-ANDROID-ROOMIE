@@ -52,9 +52,6 @@ fun DetailBottomSheet(
         ),
         containerColor = RoomieTheme.colors.grayScale1,
         modifier = modifier
-            .heightIn(
-                max = (LocalConfiguration.current.screenHeightDp * 0.468).dp
-            )
             .fillMaxWidth(),
         dragHandle = {
             Column(

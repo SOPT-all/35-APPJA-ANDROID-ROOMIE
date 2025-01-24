@@ -23,7 +23,7 @@ fun FilterChip(
 ) {
     Text(
         text = text,
-        style = RoomieTheme.typography.body1R14,
+        style = if (isSelected) RoomieTheme.typography.body3M14 else RoomieTheme.typography.body1R14,
         color = if (isSelected) RoomieTheme.colors.primary else RoomieTheme.colors.grayScale11,
         textAlign = TextAlign.Center,
         modifier = modifier
@@ -55,7 +55,7 @@ fun FilterChipSelectedPreview() {
     RoomieAndroidTheme {
         FilterChip(
             text = stringResource(R.string.apply),
-            isSelected = false,
+            isSelected = true,
             onClick = {}
         )
     }

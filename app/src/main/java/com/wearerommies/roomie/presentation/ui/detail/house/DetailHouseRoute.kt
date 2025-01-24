@@ -44,7 +44,6 @@ import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
 import com.wearerommies.roomie.presentation.core.util.UiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
-import com.wearerommies.roomie.presentation.ui.detail.DetailSideEffect
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailImagePager
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailInnerFacilityCard
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
@@ -61,12 +60,12 @@ fun DetailHouseRoute(
     title: String,
     viewModel: DetailHouseViewModel = hiltViewModel(),
 
-) {
+    ) {
     val counter by remember { mutableIntStateOf(0) }
     val currentCounter by rememberUpdatedState(counter)
 
     LaunchedEffect(currentCounter) {
-       viewModel.getDetailHouse(houseId)
+        viewModel.getDetailHouse(houseId)
     }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -105,11 +104,12 @@ fun DetailHouseScreen(
 
     val screenHeight = LocalConfiguration.current.screenHeightDp
 
-    when(state) {
+    when (state) {
         UiState.Failure -> TODO()
         UiState.Loading -> {
             RoomieLoadingView()
         }
+
         is UiState.Success -> {
             Column(
                 modifier = modifier
@@ -180,7 +180,7 @@ fun DetailHouseScreen(
                                 text = state.data.detailHouseImageEntity.mainImageDescription,
                                 style = RoomieTheme.typography.body4R12,
                                 color = RoomieTheme.colors.grayScale12,
-                                modifier = Modifier.padding(horizontal = 8.dp)
+                                modifier = Modifier.padding(horizontal = 14.dp)
                             )
 
                             Spacer(Modifier.height(12.dp))
@@ -216,7 +216,7 @@ fun DetailHouseScreen(
                                 contentDescription = stringResource(R.string.house_facility)
                             )
 
-                            if(state.data.detailHouseImageEntity.facilityImageDescription.isNotEmpty()){
+                            if (state.data.detailHouseImageEntity.facilityImageDescription.isNotEmpty()) {
                                 Text(
                                     text = state.data.detailHouseImageEntity.facilityImageDescription,
                                     style = RoomieTheme.typography.body4R12,
@@ -246,7 +246,7 @@ fun DetailHouseScreen(
                             text = room.name,
                             facility = room.facility.toPersistentList(),
                             onClickExpandedButton = {
-                                if(isExpanded) {
+                                if (isExpanded) {
                                     closeDetailRoom(room.roomId)
                                 } else {
                                     openDetailRoom(room.roomId)
@@ -332,13 +332,16 @@ fun DetailHouseScreenPreview() {
             closeDetailRoom = {},
             state = UiState.Success(
                 DetailHouseEntity(
-                   detailHouseImageEntity = DetailHouseImageEntity(
-                       mainImageUrl = "https://i.pravatar.cc/300",
-                       mainImageDescription = "테스트",
-                       facilityImageUrls = persistentListOf("https://i.pravatar.cc/300", "https://i.pravatar.cc/300"),
-                       facilityImageDescription = "테스트",
-                       floorImageUrl = "https://i.pravatar.cc/300"
-                   ),
+                    detailHouseImageEntity = DetailHouseImageEntity(
+                        mainImageUrl = "https://i.pravatar.cc/300",
+                        mainImageDescription = "테스트",
+                        facilityImageUrls = persistentListOf(
+                            "https://i.pravatar.cc/300",
+                            "https://i.pravatar.cc/300"
+                        ),
+                        facilityImageDescription = "테스트",
+                        floorImageUrl = "https://i.pravatar.cc/300"
+                    ),
                     rooms = persistentListOf(
                         DetailRoomEntity(
                             roomId = 1L,

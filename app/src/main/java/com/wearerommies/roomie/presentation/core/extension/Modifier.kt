@@ -10,6 +10,7 @@ import androidx.compose.material3.ripple
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
@@ -33,7 +34,7 @@ fun Modifier.roomieButtonClickable(
 ): Modifier = composed {
     this
         .clickable(
-            indication = if(isPressed) ripple(color = pressedColor) else null,
+            indication = if (isPressed) ripple(color = pressedColor) else null,
             interactionSource = remember { MutableInteractionSource() }
         ) {
             onClick()
@@ -69,8 +70,8 @@ fun Modifier.bottomBorder(
 fun Modifier.customShadow(
     elevation: Dp = 4.dp,
     shape: Shape = RectangleShape,
-    spotColor: Color = Color(0x40000000),
-    ambientColor: Color = Color(0x40000000),
+    spotColor: Color = Color(0x80000000),
+    ambientColor: Color = Color(0x80000000),
     clip: Boolean = false
 ): Modifier = this.shadow(
     elevation = elevation,
@@ -87,6 +88,7 @@ fun Modifier.roundedBackgroundWithBorder(
     borderWidth: Dp = 0.dp,
 ): Modifier {
     return this
+        .clip(RoundedCornerShape(8.dp))
         .background(backgroundColor, shape = RoundedCornerShape(size = cornerRadius))
         .border(
             width = borderWidth,

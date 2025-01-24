@@ -2,10 +2,9 @@ package com.wearerommies.roomie.presentation.ui.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,25 +23,14 @@ fun SplashScreen() {
         modifier = Modifier
             .background(RoomieTheme.colors.primary)
             .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height((LocalConfiguration.current.screenHeightDp * 0.435).dp))
-
         Image(
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_splash_character_white),
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_splash_logo),
             contentDescription = null,
-            modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.183).dp)
+            modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.389).dp)
         )
-
-        Spacer(modifier = Modifier.height(6.dp))
-
-        Image(
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_splash_logo_white),
-            contentDescription = null,
-            modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.197).dp)
-        )
-
-        Spacer(modifier = Modifier.weight(1f))
     }
 }
 

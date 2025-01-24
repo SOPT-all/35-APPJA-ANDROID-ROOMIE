@@ -180,7 +180,7 @@ fun MapScreen(
 
         NaverMap(
             cameraPositionState = cameraPositionState,
-            uiSettings = MapUiSettings(isZoomControlEnabled = false),
+            uiSettings = MapUiSettings(isZoomControlEnabled = false, isCompassEnabled = false),
             onMapClick = { _, _ ->
                 resetClickedMarker()
                 setBottomSheetState(true)

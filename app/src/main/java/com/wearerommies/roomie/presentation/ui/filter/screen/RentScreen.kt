@@ -27,10 +27,10 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 
 @Composable
 fun RentScreen(
-    monthlyRentStart: Int,
-    monthlyRentEnd: Int,
-    depositStart: Int,
-    depositEnd: Int,
+    monthlyRentStart: String,
+    monthlyRentEnd: String,
+    depositStart: String,
+    depositEnd: String,
     setMonthlyRangeStart: (String) -> Unit,
     setMonthlyRangeEnd: (String) -> Unit,
     setDepositRangeStart: (String) -> Unit,
@@ -57,7 +57,8 @@ fun RentScreen(
                     FilterTextField(
                         modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.436).dp),
                         paddingValues = PaddingValues(12.dp),
-                        textFieldValue = depositStart.toString(),
+                        textFieldValue = depositStart,
+                        placeHolder = "0",
                         onValueChange = setDepositRangeStart,
                         content = {
                             Text(
@@ -78,7 +79,8 @@ fun RentScreen(
                     FilterTextField(
                         modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.436).dp),
                         paddingValues = PaddingValues(12.dp),
-                        textFieldValue = depositEnd.toString(),
+                        textFieldValue = depositEnd,
+                        placeHolder = "500",
                         onValueChange = setDepositRangeEnd,
                         content = {
                             Text(
@@ -106,7 +108,8 @@ fun RentScreen(
                     FilterTextField(
                         modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.436).dp),
                         paddingValues = PaddingValues(12.dp),
-                        textFieldValue = monthlyRentStart.toString(),
+                        textFieldValue = monthlyRentStart,
+                        placeHolder = "0",
                         onValueChange = setMonthlyRangeStart,
                         content = {
                             Text(
@@ -127,7 +130,8 @@ fun RentScreen(
                     FilterTextField(
                         modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.436).dp),
                         paddingValues = PaddingValues(12.dp),
-                        textFieldValue = monthlyRentEnd.toString(),
+                        textFieldValue = monthlyRentEnd,
+                        placeHolder = "150",
                         onValueChange = setMonthlyRangeEnd,
                         content = {
                             Text(
@@ -148,10 +152,10 @@ fun RentScreen(
 fun RentScreenPreview() {
     RoomieAndroidTheme {
         RentScreen(
-            monthlyRentStart = 0,
-            monthlyRentEnd = 0,
-            depositStart = 0,
-            depositEnd = 0,
+            monthlyRentStart = "",
+            monthlyRentEnd = "",
+            depositStart = "",
+            depositEnd = "",
             setMonthlyRangeStart = {},
             setMonthlyRangeEnd = {},
             setDepositRangeStart = {},

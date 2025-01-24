@@ -11,6 +11,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,6 +72,7 @@ fun DatePickerModal(
     )
 
     DatePickerDialog(
+        modifier = Modifier.scale(.9f),
         onDismissRequest = onDismiss,
         dismissButton = {
             TextButton(
@@ -93,7 +95,6 @@ fun DatePickerModal(
             }
         },
         colors = DatePickerDefaults.colors(containerColor = RoomieTheme.colors.grayScale1),
-        modifier = modifier
     ) {
         DatePicker(
             state = datePickerState,

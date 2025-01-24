@@ -1,5 +1,6 @@
 package com.wearerommies.roomie.presentation.ui.detail.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
-import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
@@ -21,20 +21,20 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 @Composable
 fun DetailBottomIconButton(
     icon: @Composable (isPinned: Boolean) -> Unit,
-    onClickButton: () -> Unit,
     modifier: Modifier = Modifier,
+    onClickButton: () -> Unit = {},
     isPinned: Boolean = false
 ) {
     Box(
         modifier = modifier
-                .size(56.dp)
+            .size(56.dp)
             .roundedBackgroundWithBorder(
                 cornerRadius = 8.dp,
                 backgroundColor = RoomieTheme.colors.grayScale1,
                 borderColor = RoomieTheme.colors.grayScale5,
                 borderWidth = 1.dp
             )
-            .noRippleClickable(onClickButton)
+            .clickable (onClick = onClickButton)
             .padding(16.dp)
     ) {
         icon(isPinned)
@@ -49,9 +49,11 @@ fun DetailBottomIconButtonPreview() {
             DetailBottomIconButton(
                 icon = { isPinned ->
                     Icon(
-                        imageVector = if (isPinned) ImageVector.vectorResource(R.drawable.ic_heart_24px_active) else ImageVector.vectorResource(R.drawable.ic_heart_24px_active),
+                        imageVector = if (isPinned) ImageVector.vectorResource(R.drawable.ic_heart_24px_active) else ImageVector.vectorResource(
+                            R.drawable.ic_heart_24px_active
+                        ),
                         contentDescription = null,
-                        tint = if(isPinned) RoomieTheme.colors.actionError else RoomieTheme.colors.grayScale6,
+                        tint = if (isPinned) RoomieTheme.colors.actionError else RoomieTheme.colors.grayScale6,
                     )
                 },
                 onClickButton = {}
@@ -59,9 +61,11 @@ fun DetailBottomIconButtonPreview() {
             DetailBottomIconButton(
                 icon = { isPinned ->
                     Icon(
-                        imageVector = if (isPinned) ImageVector.vectorResource(R.drawable.ic_heart_24px_active) else ImageVector.vectorResource(R.drawable.ic_heart_24px_active),
+                        imageVector = if (isPinned) ImageVector.vectorResource(R.drawable.ic_heart_24px_active) else ImageVector.vectorResource(
+                            R.drawable.ic_heart_24px_active
+                        ),
                         contentDescription = null,
-                        tint = if(isPinned) RoomieTheme.colors.actionError else RoomieTheme.colors.grayScale6
+                        tint = if (isPinned) RoomieTheme.colors.actionError else RoomieTheme.colors.grayScale6
                     )
                 },
                 onClickButton = {},

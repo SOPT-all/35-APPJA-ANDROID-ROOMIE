@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +37,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun FilterTextField(
     paddingValues: PaddingValues,
     textFieldValue: String,
+    placeHolder: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Number,
@@ -43,6 +46,7 @@ fun FilterTextField(
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
 
     Column {
         BasicTextField(
@@ -57,6 +61,9 @@ fun FilterTextField(
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = { focusManager.clearFocus() }
             ),
             modifier = modifier
                 .fillMaxWidth()
@@ -88,7 +95,7 @@ fun FilterTextField(
 
                         if (textFieldValue.isEmpty()) {
                             Text(
-                                text = textFieldValue,
+                                text = placeHolder,
                                 color = RoomieTheme.colors.grayScale7,
                                 style = RoomieTheme.typography.title1R16,
                                 textAlign = textAlign,
@@ -117,7 +124,8 @@ fun RoomieTextFieldPreview() {
         ) {
             FilterTextField(
                 paddingValues = PaddingValues(12.dp),
-                textFieldValue = "",
+                textFieldValue = "123",
+                placeHolder = "456",
                 onValueChange = {},
                 content = {
                     Text(
