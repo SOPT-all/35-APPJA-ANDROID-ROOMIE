@@ -25,9 +25,11 @@ import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.domain.entity.FilterResultEntity
 import com.wearerommies.roomie.domain.entity.RoomCardEntity
+import com.wearerommies.roomie.presentation.core.component.RoomieEmptyView
 import com.wearerommies.roomie.presentation.core.component.RoomieRoomCard
 import com.wearerommies.roomie.presentation.core.extension.topBorder
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
+import com.wearerommies.roomie.presentation.type.EmptyViewType
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
 import kotlinx.collections.immutable.PersistentList
@@ -68,40 +70,53 @@ fun MapBotomSheet(
             }
         },
         sheetContent = {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .topBorder(convertDpToFloat(1.dp), RoomieTheme.colors.grayScale4)
-                    .padding(start = 11.dp, end = 13.dp)
-                    .heightIn(max = (LocalConfiguration.current.screenHeightDp * 0.67).dp)
-            ) {
-                item {
-                    Spacer(modifier = Modifier.height(24.dp))
-                }
+            if (houseList.isEmpty()) {
+                RoomieEmptyView(
+                    modifier = Modifier
+                        .heightIn(max = (LocalConfiguration.current.screenHeightDp * 0.67).dp)
+                        .padding(
+                            top = (LocalConfiguration.current.screenHeightDp * 0.115).dp,
+                            bottom = (LocalConfiguration.current.screenHeightDp * 0.262).dp
+                        )
+                        .align(Alignment.CenterHorizontally),
+                    viewType = EmptyViewType.LIST
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .topBorder(convertDpToFloat(1.dp), RoomieTheme.colors.grayScale4)
+                        .padding(start = 11.dp, end = 13.dp)
+                        .heightIn(max = (LocalConfiguration.current.screenHeightDp * 0.67).dp)
+                ) {
+                    item {
+                        Spacer(modifier = Modifier.height(24.dp))
+                    }
 
-                itemsIndexed(houseList) { index, item ->
-                    RoomieRoomCard(
-                        roomCardEntity = RoomCardEntity(
-                            houseId = item.houseId,
-                            monthlyRent = item.monthlyRent,
-                            deposit = item.deposit,
-                            occupancyType = item.occupancyTypes,
-                            location = item.locationDescription,
-                            genderPolicy = item.genderPolicy,
-                            locationDescription = item.locationDescription,
-                            moodTag = item.moodTag,
-                            contractTerm = item.contractTerm,
-                            mainImgUrl = item.mainImgUrl,
-                            isPinned = item.isPinned
-                        ),
-                        onClick = { navigateToDetail(item.houseId) },
-                        onLikeClick = { onLikeClick(item.houseId) },
-                        modifier = Modifier.padding(bottom = 4.dp)
-                    )
-                }
+                    itemsIndexed(houseList) { index, item ->
+                        RoomieRoomCard(
+                            roomCardEntity = RoomCardEntity(
+                                houseId = item.houseId,
+                                monthlyRent = item.monthlyRent,
+                                deposit = item.deposit,
+                                occupancyType = item.occupancyTypes,
+                                location = item.locationDescription,
+                                genderPolicy = item.genderPolicy,
+                                locationDescription = item.locationDescription,
+                                moodTag = item.moodTag,
+                                contractTerm = item.contractTerm,
+                                mainImgUrl = item.mainImgUrl,
+                                isPinned = item.isPinned
+                            ),
+                            onClick = { navigateToDetail(item.houseId) },
+                            onLikeClick = { onLikeClick(item.houseId) },
+                            modifier = Modifier.padding(bottom = 4.dp)
+                        )
+                    }
 
-                item {
-                    Spacer(modifier = Modifier.height(43.dp))
+                    item {
+                        Spacer(modifier = Modifier.height(43.dp))
+                    }
                 }
             }
         },
