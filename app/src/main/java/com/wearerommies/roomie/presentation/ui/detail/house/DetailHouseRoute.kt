@@ -178,7 +178,7 @@ fun DetailHouseScreen(
                                 text = state.data.detailHouseImageEntity.mainImageDescription,
                                 style = RoomieTheme.typography.body4R12,
                                 color = RoomieTheme.colors.grayScale12,
-                                modifier = Modifier.padding(horizontal = 8.dp)
+                                modifier = Modifier.padding(horizontal = 14.dp)
                             )
 
                             Spacer(Modifier.height(12.dp))
@@ -218,7 +218,7 @@ fun DetailHouseScreen(
                                 text = state.data.detailHouseImageEntity.facilityImageDescription,
                                 style = RoomieTheme.typography.body4R12,
                                 color = RoomieTheme.colors.grayScale12,
-                                modifier = Modifier.padding(horizontal = 8.dp)
+                                modifier = Modifier.padding(horizontal = 14.dp)
                             )
 
                             Spacer(Modifier.height(12.dp))
@@ -304,8 +304,6 @@ fun DetailHouseScreen(
                                     ),
                                 contentScale = ContentScale.Crop
                             )
-
-                            Spacer(Modifier.height(12.dp))
                         }
 
                         Spacer(Modifier.height(24.dp))
