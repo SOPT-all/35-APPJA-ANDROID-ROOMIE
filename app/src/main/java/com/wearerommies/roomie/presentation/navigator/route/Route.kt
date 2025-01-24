@@ -77,6 +77,20 @@ sealed interface Route {
     ) : Route
 }
 
+sealed interface MainTabRoute : Route {
+    @Serializable
+    data object Home : MainTabRoute
+
+    @Serializable
+    data class Map(
+        val filter: FilterEntity,
+        val result: SearchResultEntity
+    ) : MainTabRoute
+
+    @Serializable
+    data object My : MainTabRoute
+}
+
 val tourApplyType = object: NavType<TourEntity>(isNullableAllowed = false){
     override fun get(bundle: Bundle, key: String): TourEntity? {
         return bundle.getString(key)?.let {
@@ -95,20 +109,6 @@ val tourApplyType = object: NavType<TourEntity>(isNullableAllowed = false){
     override fun serializeAsValue(value: TourEntity): String {
         return Json.encodeToString(TourEntity.serializer(), value)
     }
-}
-
-sealed interface MainTabRoute : Route {
-    @Serializable
-    data object Home : MainTabRoute
-
-    @Serializable
-    data class Map(
-        val filter: FilterEntity,
-        val result: SearchResultEntity
-    ) : MainTabRoute
-
-    @Serializable
-    data object My : MainTabRoute
 }
 
 val FilterType = object : NavType<FilterEntity>(isNullableAllowed = false) {
