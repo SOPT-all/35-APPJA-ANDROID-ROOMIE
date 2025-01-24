@@ -21,8 +21,8 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 @Composable
 fun DetailBottomIconButton(
     icon: @Composable (isPinned: Boolean) -> Unit,
-    onClickButton: () -> Unit = {},
     modifier: Modifier = Modifier,
+    onClickButton: () -> Unit = {},
     isPinned: Boolean = false
 ) {
     Box(
