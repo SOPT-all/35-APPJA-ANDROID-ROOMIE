@@ -44,6 +44,7 @@ fun MapBotomSheet(
     BottomSheetScaffold(
         modifier = modifier.padding(top = (LocalConfiguration.current.screenHeightDp * 0.151).dp),
         sheetPeekHeight = (LocalConfiguration.current.screenHeightDp * 0.077).dp,
+        sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
         sheetContainerColor = RoomieTheme.colors.grayScale1,
         sheetShadowElevation = 4.dp,
         sheetDragHandle = {
