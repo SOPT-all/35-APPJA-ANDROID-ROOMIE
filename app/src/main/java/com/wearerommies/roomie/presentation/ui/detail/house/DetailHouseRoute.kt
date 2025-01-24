@@ -214,15 +214,16 @@ fun DetailHouseScreen(
                                 contentDescription = stringResource(R.string.house_facility)
                             )
 
-                            Text(
-                                text = state.data.detailHouseImageEntity.facilityImageDescription,
-                                style = RoomieTheme.typography.body4R12,
-                                color = RoomieTheme.colors.grayScale12,
-                                modifier = Modifier.padding(horizontal = 8.dp)
-                            )
+                            if(state.data.detailHouseImageEntity.facilityImageDescription.isNotEmpty()){
+                                Text(
+                                    text = state.data.detailHouseImageEntity.facilityImageDescription,
+                                    style = RoomieTheme.typography.body4R12,
+                                    color = RoomieTheme.colors.grayScale12,
+                                    modifier = Modifier.padding(horizontal = 8.dp)
+                                )
+                            }
 
                             Spacer(Modifier.height(12.dp))
-
                         }
                     }
 
