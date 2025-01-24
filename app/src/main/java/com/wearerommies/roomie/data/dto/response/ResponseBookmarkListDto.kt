@@ -39,7 +39,7 @@ data class ResponseBookmarkListDto(
             monthlyRent = monthlyRent,
             deposit = deposit,
             occupancyType = occupancyTypes,
-            location = locationDescription,
+            location = location,
             genderPolicy = genderPolicy,
             locationDescription = locationDescription,
             isPinned = isPinned,

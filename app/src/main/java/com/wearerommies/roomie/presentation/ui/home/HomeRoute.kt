@@ -26,6 +26,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -151,11 +152,15 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberLazyListState()
-    val scrollOffset = scrollState.firstVisibleItemScrollOffset
+    val isScrollResponsiveDefault by remember {
+        derivedStateOf {
+            scrollState.firstVisibleItemIndex == 0 && scrollState.firstVisibleItemScrollOffset < 1
+        }
+    }
     val topBarBackgroundColor =
-        if (scrollOffset > 1) RoomieTheme.colors.grayScale1 else Color.Transparent
+        if (!isScrollResponsiveDefault) RoomieTheme.colors.grayScale1 else Color.Transparent
     val topBarBorderColor =
-        if (scrollOffset > 1) RoomieTheme.colors.grayScale4 else Color.Transparent
+        if (!isScrollResponsiveDefault) RoomieTheme.colors.grayScale4 else Color.Transparent
 
     Popup(
         alignment = Alignment.BottomCenter
@@ -164,7 +169,7 @@ fun HomeScreen(
             RoomieSnackbar(
                 modifier = Modifier
                     .padding(
-                        bottom = paddingValues.calculateBottomPadding(),
+                        bottom = paddingValues.calculateBottomPadding() - 8.dp,
                         start = 12.dp,
                         end = 12.dp
                     ),

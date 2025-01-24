@@ -99,10 +99,10 @@ class HomeViewModel @Inject constructor(
     fun bookmarkHouse(houseId: Long) = viewModelScope.launch {
         houseRepository.bookmarkHouse(houseId = houseId)
             .onSuccess { response ->
-                if (response.isPinned) {
+                if (response.isPinned.not()) {
                     _sideEffect.emit(
                         HomeSideEffect.SnackBar(
-                            message = R.string.add_to_bookmark_list
+                            message = R.string.delete_at_bookmark_list
                         )
                     )
                 }
