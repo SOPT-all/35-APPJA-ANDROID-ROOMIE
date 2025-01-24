@@ -169,4 +169,5 @@
     <string name="price">금액</string>
     <string name="hashtag">#</string>
     <string name="contract_period">계약기간</string>
+    <string name="error">error</string>
 </resources>

@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -138,7 +139,7 @@ fun RommieTextField(
 
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_warning_14px),
-                contentDescription = "error",
+                contentDescription = stringResource(R.string.error),
                 tint = Color.Unspecified
             )
 

@@ -75,11 +75,15 @@ fun HomeMoodCard(
                 .height(4.dp)
         )
 
-        Image(
-            painter = painterResource(homeMoodCardType.moodDrawableResId),
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
+        Row{
+            Spacer(modifier=Modifier.weight(1f))
+
+            Image(
+                painter = painterResource(homeMoodCardType.moodDrawableResId),
+                contentDescription = null,
+                contentScale = ContentScale.Crop
+            )
+        }
     }
 }
 
