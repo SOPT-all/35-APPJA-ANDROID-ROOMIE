@@ -44,7 +44,6 @@ import com.wearerommies.roomie.presentation.core.extension.noRippleClickable
 import com.wearerommies.roomie.presentation.core.extension.roundedBackgroundWithBorder
 import com.wearerommies.roomie.presentation.core.util.UiState
 import com.wearerommies.roomie.presentation.core.util.convertDpToFloat
-import com.wearerommies.roomie.presentation.ui.detail.DetailSideEffect
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailImagePager
 import com.wearerommies.roomie.presentation.ui.detail.component.DetailInnerFacilityCard
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
