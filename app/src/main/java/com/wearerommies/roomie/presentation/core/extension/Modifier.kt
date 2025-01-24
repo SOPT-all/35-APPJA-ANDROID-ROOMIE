@@ -70,8 +70,8 @@ fun Modifier.bottomBorder(
 fun Modifier.customShadow(
     elevation: Dp = 4.dp,
     shape: Shape = RectangleShape,
-    spotColor: Color = Color(0x40000000),
-    ambientColor: Color = Color(0x40000000),
+    spotColor: Color = Color(0x80000000),
+    ambientColor: Color = Color(0x80000000),
     clip: Boolean = false
 ): Modifier = this.shadow(
     elevation = elevation,
