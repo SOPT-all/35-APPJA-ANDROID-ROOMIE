@@ -304,7 +304,7 @@ fun DetailHouseScreen(
                                     .clip(
                                         shape = RoundedCornerShape(8.dp)
                                     ),
-                                contentScale = ContentScale.Crop
+                                contentScale = ContentScale.Fit
                             )
                         }
 
