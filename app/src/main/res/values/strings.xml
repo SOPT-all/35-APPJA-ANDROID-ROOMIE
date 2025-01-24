@@ -21,6 +21,7 @@
     <string name="roomie_find_perfect_home">루미가 %1$s님의 완벽한 집을\n찾아드릴게요</string>
     <string name="no_bookmark_property">찜한 매물이 없어요</string>
     <string name="press_heart_to_bookmark_property">하트를 눌러 마음에 드는 매물을 찜해보세요</string>
+    <string name="exit_application">한 번 더 누르시면 종료됩니다.</string>
 
     // map
     <string name="deposit_variable">보증금 %1$s</string>
