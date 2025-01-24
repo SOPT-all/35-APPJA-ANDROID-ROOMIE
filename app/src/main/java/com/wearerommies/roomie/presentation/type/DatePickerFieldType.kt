@@ -25,7 +25,7 @@ enum class DatePickerFieldType(
         backgroundColor = GrayScale2
     ),
     BIRTHDATE(
-        title = R.string.desired_move_in_date,
+        title = R.string.birth_date,
         titleColor = GrayScale10,
         backgroundColor = GrayScale2
     )

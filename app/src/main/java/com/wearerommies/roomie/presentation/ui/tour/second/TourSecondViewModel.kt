@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.domain.entity.TourEntity
 import com.wearerommies.roomie.domain.repository.RoomRepository
+import com.wearerommies.roomie.presentation.core.util.RegexConstants.PHONE_NUMBER_REGEX
 import com.wearerommies.roomie.presentation.core.util.toFormattedDto
 import com.wearerommies.roomie.presentation.core.util.toFormattedString
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -70,6 +71,10 @@ class TourSecondViewModel @Inject constructor(
             uiState = _state.value.uiState.copy(
                 phoneNumber = phoneNumber
             )
+        )
+
+        _state.value = _state.value.copy(
+            isValidated = PHONE_NUMBER_REGEX.matches(phoneNumber)
         )
     }
 

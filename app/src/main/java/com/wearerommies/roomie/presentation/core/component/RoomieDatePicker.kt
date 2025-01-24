@@ -17,8 +17,9 @@ import androidx.compose.ui.unit.dp
 import com.wearerommies.roomie.R
 import com.wearerommies.roomie.ui.theme.RoomieAndroidTheme
 import com.wearerommies.roomie.ui.theme.RoomieTheme
+import java.time.LocalDate
+import java.time.ZoneOffset
 import java.util.Calendar
-import java.util.TimeZone
 
 const val UTC: String = "UTC"
 
@@ -26,11 +27,13 @@ const val UTC: String = "UTC"
 fun RoomieDatePicker(
     onConfirm: (selectedDateMillis: Long?) -> Unit,
     onDismiss: () -> Unit,
+    inLimited: Boolean = true,
     modifier: Modifier = Modifier
 ) {
     DatePickerModal(
         onConfirm = onConfirm,
         onDismiss = onDismiss,
+        inLimited = inLimited,
         modifier = modifier
     )
 }
@@ -40,25 +43,29 @@ fun RoomieDatePicker(
 fun DatePickerModal(
     onConfirm: (Long?) -> Unit,
     onDismiss: () -> Unit,
+    inLimited: Boolean,
     modifier: Modifier = Modifier
 ) {
-    val todayMillisUtc = Calendar.getInstance(TimeZone.getTimeZone(UTC)).apply {
-        set(Calendar.HOUR_OF_DAY, 0)
-        set(Calendar.MINUTE, 0)
-        set(Calendar.SECOND, 0)
-        set(Calendar.MILLISECOND, 0)
-    }.timeInMillis
+    val todayMillisUtc = LocalDate.now().atStartOfDay(ZoneOffset.UTC)?.toInstant()?.toEpochMilli() ?: System.currentTimeMillis()
 
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = todayMillisUtc,
         selectableDates = object : SelectableDates {
             override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return utcTimeMillis >= todayMillisUtc
+                return if (inLimited) {
+                    utcTimeMillis >= todayMillisUtc
+                } else {
+                    true
+                }
             }
 
             override fun isSelectableYear(year: Int): Boolean {
-                val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-                return year >= currentYear
+                return if (inLimited) {
+                    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+                    year >= currentYear
+                } else {
+                    true
+                }
             }
         }
     )
@@ -110,6 +117,20 @@ fun RoomieDatePickerPreview() {
         RoomieDatePicker(
             onConfirm = {},
             onDismiss = {},
+            inLimited = true,
+            modifier = Modifier.padding(horizontal = 20.dp)
+        )
+    }
+}
+
+@Preview
+@Composable
+fun RoomieDatePickerUnlimitedPreview() {
+    RoomieAndroidTheme {
+        RoomieDatePicker(
+            onConfirm = {},
+            onDismiss = {},
+            inLimited = false,
             modifier = Modifier.padding(horizontal = 20.dp)
         )
     }
