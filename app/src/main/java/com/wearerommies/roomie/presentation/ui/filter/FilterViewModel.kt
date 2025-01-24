@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wearerommies.roomie.domain.entity.FilterEntity
 import com.wearerommies.roomie.domain.entity.SearchResultEntity
+import com.wearerommies.roomie.presentation.core.util.toFormattedDto
 import com.wearerommies.roomie.presentation.core.util.toFormattedString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.PersistentList
@@ -37,31 +38,41 @@ class FilterViewModel @Inject constructor(
 
     fun setDepositRangeStart(value: String) {
         _state.value = _state.value.copy(
-            depositStart = value.toIntOrNull() ?: 0
+            depositStart = when {
+                value.isEmpty() -> ""
+                value.toInt() > 500 -> 0
+                else -> value.toInt()
+            }.toString()
         )
-//        뷰모델에서 범위 관리 - 초기화/max값 넘었을때 갑설정
-//        depositStart = when {
-//            value.isEmpty() -> return
-//            value.toInt() > 500 -> 500
-//            else -> value.toInt()
-//        }
     }
 
     fun setDepositRangeEnd(value: String) {
         _state.value = _state.value.copy(
-            depositEnd = value.toIntOrNull() ?: 0
+            depositEnd = when {
+                value.isEmpty() -> ""
+                value.toInt() > 500 -> 500
+                else -> value.toInt()
+            }.toString()
         )
     }
 
     fun setMonthlyRangeStart(value: String) {
         _state.value = _state.value.copy(
-            monthlyRentStart = value.toIntOrNull() ?: 0
+            monthlyRentStart = when {
+                value.isEmpty() -> ""
+                value.toInt() > 150 -> 0
+                else -> value.toInt()
+            }.toString()
         )
     }
 
     fun setMonthlyRangeEnd(value: String) {
         _state.value = _state.value.copy(
-            monthlyRentEnd = value.toIntOrNull() ?: 150
+            monthlyRentEnd = when {
+                value.isEmpty() -> ""
+                value.toInt() > 150 -> 150
+                else -> value.toInt()
+            }.toString()
         )
     }
 
@@ -95,10 +106,10 @@ class FilterViewModel @Inject constructor(
         _state.value = _state.value.copy(
             location = "서울특별시 마포구 노고산동",
             moodTag = null,
-            depositStart = 0,
-            depositEnd = 500,
-            monthlyRentStart = 0,
-            monthlyRentEnd = 150,
+            depositStart = "",
+            depositEnd = "",
+            monthlyRentStart = "",
+            monthlyRentEnd = "",
             genderPolicy = persistentListOf(),
             preferredDate = "",
             occupancyType = persistentListOf(),
@@ -113,15 +124,15 @@ class FilterViewModel @Inject constructor(
                     location = _state.value.location,
                     moodTag = _state.value.moodTag,
                     depositRange = FilterEntity.DepositRange(
-                        min = _state.value.depositStart,
-                        max = _state.value.depositEnd
+                        min = _state.value.depositStart.toIntOrNull() ?: 0,
+                        max = _state.value.depositEnd.toIntOrNull() ?: 500
                     ),
                     monthlyRentRange = FilterEntity.MonthlyRentRange(
-                        min = _state.value.monthlyRentStart,
-                        max = _state.value.monthlyRentEnd
+                        min = _state.value.monthlyRentStart.toIntOrNull() ?: 0,
+                        max = _state.value.monthlyRentEnd.toIntOrNull() ?: 150
                     ),
                     genderPolicy = _state.value.genderPolicy,
-                    preferredDate = _state.value.preferredDate.replace("/", "-"),
+                    preferredDate = _state.value.preferredDate.toFormattedDto(),
                     occupancyTypes = _state.value.occupancyType,
                     contractPeriod = _state.value.contractType
                 ),

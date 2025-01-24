@@ -26,7 +26,6 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,6 +37,7 @@ import com.wearerommies.roomie.ui.theme.RoomieTheme
 fun FilterTextField(
     paddingValues: PaddingValues,
     textFieldValue: String,
+    placeHolder: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Number,
@@ -47,7 +47,6 @@ fun FilterTextField(
     var isFocused by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
-    var currentText by remember { mutableStateOf(TextFieldValue(textFieldValue)) }
 
     Column {
         BasicTextField(
@@ -94,9 +93,9 @@ fun FilterTextField(
                     ) {
                         innerTextField()
 
-                        if (currentText.text.isEmpty()) {
+                        if (textFieldValue.isEmpty()) {
                             Text(
-                                text = currentText.text,
+                                text = placeHolder,
                                 color = RoomieTheme.colors.grayScale7,
                                 style = RoomieTheme.typography.title1R16,
                                 textAlign = textAlign,
@@ -126,6 +125,7 @@ fun RoomieTextFieldPreview() {
             FilterTextField(
                 paddingValues = PaddingValues(12.dp),
                 textFieldValue = "123",
+                placeHolder = "456",
                 onValueChange = {},
                 content = {
                     Text(
